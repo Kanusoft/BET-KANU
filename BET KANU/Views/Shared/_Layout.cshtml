@@ -1,0 +1,246 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="author" content="">
+
+    <meta property="og:description" content="BET KANU is a team of creatives with a mission to build a foundation to advance the endangered dialects of the colloquial Syriac language." />
+    <link rel="shortcut icon" href="https://www.betkanu.com/Content/img/CoverandBanner/Bet-Kanu2.png">
+    <meta property="og:image" content="~/content/img/betkanuicon.png" />
+    <title>@ViewBag.title - BET KANU</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.betkanu.com/content/img/betkanuicon.png">
+    <link rel="icon" type="image/png" href="/img/betkanuicon.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/betkanuicon.png" sizes="16x16">
+
+    <!-- CORE CSS -->
+    <link href="/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- PLUGINS -->
+    <link href="/plugins/animate/animate.min.css" rel="stylesheet">
+    <link href="/plugins/owl-carousel/owl.carousel.css" rel="stylesheet">
+    <!-- THEME CSS -->
+    <link href="/css/theme.css" rel="stylesheet">
+    <link href="/css/custom.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+<body>
+    <header style="background-color:whitesmoke">
+        <div class="container">
+            <span class="bar hide"></span>
+            <a alt="BETKANU Website" href="~/" class="logo hidden-lg hidden-md"><img src="/img/betkanulogomainLG-01.png" alt="BETKANU MainLogo"></a>
+            <a alt="BETKANU Website" href="~/" class="logo hidden-xs hidden-sm"><img src="/img/betkanulogomainLG.png" alt="BETKANU MainLogo"></a>
+            <nav>
+                <div class="nav-control">
+                    <ul>
+                        <li><a alt="Products Page" href="~/products">Products</a></li>
+
+                        <li class="dropdown">
+                            <a alt="Studio" href="#" class="dropdown-toggle">Studio</a>
+                            <ul class="dropdown-menu default">
+                                <li style="margin-top:10px"><a alt="BETKANU Studio" href="~/studio">About Studio</a></li>
+
+                                <li class="dropdown-submenu" style="margin-top:10px">
+                                    <a alt="BETKANU Cartoon" href="~/studio/cartoonseries">Cartoon Series</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a alt="BETKANU ninoandmia" href="~/studio/ninoandmia">Nino and Mia</a></li>
+                                        <li><a alt="BETKANU alphabetseries" href="~/studio/alphabetseries">Alphabet Series</a></li>
+                                    </ul>
+                                </li>
+                                <li style="margin-top:10px"><a alt="BETKANU Songs" href="~/studio/songs">Songs</a></li>
+                            </ul>
+                        </li>
+                        <li><a alt="BETKANU Software" href="~/Software">Software</a></li>
+                        <li><a alt="BETKANU Publishing" href="~/Publishing">Publishing</a></li>
+                        <li class="dropdown mega-dropdown mega-dropdown-sm">
+                            <a alt="BETKANU About" href="#">About</a>
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                                <li class="col-md-6">
+                                    <ul>
+                                        <li style="margin-top:10px"><a alt="BETKANU Partners" href="~/about/partners">Partners</a></li>
+                                        <li style="margin-top:10px"><a alt="BETKANU Contributors" href="~/about/Contributors">Contributors</a></li>
+                                        <li style="margin-top:10px"><a alt="BETKANU Special" href="~/about/SpecialThanks">Special Thanks</a></li>
+                                        <li style="margin-top:10px ; background-color:#faa61a"><a alt="BETKANU Donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B2LWBB7C4J29G&source=url">Donate</a></li>
+                                    </ul>
+                                </li>
+                                <li class="col-md-6">
+                                    <ul>
+                                        <li style="margin-top:10px"><a alt="BETKANU About" href="~/about/betkanu">BET KANU</a></li>
+                                        <li style="margin-top:10px"><a alt="BETKANU Team" href="~/about/Team">Team</a></li>
+                                        <li style="margin-top:10px"><a alt="BETKANU Center" href="~/about/ourcenter">Our Center</a></li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a alt="BETKANU Contact" href="~/Home/contact">Contact</a></li>
+                        <li style=" background-color:#faa61a"><a alt="BETKANU Shop" href="~/Shop">Shop</a></li>
+
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div class="forum-body">
+        @RenderBody()
+    </div>
+    <footer style="background-color:#0d5487">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <p style="text-align:left ; text-align:justify">
+                        BET KANU Inc is a non-profit organization, and to continue with our mission we depend soley on support from people like you. Help us cover the costs of our website and mobile app servers, or support our future projects.
+
+                        Let's make our beautiful Syriac language ready for the digital age.
+                    </p>
+                    <div class="col-md-4 col-sm-6 col-xs-6">
+
+                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                            <input type="hidden" name="cmd" value="_s-xclick" />
+                            <input type="hidden" name="hosted_button_id" value="B2LWBB7C4J29G" />
+                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+                            <img alt="paypal logo" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+                        </form>
+                    </div>
+                    <div class="col-md-8 col-sm-6 col-xs-6">
+                        <div class="post-thumbnail">
+                            <img alt="BETKANU Qr Code" src="/img/Donate_QRCode.png" style="width:50%" alt="">
+                        </div>
+                    </div>
+                    <br> <br>
+                    <h4 class="title">BET KANU newsletter</h4>
+                    <p>Send us your Email, and Subscribe now!</p>
+                    <div class="btn-inline form-inverse">
+                        <input type="email" name="Email" id="Email" class="form-control" placeholder="Email..." />
+
+                        <button type="submit" class="btn btn-success" id="myEmailForm2"><i class="fa fa-envelope"></i></button>
+                        <div name="messageResult2" id="messageResult2"></div>
+                    </div>
+                </div>
+                <div name="messageResult" id="messageResult"></div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <ul class="nav">
+                                <li><a alt="BETKANU Home" href="~/">BET KANU Home</a></li>
+                                <li><a alt="BETKANU About" href="~/about/betkanu">About BET KANU</a></li>
+                                <li><a alt="BETKANU Team" href="~/about/team">Team</a></li>
+                                <li><a alt="BETKANU Partners" href="~/about/partners">Partners </a></li>
+                                <li><a alt="BETKANU Contributers" href="~/about/contributors">Contributers </a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <ul class="nav">
+                                <li><a alt="BETKANU Songs" href="~/studio/songs">Songs</a></li>
+                                <li><a alt="BETKANU Cartoon" href="~/studio/cartoonseries">Cartoon Series</a></li>
+                                <li><a alt="BETKANU Software" href="~/software">Software</a></li>
+                                <li><a alt="BETKANU Publishing" href="~/Publishing">Publishing</a></li>
+                                <li><a alt="BETKANU contact" href="~/home/contact">contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <a alt="BETKANU twitter" class="twitter-timeline" data-width="600" data-dnt="true" data-tweet-limit="1" href="https://twitter.com/BetKanu?ref_src=twsrc%5Etfw">Tweets by BetKanu</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <ul class="list-inline">
+                    <li><a alt="BETKANU youtube" href="https://www.youtube.com/c/betkanu" class="btn btn-circle btn-social-icon" data-toggle="tooltip" title="Subscribe on YouTube"><i class="fa fa-youtube"></i></a></li>
+                    <li><a alt="BETKANU facebook" href="https://www.facebook.com/BetKanu/" class="btn btn-circle btn-social-icon" data-toggle="tooltip" title="Follow us on Facebook"><i class="fa fa-facebook"></i></a></li>
+                    <li><a alt="BETKANU twitter" href="https://twitter.com/BetKanu" class="btn btn-circle btn-social-icon" data-toggle="tooltip" title="Follow us on Twitter"><i class="fa fa-twitter"></i></a></li>
+                    <li><a alt="BETKANU instagram" href="https://www.instagram.com/betkanu/" class="btn btn-circle btn-social-icon" data-toggle="tooltip" title="Follow us on instagram"><i class="fa fa-instagram"></i></a></li>
+                </ul>
+                &copy;@DateTime.Now.Year BET KANU. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    <script src="./plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="./plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./js/core.min.js"></script>
+    <script src="./plugins/owl-carousel/owl.carousel.min.js"></script>
+    <script type="text/javascript">
+
+        const email = $('#Email').val();
+        $.ajax({
+            url: 'https://www.dargushti.com/api/v6/subscribe',
+            type: 'post',
+            data: {
+                email,
+            },
+            headers: {
+                'x-api-key': 'API_KEY_SECRET',
+            },
+            dataType: 'json',
+            success(data) {
+                if (data.result) {
+                    $('#messageResult2').html('<a>Success</a>');
+                } else {
+                    $('#messageResult2').html('<a> </a>');
+                }
+            },
+        });
+    </script>
+    <script>
+        (function ($) {
+            "use strict";
+            var owl = $(".owl-carousel");
+
+            owl.owlCarousel({
+                items: 4, //4 items above 1000px browser width
+                itemsDesktop: [1000, 3], //3 items between 1000px and 0
+                itemsTablet: [600, 1], //1 items between 600 and 0
+                itemsMobile: false // itemsMobile disabled - inherit from itemsTablet option
+            });
+
+            $(".next").click(function () {
+                owl.trigger('owl.next');
+                return false;
+            })
+            $(".prev").click(function () {
+                owl.trigger('owl.prev');
+                return false;
+            })
+        })(jQuery);
+    </script>
+    <script>$("#myEmailForm2").click(function () {
+
+    const email = $('#Email').val();
+    $.ajax({
+        url: 'https://www.dargushti.com/api/v6/subscribe',
+        type: 'post',
+        data: {
+            email,
+        },
+        headers: {
+            'x-api-key': 'API_KEY_SECRET',
+        },
+        dataType: 'json',
+        success(data) {
+            if (data.result) {
+                $('#messageResult2').html('<a>Success</a>');
+            } else {
+                $('#messageResult2').html('<a> </a>');
+            }
+        },
+    });
+
+})
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

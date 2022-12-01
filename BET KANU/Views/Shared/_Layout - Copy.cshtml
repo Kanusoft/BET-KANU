@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta property="og:title" content="BET KANU" />
+    <meta property="og:description" content="BET KANU is a team of creatives with a mission to build a foundation to advance the endangered dialects of the colloquial Syriac language." />
+    <link rel="shortcut icon" href="/img/Betkanuicon.png">
+
+    <title>BET KANU - @ViewBag.Title </title>
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="img/favicon.ico">
+
+    <!-- CORE CSS -->
+    <link href="/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    @*<link href="~/Content/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">*@
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700' rel='stylesheet' type='text/css'>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- PLUGINS -->
+    <link href="/plugins/animate/animate.min.css" rel="stylesheet">
+    <link href="/plugins/owl-carousel/owl.carousel.css" rel="stylesheet">
+    <link href="/plugins/ekko-lightbox/ekko-lightbox.min.css" rel="stylesheet">
+    <!-- THEME CSS -->
+    <link href="/css/theme.css" rel="stylesheet">
+    <link href="/css/custom.css" rel="stylesheet">
+
+</head>
+
+
+<body>
+    <header>
+        <div class="container">
+            <span class="bar hide"></span>
+            @*<a href="~/" class="logo"><img src="~/content/img/Betkanulogo.png" alt=""></a>*@
+            <nav>
+                <div class="nav-control">
+                    <ul>
+                        <li><a href="~/">Home</a></li>
+                        <li class="dropdown">
+                            <a href="~/studio/index" class="dropdown-toggle">Studio</a>
+                            <ul class="dropdown-menu default">
+                                <li class="dropdown-submenu">
+                                    <a href="~/studio/songs"><i class="fa fa-music"></i> Songs</a>
+
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a href="~/studio/series"><i class="fa fa-video-camera"></i> Series</a>
+
+                                </li>
+
+                            </ul>
+                        </li>
+                        @*<li class="dropdown mega-dropdown">
+                        <a href="~/studio">Studio</a>
+                        <ul class="dropdown-menu mega-dropdown-menu category">
+                            <li class="col-md-6">
+                                <a href="~/studio/songs">
+                                    <img src="~/content/img/game/menu-1.jpg" alt="">
+                                    <div class="caption">
+                                        <span class="label label-warning">PC</span>
+                                        <h3>Songs</h3>
+                                        <p>Lorem ipsum dolor sit amet, adipise elit.</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="col-md-6">
+                                <a href="~/studio/series">
+                                    <img src="~/content/img/game/menu-2.jpg" alt="">
+                                    <div class="caption">
+                                        <span class="label label-primary">PS4</span>
+                                        <h3>Series</h3>
+                                        <p>Lorem ipsum dolor sit amet, adipise elit.</p>
+                                    </div>
+                                </a>
+                            </li>
+                            @*<li class="col-md-3">
+                                    <a href="games-single.html">
+                                        <img src="~/content/img/game/menu-3.jpg" alt="">
+                                        <div class="caption">
+                                            <span class="label label-success">Xbox</span>
+                                            <h3>Max Payne 3</h3>
+                                            <p>Lorem ipsum dolor sit amet, adipise elit.</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="col-md-3">
+                                    <a href="games-single.html">
+                                        <img src="~/content/img/game/menu-4.jpg" alt="">
+                                        <div class="caption">
+                                            <span class="label label-danger">Steam</span>
+                                            <h3>Hitman Absolution</h3>
+                                            <p>Lorem ipsum dolor sit amet, adipise elit.</p>
+                                        </div>
+                                    </a>
+                                </li>*@
+                        @*</ul>
+                        </li>*@
+
+                        <li><a href="~/">Software</a></li>
+                        <li><a href="~/">Publishing</a></li>
+                        <li class="dropdown">
+                            <a href="~/about" class="dropdown-toggle">About</a>
+                            <ul class="dropdown-menu default">
+                                <li class="dropdown-submenu">
+                                    <a href="~/about/betkanu"><i class="fa fa-globe"></i> BET KANU</a>
+
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a href="~/about/team"><i class="fa fa-user"></i> Team</a>
+
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a href="~/about/partenrs"><i class="fa fa-group"></i> Partners</a>
+
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a href="~/about/Contributors"><i class="fa fa-list"></i> Contributors</a>
+
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li><a href="~/home/contact">Contact</a></li>
+
+                    </ul>
+                </div>
+            </nav>
+            <div class="nav-right">
+                <a href="~/" class="logo"><img src="/img/Betkanulogo.png" alt=""></a>
+            </div>
+        </div>
+    </header>
+    <div class="forum-body">
+        @RenderBody()
+        <hr />
+    </div>
+    <footer>
+        <div class="container">
+            <div class="widget row">
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                    <h4 class="title">@*The House of Creation*@</h4>
+                    <p style="text-align:justify">Bet is the Akkadian word for house and is used today by Syriac speakers. Kanu is also an Akkadian word that means to be firm, to establish, to be permanent which has a connection with the Classical Syriac word of Kiyana/Kiyanu which means the creative force. The Slogan of our Team is The House of Creation.</p>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <h4 class="title"></h4>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <ul class="nav">
+                                <li><a href="~/studio">Home&nbsp;&nbsp;</a></li>
+                                <li><a href="~/software">About</a></li>
+                                <li><a href="~/Publishing">contact</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <ul class="nav">
+                                <li><a href="~/studio">Studio</a></li>
+                                <li><a href="~/software">Software</a></li>
+                                <li><a href="~/Publishing">Publishing</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="title">Contact with us</h4>
+                    <p>We would like to hear from you!</p>
+                    <form method="post" class="btn-inline form-inverse">
+                        <input type="text" class="form-control" placeholder="Email..." />
+                        <button type="submit" class="btn btn-link"><i class="fa fa-envelope"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <ul class="list-inline">
+                    <li><a href="https://www.youtube.com/c/betkanu" class="btn btn-circle btn-social-icon" data-toggle="tooltip" title="Subscribe on YouTube"><i class="fa fa-youtube"></i></a></li>
+                    <li><a href="https://www.facebook.com/BetKanu/" class="btn btn-circle btn-social-icon" data-toggle="tooltip" title="Follow us on Facebook"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="https://twitter.com/BetKanu" class="btn btn-circle btn-social-icon" data-toggle="tooltip" title="Follow us on Twitter"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="https://www.instagram.com/betkanu/" class="btn btn-circle btn-social-icon" data-toggle="tooltip" title="Follow us on instagram"><i class="fa fa-instagram"></i></a></li>
+                </ul>
+                &copy;@DateTime.Now.Year BET KANU. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+
+
+
+        @*<script src="~/content/plugins/jquery/jquery-3.1.0.min.js"></script>
+        <script src="~/content/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <script src="~/content/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
+        <script src="~/content/js/core.min.js"></script>
+        <script src="~/content/plugins/owl-carousel/owl.carousel.min.js"></script>*@
+        @*<script src="~/content/plugins/twitter/twitter.js"></script>*@
+        <script>
+            (function ($) {
+                "use strict";
+                var owl = $(".owl-carousel");
+
+                owl.owlCarousel({
+                    autoPlay: 3000,
+                    items: 1, //4 items above 1000px browser width
+                    itemsDesktop: [1000, 3], //3 items between 1000px and 0
+                    itemsTablet: [600, 1], //1 items between 600 and 0
+                    itemsMobile: false // itemsMobile disabled - inherit from itemsTablet option
+                });
+
+                $(document).delegate('*[data-toggle="lightbox"]', 'click', function (event) {
+                    event.preventDefault();
+                    $(this).ekkoLightbox();
+                });
+
+                $(window).scroll(function () {
+                    if ($(this).scrollTop() > 350) {
+                        $('body').addClass('fixed-tab');
+                    } else {
+                        $('body').removeClass('fixed-tab');
+                    }
+                });
+            })(jQuery);
+        </script>
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

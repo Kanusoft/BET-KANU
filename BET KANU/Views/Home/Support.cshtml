@@ -1,0 +1,197 @@
+﻿﻿
+<head>
+    @{
+        ViewBag.Title = "Support";
+    }
+    <style>
+
+        .image-preview-input {
+            position: relative;
+            overflow: hidden;
+            margin: 0px;
+            color: #333;
+            background-color: #fff;
+            border-color: #ccc;
+        }
+
+            .image-preview-input input[type=file] {
+                position: absolute;
+                top: 0;
+                right: 0;
+                margin: 0;
+                padding: 0;
+                font-size: 20px;
+                cursor: pointer;
+                opacity: 0;
+                filter: alpha(opacity=0);
+            }
+
+        .image-preview-input-title {
+            margin-left: 2px;
+        }
+    </style>
+</head> 
+<section>
+    <div class="post post-lg no-border">
+        <div id="post-carousel" class="carousel slide post-thumbnail hidden-sm hidden-xs">
+           
+            <div class="carousel-inner">
+                <div class="item active">
+                        <img src="/img/products/banners/FRUITSsong_1920_350.jpg" alt="">
+                </div>
+
+            </div>
+        </div>
+        <div id="post-carousel1" class="carousel slide post-thumbnail hidden-lg hidden-md">
+           
+            <div class="carousel-inner">
+                <div class="item active">
+                        <img src="/img/products/banners/fruitssong_1920_700.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="color:#6d6e71; text-align:center">
+                <br> <h3 style="color:#6d6e71"> We would like to hear from you! </h3>
+
+                <p>
+                    You can send us a message or an email to
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=mailto:info@betkanu.com&su=Shlomo BET KANU&shva=1" style="color:#2ca8e0" target="_blank">info@betkanu.com</a>
+                    @*<a href="mailto:info@betkanu.com" target="_blank">info@betkanu.com</a>*@
+                </p>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <form id="myEmailForm" method="post">
+                    <input type="hidden" name="toEmail" value="Bet Kanu <info@betkanu.com>" />
+                    <div class="form-group">
+                        <input class=" form-control" style="max-width:100%" type="text" name="name" id="name" value="" placeholder="Your Name" required />
+                    </div>
+                    <div class="form-group">
+                        <input class=" form-control" style="max-width:100%" type="email" name="email" id="email" value="" placeholder="Your Email" required />
+                    </div>
+                    <div class="form-group">
+
+                        <!-- image-preview-filename input [CUT FROM HERE]-->
+                        <div class="input-group image-preview">
+                            <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                            <span class="input-group-btn">
+                                <!-- image-preview-clear button -->
+                                <button type="button" class="btn btn-dark image-preview-clear" style="display:none;">
+                                    <span class="glyphicon glyphicon-remove"></span> Clear
+                                </button>
+                                <!-- image-preview-input -->
+                                <div class="btn btn-default image-preview-input">
+                                    <span class="glyphicon glyphicon-folder-open"></span>
+                                    <span class="image-preview-input-title">Browse</span>
+                                    <input id="subject" type="file" accept="image/png, image/jpeg, image/gif, application/pdf,application/vnd.ms-excel" name="input-file-preview" /> <!-- rename it -->
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" id="message" rows="5" class=" form-control" style="max-width:100%" placeholder="Your Message" required></textarea>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="text-center margin-top-30">
+                        <input type="submit" class="btn btn-success btn-form marg-right5" value="Send Message" />
+                        <input type="reset" class="btn btn-danger btn-form" value="Reset" />
+                    </div>
+                    <div class="clear pad45"></div>
+                </form>
+            </div>
+            <div name="messageResult" id="messageResult"></div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script type="text/javascript">
+
+        $("#myEmailForm").submit(function () {
+
+            var jqxhr = $.post('https://knuthapp.com/api/Emailservice', $('#myEmailForm').serialize())
+                .always(function () {
+                    var loc = "index";
+                    var a = $('<a/>', { href: loc, text: "Welcome to The Bet Kanu!" });
+                    $('#messageResult').html(a);
+                })
+                .success(function () {
+                    var loc = "index"
+                    var a = $('<a/>', { href: loc, text: "Thank You!" });
+                    $('#messageResult').html(a);
+                })
+                .error(function (a, b, c) {
+                    var loc = "index";
+                    var a = $('<a/>', { href: loc, text: "Thank you for contacting us!" });
+                    $('#messageResult').html(a);
+                });
+            return false;
+        });
+    </script>
+    <script>
+        $('.file-upload').file_upload();</script>
+    <script>
+        $(document).on('click', '#close-preview', function () {
+            $('.image-preview').popover('hide');
+            // Hover befor close the preview
+            $('.image-preview').hover(
+                function () {
+                    $('.image-preview').popover('show');
+                },
+                function () {
+                    $('.image-preview').popover('hide');
+                }
+            );
+        });
+
+        $(function () {
+            // Create the close button
+            var closebtn = $('<button/>', {
+                type: "button",
+                text: 'x',
+                id: 'close-preview',
+                style: 'font-size: initial;',
+            });
+            closebtn.attr("class", "close pull-right");
+            // Set the popover default content
+            $('.image-preview').popover({
+                trigger: 'manual',
+                html: true,
+                title: "<strong>Preview</strong>" + $(closebtn)[0].outerHTML,
+                content: "There's no image",
+                placement: 'bottom'
+            });
+            // Clear event
+            $('.image-preview-clear').click(function () {
+                $('.image-preview').attr("data-content", "").popover('hide');
+                $('.image-preview-filename').val("");
+                $('.image-preview-clear').hide();
+                $('.image-preview-input input:file').val("");
+                $(".image-preview-input-title").text("Browse");
+            });
+            // Create the preview image
+            $(".image-preview-input input:file").change(function () {
+                var img = $('<img/>', {
+                    id: 'dynamic',
+                    width: 250,
+                    height: 200
+                });
+                var file = this.files[0];
+                var reader = new FileReader();
+                // Set preview image into the popover data-content
+                reader.onload = function (e) {
+                    $(".image-preview-input-title").text("Change");
+                    $(".image-preview-clear").show();
+                    $(".image-preview-filename").val(file.name);
+                    img.attr('src', e.target.result);
+                    $(".image-preview").attr("data-content", $(img)[0].outerHTML).popover("show");
+                }
+                reader.readAsDataURL(file);
+            });
+        });
+    </script>
+}

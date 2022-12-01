@@ -1,0 +1,331 @@
+﻿﻿@{
+    ViewBag.Title = "Home";
+}
+<head>
+    <!-- PLUGINS -->
+    <link href="/plugins/animate/animate.min.css" rel="stylesheet">
+    <link href="/plugins/owl-carousel/owl.carousel.css" rel="stylesheet">
+</head>
+<div id="wrapper">
+   
+
+    <div id="full-carousel" class="ken-burns carousel slide full-carousel carousel-fade" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#full-carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#full-carousel" data-slide-to="1"></li>
+            <li data-target="#full-carousel" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" id="test1">
+            <div class="item active inactiveUntilOnLoad center-block" id="test">
+                <img src="/img/home/slide1.jpg" alt="">
+                <div class="container">
+                    <div class="carousel-caption" style="text-align:center ; position:fixed ; padding-bottom:175px">
+                        <h1 data-animation="animated animate1 bounceInDown">Syriac for the digital age</h1>
+                        <p data-animation="animated animate7 fadeIn">Let's make our beautiful Syriac language ready for the digital age.</p>
+                        <a href="~/about/betkanu" data-toggle="modal" class="btn btn-primary btn-lg btn-rounded" data-animation="animated animate10 fadeIn">About BET KANU</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item center-block" id="test2">
+                <img src="/img/home/slide2.jpg" alt="">
+                <div class="container">
+                    <div class="carousel-caption" style="text-align:center ; position:fixed ; padding-bottom:175px">
+                        <h1 data-animation="animated animate1 fadeInDown">SOFTWARE</h1>
+                        <p data-animation="animated animate7 fadeIn">
+                            This track focuses on creating various digital tools to make Syriac linguistic resources easily accessible online for all ages.
+
+                        </p>
+                        <a href="/software" data-toggle="modal" class="btn btn-warning btn-lg btn-rounded" data-animation="animated animate10 fadeIn">See More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item center-block" id="test3">
+                <img src="/img/home/slide3.jpg" alt="">
+                <div class="container">
+                    <div class="carousel-caption" style="text-align:center ; position:fixed ; padding-bottom:175px">
+                        <h1 data-animation="animated animate1 fadeIn">Studio</h1>
+                        <p data-animation="animated animate7 fadeIn">
+                            This track focuses on creating songs, tales, and cartoons to preserve our language and revive our culture.
+
+                        </p>
+                        <a href="/studio" data-toggle="modal" class="btn btn-success btn-lg btn-rounded" data-animation="animated animate10 fadeIn">See More</a>
+                    </div>
+                </div>
+            </div>
+
+            <a class="left carousel-control" href="#full-carousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            </a>
+            <a class="right carousel-control" href="#full-carousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            </a>
+        </div>
+    </div>
+    &nbsp;
+    <section class=" ">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="title outline" style="padding-bottom:10px; padding-top:1px">
+                        <h4><i class="fa fa-check-circle"></i>Recent Products</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card-group">
+                <div class="row">
+                    <div class="container">
+
+                        <div class="carousel slide post-thumbnail hidden-sm hidden-xs" data-ride="carousel">
+
+                            <a href="~/products/AuClairDeLaLune">  <img src="/img/products/banners/AuClairDeLaLun_1920_350.jpg" /></a>
+                        </div>
+                        <div class="carousel slide post-thumbnail hidden-lg hidden-md" data-ride="carousel">
+                            <a href="~/products/AuClairDeLaLune">   <img src="/img/products/banners/AuClairDeLaLun_1920_700.jpg" /></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="title outline" style="padding-bottom:10px; padding-top:10px">
+                        <h4><i class="fa fa-shopping-cart"></i>Shop</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card-group">
+                <div class="row">
+                    <div class="container">
+
+                        <div class="carousel slide post-thumbnail hidden-sm hidden-xs" data-ride="carousel">
+
+                            <a href="/shop">    <img src="/img/shop/shop350.jpg" /></a>
+                        </div>
+                        <div class="carousel slide post-thumbnail hidden-lg hidden-md" data-ride="carousel">
+                            <a href="/shop">  <img src="/img/shop/shop700.jpg" /></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="title outline" style="padding-bottom:10px; padding-top:10px">
+                        <h4><i class="fa fa-child"></i>BET KANU Names</h4>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-group">
+                <div class="row">
+                    <div class="container">
+
+                        <div class="carousel slide post-thumbnail hidden-sm hidden-xs" data-ride="carousel" style="margin-bottom:10px">
+
+                            <a href="/products/betkanunames">  <img src="/img/products/banners/betkanunames_1920_350.jpg" /></a>
+                        </div>
+                        <div class="carousel slide post-thumbnail hidden-lg hidden-md" data-ride="carousel">
+                            <a href="/products/betkanunames">   <img src="/img/products/banners/betkanunames_1920_700.jpg" /></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="title outline">
+                <a href="https://names.betkanu.com/main" class="btn btn-block btn-warning ">Find A Name Now!<i class="fa fa-search margin-left-10"></i></a>
+
+            </div>
+        </div>
+    </section>
+
+    <!--</div>
+            </a>
+        </div>
+    </div>--> 
+    <div class="container">
+        <div class="row padding-top-10">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 margin-bottom-sm-30">
+                <div class="widget widget-game" style="background-image: url(/img/home/home3.jpg);">
+                    <div class="overlay">
+                        <div class="bold text-uppercase ">“If a population of only 1,000 people respects their language and transmits it 100%, that language may not be at risk of becoming endangered.”</div>
+
+                        <div class="chart-align">
+                            <span class="chart" data-percent="100"><span class="percent"></span></span>
+                        </div>
+
+                        <p class="progress-label">People <span>1000</span></p>
+                        <div class="progress progress-animation progress-xs">
+                            <div class="progress-bar progress-bar-success" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                        </div>
+                        <div class="bold text-uppercase ">By Kaitie O'Hare</div>
+                        <span class="font-size-13">
+                            The College of Art and Science, American University of Washington D.C.
+                        </span>
+
+                    </div>
+                </div>
+                <a href="https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=B2LWBB7C4J29G&source=url" class="btn btn-block btn-warning">Donate Now <i class="fa fa-heart margin-left-10"></i></a>
+
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 margin-bottom-sm-30">
+                <div class="widget widget-game" style="background-image: url(/img/home/2.jpg); ">
+                    <div class="overlay" >
+                        <div class="title">SYRIAC FOR THE DIGITAL AGE!</div>
+                        <div class="bold text-uppercase">Our Branches</div>
+                        <span class="label label-warning">Studio</span>
+                        <span class="label label-primary">Software</span>
+                        <span class="label label-success">Publishing</span>
+
+                        <div class="description">
+                            BET KANU is a team of creatives with a mission to build a foundation to advance the endangered dialects of the Syriac language. We achieve this goal by creating all types of media products such as web and mobile applications, websites, animations and books. Our full-time team of talented professionals in the homeland works seamlessly with the supporting volunteers in the diaspora to offer the best possible learning resources.
+
+                        </div>
+
+                    </div>
+                </div>
+                <a href="~/about/betkanu" class="btn btn-block btn-primary ">Read More <i class="fa fa-info margin-left-10"></i></a>
+
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 margin-bottom-sm-30">
+                <div class="widget widget-games">
+                    <ul style="padding-bottom:10px">
+                        <li style="background-image: url(/img/products/banners/betkanureader_1920_700.jpg); ">
+                            <a href="/products" class="overlay">
+                                <div class="game-meta">
+                                    <h4 class="game-title"><i class="fa fa-check"></i>  + 220 Completed Projects</h4>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li style="background-image: url(/img/products/banners/Colorssong_1920_350.jpg); ">
+                            <a href="https://www.youtube.com/c/betkanu" class="overlay">
+                                <div class="game-meta">
+                                    <h4 class="game-title"><i class="fa fa-youtube-play"></i> + 170 Videos</h4>
+                                </div>
+                            </a>
+                        </li>
+                        <li style="background-image: url(/img/home/cover.jpg);">
+                            <a href="https://www.facebook.com/BETKANU/" class="overlay">
+                                <div class="game-meta">
+                                    <h4 class="game-title"><i class="fa fa-facebook"></i> + 7000 Likes</h4>
+                                </div>
+                            </a>
+                        </li>
+                        <li style="background-image: url(/img/products/banners/qoobrana_1920_350.jpg);">
+                            <a href="https://www.youtube.com/c/betkanu" class="overlay">
+                                <div class="game-meta">
+                                    <h4 class="game-title"> <i class="fa fa-youtube"></i> + 13,000,000 Views</h4>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <ahref ="~/products" class="btn btn-block btn-success ">All Products <i class="fa fa-check-circle-o margin-left-10"></i></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class=" ">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="title outline" style="padding-bottom:10px; padding-top:10px">
+                        <h4><i class="fa fa-info-circle"></i>BET KANU Intro</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card-group">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="card-img">
+                            <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="https://www.youtube.com/embed/mHdOlOnVaXE?rel=0" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" allowfullscreen scrolling="no" allow="encrypted-media; accelerometer; gyroscope; picture-in-picture"></iframe></div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="card-img">
+                            <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="https://www.youtube.com/embed/sUyB6iEX16s?rel=0" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" allowfullscreen scrolling="no" allow="encrypted-media; accelerometer; gyroscope; picture-in-picture"></iframe></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+    &nbsp;
+@section Scripts{
+    <script src="./plugins/owl-carousel/owl.carousel.min.js"></script>
+    <script>
+        (function ($) {
+            "use strict";
+            var config1 = {
+                "id": $('#twitter').data("twitter"),
+                "domId": 'twitter',
+                "maxTweets": 1,
+                "enableLinks": true
+            };
+            twitterFetcher.fetch(config1);
+
+            $(".owl-carousel").owlCarousel({
+                autoPlay: true,
+                items: 6, //4 items above 1000px browser width
+                itemsDesktop: [1600, 3], //3 items between 1000px and 0
+                itemsTablet: [940, 1], //1 items between 600 and 0
+                itemsMobile: false // itemsMobile disabled - inherit from itemsTablet option
+            });
+        })(jQuery);
+    </script>
+    <script src="./plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/content/plugins/jquery/jquery-3.1.0.min.js"></script>
+
+    <script src="./js/core.min.js"></script>
+    <script src="./plugins/twitter/twitter.js"></script>
+    <script src="./plugins/easypiechart/jquery.easypiechart.min.js"></script>
+    <script>
+        (function ($) {
+            "use strict";
+            var config1 = {
+                "id": $('#twitter').data("twitter"),
+                "domId": 'twitter',
+                "maxTweets": 1,
+                "enableLinks": true
+            };
+            twitterFetcher.fetch(config1);
+
+            $('.chart').easyPieChart({
+                easing: 'easeOutBounce',
+                barColor: '#5eb404',
+                trackColor: '#e3e3e3',
+                onStep: function (from, to, percent) {
+                    $(this.el).find('.percent').text(Math.round(percent));
+                }
+            });
+        })(jQuery);
+    </script>
+    <script>
+        var el = document.getElementById('test');
+        el.style.height = "700px";
+    </script>
+    <script>
+        var el = document.getElementById('test1');
+        el.style.height = "700px";
+    </script>
+    <script>
+        var el = document.getElementById('test2');
+        el.style.height = "700px";
+    </script>
+    <script>
+        var el = document.getElementById('test3');
+        el.style.height = "700px";
+    </script>
+
+}

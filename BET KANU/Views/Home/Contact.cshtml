@@ -1,0 +1,78 @@
+﻿﻿
+<head>
+    @{
+        ViewBag.Title = "Contact";
+    }
+</head>
+<div id="wrapper">
+    <section class="overflow-hidden">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="color:#6d6e71; text-align:center">
+                    <br> <h3 style="color:#6d6e71">We would like to hear from you! </h3>
+                    <p>
+                        You can send us a message or an email to
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=mailto:info@betkanu.com&su=Shlomo BET KANU&shva=1" style="color:#2ca8e0" target="_blank">info@betkanu.com</a>
+                        @*<a href="mailto:info@betkanu.com" target="_blank">info@betkanu.com</a>*@
+                    </p>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <form id="myEmailForm" method="post">
+                        <input type="hidden" name="toEmail" value="Bet Kanu <info@betkanu.com>" />
+                        <div class="form-group">
+                            <input class=" form-control" style="max-width:100%" type="text" name="name" id="name" value="" placeholder="Your Name" required />
+                        </div>
+                        <div class="form-group">
+                            <input class=" form-control" style="max-width:100%" type="email" name="email" id="Email" value="" placeholder="Your Email" required />
+                        </div>
+                        <div class="form-group">
+                            <input class=" form-control" style="max-width:100%" type="text" name="subject" id="subject" value="" placeholder="Subject" required /><br>
+                        </div>
+
+                        @*<div class="form-group">
+                            <textarea name="message" id="message" rows="5" class=" form-control" style="max-width:100%" placeholder="Your Message" required></textarea>
+                            <div class="clear"></div>
+                        </div>*@
+                        <div class="text-center margin-top-30">
+                            <input type="submit" class="btn btn-success btn-form marg-right5" value="Send Message" />
+                            <input type="reset" class="btn btn-danger btn-form" value="Reset" />
+                        </div>
+                        <div class="clear pad45"></div>
+                    </form>
+                </div>
+                <div name="messageResult" id="messageResult"></div>
+            </div>
+        </div>
+    </section>
+</div>
+    @section Scripts{
+
+        <script type="text/javascript">
+            $("myEmailForm").submit(function () {
+                const fromEmail = $("#Email").val();
+                const fromName = $("#Name").val();
+                const subject = "Name: " + fromName + " " + $("#Subject").val();
+
+                $.ajax({
+                    url: "https://www.dargushti.com/api/v6/email_contactus",
+                    type: "post",
+                    data: {
+                        fromEmail,
+                        subject,
+                    },
+                    headers: {
+                        "x-api-key": "API_KEY_SECRET",
+                    },
+                    dataType: "json",
+                    success(data) {
+                        if (data.result) {
+                            $("#messageResult2").html("<a>Success</a>");
+                        } else {
+                            $("#messageResult2").html("<a>Error sending the message </a>");
+                        }
+                    },
+                });
+            });
+        </script>
+    }

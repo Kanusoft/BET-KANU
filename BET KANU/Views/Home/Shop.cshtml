@@ -1,0 +1,252 @@
+﻿
+@{
+    ViewBag.Title = "Shop";
+}
+
+<section style="padding-top:0px">
+    <div class="carousel slide post-thumbnail hidden-sm hidden-xs" data-ride="carousel">
+
+        <img src="/img/shop/shop350.jpg" />
+    </div>
+    <div class="carousel slide post-thumbnail hidden-lg hidden-md" data-ride="carousel">
+        <img src="/img/shop/shop700.jpg" />
+    </div>
+</section>
+
+
+
+<div class="container">
+    <div class="row padding-top-40">
+
+
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 margin-bottom-sm-30">
+
+            <div id="carousel" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel" data-slide-to="1"></li>
+                </ol>
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <img src="/img/shop/cw.png" class="full-width" alt="First slide image">
+
+                    </div>
+                    <div class="item">
+                        <img src="/img/shop/cdw.png" class="full-width" alt="Second slide image">
+
+                    </div>
+                </div>
+                <a class="left carousel-control" href="#carousel" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                </a>
+            </div>
+            <div class="description">
+                &nbsp; <br> &nbsp;
+                <h4>  A collection of 16 BET KANU children’s songs in the Syriac language. Your kids will enjoy 40 minutes of nonstop educational entertainment from popular international songs like Finger Family, Seasons, and Mary Had a Little Lamb, to songs from the Assyrian tradition like Allalayeh and the Alphabet songs.</h4>
+                &nbsp; <br> &nbsp;
+
+
+
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 margin-bottom-sm-30">
+            <div class="widget  widget-game" style="background-color:white">
+                <div class=" ">
+                    <div class="title" style="color:darkblue">BET KANU Album Vol. 1 | Western Syriac (Surayt)</div>
+                    <div class="bold text-uppercase">Western</div>
+                    <span class="label title label-warning"> &nbsp; CD &nbsp; </span>
+                    <span class="label title label-info"> &nbsp; 16 Song &nbsp; </span>
+                    <span class="label title label-info"> &nbsp; +40 Min &nbsp; </span>
+                    <br>  <h1 style="font-size:50px">  $12.99 </h1>
+                    <span class="label title label-warning"> &nbsp; Tax & Shipping included &nbsp; </span>
+
+                    <div class="description">
+                        @*A collection of 16 BET KANU children’s songs in the Syriac language. Your kids will enjoy 40 minutes of nonstop educational entertainment from popular international songs like Finger Family, Seasons, and Mary Had a Little Lamb, to songs from the Assyrian tradition like Allalayeh and the Alphabet songs.
+        &nbsp; <br> &nbsp;*@
+
+                        <div id="smart-button-container">
+                            <div style="text-align: center;">
+                                <div style="margin-bottom: 1.25rem;">
+                                    <h1>BET KANU Album Vol. 1</h1>
+                                    <p>Available in Eastery and Western Dialects | Surit / Surait</p>
+                                    <select style="color:darkblue" id="item-options"><option style="color:darkblue" value="Western Syriac Dialect | Surayt" price="12.99">Western Syriac Dialect | Surayt - 12.99 USD</option><option style="color:darkblue" value="Easter Syriac Dialect | Surit " price="12.99">Easter Syriac Dialect | Surit  - 12.99 USD</option><option style="color:darkblue" value="2 CD package | Eastern and Western Syriac Dialects" price="19.99">2 CD package | Eastern and Western Syriac Dialects - 19.99 USD</option></select>
+                                    <select style="visibility: hidden" id="quantitySelect"></select>
+                                </div>
+                                <div id="paypal-button-container"></div>
+                            </div>
+                        </div>
+                        <script src="https://www.paypal.com/sdk/js?client-id=sb&enable-funding=paypal&currency=USD" data-sdk-integration-source="button-factory"></script>
+                        <script>
+                            function initPayPalButton() {
+                                var shipping = 0;
+                                var itemOptions = document.querySelector("#smart-button-container #item-options");
+                                var quantity = parseInt();
+                                var quantitySelect = document.querySelector("#smart-button-container #quantitySelect");
+                                if (!isNaN(quantity)) {
+                                    quantitySelect.style.visibility = "visible";
+                                }
+                                var orderDescription = 'BET KANU Album Vol. 1';
+                                if (orderDescription === '') {
+                                    orderDescription = 'Item';
+                                }
+                                paypal.Buttons({
+                                    style: {
+                                        shape: 'rect',
+                                        color: 'gold',
+                                        layout: 'vertical',
+                                        label: 'buynow',
+
+                                    },
+                                    createOrder: function (data, actions) {
+                                        var selectedItemDescription = itemOptions.options[itemOptions.selectedIndex].value;
+                                        var selectedItemPrice = parseFloat(itemOptions.options[itemOptions.selectedIndex].getAttribute("price"));
+                                        var tax = (0 === 0 || false) ? 0 : (selectedItemPrice * (parseFloat(0) / 100));
+                                        if (quantitySelect.options.length > 0) {
+                                            quantity = parseInt(quantitySelect.options[quantitySelect.selectedIndex].value);
+                                        } else {
+                                            quantity = 1;
+                                        }
+
+                                        tax *= quantity;
+                                        tax = Math.round(tax * 100) / 100;
+                                        var priceTotal = quantity * selectedItemPrice + parseFloat(shipping) + tax;
+                                        priceTotal = Math.round(priceTotal * 100) / 100;
+                                        var itemTotalValue = Math.round((selectedItemPrice * quantity) * 100) / 100;
+
+                                        return actions.order.create({
+                                            purchase_units: [{
+                                                description: orderDescription,
+                                                amount: {
+                                                    currency_code: 'USD',
+                                                    value: priceTotal,
+                                                    breakdown: {
+                                                        item_total: {
+                                                            currency_code: 'USD',
+                                                            value: itemTotalValue,
+                                                        },
+                                                        shipping: {
+                                                            currency_code: 'USD',
+                                                            value: shipping,
+                                                        },
+                                                        tax_total: {
+                                                            currency_code: 'USD',
+                                                            value: tax,
+                                                        }
+                                                    }
+                                                },
+                                                items: [{
+                                                    name: selectedItemDescription,
+                                                    unit_amount: {
+                                                        currency_code: 'USD',
+                                                        value: selectedItemPrice,
+                                                    },
+                                                    quantity: quantity
+                                                }]
+                                            }]
+                                        });
+                                    },
+                                    onApprove: function (data, actions) {
+                                        return actions.order.capture().then(function (orderData) {
+
+                                            // Full available details
+                                            console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+                                            // Show a success message within this page, e.g.
+                                            const element = document.getElementById('paypal-button-container');
+                                            element.innerHTML = '';
+                                            element.innerHTML = '<h3>Thank you for your payment!</h3>';
+
+                                            // Or go to another URL:  actions.redirect('thank_you.html');
+
+                                        });
+                                    },
+                                    onError: function (err) {
+                                        console.log(err);
+                                    },
+                                }).render('#paypal-button-container');
+                            }
+                            initPayPalButton();
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+    &nbsp; 
+
+
+
+
+<script src="./plugins/jquery/jquery-3.1.0.min.js"></script>
+<script src="./plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="./js/core.min.js"></script>
+<script src="./plugins/twitter/twitter.js"></script>
+<script src="./plugins/easypiechart/jquery.easypiechart.min.js"></script>
+<script>
+    (function ($) {
+        "use strict";
+        var config1 = {
+            "id": $('#twitter').data("twitter"),
+            "domId": 'twitter',
+            "maxTweets": 1,
+            "enableLinks": true
+        };
+        twitterFetcher.fetch(config1);
+
+        $('.chart').easyPieChart({
+            easing: 'easeOutBounce',
+            barColor: '#5eb404',
+            trackColor: '#e3e3e3',
+            onStep: function (from, to, percent) {
+                $(this.el).find('.percent').text(Math.round(percent));
+            }
+        });
+    })(jQuery);
+</script>
+<!-- /#wrapper -->
+<!-- Javascript -->
+<script src="./plugins/jquery/jquery-3.1.0.min.js"></script>
+<script src="./plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="./js/core.min.js"></script>
+<script src="./plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
+<script src="./plugins/masonry/imagesloaded.pkgd.min.js"></script>
+<script src="./plugins/masonry/masonry.pkgd.min.js"></script>
+<script>
+    (function ($) {
+        "use strict";
+        // Masonry
+        var $container = $('.masonry');
+        $($container).imagesLoaded(function () {
+            $($container).masonry({
+                itemSelector: '.masonry-item',
+                columnWidth: '.masonry-item'
+            });
+        });
+
+        // Lightbox
+        $(document).delegate('*[data-toggle="lightbox"]', 'click', function (event) {
+            event.preventDefault();
+            $(this).ekkoLightbox();
+        });
+
+        // Filter
+        var $filter = $('.filter a').click(function (e) {
+            e.preventDefault();
+            var id = $(this).attr("href");
+            if (id == '#all') {
+                $('.masonry-item').removeClass('faded');
+            } else {
+                var $el = $(id).removeClass('faded');
+                $('.masonry-item').not($el).addClass('faded');
+            }
+            $filter.removeClass('active');
+            $(this).addClass('active');
+        });
+    })(jQuery);
+</script>
