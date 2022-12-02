@@ -15,6 +15,8 @@ namespace BetKanu.Models
         [Required]
         public string? Title { get; set; }
         [Required]
+        public string? SmallImage { get; set; }
+        [Required]
         public string? CoverImage { get; set; }
         [Required]
         public Category Category { get; set; }
