@@ -1,0 +1,112 @@
+﻿@model Product
+
+@{
+    ViewBag.Title = "Create New Product";
+}
+
+@using(Html.BeginForm("Create","Manger", FormMethod.Post))
+{
+    <div>
+        @Html.LabelFor(model => model.SmallImage)
+        <div>
+            <input type="file" name="SmallImage" id="SmallImage"/>
+        </div>
+    </div>
+        <div>
+        @Html.LabelFor(model => model.CoverImage)
+        <div>
+            <input type="file" name="CoverImage" id="CoverImage"/>
+        </div>
+    </div>
+    <div>
+          @Html.AntiForgeryToken()
+          @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Title)
+        @Html.EditorFor(model => model.Title)
+        @Html.ValidationMessageFor(model => model.Title)
+    </div>
+    <div>
+        <select asp-for="Category" asp-items="Html.GetEnumSelectList<Category>()">
+            <option selected="selected">-None-</option>
+        </select>
+    </div>
+    <div>
+        <select asp-for="TargetAudince" asp-items="Html.GetEnumSelectList<Target>()">
+            <option selected="selected">-None-</option>
+        </select>
+    </div>
+    <div>
+         @Html.LabelFor(model => model.SubCategory)
+        @Html.EditorFor(model => model.SubCategory)
+        @Html.ValidationMessageFor(model => model.SubCategory)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.LongDescription)
+        @Html.TextAreaFor(model => model.LongDescription)
+        @Html.ValidationMessageFor(model => model.LongDescription)
+    </div>
+     <div>
+        @Html.LabelFor(model => model.ShortDescription)
+        @Html.TextAreaFor(model => model.ShortDescription)
+        @Html.ValidationMessageFor(model => model.ShortDescription)
+    </div>
+     <div>
+        @Html.LabelFor(model => model.ScriptW)
+        @Html.TextAreaFor(model => model.ScriptW)
+        @Html.ValidationMessageFor(model => model.ScriptW)
+    </div>
+         <div>
+        @Html.LabelFor(model => model.ScriptE)
+        @Html.TextAreaFor(model => model.ScriptE)
+        @Html.ValidationMessageFor(model => model.ScriptE)
+    </div>
+    <div>
+         @Html.LabelFor(model => model.VideoE)
+        @Html.EditorFor(model => model.VideoE)
+        @Html.ValidationMessageFor(model => model.VideoE)
+    </div>
+     <div>
+         @Html.LabelFor(model => model.VideoW)
+        @Html.EditorFor(model => model.VideoW)
+        @Html.ValidationMessageFor(model => model.VideoW)
+    </div>
+      <div>
+        @Html.LabelFor(model => model.CreditsW)
+        @Html.TextAreaFor(model => model.CreditsW)
+        @Html.ValidationMessageFor(model => model.CreditsW)
+    </div>
+      <div>
+        @Html.LabelFor(model => model.CreditsE)
+        @Html.TextAreaFor(model => model.CreditsE)
+        @Html.ValidationMessageFor(model => model.CreditsE)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.ViewsW)
+        @Html.EditorFor(model => model.VideoW)
+        @Html.ValidationMessageFor(model => model.VideoW)
+    </div>
+     <div>
+        @Html.LabelFor(model => model.ViewsE)
+        @Html.EditorFor(model => model.VideoE)
+        @Html.ValidationMessageFor(model => model.VideoE)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Epdf)
+        @Html.EditorFor(model => model.Epdf)
+        @Html.ValidationMessageFor(model => model.Epdf)
+    </div>
+     <div>
+        @Html.LabelFor(model => model.Wpdf)
+        @Html.EditorFor(model => model.Wpdf)
+        @Html.ValidationMessageFor(model => model.Wpdf)
+     </div>
+
+     <div>
+         <div>
+             <button type="submit" value="Create">Create</button>
+         </div>
+     </div>
+   
+}

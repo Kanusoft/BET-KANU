@@ -17,7 +17,7 @@ namespace BetKanu.Data.Repositories
             _db = db;
         }
 
-        public IEnumerable<Product> GetAll()
+        public List<Product> GetAll()
         {
             return _db.Products.ToList();
         }

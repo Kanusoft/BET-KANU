@@ -1,12 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BET_KANU.ViewModels;
+using BetKanu.Models.Interface;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BET_KANU.Controllers
 {
     public class ProductsController : Controller
     {
-        public ActionResult Index()
+        private readonly IUnitOfWork _unit;
+        public ProductsController(IUnitOfWork unit)
         {
-            return View();
+            _unit = unit;
+        }
+
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
+        public ActionResult Index1()
+        {
+            var p = new ProductVM();
+            p.products = _unit.product.GetAll();
+            return View(p);
+        }
+        public ActionResult details(int id)
+        {
+            var p = _unit.product.GetOne(id);
+            return View(p);
         }
         public ActionResult About()
         {

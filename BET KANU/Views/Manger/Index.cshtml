@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewBag.Title = "Products List";
+}
+<div>
+    <a asp-action="Create" type="button">Create New Product</a>
+</div>
+<div>
+    <table class="table table-bordered table-striped" style="width : 100%">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Id)</th>
+                <th>@Html.DisplayNameFor(model => model.Title)</th>
+                <th>@Html.DisplayNameFor(model => model.Category)</th>
+                <th>@Html.DisplayNameFor(model => model.TargetAudince)</th>
+                @*<th>@Html.DisplayNameFor(model => model.SmallImage)</th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var i in Model)
+            {
+                <tr>
+                    <td width="50%">@Html.DisplayFor(model => i.Id)</td>
+                    <td width="50%">@Html.DisplayFor(model => i.Title)</td>
+                    <td width="50%">@Html.DisplayFor(model => i.Category)</td>
+                    <td width="50%">@Html.DisplayFor(model => i.TargetAudince)</td>
+                    @*<td><a href="@Html.DisplayFor(model => i.SmallImage)"> <img src="@Html.DisplayFor(model => i.SmallImage)"/></a></td>*@
+                    <td>
+                        <a asp-controller="Manger" asp-action="Edit" asp-route-id="@i.Id">Edit</a> ||
+                        <a asp-controller="Manger" asp-action="Delete" asp-route-id="@i.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
