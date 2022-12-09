@@ -1,0 +1,23 @@
+﻿@model Product
+@{
+    ViewBag.Title = "Delete";
+}
+@Html.HiddenFor(model => model.Id)
+
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want delete this?</h3>
+
+<dl>
+    <dt>@Html.DisplayNameFor(model => model.Title)</dt>
+    <dd>@Html.DisplayFor(model => model.Title)</dd>
+    <dt>@Html.DisplayNameFor(model => model.ShortDescription)</dt>
+    <dd>@Html.DisplayFor(model => model.ShortDescription)</dd>
+</dl>
+
+@using(Html.BeginForm()){
+    @Html.AntiForgeryToken()
+    <input type="submit" value="Delete"/>
+    @Html.ActionLink("Back To List","Index")
+}
