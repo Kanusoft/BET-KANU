@@ -39,8 +39,8 @@ namespace BET_KANU.Controllers
                 {
                     var Serverpath = @"/img/Product/";
                     var filename = $"{product.Id}_{product.Title}";
-                    string newfile = SaveImage(SmallImage, Serverpath, filename, false);
-                    product.CoverImage = Serverpath + filename + SmallImage.FileName.Substring(SmallImage.FileName.LastIndexOf('.'), 4);
+                    string newfile = SaveImage(CoverImage, Serverpath, filename, false);
+                    product.CoverImage = Serverpath + filename + CoverImage.FileName.Substring(CoverImage.FileName.LastIndexOf('.'), 4);
                 }
                 _unitOfWork.manger.Add(product);
             }
@@ -74,10 +74,24 @@ namespace BET_KANU.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Product product)
+        public ActionResult Edit(Product product, IFormFile SmallImage, IFormFile CoverImage)
         {
             if (ModelState.IsValid)
             {
+                if (SmallImage != null)
+                {
+                    var Serverpath = @"/img/Product/";
+                    var filename = $"{product.Id}_{product.Title}";
+                    string newfile = SaveImage(SmallImage, Serverpath, filename, false);
+                    product.SmallImage = Serverpath + filename + SmallImage.FileName.Substring(SmallImage.FileName.LastIndexOf('.'), 4);
+                }
+                if (CoverImage != null)
+                {
+                    var Serverpath = @"/img/Product/";
+                    var filename = $"{product.Id}_{product.Title}";
+                    string newfile = SaveImage(CoverImage, Serverpath, filename, false);
+                    product.CoverImage = Serverpath + filename + CoverImage.FileName.Substring(CoverImage.FileName.LastIndexOf('.'), 4);
+                }
                 _unitOfWork.manger.Edit(product);
                 return RedirectToAction("Index");
             }
@@ -99,10 +113,29 @@ namespace BET_KANU.Controllers
             return View(prod);
         }
 
+        [HttpPost]
         public ActionResult DeletePost(int id)
         {
             if (ModelState.IsValid)
             {
+                var smallimg = _unitOfWork.product.GetOne(id).SmallImage;
+                if (smallimg != null)
+                {
+                    FileInfo file = new FileInfo(smallimg);
+                    if (file.Exists)
+                    {
+                        file.Delete();
+                    }
+                }
+                var coverimg = _unitOfWork.product.GetOne(id).CoverImage;
+                if (coverimg != null)
+                {
+                    FileInfo file = new FileInfo(coverimg);
+                    if (file.Exists)
+                    {
+                        file.Delete();
+                    }
+                }
                 _unitOfWork.manger.Delete(id);
             }
             return RedirectToAction("Index");
