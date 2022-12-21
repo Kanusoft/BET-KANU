@@ -3,8 +3,14 @@ using BetKanu.Models.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Web.Helpers;
 
+
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+
 namespace BET_KANU.Controllers
 {
+    [Authorize]
     public class MangerController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -139,6 +145,12 @@ namespace BET_KANU.Controllers
                 _unitOfWork.manger.Delete(id);
             }
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -9,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace BetKanu.Models
 {
-    public class User : IdentityUser
+    public class User 
     {
-        public string?  Name { get; set; }
+        public int Id { get; set; }
+        public string?  Email { get; set; }
+        public string? PassWord { get; set; }
+        public bool KeepLoggedIn { get; set; }
     }
 }

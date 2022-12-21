@@ -1,11 +1,11 @@
 ﻿using BetKanu.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace BetKanu.Data
 {
-    public class BKdbContext : IdentityDbContext<User>
+    public class BKdbContext : IdentityDbContext
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductEpisode> ProductEpisodes { get; set; }

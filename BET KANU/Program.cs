@@ -1,6 +1,7 @@
 using BetKanu.Data;
 using BetKanu.Models;
 using BetKanu.Models.Interface;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,17 +13,58 @@ builder.Services.AddRazorPages();
 builder.Services.AddMvc();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddSingleton<IWebHostEnvironment>();
+//builder.Services.AddSingleton<IWebHostEnvironment>();
 
 var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<BKdbContext>(options =>
            options.UseSqlServer(connectionstring));
 
-builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<BKdbContext>()
-    .AddDefaultTokenProviders();
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<BKdbContext>();
 
-builder.Services.ConfigureApplicationCookie(op => op.LoginPath = "");
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Password settings.
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 1;
+
+    // Lockout settings.
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+
+    // User settings.
+    options.User.AllowedUserNameCharacters =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+    options.User.RequireUniqueEmail = false;
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    // Cookie settings
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+    options.LoginPath = "/Identity/Account/Login";
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+    options.SlidingExpiration = true;
+});
+
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+//    .AddCookie(option => {
+//        option.LoginPath = "/Account/Login";
+//        option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+//    });
+
+//builder.Services.AddIdentity<User, IdentityRole>()
+//    .AddEntityFrameworkStores<BKdbContext>()
+//    .AddDefaultTokenProviders();
+
+
 
 //builder.Services.Configure<IdentityOptions>(options =>
 //{
