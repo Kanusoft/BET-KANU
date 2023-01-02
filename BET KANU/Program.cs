@@ -1,3 +1,4 @@
+using BET_KANU.Services;
 using BetKanu.Data;
 using BetKanu.Models;
 using BetKanu.Models.Interface;
@@ -13,6 +14,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddMvc();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 //builder.Services.AddSingleton<IWebHostEnvironment>();
 
 var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -73,7 +75,6 @@ builder.Services.ConfigureApplicationCookie(options =>
 //    options.Password.RequireNonAlphanumeric = true;
 //    options.User.RequireUniqueEmail = true;
 //});
-
 
 var app = builder.Build();
 

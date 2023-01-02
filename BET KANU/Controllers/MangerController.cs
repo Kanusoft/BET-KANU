@@ -7,6 +7,7 @@ using System.Web.Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using BET_KANU.Services;
 
 namespace BET_KANU.Controllers
 {
@@ -15,10 +16,12 @@ namespace BET_KANU.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public MangerController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
+        private readonly IBlobStorageService _blobStorage;
+        public MangerController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment, IBlobStorageService blobStorage)
         {
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
+            _blobStorage = blobStorage;
         }
         public ActionResult Index()
         {
@@ -30,23 +33,27 @@ namespace BET_KANU.Controllers
             return View(new Product());
         }
         [HttpPost]
-        public ActionResult Create(Product product,IFormFile SmallImage, IFormFile CoverImage)
+        public async Task <ActionResult> Create(Product product,IFormFile SmallImage, IFormFile CoverImage)
         {
             if (ModelState.IsValid)
             {
                 if(SmallImage != null)
                 {
-                    var Serverpath = @"/img/Product/";
-                    var filename = $"{product.Id}_{product.Title}";
-                    string newfile = SaveImage(SmallImage, Serverpath, filename, false);
-                    product.SmallImage = Serverpath + filename + SmallImage.FileName.Substring(SmallImage.FileName.LastIndexOf('.'),4);
+                    //var Serverpath = @"/img/Product/";
+                    //var filename = $"{product.Id}_{product.Title}";
+                    //string newfile = SaveImage(SmallImage, Serverpath, filename, false);
+                    //product.SmallImage = Serverpath + filename + SmallImage.FileName.Substring(SmallImage.FileName.LastIndexOf('.'),4);
+                    await _blobStorage.UploadBlobFileAsync(SmallImage);
+                    product.SmallImage = SmallImage.FileName.Substring(SmallImage.FileName.LastIndexOf('.'), 4);
                 }
                 if(CoverImage != null)
                 {
-                    var Serverpath = @"/img/Product/";
-                    var filename = $"{product.Id}_{product.Title}";
-                    string newfile = SaveImage(CoverImage, Serverpath, filename, false);
-                    product.CoverImage = Serverpath + filename + CoverImage.FileName.Substring(CoverImage.FileName.LastIndexOf('.'), 4);
+                    //var Serverpath = @"/img/Product/";
+                    //var filename = $"{product.Id}_{product.Title}";
+                    //string newfile = SaveImage(CoverImage, Serverpath, filename, false);
+                    //product.CoverImage = Serverpath + filename + CoverImage.FileName.Substring(CoverImage.FileName.LastIndexOf('.'), 4);
+                    await _blobStorage.UploadBlobFileAsync(CoverImage);
+                    product.CoverImage = CoverImage.FileName.Substring(CoverImage.FileName.LastIndexOf('.'), 4);
                 }
                 _unitOfWork.manger.Add(product);
             }
@@ -80,23 +87,25 @@ namespace BET_KANU.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Product product, IFormFile SmallImage, IFormFile CoverImage)
+        public async Task<ActionResult> Edit(Product product, IFormFile SmallImage, IFormFile CoverImage)
         {
             if (ModelState.IsValid)
             {
                 if (SmallImage != null)
                 {
-                    var Serverpath = @"/img/Product/";
-                    var filename = $"{product.Id}_{product.Title}";
-                    string newfile = SaveImage(SmallImage, Serverpath, filename, false);
-                    product.SmallImage = Serverpath + filename + SmallImage.FileName.Substring(SmallImage.FileName.LastIndexOf('.'), 4);
+                    //var Serverpath = @"/img/Product/";
+                    //var filename = $"{product.Id}_{product.Title}";
+                    //string newfile = SaveImage(SmallImage, Serverpath, filename, false);
+                    await _blobStorage.UploadBlobFileAsync(SmallImage);
+                    product.SmallImage = SmallImage.FileName.Substring(SmallImage.FileName.LastIndexOf('.'), 4);
                 }
                 if (CoverImage != null)
                 {
-                    var Serverpath = @"/img/Product/";
-                    var filename = $"{product.Id}_{product.Title}";
-                    string newfile = SaveImage(CoverImage, Serverpath, filename, false);
-                    product.CoverImage = Serverpath + filename + CoverImage.FileName.Substring(CoverImage.FileName.LastIndexOf('.'), 4);
+                    //var Serverpath = @"/img/Product/";
+                    //var filename = $"{product.Id}_{product.Title}";
+                    //string newfile = SaveImage(CoverImage, Serverpath, filename, false);
+                    await _blobStorage.UploadBlobFileAsync(CoverImage);
+                    product.CoverImage = CoverImage.FileName.Substring(CoverImage.FileName.LastIndexOf('.'), 4);
                 }
                 _unitOfWork.manger.Edit(product);
                 return RedirectToAction("Index");
