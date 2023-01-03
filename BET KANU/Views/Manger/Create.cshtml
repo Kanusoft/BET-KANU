@@ -185,16 +185,16 @@
                                     </div>
                                 </div>
                             </div>
-
-
+                            @using (Html.BeginForm("Create", "Manger", FormMethod.Post))
+                            {
                                <div class="card-body" style="color:white">
                                     <div class="row">
                                         <div class="card">
                                             <div class="card-header">
                                                 <h3 class="card-title"> Details</h3>
                                             </div>
-                                                @using(Html.BeginForm("Create","Manger", FormMethod.Post))
-{
+                                         
+
                                             <div class="table-responsive">
                                             
                         
@@ -299,7 +299,6 @@
                                                             @Html.ValidationMessageFor(model => model.ViewsW)
                                                         </td>
                                                     </tr>
-                                                               
                                                                               <tr>
                                                         <td>
                                                             @Html.LabelFor(model => model.ViewsE)
@@ -309,9 +308,7 @@
                                                             @Html.EditorFor(model => model.ViewsE)
                                                                 @Html.ValidationMessageFor(model => model.ViewsE)
                                                         </td>
-                                                    </tr>
-                                                             
-                                                    <tr>
+                                                    </tr>                                                    <tr>
                                                         <td>
                                                             @Html.LabelFor(model => model.Epdf)
                                                         </td>
@@ -332,17 +329,11 @@
                                                             @Html.ValidationMessageFor(model => model.Wpdf)
                                                         </td>
                                                     </tr>
-
-                  
-                  
-                    
-                                                          
                                                     </tbody>
                                                 </table>
-                                            
                                             </div>
                                             <!-- table-responsive -->
-                                        }
+                                        
                                         </div>
                                     </div>
                                 </div>
@@ -352,6 +343,7 @@
                                     <button style="float:right" class="btn btn-info" type="submit" value="Create">Create</button>
                                     </div>
                                 </div>
+                            }
                         </form>
                     </div>
                 </div>
@@ -362,7 +354,7 @@
 
 @using(Html.BeginForm("Create","Manger", FormMethod.Post))
 {
-    @*  <div>
+    <div>
         @Html.LabelFor(model => model.SmallImage)
         <div>
             <input type="file" name="SmallImage" id="SmallImage"/>
@@ -463,6 +455,6 @@
          <div>
             <button style="float:right" type="submit" value="Create">Create</button>
          </div>
-     </div>*@
+     </div>
    
 }
