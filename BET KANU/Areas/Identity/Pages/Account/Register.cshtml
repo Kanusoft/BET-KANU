@@ -1,10 +1,79 @@
 ﻿@page
+<link rel="stylesheet" href="/css/login.css">
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
+
+
+<body>
+    <main>
+        <div id="page" class="site login-show">
+            <div class="container">
+                <div class="wrapper">
+                    <!--signup form-->
+                    <div class="signup">
+                        <div class="content-heading">
+                            <y-style>
+                                <div class="logo">
+                                    <h2>Create a new account.</h2>
+                                    <h2>Sign up<br>Now</h2>
+                                </div>
+                               
+                            </y-style>
+                        </div>
+                        <div class="content-form">
+                            <div class="y-style">
+                                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                            
+                                    <p>
+                                        <label asp-for="Input.Email">Email</label>
+                                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                                    
+                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                    </p>
+                                    <p>
+                                        <label asp-for="Input.Password">Password</label>
+                                             <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                                     
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                    </p>
+                                    <p>
+                                        <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                                   
+                                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                    </p>
+                              
+                                    <p>
+                                        <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+                                    </p>
+                                </form>
+                                <div class="social">
+                                    <p><span>Or You Can Sign in With</span></p>
+                                    <ul>
+                                        <li><a href="#" class="google"><ion-icon name="logo-google"></ion-icon></a></li>
+                                        <li><a href="#" class="facebook"><ion-icon name="logo-facebook"></ion-icon></a></li>
+                                        <li><a href="#" class="twiter"><ion-icon name="logo-twitter"></ion-icon></a></li>
+
+                                    </ul>
+                                </div>
+                                <div class="afterform">
+                                    <p>Already Have an Account</p>
+                                    <a asp-page="./Login" class="t-login">login Here</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    </main>
+</body>
 
 <div class="row">
     <div class="col-md-4">
@@ -65,3 +134,4 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+  

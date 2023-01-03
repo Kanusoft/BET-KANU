@@ -1,0 +1,126 @@
+﻿/* .cd-popup {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s 0s, visibility 0s 0.3s;
+  }
+  
+  .cd-popup.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s 0s, visibility 0s 0s;
+  }
+  
+  .cd-popup-container {
+    transform: translateY(-40px);
+    transition-property: transform;
+    transition-duration: 0.3s;
+  }
+  
+  .is-visible .cd-popup-container {
+    transform: translateY(0);
+  } */
+/* .container{
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    transition: 0.5s;
+  }
+  .container#blur.active{
+filter: blur(20px);
+  } */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #07466b;
+    transition: 0.5px;
+    padding: 20px;
+}
+
+    .container#blur.active {
+        filter: blur(20px);
+        pointer-events: none;
+        user-select: none;
+    }
+
+    .container .content {
+        position: relative;
+        max-width: 800px;
+    }
+
+h2 {
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+a {
+    position: relative;
+    padding: 5px 20px;
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #fff;
+    background: rgb (134,43,43);
+    transition: 1s;
+    background-color: #07466b;
+    border-radius: 10px;
+}
+
+    a:hover {
+        transition: 1s;
+        background: #faa61a;
+    }
+
+#popup {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 600px;
+    padding: 50px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, .30);
+    background: #fff;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+    #popup.active {
+        top: 50%;
+        visibility: visible;
+        opacity: 1;
+        transform: 0.5s;
+    }
+
+#popupp {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 600px;
+    padding: 50px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, .30);
+    background: #fff;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+    #popupp.active {
+        top: 50%;
+        visibility: visible;
+        opacity: 1;
+        transform: 0.5s;
+    }

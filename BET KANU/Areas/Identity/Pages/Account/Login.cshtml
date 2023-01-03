@@ -1,11 +1,68 @@
 ﻿@page
+<link rel="stylesheet" href="/css/login.css">
 @model LoginModel
 
 @{
     ViewData["Title"] = "Log in";
 }
-
-<h1>@ViewData["Title"]</h1>
+<body>
+    <main>
+        <div id="page" class="site login-show">
+            <div class="container">
+        
+                <div class="wrapper">
+                    <div class="login">
+                        <div class="content-heading">
+                            <div class="y-style">
+                                <h2>Log in To</h2>
+                                <div class="logo"> <img src="/img/betkanulogobkl.png" /></div>
+                                <div class="welcome">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-form">
+                            <div class="y-style">
+                                <form action="" id="account" method="post">
+                                    <p>
+                                         <label asp-for="Input.Email" class="form-label">Email</label>
+                                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                    </p>
+                                    <p>
+                                        <label asp-for="Input.Password" class="form-label">Password</label>
+                                        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                    </p>
+                                    <p class="check">
+                                        <input type="checkbox" id=remember>
+                                        <lable for="remember">Remember Me</lable>
+                                    </p>
+                                    <p>
+                                        <a class="forget" id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                                    </p>
+                                    <div>
+                                        <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                                    </div>
+                                
+                                </form>
+                                <div class="afterform">
+                                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                                </div>
+                                 <div class="afterform">
+                                    <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--signup form-->
+                   
+                </div>
+            </div>
+        </div>
+     
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    </main>
+</body>
 <div class="row">
     <div class="col-md-4">
         <section>
@@ -37,7 +94,7 @@
                         <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
                     </p>
                     <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                        <a asp-page="" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
                     </p>
                     <p>
                         <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>

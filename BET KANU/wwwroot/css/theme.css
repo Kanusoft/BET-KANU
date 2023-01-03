@@ -2902,7 +2902,7 @@ nav ul li .dropdown-menu > li i,
 	margin-top: 20px;
 }
 .card .btn {
-	margin-top: 20px;
+	margin-bottom: 20px;
 }
 .card .caption ul {
 	font-size: 13px;
@@ -3077,7 +3077,7 @@ nav ul li .dropdown-menu > li i,
 
 
 /*---------- 23. Sections ----------*/
-section {	
+section {
 	padding: 50px 0;
 }
 section.half-section {
