@@ -287,6 +287,7 @@ input, button, select, optgroup, textarea {
 	font-family: inherit;
 	font-size: inherit;
 	line-height: inherit;
+	color: gray;
 }
 
 button, input {
@@ -702,6 +703,7 @@ Hidden */
 	min-height: 1px;
 	padding-right: 0.75rem;
 	padding-left: 0.75rem;
+	margin-top: 4em;
 }
 
 .col {
@@ -4149,6 +4151,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 	-ms-flex-pack: justify;
 	justify-content: space-between;
 	padding: 0.5rem 1rem;
+
 }
 
 	.navbar > .container, .navbar > .container-fluid {
@@ -12650,6 +12653,12 @@ a.text-light:hover, a.text-light:focus {
 
 .text-dark {
 	color: #8d9dce !important;
+	color: #8d9dce !important;
+	background-color: white;
+	padding: 1em;
+	border-radius: 7px;
+	font-size: 15px;
+	font-weight:500;
 }
 
 a.text-dark:hover, a.text-dark:focus {

@@ -33,7 +33,7 @@
 
 
                                         <div class="form-group">
-                                            <label class="form-label" ></label>
+                                            <label class="form-label">Category</label>
                                        
                                                 <select class="form-control custom-select" asp-for="Category" asp-items="Html.GetEnumSelectList<Category>()">
                                                     <option selected="selected">-None-</option>
@@ -44,7 +44,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="form-label " for="DeviceType"></label>
+                                            <label class="form-label " for="DeviceType">Target</label>
                          
                                             <select class="form-control custom-select" asp-for="TargetAudince" asp-items="Html.GetEnumSelectList<Target>()">
                                                     <option selected="selected">-None-</option>
@@ -54,7 +54,7 @@
                                         </div>
                                     </div>
                                         <div class="col-lg-3 col-sm-12">
-                                        <label class="form-label " for="ImageURL">@Html.LabelFor(model => model.CoverImage)</label>
+                                        <label class="form-label " for="ImageURL">    @Html.LabelFor(model => model.SmallImage)</label>
                                             <div data-height="180">
 
                                                 <div class="dropify-wrapper">
@@ -63,7 +63,7 @@
                                                         <p>Drag and drop a file here or click</p>
                                                         <p class="dropify-error">Ooops, something wrong appended.</p>
                                                     </div>
-                                                    <input type="file" name="ImageURL" id="ImageURL" class="dropify" />
+                                                <input type="file" name="SmallImage" id="SmallImage" />
                                                     <button type="button" class="dropify-clear">Remove</button>
                                                     <div class="dropify-preview">
                                                         <span class="dropify-render">
@@ -81,42 +81,65 @@
                                             <span class="field-validation-valid text-danger" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
 
                                         </div>
-                                        <div class="col-lg-3 col-sm-12">
-                                        <label class="form-label " for="ImageURL">   @Html.LabelFor(model => model.SmallImage)</label>
-                                            <div data-height="180">
+                                    <div class="col-lg-3 col-sm-12">
+                                        <label class="form-label " for="ImageURL">         @Html.LabelFor(model => model.CoverImage)</label>
+                                        <div data-height="180">
 
-                                                <div class="dropify-wrapper">
-                                                    <div class="dropify-message">
-                                                        <span class="file-icon"></span>
-                                                        <p>Drag and drop a file here or click</p>
-                                                        <p class="dropify-error">Ooops, something wrong appended.</p>
+                                            <div class="dropify-wrapper">
+                                                <div class="dropify-message">
+                                                    <span class="file-icon"></span>
+                                                    <p>Drag and drop a file here or click</p>
+                                                    <p class="dropify-error">Ooops, something wrong appended.</p>
+                                                </div>
+                                                <input type="file" name="CoverImage" id="CoverImage" />
+                                                <button type="button" class="dropify-clear">Remove</button>
+                                                <div class="dropify-preview">
+                                                    <span class="dropify-render">
+
+                                                    </span>
+                                                    <div class="dropify-infos">
+                                                        <p class="dropify-infos-inner">
+                                                            Drag and drop or click to replace
+                                                        </p>
                                                     </div>
-                                                    <input type="file" name="ImageURL" id="ImageURL" class="dropify" />
                                                 </div>
                                             </div>
-
-                                            <span class="field-validation-valid text-danger" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
-
                                         </div>
-                                        <div class="col-lg-3 col-sm-12">
-                                            <label class="form-label " for="ImageURL">Image</label>
-                                            <div data-height="180">
 
-                                                <div class="dropify-wrapper">
-                                                    <div class="dropify-message">
-                                                        <span class="file-icon"></span>
-                                                        <p>Drag and drop a file here or click</p>
-                                                        <p class="dropify-error">Ooops, something wrong appended.</p>
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
+
+                                    </div>
+                                    <div class="col-lg-3 col-sm-12">
+                                        <label class="form-label " for="ImageURL">     @Html.LabelFor(model => model.img1)</label>
+                                        <div data-height="180">
+
+                                            <div class="dropify-wrapper">
+                                                <div class="dropify-message">
+                                                    <span class="file-icon"></span>
+                                                    <p>Drag and drop a file here or click</p>
+                                                    <p class="dropify-error">Ooops, something wrong appended.</p>
+                                                </div>
+                                                <input type="file" name="img1" id="img1" />
+                                                <button type="button" class="dropify-clear">Remove</button>
+                                                <div class="dropify-preview">
+                                                    <span class="dropify-render">
+
+                                                    </span>
+                                                    <div class="dropify-infos">
+                                                        <p class="dropify-infos-inner">
+                                                            Drag and drop or click to replace
+                                                        </p>
                                                     </div>
-                                                    <input type="file" name="ImageURL" id="ImageURL" class="dropify" />
                                                 </div>
                                             </div>
-
-                                            <span class="field-validation-valid text-danger" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
-
                                         </div>
+
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
+
+                                    </div>
+
                                        <div class="col-lg-3 col-sm-12">
-                                        <label class="form-label " for="ImageURL">Image</label>
+                                        <label class="form-label " for="ImageURL">       @Html.LabelFor(model => model.img2)</label>
                                         <div data-height="180">
 
                                             <div class="dropify-wrapper">
@@ -125,15 +148,27 @@
                                                     <p>Drag and drop a file here or click</p>
                                                     <p class="dropify-error">Ooops, something wrong appended.</p>
                                                 </div>
-                                                <input type="file" name="ImageURL" id="ImageURL" class="dropify" />
+                                                <input type="file" name="img2" id="img2" />
+                                                <button type="button" class="dropify-clear">Remove</button>
+                                                <div class="dropify-preview">
+                                                    <span class="dropify-render">
+
+                                                    </span>
+                                                    <div class="dropify-infos">
+                                                        <p class="dropify-infos-inner">
+                                                            Drag and drop or click to replace
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
                                         <span class="field-validation-valid text-danger" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
 
                                     </div>
+                                   
                                        <div class="col-lg-3 col-sm-12">
-                                        <label class="form-label " for="ImageURL">Image</label>
+                                        <label class="form-label " for="ImageURL">       @Html.LabelFor(model => model.img3)</label>
                                         <div data-height="180">
 
                                             <div class="dropify-wrapper">
@@ -142,15 +177,27 @@
                                                     <p>Drag and drop a file here or click</p>
                                                     <p class="dropify-error">Ooops, something wrong appended.</p>
                                                 </div>
-                                                <input type="file" name="ImageURL" id="ImageURL" class="dropify" />
+                                                <input type="file" name="img3" id="img3" />
+                                                <button type="button" class="dropify-clear">Remove</button>
+                                                <div class="dropify-preview">
+                                                    <span class="dropify-render">
+
+                                                    </span>
+                                                    <div class="dropify-infos">
+                                                        <p class="dropify-infos-inner">
+                                                            Drag and drop or click to replace
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
                                         <span class="field-validation-valid text-danger" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
 
                                     </div>
+                                   
                                        <div class="col-lg-3 col-sm-12">
-                                        <label class="form-label " for="ImageURL">Image</label>
+                                        <label class="form-label " for="ImageURL">     @Html.LabelFor(model => model.img4)</label>
                                         <div data-height="180">
 
                                             <div class="dropify-wrapper">
@@ -159,15 +206,27 @@
                                                     <p>Drag and drop a file here or click</p>
                                                     <p class="dropify-error">Ooops, something wrong appended.</p>
                                                 </div>
-                                                <input type="file" name="ImageURL" id="ImageURL" class="dropify" />
+                                                <input type="file" name="img4" id="img4" />
+                                                <button type="button" class="dropify-clear">Remove</button>
+                                                <div class="dropify-preview">
+                                                    <span class="dropify-render">
+
+                                                    </span>
+                                                    <div class="dropify-infos">
+                                                        <p class="dropify-infos-inner">
+                                                            Drag and drop or click to replace
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
                                         <span class="field-validation-valid text-danger" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
 
                                     </div>
-                                       <div class="col-lg-3 col-sm-12">
-                                        <label class="form-label " for="ImageURL">Image</label>
+
+                                    <div class="col-lg-3 col-sm-12">
+                                        <label class="form-label " for="ImageURL">    @Html.LabelFor(model => model.img5)</label>
                                         <div data-height="180">
 
                                             <div class="dropify-wrapper">
@@ -176,13 +235,26 @@
                                                     <p>Drag and drop a file here or click</p>
                                                     <p class="dropify-error">Ooops, something wrong appended.</p>
                                                 </div>
-                                                <input type="file" name="ImageURL" id="ImageURL" class="dropify" />
+                                                <input type="file" name="img5" id="img5" />
+                                                <button type="button" class="dropify-clear">Remove</button>
+                                                <div class="dropify-preview">
+                                                    <span class="dropify-render">
+
+                                                    </span>
+                                                    <div class="dropify-infos">
+                                                        <p class="dropify-infos-inner">
+                                                            Drag and drop or click to replace
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
                                         <span class="field-validation-valid text-danger" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
 
                                     </div>
+
+
                                 </div>
                             </div>
                             @using (Html.BeginForm("Create", "Manger", FormMethod.Post))
@@ -354,7 +426,7 @@
 
 @using(Html.BeginForm("Create","Manger", FormMethod.Post))
 {
-    <div>
+  @*  <div>
         @Html.LabelFor(model => model.SmallImage)
         <div>
             <input type="file" name="SmallImage" id="SmallImage"/>
@@ -477,5 +549,5 @@
             <button style="float:right" type="submit" value="Create">Create</button>
          </div>
      </div>
-   
+   *@
 }

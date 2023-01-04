@@ -62,7 +62,7 @@ namespace BetKanu.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("BetKanu.Models.Bundle", b =>
@@ -122,7 +122,7 @@ namespace BetKanu.Data.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("Bundles");
+                    b.ToTable("Bundles", (string)null);
                 });
 
             modelBuilder.Entity("BetKanu.Models.Product", b =>
@@ -216,7 +216,7 @@ namespace BetKanu.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("BetKanu.Models.ProductEpisode", b =>
@@ -256,7 +256,7 @@ namespace BetKanu.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductEpisodes");
+                    b.ToTable("ProductEpisodes", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
