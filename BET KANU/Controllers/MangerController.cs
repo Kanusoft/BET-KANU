@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using BET_KANU.Services;
+using BetKanu.Data;
+using System;
+using BET_KANU.ViewModels;
 
 namespace BET_KANU.Controllers
 {
@@ -15,12 +18,14 @@ namespace BET_KANU.Controllers
     public class MangerController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly BKdbContext _bKdb;
+        private readonly IWebHostEnvironment _HostEnvironment;
         private readonly IBlobStorageService _blobStorage;
-        public MangerController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment, IBlobStorageService blobStorage)
+        public MangerController(IUnitOfWork unitOfWork, IWebHostEnvironment HostEnvironment, IBlobStorageService blobStorage,BKdbContext bKdb)
         {
+            _bKdb = bKdb;
             _unitOfWork = unitOfWork;
-            _webHostEnvironment = webHostEnvironment;
+            _HostEnvironment = HostEnvironment;
             _blobStorage = blobStorage;
         }
         public ActionResult Index()
@@ -28,149 +33,268 @@ namespace BET_KANU.Controllers
             var Prod = _unitOfWork.product.GetAll();
             return View(Prod);
         }
+
         public ActionResult Create()
         {
             return View(new Product());
         }
+
         [HttpPost]
-        public async Task <ActionResult> Create(Product product,IFormFile SmallImage, IFormFile CoverImage , IFormFile image1 , IFormFile image2, IFormFile image3, IFormFile image4, IFormFile image5)
+        [ValidateAntiForgeryToken]
+        public  ActionResult Create([Bind("Id,Title,SmallUrl,CoverUrl,imgUrl,imgUrl2,imgUrl3,imgUrl4,imgUrl5,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,CreditsE,CreditsW,Link1,Link2,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW")] Product p)
         {
             if (ModelState.IsValid)
             {
-                if(SmallImage != null)
+                try
                 {
-                    var Serverpath = @"/img/Product/";
-                    var filename = $"{product.Id}_{product.Title}";
-                    //string newfile = SaveImage(SmallImage, Serverpath, filename, false);
-                    //product.SmallImage = Serverpath + filename + SmallImage.FileName.Substring(SmallImage.FileName.LastIndexOf('.'),4);
-                    await _blobStorage.UploadBlobFileAsync(SmallImage);
-                    product.SmallImage = Serverpath + filename + SmallImage.FileName.Substring(SmallImage.FileName.LastIndexOf('.'), 4);
-                }
-                if(CoverImage != null)
-                {
-                    var Serverpath = @"/img/Product/";
-                    var filename = $"{product.Id}_{product.Title}";
-                    //string newfile = SaveImage(CoverImage, Serverpath, filename, false);
-                    //product.CoverImage = Serverpath + filename + CoverImage.FileName.Substring(CoverImage.FileName.LastIndexOf('.'), 4);
-                    await _blobStorage.UploadBlobFileAsync(CoverImage);
-                    product.CoverImage = Serverpath + filename + CoverImage.FileName.Substring(CoverImage.FileName.LastIndexOf('.'), 4);
-                }
-                if(image1 != null)
-                {
-                    var Serverpath = @"/img/Product/";
-                    var filename = $"{product.Id}_{product.Title}";
-                    await _blobStorage.UploadBlobFileAsync(image1);
-                    product.img1 = Serverpath + filename + image1.FileName.Substring(image1.FileName.LastIndexOf('.'), 4);
-                }
-                if (image2 != null)
-                {
-                    var Serverpath = @"/img/Product/";
-                    var filename = $"{product.Id}_{product.Title}";
-                    await _blobStorage.UploadBlobFileAsync(image2);
-                    product.img2 = Serverpath + filename + image2.FileName.Substring(image2.FileName.LastIndexOf('.'), 4);
-                }
-                if (image3 != null)
-                {
-                    var Serverpath = @"/img/Product/";
-                    var filename = $"{product.Id}_{product.Title}";
-                    await _blobStorage.UploadBlobFileAsync(image3);
-                    product.img3 = Serverpath + filename + image3.FileName.Substring(image3.FileName.LastIndexOf('.'), 4);
-                }
-                if (image4 != null)
-                {
-                    var Serverpath = @"/img/Product/";
-                    var filename = $"{product.Id}_{product.Title}";
-                    await _blobStorage.UploadBlobFileAsync(image4);
-                    product.img4 = Serverpath + filename + image4.FileName.Substring(image4.FileName.LastIndexOf('.'), 4);
-                }
-                if (image5 != null)
-                {
-                    var Serverpath = @"/img/Product/";
-                    var filename = $"{product.Id}_{product.Title}";
-                    await _blobStorage.UploadBlobFileAsync(image5);
-                    product.img5 = Serverpath + filename + image5.FileName.Substring(image5.FileName.LastIndexOf('.'), 4);
-                }
-                _unitOfWork.manger.Add(product);
-            }
-            return View(product);
-        }
-        //private string SaveImage(IFormFile file, string Serverpath, string name,bool isCompletePath)
-        //{
-        //    WebImage img = new WebImage(file.ContentDisposition);
-        //    string webRoot = _webHostEnvironment.WebRootPath;
-        //    string? getFileName;
-        //    getFileName = file.FileName;
-        //    var Filename = Path.GetFileName(file.FileName);
-        //    string newFileName = name.ToString() + Filename.Substring(Filename.LastIndexOf("."), 4);
-        //    var path = Path.Combine((isCompletePath ? Serverpath : webRoot), newFileName);
-        //    img.Save(path);
+                    if (p.SmallUrl != null)
+                    {
+                        string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
+                        string Pathimg = @"/Uploades/";
+                        string filename = Path.GetFileNameWithoutExtension(p.SmallUrl.FileName);
+                        string ex = Path.GetExtension(p.SmallUrl.FileName);
+                        p.SmallImage = Pathimg + filename + ex;
+                        filename = filename + ex;
+                        string path = Path.Combine(Rootpath, filename);
+                        p.SmallUrl.CopyTo(new FileStream(path, FileMode.Create));
 
-        //    return newFileName;
-        //}
+                    }
+                    if (p.CoverUrl != null)
+                    {
+                        string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
+                        string Pathimg = @"/Uploades/";
+                        string filename = Path.GetFileNameWithoutExtension(p.CoverUrl.FileName);
+                        string ex = Path.GetExtension(p.CoverUrl.FileName);
+                        p.CoverImage = Pathimg + filename + ex;
+                        filename = filename + ex;
+                        string path = Path.Combine(Rootpath, filename);
+                        p.CoverUrl.CopyTo(new FileStream(path, FileMode.Create));
+
+                    }
+                    if (p.imgUrl != null)
+                    {
+                        string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
+                        string Pathimg = @"/Uploades/";
+                        string filename = Path.GetFileNameWithoutExtension(p.imgUrl.FileName);
+                        string ex = Path.GetExtension(p.imgUrl.FileName);
+                        p.img1 = Pathimg + filename + ex;
+                        filename = filename + ex;
+                        string path = Path.Combine(Rootpath, filename);
+                        p.imgUrl.CopyTo(new FileStream(path, FileMode.Create));
+
+                    }
+                    if (p.imgUrl2 != null)
+                    {
+                        string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
+                        string Pathimg = @"/Uploades/";
+                        string filename = Path.GetFileNameWithoutExtension(p.imgUrl2.FileName);
+                        string ex = Path.GetExtension(p.imgUrl2.FileName);
+                        p.img2 = Pathimg + filename + ex;
+                        filename = filename + ex;
+                        string path = Path.Combine(Rootpath, filename);
+                        p.imgUrl2.CopyTo(new FileStream(path, FileMode.Create));
+
+                    }
+                    if (p.imgUrl3 != null)
+                    {
+                        string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
+                        string Pathimg = @"/Uploades/";
+                        string filename = Path.GetFileNameWithoutExtension(p.imgUrl3.FileName);
+                        string ex = Path.GetExtension(p.imgUrl3.FileName);
+                        p.img3 = Pathimg + filename + ex;
+                        filename = filename + ex;
+                        string path = Path.Combine(Rootpath, filename);
+                        p.imgUrl3.CopyTo(new FileStream(path, FileMode.Create));
+
+                    }
+                    if (p.imgUrl4 != null)
+                    {
+                        string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
+                        string Pathimg = @"/Uploades/";
+                        string filename = Path.GetFileNameWithoutExtension(p.imgUrl4.FileName);
+                        string ex = Path.GetExtension(p.imgUrl4.FileName);
+                        p.img4 = Pathimg + filename + ex;
+                        filename = filename + ex;
+                        string path = Path.Combine(Rootpath, filename);
+                        p.imgUrl4.CopyTo(new FileStream(path, FileMode.Create));
+
+                    }
+                    if (p.imgUrl5 != null)
+                    {
+                        string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
+                        string Pathimg = @"/Uploades/";
+                        string filename = Path.GetFileNameWithoutExtension(p.imgUrl5.FileName);
+                        string ex = Path.GetExtension(p.imgUrl5.FileName);
+                        p.img5 = Pathimg + filename + ex;
+                        filename = filename + ex;
+                        string path = Path.Combine(Rootpath, filename);
+                        p.imgUrl5.CopyTo(new FileStream(path, FileMode.Create));
+                    }              
+                    _unitOfWork.manger.Add(p);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception)
+                {
+                }
+            }
+            return View(p);
+        }
+        private string SaveImage(IFormFile file)
+        {
+            //WebImage img = new WebImage(file.ContentDisposition);
+            //string webRoot = _HostEnvironment.WebRootPath;
+            //string? getFileName;
+            //getFileName = file.FileName;
+            //var Filename = Path.GetFileName(file.FileName);
+            //string newFileName = name.ToString() + Filename.Substring(Filename.LastIndexOf("."), 4);
+            //var path = Path.Combine((isCompletePath ? Serverpath : webRoot), newFileName);
+            //img.Save(path);
+            string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
+            string fullpath = Path.Combine(uploade, file.FileName);
+            file.CopyTo(new FileStream(fullpath, FileMode.Create));
+
+            return file.FileName;
+        }
         public ActionResult Edit(int id)
         {
             if(id == null || id == 0)
             {
                 return NotFound();
             }
-            var prod = _unitOfWork.product.GetOne(id);
-            if(prod == null)
+            var mangerVm = _unitOfWork.manger.GetProductInfo(id);
+            if(mangerVm == null)
             {
                 return NotFound();
             }
-            return View(prod);
+            
+            return View(mangerVm);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(Product product, IFormFile SmallImage, IFormFile CoverImage, IFormFile image1, IFormFile image2, IFormFile image3, IFormFile image4, IFormFile image5)
+        public async Task<ActionResult> Edit(MangerVM manger)
         {
             if (ModelState.IsValid)
             {
-                if (SmallImage != null)
+                
+                string filename = string.Empty;
+                if (manger.product.SmallUrl != null)
                 {
-                    //var Serverpath = @"/img/Product/";
-                    //var filename = $"{product.Id}_{product.Title}";
-                    //string newfile = SaveImage(SmallImage, Serverpath, filename, false);
-                    await _blobStorage.UploadBlobFileAsync(SmallImage);
-                    product.SmallImage = SmallImage.FileName.Substring(SmallImage.FileName.LastIndexOf('.'), 4);
+                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
+                    filename = manger.product.SmallUrl.FileName;
+                    string fullpath = Path.Combine(uploade, filename);
+
+                    //Delete The Old File
+                    string oldFile = _unitOfWork.product.GetOne(manger.product.Id).SmallImage;
+                    string OldPath = Path.Combine(uploade, oldFile);
+                    if(fullpath != OldPath)
+                    {
+                        System.IO.File.Delete(OldPath);
+                        //Save The New File
+                        manger.product.SmallUrl.CopyTo(new FileStream(fullpath, FileMode.Create));
+                    }
                 }
-                if (CoverImage != null)
+                string filename2 = string.Empty;
+                if (manger.product.CoverUrl != null)
                 {
-                    //var Serverpath = @"/img/Product/";
-                    //var filename = $"{product.Id}_{product.Title}";
-                    //string newfile = SaveImage(CoverImage, Serverpath, filename, false);
-                    await _blobStorage.UploadBlobFileAsync(CoverImage);
-                    product.CoverImage = CoverImage.FileName.Substring(CoverImage.FileName.LastIndexOf('.'), 4);
+                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
+                    filename2 = manger.product.CoverUrl.FileName;
+                    string fullpath = Path.Combine(uploade, filename2);
+                    //Delete The Old File
+                    string oldFile = _unitOfWork.product.GetOne(manger.product.Id).CoverImage;
+                    string OldPath = Path.Combine(uploade, oldFile);
+                    if (fullpath != OldPath)
+                    {
+                        System.IO.File.Delete(OldPath);
+                        //Save The New File
+                        manger.product.CoverUrl.CopyTo(new FileStream(fullpath, FileMode.Create));
+                    }
                 }
-                if (image1 != null)
+                string filename3 = string.Empty;
+                if (manger.product.imgUrl != null)
                 {
-                    await _blobStorage.UploadBlobFileAsync(image1);
-                    product.img1 = image1.FileName.Substring(image1.FileName.LastIndexOf('.'), 4);
+                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
+                    filename3 = manger.product.imgUrl.FileName;
+                    string fullpath = Path.Combine(uploade, filename3);
+                    //Delete The Old File
+                    string oldFile = _unitOfWork.product.GetOne(manger.product.Id).img1;
+                    string OldPath = Path.Combine(uploade, oldFile);
+                    if (fullpath != OldPath)
+                    {
+                        System.IO.File.Delete(OldPath);
+                        //Save The New File
+                        manger.product.imgUrl.CopyTo(new FileStream(fullpath, FileMode.Create));
+                    }
                 }
-                if (image2 != null)
+                string filename4 = string.Empty;
+                if (manger.product.imgUrl2 != null)
                 {
-                    await _blobStorage.UploadBlobFileAsync(image2);
-                    product.img2 = image2.FileName.Substring(image2.FileName.LastIndexOf('.'), 4);
+                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
+                    filename4 = manger.product.imgUrl2.FileName;
+                    string fullpath = Path.Combine(uploade, filename4);
+                    //Delete The Old File
+                    string oldFile = _unitOfWork.product.GetOne(manger.product.Id).img2;
+                    string OldPath = Path.Combine(uploade, oldFile);
+                    if (fullpath != OldPath)
+                    {
+                        System.IO.File.Delete(OldPath);
+                        //Save The New File
+                        manger.product.imgUrl2.CopyTo(new FileStream(fullpath, FileMode.Create));
+                    }
                 }
-                if (image3 != null)
+                string filename5 = string.Empty;
+                if (manger.product.imgUrl3 != null)
                 {
-                    await _blobStorage.UploadBlobFileAsync(image3);
-                    product.img3 = image3.FileName.Substring(image3.FileName.LastIndexOf('.'), 4);
+                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
+                    filename5 = manger.product.imgUrl3.FileName;
+                    string fullpath = Path.Combine(uploade, filename5);
+                    //Delete The Old File
+                    string oldFile = _unitOfWork.product.GetOne(manger.product.Id).img3;
+                    string OldPath = Path.Combine(uploade, oldFile);
+                    if (fullpath != OldPath)
+                    {
+                        System.IO.File.Delete(OldPath);
+                        //Save The New File
+                        manger.product.imgUrl3.CopyTo(new FileStream(fullpath, FileMode.Create));
+                    }
                 }
-                if (image4 != null)
+                string filename6 = string.Empty;
+                if (manger.product.imgUrl4 != null)
                 {
-                    await _blobStorage.UploadBlobFileAsync(image4);
-                    product.img4 = image4.FileName.Substring(image4.FileName.LastIndexOf('.'), 4);
+                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
+                    filename6 = manger.product.imgUrl4.FileName;
+                    string fullpath = Path.Combine(uploade, filename6);
+                    //Delete The Old File
+                    string oldFile = _unitOfWork.product.GetOne(manger.product.Id).img4;
+                    string OldPath = Path.Combine(uploade, oldFile);
+                    if (fullpath != OldPath)
+                    {
+                        System.IO.File.Delete(OldPath);
+                        //Save The New File
+                        manger.product.imgUrl4.CopyTo(new FileStream(fullpath, FileMode.Create));
+                    }
                 }
-                if (image5 != null)
+                string filename7 = string.Empty;
+                if (manger.product.imgUrl5 != null)
                 {
-                    await _blobStorage.UploadBlobFileAsync(image5);
-                    product.img5 = image5.FileName.Substring(image5.FileName.LastIndexOf('.'), 4);
+                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
+                    filename5 = manger.product.imgUrl5.FileName;
+                    string fullpath = Path.Combine(uploade, filename5);
+                    //Delete The Old File
+                    string oldFile = _unitOfWork.product.GetOne(manger.product.Id).img5;
+                    string OldPath = Path.Combine(uploade, oldFile);
+                    if (fullpath != OldPath)
+                    {
+                        System.IO.File.Delete(OldPath);
+                        //Save The New File
+                        manger.product.imgUrl5.CopyTo(new FileStream(fullpath, FileMode.Create));
+                    }
                 }
-                _unitOfWork.manger.Edit(product);
-                return RedirectToAction("Index");
+                if (_unitOfWork.manger.Edit(manger))
+                {
+                    return RedirectToAction(nameof(Index));
+                }                             
             }
-            return View(product);
+            return View(manger);
         }
 
        

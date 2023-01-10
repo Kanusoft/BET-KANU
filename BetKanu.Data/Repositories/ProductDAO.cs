@@ -19,7 +19,7 @@ namespace BetKanu.Data.Repositories
 
         public List<Product> GetAll()
         {
-            return _db.Products.ToList();
+            return _db.Products.OrderByDescending(p => p.ReleaseDate).ToList();
         }
         public List<Product> GetAll(Category category , Target target)
         {
@@ -30,9 +30,9 @@ namespace BetKanu.Data.Repositories
             return _db.Products.Where(p => p.Id == id).FirstOrDefault();
         }
 
-        public List<Product> RecentProduct()
+        public List<Product> RecentProduct(int num)
         {
-            return _db.Products.OrderByDescending(p => p.ReleaseDate).ToList();
+            return _db.Products.OrderByDescending(p => p.ReleaseDate).Take(num).ToList();
         }
 
         public List<ProductEpisode> GetEpisode(int id)

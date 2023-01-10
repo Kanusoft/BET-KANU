@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BET_KANU.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,7 @@ namespace BetKanu.Models.Interface
         int Add(Product product);
         bool Edit(Product product);
         bool Delete(int id);
+        bool Edit(MangerVM manger);
+        MangerVM GetProductInfo(int ProdId);
     }
 }
