@@ -5,14 +5,14 @@
 <ul class="navbar">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="">
+@*    <li class="">
         <a  class=" text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
-        <li class=".button">
+    </li>*@
+     
         <form  class="" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="">Logout</button>
+            <button style="background-color:#0d5487" type="submit" class="btn btn-warning btn-shadow">Logout</button>
         </form>
-    </li>
+ 
 }
 else
 {
