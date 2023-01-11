@@ -7,8 +7,6 @@
 @{
     ViewBag.Title = "Products List";
 }
-
-
 <div id="wrapper">
     <section class="bg-success promo">
        <div class="container">
@@ -16,7 +14,12 @@
             </div>
     </section>
 
-   
+    @if (TempData["Message"] != null)
+    {
+        <div>
+            <h2 style="color:red">@TempData["Message"]</h2>
+        </div>
+    }
      
     <section>
         <div class="container">
