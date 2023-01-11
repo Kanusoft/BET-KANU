@@ -14,5 +14,7 @@ namespace BetKanu.Models.Interface
         bool Delete(int id);
         bool Edit(MangerVM manger);
         MangerVM GetProductInfo(int ProdId);
+        List<Product> GetAll(string Select);
+        int Add(ProductEpisode episode);
     }
 }

@@ -11,6 +11,8 @@ using BET_KANU.Services;
 using BetKanu.Data;
 using System;
 using BET_KANU.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace BET_KANU.Controllers
 {
@@ -28,9 +30,9 @@ namespace BET_KANU.Controllers
             _HostEnvironment = HostEnvironment;
             _blobStorage = blobStorage;
         }
-        public ActionResult Index()
+        public ActionResult Index(string Select)
         {
-            var Prod = _unitOfWork.product.GetAll();
+            var Prod = _unitOfWork.manger.GetAll(Select);
             return View(Prod);
         }
 
@@ -340,10 +342,32 @@ namespace BET_KANU.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult CreateEpisode()
+        {
+            var prod = new SelectList(_unitOfWork.product.GetAll()?.ToDictionary(p => p.Id,p=>p.Title), "Key", "Value");
+            ViewBag.ProductId = prod;
+            return View(new ProductEpisode());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateEpisode(ProductEpisode episode)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.manger.Add(episode);
+                return RedirectToAction(nameof(Index));
+            }          
+            return View(episode);
+        }
+
+
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
         }
+
+
     }
 }
