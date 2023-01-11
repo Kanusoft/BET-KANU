@@ -81,7 +81,7 @@ article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, s
 	background: #eeeeee;
 }
 
-body {
+/*body {
 	margin: 0;
 	font-family: 'Quicksand', sans-serif;
 	font-size: 14px;
@@ -89,9 +89,9 @@ body {
 	line-height: 1.5;
 	color: #8f98c1;
 	text-align: left;
-	background-color: #eeedf2;
+	background-color: #eeedf2;*/
 	/*background-color: #292e3e;*/
-}
+/*}*/
 
 [tabindex="-1"]:focus {
 	outline: 0 !important;
@@ -12735,7 +12735,7 @@ a.text-dark:hover, a.text-dark:focus {
 		}
 }
 
-html {
+/*html {
 	font-size: 16px;
 	height: 100%;
 	direction: ltr;
@@ -12774,7 +12774,7 @@ body *::-webkit-scrollbar-thumb {
 
 body *:hover::-webkit-scrollbar-thumb {
 	background: #adb5bd;
-}
+}*/
 
 .lead {
 	line-height: 1.4;

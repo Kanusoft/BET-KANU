@@ -4,8 +4,44 @@
 }
 @Html.HiddenFor(model => model.Id)
 
+<div id="wrapper">
+    <section class="overflow-hidden">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="color:#6d6e71; text-align:center">
+                    <br> <h3 style="color:#6d6e71">Are you sure you want delete this? </h3>
+                </div>
 
-<h2>Delete</h2>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <form id="myEmailForm" method="post">
+
+                        <dl>
+                            <dt>@Html.DisplayNameFor(model => model.Title)</dt>
+                            <dd>@Html.DisplayFor(model => model.Title)</dd>
+                            <dt>@Html.DisplayNameFor(model => model.ShortDescription)</dt>
+                            <dd>@Html.DisplayFor(model => model.ShortDescription)</dd>
+                        </dl>
+
+                        <div class="text-center margin-top-30">
+                        @using (Html.BeginForm())
+                        {  
+                            @Html.AntiForgeryToken()
+                                <input class="btn btn-info" type="submit" value="Delete" />
+                                <div class="btn btn-info"> @Html.ActionLink("Back To List","Index")</div>
+
+                        }
+                        </div>
+                    
+                    
+                        <div class="clear pad45"></div>
+                    </form>
+                </div>
+                <div name="messageResult" id="messageResult"></div>
+            </div>
+        </div>
+    </section>
+</div>
+@*<h2>Delete</h2>
 
 <h3>Are you sure you want delete this?</h3>
 
@@ -20,4 +56,4 @@
     @Html.AntiForgeryToken()
     <input type="submit" value="Delete"/>
     @Html.ActionLink("Back To List","Index")
-}
+}*@

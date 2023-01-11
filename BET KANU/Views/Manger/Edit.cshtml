@@ -1,13 +1,452 @@
 ﻿@model Product
+<link rel="stylesheet" href="~/css/List.css">
+<link rel="stylesheet" href="~/css/dashboard.css">
+<link rel="stylesheet" href="~/css/create.css">
 @{
     ViewData["Title"] = "Edit";
 }
-
-<h1>Edit @Model.Title</h1>
 <hr />
+    <section class="bg-grey-500 promo">
+            <div class="container">
+        <h1>Edit @Model.Title</h1>
+            </div>
+        </section>
+    <div class="col-md-12">
+        <div class="card">
+            <form action="/Mobiles/Create" enctype="multipart/form-data" method="post">
+                <div class="container">
+                    <div class="col-12">
+                        <form method="post" class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-3 col-sm-12">
+                                        <input name="__RequestVerificationToken" type="hidden" value="" />
+
+
+                                        <div class="form-group">
+                                        <label class="form-label" asp-for="Title"></label>
+                                        <input class="form-control text-box single-line" asp-for="Title" />
+                                        <span class="field-validation-valid text-danger" asp-validation-for="Title"></span>
+                            
+                                   </div>
+
+
+                                        <div class="form-group">
+                                            <label class="form-label">Category</label>
+                                        
+                                                <select class="form-control custom-select" asp-for="Category" asp-items="Html.GetEnumSelectList<Category>()">
+                                                    <option selected="selected">-None-</option>
+                                                </select>
+                                         
+                                            <span class="field-validation-valid text-danger" data-valmsg-for="BrandId" data-valmsg-replace="true"></span>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label " for="DeviceType">Target</label>
+                         
+                                            <select class="form-control custom-select" asp-for="TargetAudince" asp-items="Html.GetEnumSelectList<Target>()">
+                                                    <option selected="selected">-None-</option>
+                                                </select>
+                                      
+                                            <span class="field-validation-valid text-danger" data-valmsg-for="DeviceType" data-valmsg-replace="true"></span>
+                                        </div>
+                                    </div>
+                                        <div class="col-lg-3 col-sm-12">
+                                        <label class="form-label " for="ImageURL">    @Html.LabelFor(model => model.SmallImage)</label>
+                                            <div data-height="180">
+
+                                                <div class="dropify-wrapper">
+                                                    <div class="dropify-message">
+                                                        <span class="file-icon"></span>
+                                                        <p>Drag and drop a file here or click</p>
+                                                        <p class="dropify-error">Ooops, something wrong appended.</p>
+                                                    </div>
+                                                <input type="file" name="SmallImage" id="SmallImage" />
+                                                    <button type="button" class="dropify-clear">Remove</button>
+                                                    <div class="dropify-preview">
+                                                        <span class="dropify-render">
+
+                                                        </span>
+                                                        <div class="dropify-infos">
+                                                            <p class="dropify-infos-inner">
+                                                                Drag and drop or click to replace
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <span class="field-validation-valid text-danger" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
+
+                                        </div>
+                                    <div class="col-lg-3 col-sm-12">
+                                        <label class="form-label " for="ImageURL">         @Html.LabelFor(model => model.CoverImage)</label>
+                                        <div data-height="180">
+
+                                            <div class="dropify-wrapper">
+                                                <div class="dropify-message">
+                                                    <span class="file-icon"></span>
+                                                    <p>Drag and drop a file here or click</p>
+                                                    <p class="dropify-error">Ooops, something wrong appended.</p>
+                                                </div>
+                                                <input type="file" name="CoverImage" id="CoverImage" />
+                                                <button type="button" class="dropify-clear">Remove</button>
+                                                <div class="dropify-preview">
+                                                    <span class="dropify-render">
+
+                                                    </span>
+                                                    <div class="dropify-infos">
+                                                        <p class="dropify-infos-inner">
+                                                            Drag and drop or click to replace
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
+
+                                    </div>
+                                    <div class="col-lg-3 col-sm-12">
+                                        <label class="form-label " for="ImageURL">     @Html.LabelFor(model => model.img1)</label>
+                                        <div data-height="180">
+
+                                            <div class="dropify-wrapper">
+                                                <div class="dropify-message">
+                                                    <span class="file-icon"></span>
+                                                    <p>Drag and drop a file here or click</p>
+                                                    <p class="dropify-error">Ooops, something wrong appended.</p>
+                                                </div>
+                                                <input type="file" name="img1" id="img1" />
+                                                <button type="button" class="dropify-clear">Remove</button>
+                                                <div class="dropify-preview">
+                                                    <span class="dropify-render">
+
+                                                    </span>
+                                                    <div class="dropify-infos">
+                                                        <p class="dropify-infos-inner">
+                                                            Drag and drop or click to replace
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
+
+                                    </div>
+
+                                       <div class="col-lg-3 col-sm-12">
+                                        <label class="form-label " for="ImageURL">       @Html.LabelFor(model => model.img2)</label>
+                                        <div data-height="180">
+
+                                            <div class="dropify-wrapper">
+                                                <div class="dropify-message">
+                                                    <span class="file-icon"></span>
+                                                    <p>Drag and drop a file here or click</p>
+                                                    <p class="dropify-error">Ooops, something wrong appended.</p>
+                                                </div>
+                                                <input type="file" name="img2" id="img2" />
+                                                <button type="button" class="dropify-clear">Remove</button>
+                                                <div class="dropify-preview">
+                                                    <span class="dropify-render">
+
+                                                    </span>
+                                                    <div class="dropify-infos">
+                                                        <p class="dropify-infos-inner">
+                                                            Drag and drop or click to replace
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
+
+                                    </div>
+                                   
+                                       <div class="col-lg-3 col-sm-12">
+                                        <label class="form-label " for="ImageURL">       @Html.LabelFor(model => model.img3)</label>
+                                        <div data-height="180">
+
+                                            <div class="dropify-wrapper">
+                                                <div class="dropify-message">
+                                                    <span class="file-icon"></span>
+                                                    <p>Drag and drop a file here or click</p>
+                                                    <p class="dropify-error">Ooops, something wrong appended.</p>
+                                                </div>
+                                                <input type="file" name="img3" id="img3" />
+                                                <button type="button" class="dropify-clear">Remove</button>
+                                                <div class="dropify-preview">
+                                                    <span class="dropify-render">
+
+                                                    </span>
+                                                    <div class="dropify-infos">
+                                                        <p class="dropify-infos-inner">
+                                                            Drag and drop or click to replace
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
+
+                                    </div>
+                                   
+                                       <div class="col-lg-3 col-sm-12">
+                                        <label class="form-label " for="ImageURL">     @Html.LabelFor(model => model.img4)</label>
+                                        <div data-height="180">
+
+                                            <div class="dropify-wrapper">
+                                                <div class="dropify-message">
+                                                    <span class="file-icon"></span>
+                                                    <p>Drag and drop a file here or click</p>
+                                                    <p class="dropify-error">Ooops, something wrong appended.</p>
+                                                </div>
+                                                <input type="file" name="img4" id="img4" />
+                                                <button type="button" class="dropify-clear">Remove</button>
+                                                <div class="dropify-preview">
+                                                    <span class="dropify-render">
+
+                                                    </span>
+                                                    <div class="dropify-infos">
+                                                        <p class="dropify-infos-inner">
+                                                            Drag and drop or click to replace
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
+
+                                    </div>
+
+                                    <div class="col-lg-3 col-sm-12">
+                                        <label class="form-label " for="ImageURL">    @Html.LabelFor(model => model.img5)</label>
+                                        <div data-height="180">
+
+                                            <div class="dropify-wrapper">
+                                                <div class="dropify-message">
+                                                    <span class="file-icon"></span>
+                                                    <p>Drag and drop a file here or click</p>
+                                                    <p class="dropify-error">Ooops, something wrong appended.</p>
+                                                </div>
+                                                <input type="file" name="img5" id="img5" />
+                                                <button type="button" class="dropify-clear">Remove</button>
+                                                <div class="dropify-preview">
+                                                    <span class="dropify-render">
+
+                                                    </span>
+                                                    <div class="dropify-infos">
+                                                        <p class="dropify-infos-inner">
+                                                            Drag and drop or click to replace
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <span class="field-validation-valid text-danger" data-valmsg-for="ImageURL" data-valmsg-replace="true"></span>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            @using (Html.BeginForm("Create", "Manger", FormMethod.Post))
+                            {
+                               <div class="card-body" style="color:white">
+                                    <div class="row">
+                                        <div class="card">
+                                        
+                                         
+
+                                            <div class="table-responsive">
+                                            
+                        
+                                                <table class="table table-striped table-bordered" style="width:100%">
+                                                    <tbody>
+                                                        <tr>
+                                                        <td>
+                                                             @Html.LabelFor(model => model.SubCategory)
+                                                        </td>  
+                                                        <td>
+                                                           @Html.EditorFor(model => model.SubCategory)
+                                                           @Html.ValidationMessageFor(model => model.SubCategory)
+                                                         </td>
+                                                   </tr>
+                                                    <tr>
+                                                         <td>
+                                                               @Html.LabelFor(model => model.LongDescription)
+                                                        </td>
+                                                        <td>
+                                                          @Html.TextAreaFor(model => model.LongDescription)
+                                                    
+                                                          @Html.ValidationMessageFor(model => model.LongDescription) 
+                                                         </td>
+                                                    </tr>
+                                                            <tr>
+                                                         <td>
+                                                                 @Html.LabelFor(model => model.ShortDescription)
+                                                        </td>
+                                                        <td>
+                                                      
+                                                                @Html.TextAreaFor(model => model.ShortDescription)
+                                                                @Html.ValidationMessageFor(model => model.ShortDescription)
+                                                         </td>
+                                                    </tr>
+                                                            <tr>
+                                                         <td>
+                                                                 @Html.LabelFor(model => model.ScriptW)
+                                                        </td>
+                                                        <td>
+                                                        
+                                                                @Html.TextAreaFor(model => model.ScriptW)
+                                                                @Html.ValidationMessageFor(model => model.ScriptW)
+                                                         </td>
+                                                    </tr>
+                                                            <tr>
+                                                         <td>
+                                                            @Html.LabelFor(model => model.ScriptE)
+                                                        </td>
+                                                        <td>
+                                                          
+                                                            @Html.TextAreaFor(model => model.ScriptE)
+                                                            @Html.ValidationMessageFor(model => model.ScriptE)
+                                                         </td>
+                                                    </tr>
+                                                            <tr>
+                                                         <td>
+                                                            @Html.LabelFor(model => model.VideoW)
+                                                        </td>
+                                                        <td>
+                                                       
+                                                            @Html.EditorFor(model => model.VideoW)
+                                                            @Html.ValidationMessageFor(model => model.VideoW)
+                                                         </td>
+                                                    </tr>
+                                                            <tr>
+                                                         <td>
+                                                            @Html.LabelFor(model => model.ViewsE)
+                                                        </td>
+                                                        <td>
+                                                       
+                                                            @Html.EditorFor(model => model.VideoE)
+                                                            @Html.ValidationMessageFor(model => model.VideoE)
+                                                         </td>
+                                                    </tr>
+                                                                  <tr>
+                                                         <td>
+                                                            @Html.LabelFor(model => model.CreditsW)
+                                                        </td>
+                                                        <td>
+                                                       
+                                                            @Html.EditorFor(model => model.CreditsW)
+                                                            @Html.ValidationMessageFor(model => model.CreditsW)
+                                                         </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            @Html.LabelFor(model => model.CreditsE)
+                                                        </td>
+                                                        <td>
+
+                                                            @Html.EditorFor(model => model.CreditsE)
+                                                            @Html.ValidationMessageFor(model => model.CreditsE)
+                                                        </td>
+                                                    </tr>
+                                                               <tr>
+                                                        <td>
+                                                            @Html.LabelFor(model => model.ViewsW)
+                                                        </td>
+                                                        <td>
+                                                        
+                                                            @Html.EditorFor(model => model.ViewsW)
+                                                            @Html.ValidationMessageFor(model => model.ViewsW)
+                                                        </td>
+                                                    </tr>
+                                                                              <tr>
+                                                        <td>
+                                                            @Html.LabelFor(model => model.ViewsE)
+                                                        </td>
+                                                        <td>
+                                                        
+                                                            @Html.EditorFor(model => model.ViewsE)
+                                                                @Html.ValidationMessageFor(model => model.ViewsE)
+                                                        </td>
+                                                    </tr>                                                    <tr>
+                                                        <td>
+                                                            @Html.LabelFor(model => model.Epdf)
+                                                        </td>
+                                                        <td>
+                                                        
+                                                            @Html.EditorFor(model => model.Epdf)
+                                                            @Html.ValidationMessageFor(model => model.Epdf)
+                                                        </td>
+                                                    </tr>
+                                                               <tr>
+                                                        <td>
+                                                            @Html.LabelFor(model => model.Wpdf)
+                                                        </td>
+                                                        <td>
+                                                            @Html.EditorFor(model => model.Wpdf)
+                                                            @Html.ValidationMessageFor(model => model.Wpdf)
+                                                        </td>
+                                                    </tr>
+                                                        <tr>
+                                                        <td>
+                                                            @Html.LabelFor(model => model.ReleaseDate)
+                                                        </td>
+                                                        <td>
+                                                            @Html.EditorFor(model => model.ReleaseDate)
+                                                            @Html.ValidationMessageFor(model => model.ReleaseDate)
+                                                        </td>
+                                                    </tr>
+                                                           <tr>
+                                                        <td>
+                                                            @Html.LabelFor(model => model.Link1)
+                                                        </td>
+                                                        <td>
+                                                            @Html.EditorFor(model => model.Link1)
+                                                            @Html.ValidationMessageFor(model => model.Link1)
+                                                        </td>
+                                                    </tr>
+                                                           <tr>
+                                                        <td>
+                                                            @Html.LabelFor(model => model.Link2)
+                                                        </td>
+                                                        <td>
+                                                            @Html.EditorFor(model => model.Link2)
+                                                            @Html.ValidationMessageFor(model => model.Link2)
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- table-responsive -->
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class=" col-md-12">
+                                    <a asp-action="Index">Back to List</a>
+                                    <button style="float:right; background-color:#3a4258" class="btn btn-primary" type="submit" value=" Save">Save</button>
+                                    </div>
+                                </div>
+                            }
+                        </form>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 <div>
     <form asp-action="Edit">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+       @* <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="Id" />
          <div class="form-group">
              <label asp-for="Title"></label>
@@ -88,11 +527,6 @@
              <span asp-validation-for="Wpdf"></span>
          </div>
            <div class="form-group">
-             <label asp-for="Title"></label>
-             <input asp-for="Title" />
-             <span asp-validation-for="Title"></span>
-         </div>
-           <div class="form-group">
              <label asp-for="Link1"></label>
              <input asp-for="Link1" />
              <span asp-validation-for="Link1"></span>
@@ -127,7 +561,7 @@
          </div>
           <div>
             <a asp-action="Index">Back to List</a>
-          </div>
+          </div>*@
     </form>
 </div>
   
