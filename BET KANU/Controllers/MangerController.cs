@@ -131,7 +131,8 @@ namespace BET_KANU.Controllers
                         filename = filename + ex;
                         string path = Path.Combine(Rootpath, filename);
                         p.imgUrl5.CopyTo(new FileStream(path, FileMode.Create));
-                    }              
+                    }
+                    TempData["Message"] = p.Title + " " + "has been created successfully!";
                     _unitOfWork.manger.Add(p);
                     return RedirectToAction(nameof(Index));
                 }
@@ -338,6 +339,7 @@ namespace BET_KANU.Controllers
                     }
                 }
                 _unitOfWork.manger.Delete(id);
+                TempData["Message"] =  "The Product has been Delete successfully!";
             }
             return RedirectToAction("Index");
         }
