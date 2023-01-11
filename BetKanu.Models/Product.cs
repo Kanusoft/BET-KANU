@@ -1,8 +1,10 @@
 ﻿using BetKanu.Models.Common;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,12 +18,11 @@ namespace BetKanu.Models
         [Required]
         public string? Title { get; set; }
 
-        [Required]
-        [DisplayName("Image")]
+      
+        [DisplayName("Small Image 700")]
         public string? SmallImage { get; set; }
 
-        [Required]
-        [DisplayName("Image")]
+        [DisplayName("Cover Image 350")]
         public string? CoverImage { get; set; }
 
         [Required]
@@ -35,6 +36,7 @@ namespace BetKanu.Models
         public Target TargetAudince { get; set; }
 
         [DisplayName("Release Date")]
+        [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
 
         [DisplayName("Short Description")]
@@ -85,6 +87,29 @@ namespace BetKanu.Models
         public string? img4 { get; set; }
         [DisplayName("Image")]
         public string? img5 { get; set; }
+
+        [NotMapped]
+        public IFormFile? SmallUrl { get; set; }
+
+        [NotMapped]
+        public IFormFile? CoverUrl { get; set; }
+
+        [NotMapped]
+        public IFormFile? imgUrl { get; set; }
+
+        [NotMapped]
+        public IFormFile? imgUrl2 { get; set; }
+
+        [NotMapped]
+        public IFormFile? imgUrl3 { get; set; }
+
+        [NotMapped]
+        public IFormFile? imgUrl4 { get; set; }
+
+        [NotMapped]
+        public IFormFile? imgUrl5 { get; set; }
+
+       
 
         //public int ParentId { get; set; }
         //public Product Parent { get; set; }

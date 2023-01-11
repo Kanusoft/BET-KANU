@@ -1,21 +1,29 @@
 ﻿@model Product
-<link rel="stylesheet" href="~/css/List.css">
-<link rel="stylesheet" href="~/css/dashboard.css">
-<link rel="stylesheet" href="~/css/create.css">
 @{
     ViewBag.Title = "Create New Product";
 }
+<head>
+    <!-- file Uploads -->
+    <link href="~/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
 
-    <div id="wrapper">
+    <link rel="stylesheet" href="~/css/List.css">
+    <link rel="stylesheet" href="~/css/dashboard.css">
+    <link rel="stylesheet" href="~/css/create.css">
+</head>
+<div id="wrapper">
     <section class="bg-grey-500 promo">
             <div class="container">
                 <h1 style="color:white"> &nbsp;create</h1>
             </div>
-        </section>
+    </section>
+</div>
+<div>
+    <a asp-action="CreateEpisode">Create Episode</a>
+</div>
 
     <div class="col-md-12">
         <div class="card">
-            <form action="/Manager/Create" enctype="multipart/form-data" method="post">
+            <form action="/Mobiles/Create" enctype="multipart/form-data" method="post">
                 <div class="container">
                     <div class="col-12">
                         <form method="post" class="card">
@@ -27,7 +35,7 @@
 
                                         <div class="form-group">
                                             <label class="form-label" for="Name">   @Html.LabelFor(model => model.Title)</label>
-                                            <input class="form-control text-box single-line" asp-for="Title" />
+                                            <input class="form-control text-box single-line" data-val="true" data-val-required="The Title field is required." id="Name" name="Name" type="text" />
                                             <span class="field-validation-valid text-danger" data-valmsg-for="Name" data-valmsg-replace="true">   @Html.ValidationMessageFor(model => model.Title)</span>
                                         </div>
 
@@ -412,7 +420,7 @@
                                 <div class="form-group">
                                     <div class=" col-md-12">
                                     <a asp-action="Index">Back to List</a>
-                                        <button style="float:right; background-color:#3a4258" class="btn btn-info" type="submit" value="Create">Create</button>
+                                    <button style="float:right" class="btn btn-info" type="submit" value="Create">Create</button>
                                     </div>
                                 </div>
                             }
@@ -451,103 +459,125 @@
         <select asp-for="Category" asp-items="Html.GetEnumSelectList<Category>()">
             <option selected="selected">-None-</option>
         </select>
+        <span asp-validation-for="Category" class="text-danger"></span>
     </div>
-    <div>
+    <div class="form-group">
+        <label asp-for="SubCategory" class="control-label"></label>
+        <input asp-for="SubCategory" class="form-control" />
+        <span asp-validation-for="SubCategory" class="text-danger"></span>
+    </div>
+    <div class="form-group">
         <select asp-for="TargetAudince" asp-items="Html.GetEnumSelectList<Target>()">
             <option selected="selected">-None-</option>
         </select>
+        <span asp-validation-for="TargetAudince" class="text-danger"></span>
     </div>
-    <div>
-         @Html.LabelFor(model => model.SubCategory)
-        @Html.EditorFor(model => model.SubCategory)
-        @Html.ValidationMessageFor(model => model.SubCategory)
+    <div class="form-group">
+        <label asp-for="ReleaseDate" class="control-label"></label>
+        <input asp-for="ReleaseDate" class="form-control" />
+        <span asp-validation-for="ReleaseDate" class="text-danger"></span>
     </div>
-    <div>
-        @Html.LabelFor(model => model.LongDescription)
-        @Html.TextAreaFor(model => model.LongDescription)
-        @Html.ValidationMessageFor(model => model.LongDescription)
+    <div class="form-group">
+        <label asp-for="ShortDescription" class="control-label"></label>
+        <input asp-for="ShortDescription" class="form-control" />
+        <span asp-validation-for="ShortDescription" class="text-danger"></span>
     </div>
-     <div>
-        @Html.LabelFor(model => model.ShortDescription)
-        @Html.TextAreaFor(model => model.ShortDescription)
-        @Html.ValidationMessageFor(model => model.ShortDescription)
+    <div class="form-group">
+        <label asp-for="LongDescription" class="control-label"></label>
+        <input asp-for="LongDescription" class="form-control" />
+        <span asp-validation-for="LongDescription" class="text-danger"></span>
     </div>
-     <div>
-        @Html.LabelFor(model => model.ScriptW)
-        @Html.TextAreaFor(model => model.ScriptW)
-        @Html.ValidationMessageFor(model => model.ScriptW)
+    <div class="form-group">
+        <label asp-for="ScriptE" class="control-label"></label>
+        <input asp-for="ScriptE" class="form-control" />
+        <span asp-validation-for="ScriptE" class="text-danger"></span>
     </div>
-         <div>
-        @Html.LabelFor(model => model.ScriptE)
-        @Html.TextAreaFor(model => model.ScriptE)
-        @Html.ValidationMessageFor(model => model.ScriptE)
+    <div class="form-group">
+        <label asp-for="ScriptW" class="control-label"></label>
+        <input asp-for="ScriptW" class="form-control" />
+        <span asp-validation-for="ScriptW" class="text-danger"></span>
     </div>
-    <div>
-         @Html.LabelFor(model => model.VideoE)
-        @Html.EditorFor(model => model.VideoE)
-        @Html.ValidationMessageFor(model => model.VideoE)
+    <div class="form-group">
+        <label asp-for="CreditsE" class="control-label"></label>
+        <input asp-for="CreditsE" class="form-control" />
+        <span asp-validation-for="CreditsE" class="text-danger"></span>
     </div>
-     <div>
-         @Html.LabelFor(model => model.VideoW)
-        @Html.EditorFor(model => model.VideoW)
-        @Html.ValidationMessageFor(model => model.VideoW)
+    <div class="form-group">
+        <label asp-for="CreditsW" class="control-label"></label>
+        <input asp-for="CreditsW" class="form-control" />
+        <span asp-validation-for="CreditsW" class="text-danger"></span>
     </div>
-      <div>
-        @Html.LabelFor(model => model.CreditsW)
-        @Html.TextAreaFor(model => model.CreditsW)
-        @Html.ValidationMessageFor(model => model.CreditsW)
+    <div class="form-group">
+        <label asp-for="Link1" class="control-label"></label>
+        <input asp-for="Link1" class="form-control" />
+        <span asp-validation-for="Link1" class="text-danger"></span>
     </div>
-      <div>
-        @Html.LabelFor(model => model.CreditsE)
-        @Html.TextAreaFor(model => model.CreditsE)
-        @Html.ValidationMessageFor(model => model.CreditsE)
+    <div class="form-group">
+        <label asp-for="Link2" class="control-label"></label>
+        <input asp-for="Link2" class="form-control" />
+        <span asp-validation-for="Link2" class="text-danger"></span>
     </div>
-    <div>
-        @Html.LabelFor(model => model.ViewsW)
-        @Html.EditorFor(model => model.VideoW)
-        @Html.ValidationMessageFor(model => model.VideoW)
+    <div class="form-group">
+        <label asp-for="Wpdf" class="control-label"></label>
+        <input asp-for="Wpdf" class="form-control" />
+        <span asp-validation-for="Wpdf" class="text-danger"></span>
     </div>
-     <div>
-        @Html.LabelFor(model => model.ViewsE)
-        @Html.EditorFor(model => model.VideoE)
-        @Html.ValidationMessageFor(model => model.VideoE)
+    <div class="form-group">
+        <label asp-for="Epdf" class="control-label"></label>
+        <input asp-for="Epdf" class="form-control" />
+        <span asp-validation-for="Epdf" class="text-danger"></span>
     </div>
-    <div>
-        @Html.LabelFor(model => model.Epdf)
-        @Html.EditorFor(model => model.Epdf)
-        @Html.ValidationMessageFor(model => model.Epdf)
+    <div class="form-group">
+        <label asp-for="VideoE" class="control-label"></label>
+        <input asp-for="VideoE" class="form-control" />
+        <span asp-validation-for="VideoE" class="text-danger"></span>
     </div>
-     <div>
-        @Html.LabelFor(model => model.Wpdf)
-        @Html.EditorFor(model => model.Wpdf)
-        @Html.ValidationMessageFor(model => model.Wpdf)
-     </div>
-
-    @Html.LabelFor(model => model.img1)
-    <div>
-        <input type="file" name="img1" id="img1" />
+    <div class="form-group">
+        <label asp-for="VideoW" class="control-label"></label>
+        <input asp-for="VideoW" class="form-control" />
+        <span asp-validation-for="VideoW" class="text-danger"></span>
     </div>
-    @Html.LabelFor(model => model.img2)
-    <div>
-        <input type="file" name="img2" id="img2" />
+    <div class="form-group">
+        <label asp-for="ViewsE" class="control-label"></label>
+        <input asp-for="ViewsE" class="form-control" />
+        <span asp-validation-for="ViewsE" class="text-danger"></span>
     </div>
-    @Html.LabelFor(model => model.img3)
-    <div>
-        <input type="file" name="img3" id="img3" />
-    </div>
-    @Html.LabelFor(model => model.img4)
-    <div>
-        <input type="file" name="img4" id="img4" />
-    </div>
-    @Html.LabelFor(model => model.img5)
-    <div>
-        <input type="file" name="img5" id="img5" />
+    <div class="form-group">
+        <label asp-for="ViewsW" class="control-label"></label>
+        <input asp-for="ViewsW" class="form-control" />
+        <span asp-validation-for="ViewsW" class="text-danger"></span>
     </div>
 
-     <div>
-         <div>
-            <button style="float:right" type="submit" value="Create">Create</button>
-         </div>
-     </div>
-   *@
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts {
+    @{
+        <!-- file uploads js -->
+    <script src="~/plugins/fileuploads/js/dropify.js"></script>
+        <script>
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Drag and drop a file here or click',
+                    'replace': 'Drag and drop or click to replace',
+                    'remove': 'Remove',
+                    'error': 'Ooops, something wrong appended.'
+                },
+                error: {
+                    'fileSize': 'The file size is too big (2M max).'
+                }
+            });
+        </script>
+
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
+
+ 

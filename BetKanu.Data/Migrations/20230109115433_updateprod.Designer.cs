@@ -4,6 +4,7 @@ using BetKanu.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BetKanu.Data.Migrations
 {
     [DbContext(typeof(BKdbContext))]
-    partial class BKdbContextModelSnapshot : ModelSnapshot
+    [Migration("20230109115433_updateprod")]
+    partial class updateprod
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,7 +65,7 @@ namespace BetKanu.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Books", (string)null);
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("BetKanu.Models.Bundle", b =>
@@ -122,7 +125,7 @@ namespace BetKanu.Data.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("Bundles", (string)null);
+                    b.ToTable("Bundles");
                 });
 
             modelBuilder.Entity("BetKanu.Models.Product", b =>
@@ -214,7 +217,7 @@ namespace BetKanu.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("BetKanu.Models.ProductEpisode", b =>
@@ -254,7 +257,7 @@ namespace BetKanu.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductEpisodes", (string)null);
+                    b.ToTable("ProductEpisodes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

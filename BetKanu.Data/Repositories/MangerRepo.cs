@@ -1,5 +1,8 @@
-﻿using BetKanu.Models;
+﻿using BET_KANU.ViewModels;
+using BetKanu.Models;
+using BetKanu.Models.Common;
 using BetKanu.Models.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +19,47 @@ namespace BetKanu.Data.Repositories
         {
           _bKdb = bKdb;
         }
+
+        public Product GetOne(int id)
+        {
+            return _bKdb.Products.Where(p => p.Id == id).FirstOrDefault();
+        }
+
+        public List<Product> GetAll(string Select)
+        {
+            var product = from p in _bKdb.Products                                            
+                          select p;
+            if (Select != null)
+            {
+                Category c = (Category)Enum.Parse(typeof(Category), Select);
+                switch (Select)
+                {
+                    case "":
+                        product = product.OrderBy(p => p.Title);
+                        break;
+                    case "Books":
+                       product = product.Where(pe => pe.Category.Equals(c));
+                        break;
+                    case "Songs":
+                        product = product.Where(pe => pe.Category.Equals(c));
+                        break;
+                    case "CartoonSeries":
+                        product = product.Where(pe => pe.Category.Equals(c));
+                        break;
+                    case "Software":
+                        product = product.Where(pe => pe.Category.Equals(c));
+                        break;
+                }
+            }
+            return product.ToList();
+        }
         public int Add(Product product)
         {
             if(product != null)
-            {
+            {               
                 _bKdb.Products.Add(product);
-                _bKdb.SaveChanges();
-                return product.Id;
-            }
+                _bKdb.SaveChanges();  
+            }            
             return 0;
         }
         public bool Edit(Product product)
@@ -32,12 +68,12 @@ namespace BetKanu.Data.Repositories
             {
                 _bKdb.Products.Update(product);
                 _bKdb.SaveChanges();
-                return true;
             }
             catch (Exception)
             {
                 return false;
             }
+            return true;
         }
 
         public bool Delete(int id)
@@ -53,8 +89,40 @@ namespace BetKanu.Data.Repositories
             {
                 return false;
             }
+        } 
+        public bool DoesExist(int id)
+        {
+            return _bKdb.Products.Any(p => p.Id == id);
+        }
+        
+        public bool Edit(MangerVM manger)
+        {
+            if(manger != null && DoesExist(manger.product.Id))
+            {
+                manger.product.ReleaseDate = (manger.product.ReleaseDate == null || manger.product.ReleaseDate == null ? DateTime.Now : manger.product.ReleaseDate);
+                _bKdb.Entry(manger.product).State = EntityState.Modified;
+                _bKdb.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }            
         }
 
-       
+        public int Add(ProductEpisode episode)
+        {
+            if(episode != null)
+            {
+                _bKdb.Add(episode);
+                _bKdb.SaveChanges();
+            }
+            return 0;
+        }
+
+        public MangerVM GetProductInfo(int ProdId)
+        {
+            return new MangerVM() { product = GetOne(ProdId) };
+        }
     }
 }
