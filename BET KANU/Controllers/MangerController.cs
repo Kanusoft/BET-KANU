@@ -32,8 +32,13 @@ namespace BET_KANU.Controllers
         }
         public ActionResult Index(string Select)
         {
-            var Prod = _unitOfWork.manger.GetAll(Select);
-            return View(Prod);
+            //var Prod = _unitOfWork.manger.GetAll(Select);
+            var vm = new ProductVM()
+            {
+                products = _unitOfWork.manger.GetAll(Select),
+                episode = _unitOfWork.product.GetEpisode()
+            };
+            return View(vm);
         }
 
         public ActionResult Create()

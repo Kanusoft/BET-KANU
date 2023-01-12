@@ -9,5 +9,6 @@ namespace BetKanu.Models.Interface
         Product? GetOne(int id);
         List<Product>? RecentProduct(int num);
         ProductEpisode GetOneEpisode(int id);
+        List<ProductEpisode> GetEpisode();
     }
 }

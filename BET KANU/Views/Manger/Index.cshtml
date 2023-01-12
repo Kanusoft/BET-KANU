@@ -1,5 +1,9 @@
-﻿@model IEnumerable<Product>
+﻿@model ProductVM
 @*<link rel="stylesheet" href="~/css/List.css">*@
+
+ <!-- Data table css -->
+<link href="~/plugins/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
 <link rel="stylesheet" href="~/css/dashboard.css">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -66,16 +70,16 @@
                                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.Id)</th>
-                                            <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.Title)</th>
-                                            <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.Category)</th>
-                                            <th class="wd-20p " style="color:white">@Html.DisplayNameFor(model => model.TargetAudince)</th>
+                                            <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.product.Id)</th>
+                                            <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.product.Title)</th>
+                                            <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.product.Category)</th>
+                                            <th class="wd-20p " style="color:white">@Html.DisplayNameFor(model => model.product.TargetAudince)</th>
                                             @*<th>@Html.DisplayNameFor(model => model.SmallImage)</th>*@
                                             <th class="wd-10p" style="color:white">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var i in Model)
+                                        @foreach (var i in Model.products)
                                         {
                                             <tr>
                                                 <td>@Html.DisplayFor(model => i.Id)</td>
@@ -102,22 +106,21 @@
                                     <table id="example" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.Id)</th>
-                                                <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.Title)</th>
-                                        
-                                                <th class="wd-20p " style="color:white">@Html.DisplayNameFor(model => model.TargetAudince)</th>
+                                                <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.productEp.Id)</th>
+                                                    <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.productEp.Title)</th>
+                                                    <th class="wd-20p " style="color:white">@Html.DisplayNameFor(model => model.productEp.ProductId)</th>
                                                 @*<th>@Html.DisplayNameFor(model => model.SmallImage)</th>*@
                                                 <th class="wd-10p" style="color:white">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var i in Model)
+                                            @foreach (var i in Model.episode)
                                             {
                                                 <tr>
                                                     <td>@Html.DisplayFor(model => i.Id)</td>
                                                     <td>@Html.DisplayFor(model => i.Title)</td>
                                                   
-                                                    <td>@Html.DisplayFor(model => i.TargetAudince)</td>
+                                                    <td>@Html.DisplayFor(model => i.ProductId)</td>
                                                     @*<td><a href="@Html.DisplayFor(model => i.SmallImage)"> <img src="@Html.DisplayFor(model => i.SmallImage)"/></a></td>*@
                                                     <td>
                                                         <a class="btn btn-icon btn-info   " asp-controller="Manger" asp-action="Edit" asp-route-id="@i.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
@@ -144,6 +147,10 @@
 <table class="">
 </table>
 @section scripts{
+    <!-- Data tables -->
+    <script src="~/plugins/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatable/dataTables.bootstrap4.min.js"></script>
+
     <script>
 $(document).ready(function () {
     /* by default hide all radio_content div elements except first element */
@@ -157,5 +164,15 @@ $(document).ready(function () {
         $("." + current_raido).show();
     })
 });
+    </script>
+
+    <!-- Data table js -->
+    <script>
+
+
+        $(function (e) {
+            $('#example').DataTable();
+        });
+
     </script>
    }

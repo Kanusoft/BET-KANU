@@ -40,9 +40,10 @@ namespace BetKanu.Data.Repositories
             return _db.Products.OrderByDescending(p => p.ReleaseDate).Take(num).ToList();
         }
 
-        public List<ProductEpisode> GetEpisode(int id)
+        public List<ProductEpisode> GetEpisode()
         {
-            return _db.ProductEpisodes.Where(p => p.ProductId == id).ToList();
+            //.Where(p => p.ProductId == id)
+            return _db.ProductEpisodes.ToList();
         }
 
         public ProductEpisode GetOneEpisode(int id)
