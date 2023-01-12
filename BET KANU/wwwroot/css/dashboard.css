@@ -60,8 +60,6 @@
 
 
 /*-------- Bootstrap Framework -------*/
-@import url('https://fonts.googleapis.com/css?family=Comfortaa:300,400,700');
-@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
 
 :root {
 	--lightpink-red: #ff7088;
@@ -99,9 +97,9 @@
 	--font-family-monospace: Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
-*, *::before, *::after {
+/**, *::before, *::after {
 	box-sizing: border-box;
-}
+}*/
 
 
 
@@ -208,7 +206,7 @@ a {
 	-webkit-text-decoration-skip: objects;
 }
 
-	a:hover {
+/*	a:hover {
 		color: #9f78ff;
 		text-decoration: underline;
 	}
@@ -226,7 +224,7 @@ a {
 		a:not([href]):not([tabindex]):focus {
 			outline: 0;
 		}
-
+*/
 pre, code, kbd, samp {
 	font-family: monospace, monospace;
 	font-size: 1em;
@@ -282,12 +280,13 @@ button {
 		outline: 5px auto -webkit-focus-ring-color;
 	}
 
-input, button, select, optgroup, textarea {
+input,  select, optgroup, textarea {
 	margin: 0;
 	font-family: inherit;
 	font-size: inherit;
 	line-height: inherit;
 	color: gray;
+	width: 30em;
 }
 
 button, input {
@@ -319,7 +318,7 @@ input[type="date"], input[type="time"], input[type="datetime-local"], input[type
 textarea {
 	overflow: auto;
 	resize: vertical;
-	color:grey;
+	
 }
 
 fieldset {
@@ -614,13 +613,7 @@ pre {
 	overflow-y: scroll;
 }
 
-/*.container {
-	width: 100%;
-	padding-right: 0.75rem;
-	padding-left: 0.75rem;
-	margin-right: auto;
-	margin-left: auto;
-}
+/*
 
 @media (min-width: 576px) {
 	.container {
@@ -697,14 +690,14 @@ Hidden */
 		padding-left: 0;
 	}
 
-.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col, .col-auto, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm, .col-sm-auto, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md, .col-md-auto, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg, .col-lg-auto, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl, .col-xl-auto {
+/*.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col, .col-auto, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm, .col-sm-auto, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md, .col-md-auto, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg, .col-lg-auto, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl, .col-xl-auto {
 	position: relative;
 	width: 100%;
 	min-height: 1px;
 	padding-right: 0.75rem;
 	padding-left: 0.75rem;
-	margin-top: 4em;
-}
+	margin-top: 3em;
+}*/
 
 .col {
 	-ms-flex-preferred-size: 0;
@@ -12776,7 +12769,7 @@ html {
 	direction: ltr;
 }
 
-body {
+/*body {
 	direction: ltr;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -12789,7 +12782,7 @@ body {
 	height: 100%;
 	overflow-y: scroll;
 	position: relative;
-}
+}*/
 
 @media print {
 	body {
@@ -12830,6 +12823,7 @@ strong, b {
 
 p, ul, ol, blockquote {
 	margin-bottom: 1em;
+	display: flex;
 }
 
 blockquote {
@@ -15205,7 +15199,7 @@ a.icon {
 
 	.btn i {
 		font-size: 1rem;
-		margin-right: 6px;
+		margin-left: 4px;
 	}
 
 .btn-icon {
@@ -25181,7 +25175,7 @@ svg {
 	background: #424b65;
 }
 /***** Date Picker*****/
-
+/*
 * {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -25192,7 +25186,7 @@ svg {
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
-	}
+	}*/
 /***** time-line*****/
 .timeline__item:after {
 	background: #fff !important;
@@ -26620,7 +26614,9 @@ Inbox Message Style
 		filter: blur(1px);
 	}
 
-
+.create{
+	margin-bottom:20px;
+}
 /*hidden columns lg*/
 @media (min-width: 1200px) {
 	.visible-lg {
@@ -26797,3 +26793,12 @@ Inbox Message Style
 		display: none !important;
 	}
 }
+
+
+
+
+
+
+
+
+

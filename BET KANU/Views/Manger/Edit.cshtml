@@ -13,12 +13,12 @@
     <form asp-action="Edit" enctype="multipart/form-data">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="@Model.product.Id" />
-        
-         <div class="form-group">
-             <label asp-for="@Model.product.Title"></label>
+
+        <div class="form-group">
+            <label asp-for="@Model.product.Title"></label>
             <input asp-for="@Model.product.Title" />
             <span asp-validation-for="@Model.product.Title"></span>
-         </div>
+        </div>
         <div class="form-group">
             <label asp-for="@Model.product.SmallImage" class="control-label"></label>
             <div>
@@ -68,103 +68,103 @@
                 <span asp-validation-for="@Model.product.img5" class="text-danger"></span>
             </div>
         </div>
-          <div class="form-group">
+        <div class="form-group">
             <label asp-for="@Model.product.ShortDescription"></label>
             <input asp-for="@Model.product.ShortDescription" />
             <span asp-validation-for="@Model.product.ShortDescription"></span>
-         </div>
-          <div class="form-group">
+        </div>
+        <div class="form-group">
             <label asp-for="@Model.product.LongDescription"></label>
             <input asp-for="@Model.product.LongDescription" />
             <span asp-validation-for="@Model.product.LongDescription"></span>
-         </div>
-          <div class="form-group">
+        </div>
+        <div class="form-group">
             <label asp-for="@Model.product.ReleaseDate"></label>
             <input asp-for="@Model.product.ReleaseDate" />
             <span asp-validation-for="@Model.product.ReleaseDate"></span>
-         </div>
-         
-          <div class="form-group">
-                <label asp-for="@Model.product.Category" class="control-label"></label>
-                @Html.DropDownListFor(m => m.product.Category, new SelectList(Enum.GetValues(typeof(Category))),"Select Mail")
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.product.Category" class="control-label"></label>
+            @Html.DropDownListFor(m => m.product.Category, new SelectList(Enum.GetValues(typeof(Category))),"Select Mail")
             <span asp-validation-for="@Model.product.Category" class="text-danger"></span>
-            </div>
-          <div class="form-group">
+        </div>
+        <div class="form-group">
             <label asp-for="@Model.product.SubCategory"></label>
             <input asp-for="@Model.product.SubCategory" />
             <span asp-validation-for="@Model.product.SubCategory"></span>
-           </div>
-          <div class="form-group">
+        </div>
+        <div class="form-group">
             <label asp-for="@Model.product.TargetAudince" class="control-label"></label>
-                @Html.DropDownListFor(m => m.product.TargetAudince, new SelectList(Enum.GetValues(typeof(Target))),"Select Mail")
+            @Html.DropDownListFor(m => m.product.TargetAudince, new SelectList(Enum.GetValues(typeof(Target))),"Select Mail")
             <span asp-validation-for="@Model.product.TargetAudince" class="text-danger"></span>
-            </div>
-         
-        
-          <div class="form-group">
+        </div>
+
+
+        <div class="form-group">
             <label asp-for="@Model.product.ScriptE"></label>
             <input asp-for="@Model.product.ScriptE" />
             <span asp-validation-for="@Model.product.ScriptE"></span>
-         </div>
-           <div class="form-group">
+        </div>
+        <div class="form-group">
             <label asp-for="@Model.product.ScriptW"></label>
             <input asp-for="@Model.product.ScriptW" />
             <span asp-validation-for="@Model.product.ScriptW"></span>
-         </div>
-           <div class="form-group">
+        </div>
+        <div class="form-group">
             <label asp-for="@Model.product.CreditsW"></label>
             <input type="text" asp-for="@Model.product.CreditsW" />
             <span asp-validation-for="@Model.product.CreditsW"></span>
-         </div>
-           <div class="form-group">
+        </div>
+        <div class="form-group">
             <label asp-for="@Model.product.CreditsE"></label>
             <input type="text" asp-for="@Model.product.CreditsE" />
             <span asp-validation-for="@Model.product.CreditsE"></span>
-         </div>
-           <div class="form-group">
+        </div>
+        <div class="form-group">
             <label asp-for="@Model.product.Epdf"></label>
             <input asp-for="@Model.product.Epdf" />
             <span asp-validation-for="@Model.product.Epdf"></span>
-         </div>
-           <div class="form-group">
+        </div>
+        <div class="form-group">
             <label asp-for="@Model.product.Wpdf"></label>
             <input asp-for="@Model.product.Wpdf" />
             <span asp-validation-for="@Model.product.Wpdf"></span>
-         </div>         
-           <div class="form-group">
+        </div>
+        <div class="form-group">
             <label asp-for="@Model.product.Link1"></label>
             <input asp-for="@Model.product.Link1" />
             <span asp-validation-for="@Model.product.Link1"></span>
-         </div>
-            <div class="form-group">
+        </div>
+        <div class="form-group">
             <label asp-for="@Model.product.Link2"></label>
             <input asp-for="@Model.product.Link2" />
             <span asp-validation-for="@Model.product.Link2"></span>
-         </div>
-           <div class="form-group">
+        </div>
+        <div class="form-group">
             <label asp-for="@Model.product.VideoE"></label>
             <input asp-for="@Model.product.VideoE" />
             <span asp-validation-for="@Model.product.VideoE"></span>
-         </div>
-         <div class="form-group">
+        </div>
+        <div class="form-group">
             <label asp-for="@Model.product.VideoW"></label>
             <input asp-for="@Model.product.VideoW" />
             <span asp-validation-for="@Model.product.VideoW"></span>
-         </div>
-          
-         <div class="form-group">
-                <input type="submit" value="save" class="btn btn-primary" />
-         </div>
-          <div>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="save" class="btn btn-primary" />
+        </div>
+        <div>
             <a asp-action="Index">Back to List</a>
-          </div>
+        </div>
     </form>
 </div>
 @section Scripts {
     @{
         <!-- file uploads js -->
         <script src="~/plugins/fileuploads/js/dropify.js"></script>
-          <script>
+        <script>
             $('.dropify').dropify({
                 messages: {
                     'default': 'Drag and drop a file here or click',
@@ -176,28 +176,25 @@
                     'fileSize': 'The file size is too big (2M max).'
                 }
             });
-          </script>
+        </script>
         <script type="text/javascript">
-           
+
             $(document).ready(function () {
-            var source = document.getElementById("ImageURL").src;
-            var source2 = document.getElementById("ImageURL2").src;
-            var source3 = document.getElementById("ImageURL3").src;
-
-            $(".dropify-render:eq(0)").find("img").remove();
-            $(".dropify-preview:eq(0)").attr("Style", "Display:Block");
-            $(".dropify-render:eq(0)").append("<img src=" + source + " height=\"100%\" />");
-
-            $(".dropify-render:eq(1)").find("img").remove();
-            $(".dropify-preview:eq(1)").attr("Style", "Display:Block");
-            $(".dropify-render:eq(1)").append("<img src=" + source2 + " height=\"100%\" />");
-
-            $(".dropify-render:eq(2)").find("img").remove();
-            $(".dropify-preview:eq(2)").attr("Style", "Display:Block");
-            $(".dropify-render:eq(2)").append("<img src=" + source3 + " height=\"100%\" />");
-        });
+                var source = document.getElementById("ImageURL").src;
+                var source2 = document.getElementById("ImageURL2").src;
+                var source3 = document.getElementById("ImageURL3").src;
+                $(".dropify-render:eq(0)").find("img").remove();
+                $(".dropify-preview:eq(0)").attr("Style", "Display:Block");
+                $(".dropify-render:eq(0)").append("<img src=" + source + " height=\"100%\" />");
+                $(".dropify-render:eq(1)").find("img").remove();
+                $(".dropify-preview:eq(1)").attr("Style", "Display:Block");
+                $(".dropify-render:eq(1)").append("<img src=" + source2 + " height=\"100%\" />");
+                $(".dropify-render:eq(2)").find("img").remove();
+                $(".dropify-preview:eq(2)").attr("Style", "Display:Block");
+                $(".dropify-render:eq(2)").append("<img src=" + source3 + " height=\"100%\" />");
+            });
         </script>
 
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-}
+    }
