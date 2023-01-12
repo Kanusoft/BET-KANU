@@ -174,11 +174,10 @@ namespace BET_KANU.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(MangerVM manger)
+        public ActionResult Edit(MangerVM manger)
         {
             if (ModelState.IsValid)
-            {
-                
+            {               
                 string filename = string.Empty;
                 if (manger.product.SmallUrl != null)
                 {
@@ -357,10 +356,116 @@ namespace BET_KANU.Controllers
         {
             if (ModelState.IsValid)
             {
+                string filename = string.Empty;
+                if (episode.imgUrl != null)
+                {
+                    string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades/Episode");
+                    string Pathimg = @"/Uploades/Episode/";
+                    filename = Path.GetFileNameWithoutExtension(episode.imgUrl.FileName);
+                    string ex = Path.GetExtension(episode.imgUrl.FileName);
+                    episode.ImageE = Pathimg + filename + ex;
+                    filename = filename + ex;
+                    string path = Path.Combine(Rootpath, filename);
+                    episode.imgUrl.CopyTo(new FileStream(path, FileMode.Create));
+                }
+                string filename2 = string.Empty;
+                if (episode.imgUrl2 != null)
+                {
+                    string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades/Episode");
+                    string Pathimg = @"/Uploades/Episode/";
+                    filename2 = Path.GetFileNameWithoutExtension(episode.imgUrl2.FileName);
+                    string ex = Path.GetExtension(episode.imgUrl2.FileName);
+                    episode.ImageW = Pathimg + filename + ex;
+                    filename = filename + ex;
+                    string path = Path.Combine(Rootpath, filename);
+                    episode.imgUrl2.CopyTo(new FileStream(path, FileMode.Create));
+                }
                 _unitOfWork.manger.Add(episode);
                 return RedirectToAction(nameof(Index));
             }          
             return View(episode);
+        }
+        public ActionResult EditEpisode(int id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var prodEp = _unitOfWork.product.GetOneEpisode(id);
+            if (prodEp == null)
+            {
+                return NotFound();
+            }
+            return View(prodEp);
+        }
+        [HttpPost]
+        public ActionResult EditEP(ProductEpisode episode)
+        {
+            if (ModelState.IsValid)
+            {       
+                string filename3 = string.Empty;
+                if (episode.imgUrl != null)
+                {
+                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
+                    filename3 = episode.imgUrl.FileName;
+                    string fullpath = Path.Combine(uploade, filename3);
+                    //Delete The Old File
+                    string oldFile = _unitOfWork.product.GetOneEpisode(episode.Id).ImageE;
+                    string OldPath = Path.Combine(uploade, oldFile);
+                    if (fullpath != OldPath)
+                    {
+                        System.IO.File.Delete(OldPath);
+                        //Save The New File
+                        episode.imgUrl.CopyTo(new FileStream(fullpath, FileMode.Create));
+                    }
+                }
+                string filename4 = string.Empty;
+                if (episode.imgUrl2 != null)
+                {
+                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
+                    filename4 = episode.imgUrl2.FileName;
+                    string fullpath = Path.Combine(uploade, filename4);
+                    //Delete The Old File
+                    string oldFile = _unitOfWork.product.GetOneEpisode(episode.Id).ImageW;
+                    string OldPath = Path.Combine(uploade, oldFile);
+                    if (fullpath != OldPath)
+                    {
+                        System.IO.File.Delete(OldPath);
+                        //Save The New File
+                        episode.imgUrl2.CopyTo(new FileStream(fullpath, FileMode.Create));
+                    }
+                }            
+            }
+                if (_unitOfWork.manger.EditEP(episode))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            return View(episode);
+        }
+                    
+        public ActionResult DeleteEp(int id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var prodEp = _unitOfWork.product.GetOneEpisode(id);
+            if (prodEp == null)
+            {
+                return NotFound();
+            }
+            return View(prodEp);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteEPpost(int id)
+        {
+            if (ModelState.IsValid)
+            { 
+                _unitOfWork.manger.Delete(id);
+                TempData["Message"] = "The Product has been Delete successfully!";
+            }
+            return RedirectToAction("Index");
         }
 
 

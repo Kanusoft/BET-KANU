@@ -18,15 +18,9 @@
     {
         <div>
             <h2 style="color:red">@TempData["Message"]</h2>
-        </div>
+        </div>      
     }
-     
-    <section>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
+     <div class="card-header">
                 <div class="btn-list">
                    <a asp-action="Create" type="button" class="btn btn-success"> Create Product <i class="fa-solid fa-plus"></i></a>
                 </div>
@@ -45,6 +39,13 @@
                        <li><a href="@Url.Action("Index","Manger",new{Select = "Software"})">Software</a></li>
                     </ul>
                   </div>
+     
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+        <div class="card">
+           
                  
                
             <div class="card-body" style="color:white">

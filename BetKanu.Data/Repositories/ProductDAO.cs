@@ -44,5 +44,10 @@ namespace BetKanu.Data.Repositories
         {
             return _db.ProductEpisodes.Where(p => p.ProductId == id).ToList();
         }
+
+        public ProductEpisode GetOneEpisode(int id)
+        {
+            return _db.ProductEpisodes.FirstOrDefault((e => e.Id == id));
+        }
     }
 }

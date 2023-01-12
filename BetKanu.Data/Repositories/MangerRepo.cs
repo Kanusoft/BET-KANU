@@ -66,6 +66,7 @@ namespace BetKanu.Data.Repositories
         {
             try
             {
+
                 _bKdb.Products.Update(product);
                 _bKdb.SaveChanges();
             }
@@ -123,6 +124,35 @@ namespace BetKanu.Data.Repositories
         public MangerVM GetProductInfo(int ProdId)
         {
             return new MangerVM() { product = GetOne(ProdId) };
+        }
+
+        public bool DeleteEP (int id)
+        {
+            try
+            {
+                var ep = _bKdb.ProductEpisodes.FirstOrDefault(e => e.Id == id);
+                _bKdb.Remove(ep);
+                _bKdb.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }            
+        }
+
+        public bool EditEP(ProductEpisode episode)
+        {
+            try
+            {
+                _bKdb.ProductEpisodes.Update(episode);
+                _bKdb.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
