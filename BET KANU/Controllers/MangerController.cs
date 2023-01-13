@@ -392,6 +392,8 @@ namespace BET_KANU.Controllers
         }
         public ActionResult EditEpisode(int id)
         {
+            var prod = new SelectList(_unitOfWork.product.GetAll()?.ToDictionary(p => p.Id, p => p.Title), "Key", "Value");
+            ViewBag.ProductId = prod;
             if (id == null || id == 0)
             {
                 return NotFound();
@@ -404,7 +406,7 @@ namespace BET_KANU.Controllers
             return View(prodEp);
         }
         [HttpPost]
-        public ActionResult EditEP(ProductEpisode episode)
+        public ActionResult EditEpisode(ProductEpisode episode)
         {
             if (ModelState.IsValid)
             {       
@@ -448,7 +450,7 @@ namespace BET_KANU.Controllers
             return View(episode);
         }
                     
-        public ActionResult DeleteEp(int id)
+        public ActionResult DeleteEpisode(int id)
         {
             if (id == null || id == 0)
             {
