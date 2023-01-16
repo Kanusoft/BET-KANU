@@ -1118,6 +1118,7 @@ Hidden */
 }
 
 @media (min-width: 768px) {
+	
 	.col-md {
 		-ms-flex-preferred-size: 0;
 		flex-basis: 0;
@@ -4882,7 +4883,7 @@ ul li ul:hover {
 .page-item.active .page-link {
 	z-index: 1;
 	color: #fff;
-	background-color: #9f78ff;
+	background-color: #0d5487;
 }
 
 .page-item.disabled .page-link {
@@ -6910,7 +6911,7 @@ ul.dropdown-menu li.dropdown ul.dropdown-menu {
 
 	.dropdown-menu > li > a {
 		display: block;
-		padding: 3px 20px;
+		padding: 6px 117px 4px 6px;
 		clear: both;
 		font-weight: 400;
 		line-height: 1.428571429;
@@ -16166,7 +16167,7 @@ a.icon {
 }
 
 .btn-list {
-	margin-bottom: -.5rem;
+	margin-bottom: 0.5rem;
 	font-size: 0;
 }
 

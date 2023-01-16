@@ -1,22 +1,176 @@
 ﻿@model ProductEpisode
-
+<link href="~/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="~/css/dashboard.css">
 @{
-    ViewData["Title"] = "CreateEpisode";
+    ViewData["Title"] = "CreateEpisodee";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>CreateEpisode</h1>
-<h4>ProductEpisode</h4>
+
 <head>
-    <!-- file Uploads -->
+    <!-- file Uploads
     <link href="~/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="~/css/List.css">
-    <link rel="stylesheet" href="~/css/dashboard.css">
-    <link rel="stylesheet" href="~/css/create.css">
+  
+    <link rel="stylesheet" href="~/css/create.css"> -->
+    
 </head>
 <hr />
-<div class="row">
+
+<div id="wrapper">
+    <section class="bg-grey-500 promo">
+        <div class="container">
+            <h1 style="color:white"> &nbsp;Create Episodee</h1>
+        </div>
+    </section>
+
+    <section>
+
+        <div class="col-md-12">
+            <form class="card" asp-action="CreateEpisode" enctype="multipart/form-data" method="post">
+                <div class="container">
+                    <div class="col-12">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3 col-sm-12">
+                                
+                                    <div class="form-group">
+                                        <label asp-for="Title" class="control-label"></label>
+                                        <input asp-for="Title" class="form-control" />
+                                        <span asp-validation-for="Title" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-3 col-sm-12">
+                                    <div class="form-group">
+                                        <label asp-for="ImageE" class="control-label"></label>
+                                        <input asp-for="imgUrl" class="dropify form-control" />
+                                        <span asp-validation-for="ImageE" class="text-danger"></span>
+                                    </div>
+                                 
+                                </div>
+                                <div class="col-lg-3 col-sm-12">
+                                    <div class="form-group">
+                                        <label asp-for="ImageW" class="control-label"></label>
+                                        <input asp-for="imgUrl2" class="dropify form-control" />
+                                        <span asp-validation-for="ImageW" class="text-danger"></span>
+                                    </div>
+                                </div>
+                     
+                             
+                           
+
+                            </div>
+                        </div>
+                        <div class="card-body" style="color:white">
+                            <div class="row">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title"> Details</h3>
+                                    </div>
+
+                                    <!--START table-responsive -->
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered" style="width:100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <label asp-for="Views" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                         
+                                                            <input asp-for="Views" class="form-control" />
+                                                            <span asp-validation-for="Views" class="text-danger"></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                               
+                                                <tr>
+                                                    <td>
+                                                        <label asp-for="Status" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+
+                                                    
+                                                        <input asp-for="Status" class="form-control" />
+                                                        <span asp-validation-for="Status" class="text-danger"></span>
+                                                    </td>
+                                                </tr>
+                                
+                                                    <tr>
+                                                    <td>
+                                                        <label asp-for="ProductId" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+                                                  
+                                                        <select asp-for="ProductId" class="form-control" asp-items="@ViewBag.ProductId"></select>
+                                                    </td>
+                                                </tr>
+
+                                  
+                                                <tr>
+                                                    <td>
+                                                        <label asp-for="VideoW" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+
+                                                        <input asp-for="VideoW" class="form-control" />
+                                                        <span asp-validation-for="VideoW" class="text-danger"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label asp-for="VideoE" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+
+
+                                                        <input asp-for="VideoE" class="form-control" />
+                                                        <span asp-validation-for="VideoE" class="text-danger"></span>
+                                                    </td>
+                                                </tr>
+                                     
+                                      
+                                     
+                                      
+                                      
+                                   
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--END table-responsive -->
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class=" col-md-12">
+                                <a asp-action="Index">Back to List</a>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" style="float:right" class="btn btn-info" />
+                          
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+
+        </div>
+    </section>
+</div>
+
+@*<div class="row">
     <div class="col-md-4">
         <form asp-action="CreateEpisode">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -68,7 +222,7 @@
 
 <div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts {
     @{
@@ -90,4 +244,4 @@
 
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-}
+    }

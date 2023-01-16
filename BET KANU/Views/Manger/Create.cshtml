@@ -16,7 +16,7 @@
         </div>
     </section>
 
-    <section>
+    <section>   
     
     <div class="col-md-12">
         <form class="card" asp-action="Create" enctype="multipart/form-data" method="post">
@@ -279,8 +279,8 @@
                                                 <td>
 
                                                          
-                        <input asp-for="Link2" class="form-control" />
-                        <span asp-validation-for="Link2" class="text-danger"></span>
+                                                    <input asp-for="Link2" class="form-control" />
+                                                    <span asp-validation-for="Link2" class="text-danger"></span>
 
                                                 </td>
                                             </tr>
@@ -295,14 +295,14 @@
 
 
                     <div class="form-group">
-                        <div class=" col-md-12">
+                        <div class=" col-md-6">
                             <a asp-action="Index">Back to List</a>
                       
                         </div>
                     </div>
-                    <div class="form-group">
+                        <div class="form-group">
                             <input type="submit" value="Create" style="float:right" class="btn btn-info" />
-                    </div>
+                        </div>
                
                 </div>
 

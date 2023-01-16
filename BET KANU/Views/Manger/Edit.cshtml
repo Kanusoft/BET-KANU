@@ -1,199 +1,345 @@
 ﻿@model MangerVM
-@{
+<link href="~/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="~/css/dashboard.css">
+
+
+
+<head>
+    @{
     ViewData["Title"] = "Edit";
 }
-
+</head>
 <h1>Edit @Model.product.Title</h1>
 <hr />
-<head>
-    <!-- file Uploads -->
-    <link href="~/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
-</head>
-<div>
-    <form asp-action="Edit" enctype="multipart/form-data">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="@Model.product.Id" />
+<div id="wrapper">
+    <section class="bg-grey-500 promo">
+        <div class="container">
+            <h1 style="color:white"> &nbsp;Edit</h1>
+        </div>
+    </section>
 
-        <div class="form-group">
-            <label asp-for="@Model.product.Title"></label>
-            <input asp-for="@Model.product.Title" />
-            <span asp-validation-for="@Model.product.Title"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.SmallImage" class="control-label"></label>
-            <div>
-                <input asp-for="@Model.product.SmallUrl" type="file" class="dropify" id="ImageUrl" name="ImageUrl" src="@Model.product.SmallImage" data-height='180' />
-                <span asp-validation-for="@Model.product.SmallImage" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.CoverImage" class="control-label"></label>
-            <div>
-                <input asp-for="@Model.product.CoverUrl" type="file" class="dropify" id="ImageUrl2" name="ImageUrl2" src="@Model.product.CoverImage" data-height='180' />
-                <span asp-validation-for="@Model.product.CoverImage" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.img1" class="control-label"></label>
-            <div>
-                <input asp-for="@Model.product.imgUrl" type="file" class="dropify" id="ImageUrl3" name="ImageUrl3" src="@Model.product.img1" data-height='180' />
-                <span asp-validation-for="@Model.product.img1" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.img2" class="control-label"></label>
-            <div>
-                <input asp-for="@Model.product.imgUrl2" type="file" class="dropify" id="CoverImage" name="img2" src="@Model.product.img2" data-height='180' />
-                <span asp-validation-for="@Model.product.img2" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.img3" class="control-label"></label>
-            <div>
-                <input asp-for="@Model.product.imgUrl3" type="file" class="dropify" id="img3" name="img3" src="@Model.product.img3" data-height='180' />
-                <span asp-validation-for="@Model.product.img3" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.img4" class="control-label"></label>
-            <div>
-                <input asp-for="@Model.product.imgUrl4" type="file" class="dropify" id="img4" name="img4" src="@Model.product.img4" data-height='180' />
-                <span asp-validation-for="@Model.product.img4" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.img5" class="control-label"></label>
-            <div>
-                <input asp-for="@Model.product.imgUrl5" type="file" class="dropify" id="img5" name="img5" src="@Model.product.img5" data-height='180' />
-                <span asp-validation-for="@Model.product.img5" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.ShortDescription"></label>
-            <input asp-for="@Model.product.ShortDescription" />
-            <span asp-validation-for="@Model.product.ShortDescription"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.LongDescription"></label>
-            <input asp-for="@Model.product.LongDescription" />
-            <span asp-validation-for="@Model.product.LongDescription"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.ReleaseDate"></label>
-            <input asp-for="@Model.product.ReleaseDate" />
-            <span asp-validation-for="@Model.product.ReleaseDate"></span>
-        </div>
+    <section>
+    
+    <div class="col-md-12">
+        <form class="card" asp-action="Create" enctype="multipart/form-data" method="post">
+            <div class="container">
+                <div class="col-12">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-12">
+                                <div class="form-group">
+                                        <label asp-for="@Model.product.Title" class="control-label"></label>
+                                        <input asp-for="@Model.product.Title" class="form-control" />
+                                        <span asp-validation-for="@Model.product.Title"></span>
+                                </div>
+                                <div class="form-group">
+                                  <label asp-for="@Model.product.Category" class="control-label"></label>
 
-        <div class="form-group">
-            <label asp-for="@Model.product.Category" class="control-label"></label>
-            @Html.DropDownListFor(m => m.product.Category, new SelectList(Enum.GetValues(typeof(Category))),"Select Mail")
-            <span asp-validation-for="@Model.product.Category" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.SubCategory"></label>
-            <input asp-for="@Model.product.SubCategory" />
-            <span asp-validation-for="@Model.product.SubCategory"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.TargetAudince" class="control-label"></label>
-            @Html.DropDownListFor(m => m.product.TargetAudince, new SelectList(Enum.GetValues(typeof(Target))),"Select Mail")
-            <span asp-validation-for="@Model.product.TargetAudince" class="text-danger"></span>
-        </div>
+                                        @Html.DropDownListFor(m => m.product.Category, new SelectList(Enum.GetValues(typeof(Category))),new {@class = "form-control"})
+                         
+                                        <span asp-validation-for="@Model.product.Category" class="text-danger"></span>
+                                  
+                               
+                                </div>
+                               
+                                    <div class="form-group">
+                                             <label asp-for="@Model.product.TargetAudince" class="control-label"></label>
+                                            @Html.DropDownListFor(m => m.product.TargetAudince, new SelectList(Enum.GetValues(typeof(Target))),new {@class = "form-control"})
+                                            <span asp-validation-for="@Model.product.TargetAudince" class="text-danger"></span>
+                                    </div>
+                              
+                            </div>
+                            <div class="col-lg-3 col-sm-12">
+                                <div class="form-group">
+                                    <label asp-for="@Model.product.SmallImage" class="control-label"></label>
+                                    <input asp-for="@Model.product.SmallUrl" type="file" class="dropify" id="ImageUrl" name="ImageUrl" src="@Model.product.SmallImage" data-height='180' />
+                                    <span asp-validation-for="@Model.product.SmallImage" class="text-danger"></span>
+                                </div>
+                            </div>
+                                <div class="col-lg-3 col-sm-12">
+                                <div class="form-group">
+                                    <label asp-for="@Model.product.CoverImage" class="control-label"></label>
+                                    <div>
+                                        <input asp-for="@Model.product.CoverUrl" type="file" class="dropify" id="ImageUrl2" name="ImageUrl2" src="@Model.product.CoverImage" data-height='180' />
+                                        <span asp-validation-for="@Model.product.CoverImage" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-12">
+                                <div class="form-group">
+                                    <label asp-for="@Model.product.img1" class="control-label"></label>
+                                    <div>
+                                        <input asp-for="@Model.product.imgUrl" type="file" class="dropify" id="ImageUrl3" name="ImageUrl3" src="@Model.product.img1" data-height='180' />
+                                        <span asp-validation-for="@Model.product.img1" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                </div>
+                                    <div class="col-lg-3 col-sm-12">
+                                <div class="form-group">
+                                    <label asp-for="@Model.product.img2" class="control-label"></label>
+                                    <div>
+                                        <input asp-for="@Model.product.imgUrl2" type="file" class="dropify" id="CoverImage" name="img2" src="@Model.product.img2" data-height='180' />
+                                        <span asp-validation-for="@Model.product.img2" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                    </div>
+                                        <div class="col-lg-3 col-sm-12">
+                                <div class="form-group">
+                                    <label asp-for="@Model.product.img3" class="control-label"></label>
+                                    <div>
+                                        <input asp-for="@Model.product.imgUrl3" type="file" class="dropify" id="img3" name="img3" src="@Model.product.img3" data-height='180' />
+                                        <span asp-validation-for="@Model.product.img3" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                        </div>
+                                            <div class="col-lg-3 col-sm-12">
+                                <div class="form-group">
+                                    <label asp-for="@Model.product.img4" class="control-label"></label>
+                                    <div>
+                                        <input asp-for="@Model.product.imgUrl4" type="file" class="dropify" id="img4" name="img4" src="@Model.product.img4" data-height='180' />
+                                        <span asp-validation-for="@Model.product.img4" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                            </div>
+                            <div class="col-lg-3 col-sm-12">
+                                <div class="form-group">
+                                        <label asp-for="@Model.product.img5" class="control-label"></label>
+                                            <input asp-for="@Model.product.imgUrl5" type="file" class="dropify" id="img5" name="img5" src="@Model.product.img5" data-height='180' />
+                                            <span asp-validation-for="@Model.product.img5" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-body" style="color:white">
+                        <div class="row">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title"> Details</h3>
+                                </div>
+
+                                <!--START table-responsive -->
+                                <div class="table-responsive">
+                                         <table class="table table-striped table-bordered" style="width:100%">
+                                                    <tbody>
+                                                        <tr>
+                                                        <td>
+                                                        <label asp-for="@Model.product.SubCategory" class="control-label"></label>
+                                                        </td>  
+                                                        <td>
+                                                        <input asp-for="@Model.product.SubCategory" class="form-control" />
+                                                        <span asp-validation-for="@Model.product.SubCategory"></span>
+                                                         </td>
+                                                   </tr>
+                                                    <tr>
+                                                        <td>
+                                                        <label asp-for="@Model.product.ReleaseDate" class="control-label"></label>
+                                                        </td>  
+                                                        <td>
 
 
-        <div class="form-group">
-            <label asp-for="@Model.product.ScriptE"></label>
-            <input asp-for="@Model.product.ScriptE" />
-            <span asp-validation-for="@Model.product.ScriptE"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.ScriptW"></label>
-            <input asp-for="@Model.product.ScriptW" />
-            <span asp-validation-for="@Model.product.ScriptW"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.CreditsW"></label>
-            <input type="text" asp-for="@Model.product.CreditsW" />
+                                                        <input asp-for="@Model.product.ReleaseDate" class="form-control" />
+                                                        <span asp-validation-for="@Model.product.ReleaseDate" class="text-danger"></span>
+                                                         </td>
+                                                   </tr>
+                                                    <tr>
+                                                         <td>
+                                                        <label asp-for="@Model.product.LongDescription" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+                                                      
+                                                        <input asp-for="@Model.product.LongDescription" class="form-control" />
+                                                        <span asp-validation-for="@Model.product.LongDescription"></span>
+                                                         </td>
+                                                    </tr>
+                                                            <tr>
+                                                         <td>
+                                                        <label asp-for="@Model.product.ShortDescription" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+                                                        
+                                                        <input asp-for="@Model.product.ShortDescription" class="form-control" />
+                                                        <span asp-validation-for="@Model.product.ShortDescription"></span>
+                                                         </td>
+                                                    </tr>
+                                                            <tr>
+                                                         <td>
+                                                        <label asp-for="@Model.product.ScriptW" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+                                                        <input asp-for="@Model.product.ScriptW" class="form-control" />
+                                                            <span asp-validation-for="@Model.product.ScriptW"></span>
+                                                         </td>
+                                                    </tr>
+                                                            <tr>
+                                                         <td>
+
+                                                        <label asp-for="@Model.product.ScriptE" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+
+
+                                                        <input asp-for="@Model.product.ScriptE" class="form-control" />
+                                                        <span asp-validation-for="@Model.product.ScriptE"></span>
+                                                         </td>
+                                                    </tr>
+                                                            <tr>
+                                                         <td>
+                                                        <label asp-for="@Model.product.CreditsW" class="control-label"></label>
+                                
+                                                        </td>
+                                                        <td>
+
+
+
+                                                        <input type="text" asp-for="@Model.product.CreditsW" class="form-control" />
             <span asp-validation-for="@Model.product.CreditsW"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.CreditsE"></label>
-            <input type="text" asp-for="@Model.product.CreditsE" />
-            <span asp-validation-for="@Model.product.CreditsE"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.Epdf"></label>
-            <input asp-for="@Model.product.Epdf" />
-            <span asp-validation-for="@Model.product.Epdf"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.Wpdf"></label>
-            <input asp-for="@Model.product.Wpdf" />
-            <span asp-validation-for="@Model.product.Wpdf"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.Link1"></label>
-            <input asp-for="@Model.product.Link1" />
-            <span asp-validation-for="@Model.product.Link1"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.Link2"></label>
-            <input asp-for="@Model.product.Link2" />
-            <span asp-validation-for="@Model.product.Link2"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.VideoE"></label>
-            <input asp-for="@Model.product.VideoE" />
-            <span asp-validation-for="@Model.product.VideoE"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.product.VideoW"></label>
-            <input asp-for="@Model.product.VideoW" />
-            <span asp-validation-for="@Model.product.VideoW"></span>
-        </div>
+                                                         </td>
+                                                    </tr>
 
-        <div class="form-group">
-            <input type="submit" value="save" class="btn btn-primary" />
-        </div>
-        <div>
-            <a asp-action="Index">Back to List</a>
-        </div>
-    </form>
+                                          
+                                                    <tr>
+                                                        <td>
+                                                        <label asp-for="@Model.product.CreditsE" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+
+
+
+                                                        <input type="text" asp-for="@Model.product.CreditsE" class="form-control" />
+            <span asp-validation-for="@Model.product.CreditsE"></span>
+                                                        </td>
+                                                    </tr>
+                                            <tr>
+                                                <td>
+
+                                                        <label asp-for="@Model.product.VideoW" class="control-label"></label>
+                                                </td>
+                                                <td>
+
+                                                        <input asp-for="@Model.product.VideoW" class="form-control" />
+            <span asp-validation-for="@Model.product.VideoW"></span>
+                                                </td>
+                                            </tr>
+                                                <tr>
+                                                        <td>
+                                                    <label asp-for="@Model.product.VideoE" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+                                             
+            <input asp-for="@Model.product.VideoE" class="form-control" />
+            <span asp-validation-for="@Model.product.VideoE"></span>
+                                                        </td>
+                                                    </tr>
+                                         
+                                                                                                                              <tr>
+                                                        <td>
+                                                        <label asp-for="@Model.product.Epdf" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+
+
+
+                                                        <input asp-for="@Model.product.Epdf" class="form-control" />
+            <span asp-validation-for="@Model.product.Epdf"></span>
+                                                        </td>
+                                                    </tr>
+                                                               <tr>
+                                                        <td>
+                                                        <label asp-for="@Model.product.Wpdf" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+
+
+
+                                                    
+                                                        <input asp-for="@Model.product.Wpdf" class="form-control" />
+                                                        <span asp-validation-for="@Model.product.Wpdf"></span>
+                                                        </td>
+                                                    </tr>
+                                            <tr>
+                                                <td>
+                                               <label asp-for="@Model.product.Link1" class="control-label"></label>
+                                                </td>
+                                                <td>
+
+                                                        <input asp-for="@Model.product.Link1" class="form-control" />
+            <span asp-validation-for="@Model.product.Link1"></span>
+                                                </td>
+                                            </tr>
+                                                       <tr>
+                                                <td>
+                                                        <label asp-for="@Model.product.Link2" class="control-label"></label>
+                                                </td>
+                                                <td>
+
+                                                        <input asp-for="@Model.product.Link2" class="form-control" />
+            <span asp-validation-for="@Model.product.Link2"></span>
+
+                                                </td>
+                                            </tr>
+                                                    </tbody>
+                                                </table>
+                                </div>
+                                <!--END table-responsive -->
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class=" col-md-12">
+                            <a asp-action="Index">Back to List</a>
+                      
+                        </div>
+                    </div>
+                    <div class="form-group">
+                            <input type="submit" value="Create" style="float:right;width: 19%;
+    margin-right: 32px" class="btn btn-success btn-form marg-right5" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    </section>
 </div>
+
 @section Scripts {
     @{
-        <!-- file uploads js -->
-        <script src="~/plugins/fileuploads/js/dropify.js"></script>
-        <script>
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Drag and drop a file here or click',
-                    'replace': 'Drag and drop or click to replace',
-                    'remove': 'Remove',
-                    'error': 'Ooops, something wrong appended.'
-                },
-                error: {
-                    'fileSize': 'The file size is too big (2M max).'
-                }
-            });
-        </script>
-        <script type="text/javascript">
+    <!-- file uploads js -->
+    <script src="~/plugins/fileuploads/js/dropify.js"></script>
+    <script>
+                $('.dropify').dropify({
+                    messages: {
+                        'default': 'Drag and drop a file here or click',
+                        'replace': 'Drag and drop or click to replace',
+                        'remove': 'Remove',
+                        'error': 'Ooops, something wrong appended.'
+                    },
+                    error: {
+                        'fileSize': 'The file size is too big (2M max).'
+                    }
+                });
+    </script>
+    <script type="text/javascript">
 
-            $(document).ready(function () {
-                var source = document.getElementById("ImageURL").src;
-                var source2 = document.getElementById("ImageURL2").src;
-                var source3 = document.getElementById("ImageURL3").src;
-                $(".dropify-render:eq(0)").find("img").remove();
-                $(".dropify-preview:eq(0)").attr("Style", "Display:Block");
-                $(".dropify-render:eq(0)").append("<img src=" + source + " height=\"100%\" />");
-                $(".dropify-render:eq(1)").find("img").remove();
-                $(".dropify-preview:eq(1)").attr("Style", "Display:Block");
-                $(".dropify-render:eq(1)").append("<img src=" + source2 + " height=\"100%\" />");
-                $(".dropify-render:eq(2)").find("img").remove();
-                $(".dropify-preview:eq(2)").attr("Style", "Display:Block");
-                $(".dropify-render:eq(2)").append("<img src=" + source3 + " height=\"100%\" />");
-            });
-        </script>
+                $(document).ready(function () {
+                    var source = document.getElementById("ImageURL").src;
+                    var source2 = document.getElementById("ImageURL2").src;
+                    var source3 = document.getElementById("ImageURL3").src;
+                    $(".dropify-render:eq(0)").find("img").remove();
+                    $(".dropify-preview:eq(0)").attr("Style", "Display:Block");
+                    $(".dropify-render:eq(0)").append("<img src=" + source + " height=\"100%\" />");
+                    $(".dropify-render:eq(1)").find("img").remove();
+                    $(".dropify-preview:eq(1)").attr("Style", "Display:Block");
+                    $(".dropify-render:eq(1)").append("<img src=" + source2 + " height=\"100%\" />");
+                    $(".dropify-render:eq(2)").find("img").remove();
+                    $(".dropify-preview:eq(2)").attr("Style", "Display:Block");
+                    $(".dropify-render:eq(2)").append("<img src=" + source3 + " height=\"100%\" />");
+                });
+    </script>
 
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
