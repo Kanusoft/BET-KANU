@@ -5,6 +5,7 @@
 <link href="~/plugins/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="~/css/dashboard.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 @{
     ViewBag.Title = "Products List";
 }
@@ -14,13 +15,19 @@
             <h1 style="color:white"> &nbsp;List</h1>
         </div>
     </section>
-
     @if (TempData["Messagee"] != null)
+    {
+        <script>
+
+            alert('@Html.Raw(TempData["Messagee"])')
+        </script>
+    }
+@*    @if (TempData["Messagee"] != null)
     {
         <div>
             <h2 style="color:red">@TempData["Messagee"]</h2>
         </div>      
-    }
+    }*@
     <section>
         <div class="container">
           

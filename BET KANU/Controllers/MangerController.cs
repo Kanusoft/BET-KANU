@@ -385,6 +385,7 @@ namespace BET_KANU.Controllers
                     string path = Path.Combine(Rootpath, filename);
                     episode.imgUrl2.CopyTo(new FileStream(path, FileMode.Create));
                 }
+                TempData["Messagee"] = episode.Title + " " + "has been created successfully!";
                 _unitOfWork.manger.Add(episode);
                 return RedirectToAction(nameof(Index));
             }          
