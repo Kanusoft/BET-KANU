@@ -19,10 +19,10 @@ namespace BetKanu.Models
         public string? Title { get; set; }
 
       
-        [DisplayName("Small Image 700")]
+        [DisplayName("Image")]
         public string? SmallImage { get; set; }
 
-        [DisplayName("Cover Image 350")]
+        [DisplayName("Cover Image")]
         public string? CoverImage { get; set; }
 
         [Required]
@@ -89,9 +89,11 @@ namespace BetKanu.Models
         public string? img5 { get; set; }
 
         [NotMapped]
+        [DisplayName("Image")]
         public IFormFile? SmallUrl { get; set; }
 
         [NotMapped]
+        [DisplayName("Image")]
         public IFormFile? CoverUrl { get; set; }
 
         [NotMapped]

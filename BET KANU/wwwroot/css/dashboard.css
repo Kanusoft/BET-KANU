@@ -198,7 +198,7 @@ sub {
 sup {
 	top: -.5em;
 }
-
+/*
 a {
 	color: #9f78ff;
 	text-decoration: none;
@@ -206,7 +206,7 @@ a {
 	-webkit-text-decoration-skip: objects;
 }
 
-/*	a:hover {
+	a:hover {
 		color: #9f78ff;
 		text-decoration: underline;
 	}
@@ -26795,7 +26795,16 @@ Inbox Message Style
 	}
 }
 
-
+.BackToList{
+	color:#fff;
+}
+	.BackToList:hover {
+		color: #8f98c1;
+		background-color: #3a4258;
+		margin:10px;
+		padding:10px;
+		border-radius:10px;
+	}
 
 
 

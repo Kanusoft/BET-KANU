@@ -1,13 +1,10 @@
 ﻿@model ProductVM
-@*<link rel="stylesheet" href="~/css/List.css">*@
+
 
  <!-- Data table css -->
 <link href="~/plugins/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" />
-
 <link rel="stylesheet" href="~/css/dashboard.css">
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 @{
     ViewBag.Title = "Products List";
 }
@@ -17,22 +14,23 @@
             <h1 style="color:white"> &nbsp;List</h1>
         </div>
     </section>
-@*
-    @if (TempData["Message"] != null)
+
+    @if (TempData["Messagee"] != null)
     {
         <div>
-            <h2 style="color:red">@TempData["Message"]</h2>
+            <h2 style="color:red">@TempData["Messagee"]</h2>
         </div>      
-    }*@
+    }
     <section>
         <div class="container">
-            <div class="col-md-12">
+          
                 <div class="col-md-12 create">
+                  <div class="col-md-12">
                     <div class="btn-list">
-                        <a asp-action="Create" type="button" class="btn btn-success"> Create Product <i class="fa-solid fa-plus"></i></a>
-                        <a asp-action="CreateEpisode" type="button" class="btn btn-success">Create Episode <i class="fa-solid fa-plus"></i></a>
-                        <div class="btn-list" id="btn1" style="float:right">
-                            <div class="sorting clearfix center-grid">
+                      <a asp-action="Create" type="button" class="btn btn-success"> Create Product <i class="fa-solid fa-plus"></i></a>
+                      <a asp-action="CreateEpisode" type="button" class="btn btn-success">Create Episode <i class="fa-solid fa-plus"></i></a>
+                      <div class="btn-list" id="btn1" style="float:right">
+                        <div class="sorting clearfix center-grid">
                                 <div class="radio_wrap btn btn-success" style="margin-right:10px" data-radio="radio_1">
 
                                     <span class="radio_mark">
@@ -41,16 +39,14 @@
                                 </div>
                                 <div class="radio_wrap btn btn-success" data-radio="radio_2">
 
-                                    <span class="radio_mark">
-                                        Epicode
-                                    </span>
-                                </div>
-                           
+                                <span class="radio_mark" >
+                                   Epicode
+                                </span>
                             </div>
                         </div>
-                    </div>
+                      </div>
+                 </div>
                 </div>
-            
                 <div class="col-md-12">
                     <div class="card">
                    
@@ -93,9 +89,7 @@
                                                 <td>
                                                     <a class="btn btn-icon btn-info   " asp-controller="Manger" asp-action="Edit" asp-route-id="@i.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
                                                     <a class="btn btn-icon btn-orange btn-danger  " asp-controller="Manger" asp-action="Delete" asp-route-id="@i.Id"><i class="fa-solid fa-trash-can"></i>Delete</a>
-
                                                 </td>
-
                                             </tr>
                                         }
                                     </tbody>
@@ -106,7 +100,7 @@
                         <div class="radio_content radio_2">
                             <div class="card-body" style="color:white">
                                 <div class="table-responsive">
-                                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                    <table id="example2" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.productEp.Id)</th>
@@ -121,35 +115,32 @@
                                             {
                                                 <tr>
                                                     <td>@Html.DisplayFor(model => i.Id)</td>
-                                                    <td>@Html.DisplayFor(model => i.Title)</td>
-                                                  
+                                                    <td>@Html.DisplayFor(model => i.Title)</td>                                                  
                                                     <td>@Html.DisplayFor(model => i.ProductId)</td>
                                                     @*<td><a href="@Html.DisplayFor(model => i.SmallImage)"> <img src="@Html.DisplayFor(model => i.SmallImage)"/></a></td>*@
                                                     <td>
-                                                        <a class="btn btn-icon btn-info   " asp-controller="Manger" asp-action="Edit" asp-route-id="@i.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
-                                                        <a class="btn btn-icon btn-orange btn-danger  " asp-controller="Manger" asp-action="Delete" asp-route-id="@i.Id"><i class="fa-solid fa-trash-can"></i>Delete</a>
-
+                                                       <a class="btn btn-icon btn-info   " asp-controller="Manger" asp-action="EditEpisode" asp-route-id="@i.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
+                                                       <a class="btn btn-icon btn-orange btn-danger  " asp-controller="Manger" asp-action="DeleteEpisode" asp-route-id="@i.Id"><i class="fa-solid fa-trash-can"></i>Delete</a>
                                                     </td>
-
                                                 </tr>
                                             }
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-
                         </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+     
     </section>
     <partial name="_LoginPartial" />
 </div>
 <table class="">
 </table>
 @section scripts{
+
     <!-- Data tables -->
     <script src="~/plugins/datatable/jquery.dataTables.min.js"></script>
     <script src="~/plugins/datatable/dataTables.bootstrap4.min.js"></script>
@@ -172,12 +163,14 @@
 
     <!-- Data table js -->
     <script>
-
-
         $(function (e) {
             $('#example').DataTable();
         });
-
+    </script>
+    <script>
+        $(function (e) {
+            $('#example2').DataTable();
+        });
     </script>
     <script>
 

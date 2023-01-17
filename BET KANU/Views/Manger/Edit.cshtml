@@ -1,5 +1,6 @@
 ﻿@model MangerVM
 <link href="~/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
+
 <link rel="stylesheet" href="~/css/dashboard.css">
 
 
@@ -9,8 +10,7 @@
     ViewData["Title"] = "Edit";
 }
 </head>
-<h1>Edit @Model.product.Title</h1>
-<hr />
+
 <div id="wrapper">
     <section class="bg-grey-500 promo">
         <div class="container">
@@ -21,10 +21,11 @@
     <section>
     
     <div class="col-md-12">
-        <form class="card" asp-action="Create" enctype="multipart/form-data" method="post">
+            <form class="card" asp-action="Edit" enctype="multipart/form-data">
             <div class="container">
                 <div class="col-12">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="@Model.product.Id" />
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-3 col-sm-12">
@@ -211,7 +212,7 @@
             <span asp-validation-for="@Model.product.CreditsE"></span>
                                                         </td>
                                                     </tr>
-                                            <tr>
+                                            <t0r>
                                                 <td>
 
                                                         <label asp-for="@Model.product.VideoW" class="control-label"></label>
@@ -221,7 +222,7 @@
                                                         <input asp-for="@Model.product.VideoW" class="form-control" />
             <span asp-validation-for="@Model.product.VideoW"></span>
                                                 </td>
-                                            </tr>
+                                            </t0r>
                                                 <tr>
                                                         <td>
                                                     <label asp-for="@Model.product.VideoE" class="control-label"></label>
@@ -232,7 +233,28 @@
             <span asp-validation-for="@Model.product.VideoE"></span>
                                                         </td>
                                                     </tr>
-                                         
+                                                <tr>
+                                                    <td>
+                                                        <label asp-for="@Model.product.VideoW" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+    
+
+                                                        <input asp-for="@Model.product.VideoW" class=" form-control" />
+                                                        <span asp-validation-for="@Model.product.VideoW" class=" text-danger"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label asp-for="@Model.product.ViewsE" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+
+                                                        <input asp-for="@Model.product.ViewsE" class="form-control" />
+                                                        <span asp-validation-for="@Model.product.ViewsE" class="text-danger"></span>
+
+                                                    </td>
+                                                </tr>
                                                                                                                               <tr>
                                                         <td>
                                                         <label asp-for="@Model.product.Epdf" class="control-label"></label>
@@ -242,7 +264,7 @@
 
 
                                                         <input asp-for="@Model.product.Epdf" class="form-control" />
-            <span asp-validation-for="@Model.product.Epdf"></span>
+                                                       <span asp-validation-for="@Model.product.Epdf"></span>
                                                         </td>
                                                     </tr>
                                                                <tr>
@@ -287,17 +309,14 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div class="form-group">
-                        <div class=" col-md-12">
-                            <a asp-action="Index">Back to List</a>
-                      
+                            <div class=" col-md-12">
+                                <a asp-action="Index" class="BackToList">Back to List</a>
                         </div>
                     </div>
                     <div class="form-group">
-                            <input type="submit" value="Create" style="float:right;width: 19%;
-    margin-right: 32px" class="btn btn-success btn-form marg-right5" />
+                            <input type="submit" value="save" style="float:right;width: 19%;    background-color: #3a4258;
+                             margin-right: 32px" class="btn btn-primary btn-shadow" />
                     </div>
                 </div>
             </div>
