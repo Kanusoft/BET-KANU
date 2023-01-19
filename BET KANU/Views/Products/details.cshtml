@@ -1441,16 +1441,25 @@
                                     </ul>
                                 </div>
                             </div>
-                        
+                               @if(Model.Epdf == null){
+                                                  <div class="img-test">   </div>
+                                        }else{
+                                                  <div class="well" style="text-align:left ; direction:ltr">
+                                
+                                    <h3>  @Model.ScriptE</h3>
+                                    <h3>  @Model.ScriptW</h3>
+                               
+                            </div>
+                                        }
                             <div class="well" style="text-align:left ; direction:ltr">
                                 <p>
-                        @Model.LongDescription
+                                  @Model.LongDescription
                                 </p>
                             </div>
                             <div class="well" style="text-align:left ; direction:ltr">
                                 <h4 style="text-align:left ; direction:ltr">Features:</h4>
                                 <ul>
-                             @Html.Raw(@Model.CreditsW)
+                                 @Html.Raw(@Model.CreditsW)
                                 </ul>
                             </div>
                             <div class="well">
@@ -1465,7 +1474,7 @@
                                 </ul> 
                             </div>
                             <div class="well">
-                                <h2 style="text-align:center">      <img style="width:150px" src="/content/img/reader.png" /> </h2>
+                                <h2 style="text-align:center">      <img style="width:150px" src="/img/Products/banners/reader.png" /> </h2>
                                 <h4 style="text-align: center; padding-top: 10px; padding-bottom: 10px ">   BET KANU Reader App </h4>
 
                                 <a href="https://apps.apple.com/tr/app/bet-kanu-reader/id1452612542" class="btn btn-warning btn-block">Get it on the App Store!</a>
@@ -1478,13 +1487,21 @@
                         <div class="col-md-12">
                             <br>
                             <div class="row">
-                                <div class="well">
-                                    <h2 style="text-align:center">      <img src="@Model.img1"> </h2>
-
-                                    &nbsp;
-                                    <a href="mailto:shmuniha@gmail.com" class="btn btn-warning btn-block">Order Now! <i class="fa fa-google"></i></a>
-                                    <a href="https://www.instagram.com/erzaehlungen_turabdin/" class="btn btn-instagram btn-block">Order Now! <i class="fa fa-instagram"></i> </a>
-
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="well">
+                                        <img src="@Model.img1" alt="">
+                                        @if(Model.Link1 == null){
+                                                  <div class="img-test">   </div>
+                                        }else{
+                                               <a href="mailto:shmuniha@gmail.com" class="btn btn-warning btn-block">Order Now! <i class="fa fa-google"></i></a>
+                                        }
+                                       @if(Model.Link2 == null){
+                                                  <div class="img-test">   </div>
+                                        }else{
+                                            <a href="https://www.instagram.com/erzaehlungen_turabdin/" class="btn btn-instagram btn-block">Order Now! <i class="fa fa-instagram"></i> </a>
+                                        }
+                                                 &nbsp;
+                                    </div>
                                 </div>
 
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -1493,7 +1510,7 @@
 
                                     </div>
                                 </div>
-                                 @if(Model.img3 == "")
+                                 @if(Model.img3 == null)
                                 {
                                        <div class="img-test"></div>
                                 }else{
@@ -1504,7 +1521,7 @@
                                         </div>
                                     </div>
                                 }
-                                   @if(Model.img4 == "")
+                                @if (Model.img4 == null)
                                 {
                                        <div class="img-test"></div>
                                 }else{
@@ -1515,7 +1532,7 @@
                                         </div>
                                     </div>
                                 }
-                                @if(Model.img5 == "")
+                                @if (Model.img5 == null)
                                 {
                                        <div class="img-test"></div>
                                 }else{
