@@ -16,7 +16,7 @@
         </div>
     </section>
 
-    <section>
+    <section>   
     
     <div class="col-md-12">
         <form class="card" asp-action="Create" enctype="multipart/form-data" method="post">
@@ -236,7 +236,7 @@
                                               
                                                         </td>
                                                     </tr>
-                                                                                                                              <tr>
+                                                         <tr>                                                                 
                                                         <td>
                                                     <label asp-for="Epdf" class="control-label"></label>
                                                         </td>
@@ -246,8 +246,8 @@
                                                     <input asp-for="Epdf" class="form-control" />
                                                     <span asp-validation-for="Epdf" class="text-danger"></span>
                                                         </td>
-                                                    </tr>
-                                                               <tr>
+                                                </tr>
+                                                <tr>
                                                         <td>
                                                     <label asp-for="Wpdf" class="control-label"></label>
                                                         </td>
@@ -259,35 +259,31 @@
                                                     <span asp-validation-for="Wpdf" class="text-danger"></span>
                                                         </td>
                                                     </tr>
-                                            <tr>
-                                                <td>
-                                                    <label asp-for="Link1" class="control-label"></label>
-                                                </td>
-                                                <td>
-
-
-
-                                                   
-                                                    <input asp-for="Link1" class="form-control" />
-                                                    <span asp-validation-for="Link1" class="text-danger"></span>
-                                                </td>
-                                            </tr>
-                                                       <tr>
-                                                <td>
-                                                    <label asp-for="Link2" class="control-label"></label>
-                                                </td>
-                                                <td>
+                                                    <tr>
+                                                        <td>
+                                                            <label asp-for="Link1" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+                                                            <input asp-for="Link1" class="form-control" />
+                                                            <span asp-validation-for="Link1" class="text-danger"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <label asp-for="Link2" class="control-label"></label>
+                                                        </td>
+                                                        <td>
 
                                                          
-                        <input asp-for="Link2" class="form-control" />
-                        <span asp-validation-for="Link2" class="text-danger"></span>
+                                                            <input asp-for="Link2" class="form-control" />
+                                                            <span asp-validation-for="Link2" class="text-danger"></span>
 
-                                                </td>
-                                            </tr>
+                                                        </td>
+                                                     </tr>
                                                     </tbody>
                                                 </table>
                                 </div>
-                                <!--END table-responsive -->
+                                    <!--END table-responsive #3a4258-->
 
                             </div>
                         </div>
@@ -295,14 +291,14 @@
 
 
                     <div class="form-group">
-                        <div class=" col-md-12">
-                            <a asp-action="Index">Back to List</a>
-                      
+                            <div class=" col-md-6" >
+                                <a asp-action="Index" class="BackToList" >Back to List</a>
                         </div>
                     </div>
-                    <div class="form-group">
-                            <input type="submit" value="Create" style="float:right" class="btn btn-info" />
-                    </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" style="float:right;width: 19%;background-color: #3a4258;
+                               margin-right: 32px" class="btn btn-primary btn-shadow" />
+                        </div>
                
                 </div>
 

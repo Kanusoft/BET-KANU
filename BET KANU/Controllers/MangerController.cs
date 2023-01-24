@@ -137,7 +137,7 @@ namespace BET_KANU.Controllers
                         string path = Path.Combine(Rootpath, filename);
                         p.imgUrl5.CopyTo(new FileStream(path, FileMode.Create));
                     }
-                    TempData["Message"] = p.Title + " " + "has been created successfully!";
+                    TempData["Messagee"] = p.Title + " " + "has been created successfully!";
                     _unitOfWork.manger.Add(p);
                     return RedirectToAction(nameof(Index));
                 }
@@ -385,6 +385,7 @@ namespace BET_KANU.Controllers
                     string path = Path.Combine(Rootpath, filename);
                     episode.imgUrl2.CopyTo(new FileStream(path, FileMode.Create));
                 }
+                TempData["Messagee"] = episode.Title + " " + "has been created successfully!";
                 _unitOfWork.manger.Add(episode);
                 return RedirectToAction(nameof(Index));
             }          

@@ -5,30 +5,37 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>DeleteEp</h1>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>ProductEpisode</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>     
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ProductId)
-        </dd>
-    </dl>
+<div id="wrapper">
+    <section class="overflow-hidden">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="color:#6d6e71; text-align:center">
+                    <h3>Are you sure you want delete this?</h3>
+                </div>
 
-    <form asp-action="DeleteEpPost" asp-route-id="@Model.Id">
-        @* <input type="hidden" asp-for="Id" />*@
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-50" style="color:#6d6e71; text-align:center">
+                    <div class="form-group">
+                        <label>     @Html.DisplayFor(model => model.Title)</label>
+                    </div>
+                    <div class="form-group">
+                        <label>      @Html.DisplayFor(model => model.ProductId)</label>
+                    </div>
+                    <div class="text-center margin-top-30">
+                        <form asp-action="DeleteEpPost" asp-route-id="@Model.Id">
+                            <input type="submit" onclick="PopUpep()" value="Delete" class="btn btn-success btn-form marg-right5" /> |
+                            <a asp-action="Index" class="btn btn-danger btn-form">Back To List</a>
+
+                        </form>
+                  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
+
+
+<script>
+    function PopUpep() { alert("The Product has been Delete successfully!!") }
+</script>
