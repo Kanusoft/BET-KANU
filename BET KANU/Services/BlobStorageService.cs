@@ -1,6 +1,6 @@
 ﻿using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace BET_KANU.Services
 {
@@ -8,12 +8,16 @@ namespace BET_KANU.Services
     {
         private readonly string? _storageConnectionString;
         private readonly string? _storageContainerName;
+        
 
         public BlobStorageService(IConfiguration configuration)
         {
             _storageConnectionString = configuration.GetValue<string>("BlobConnectionString");
             _storageContainerName = configuration.GetValue<string>("BlobContainerName");
         }
+
+     
+       
         public async Task UploadBlobFileAsync(IFormFile files)
         {
             try
@@ -64,5 +68,27 @@ namespace BET_KANU.Services
         }
 
        
+    }
+}
+
+public class BlobStorage
+{
+
+    [Display(Name = "File Name")]
+    public string FileName
+    {
+        get;
+        set;
+    }
+    [Display(Name = "File Size")]
+    public string FileSize
+    {
+        get;
+        set;
+    }
+    public string Modified
+    {
+        get;
+        set;
     }
 }

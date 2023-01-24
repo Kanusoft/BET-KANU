@@ -22,9 +22,9 @@ namespace BetKanu.Data.Repositories
             return _db.Products.OrderByDescending(p => p.ReleaseDate).ToList();
                      
         }
-        public List<Product> GetAll(Category category , Target target)
+        public List<Product> GetAll(Category category)
         {
-            return _db.Products.Where(p => p.Category == category && p.TargetAudince == target).ToList();
+            return _db.Products.Where(p => p.Category == category).ToList();
         }
         public Product GetOne(int id)
         {
