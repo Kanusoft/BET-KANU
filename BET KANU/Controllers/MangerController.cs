@@ -471,7 +471,7 @@ namespace BET_KANU.Controllers
         {
             if (ModelState.IsValid)
             { 
-                _unitOfWork.manger.Delete(id);
+                _unitOfWork.manger.DeleteEP(id);
                 TempData["Message"] = "The Product has been Delete successfully!";
             }
             return RedirectToAction("Index");
