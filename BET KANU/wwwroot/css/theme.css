@@ -4167,7 +4167,7 @@ section#video {
 }
 .widget-list ul li {
 	display: block;
-	border-bottom: 1px solid rgba(0,0,0, 0.08);
+
 	padding: 15px 0;
 }
 .widget-list ul li:first-child {

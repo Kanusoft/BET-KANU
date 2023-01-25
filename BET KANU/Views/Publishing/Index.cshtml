@@ -16,159 +16,42 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                            @foreach(var b in Model.products)
-                            {
-                                <div class="post post-md no-border col-md-6">
-                                    <div class="row">
-                            <div class="col-md-12">
-                                <div class="post-thumbnail">
-                                        <a asp-controller="Products" asp-action="details" asp-route-id="@b.Id"><img src="@b.SmallImage" alt=""></a>
-                                    <div class="post-caption" style="background-color:darkgray">@b.Category</div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="post-header">
-                                    <div class="post-title">
-                                            <h4><a asp-controller="Products" asp-action="details" asp-route-id="@b.Id">@b.Title</a></h4>
-                                        <ul class="post-meta">
-                                            <li><i class="fa fa-book"></i> @b.Category</li>
-                                            <li><i class="fa fa-info"></i> @b.SubCategory </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <p>
-                                   @b.ShortDescription
-                                </p>
-                                    <a asp-controller="Products" asp-action="details" asp-route-id="@b.Id" class="btn btn-info btn-shadow">Info</a>
-                            </div>
-                                    </div>
-                                </div>
-                            }
                 
-                            
-                 @*   <div class="post post-md no-border col-md-6 ">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="post-thumbnail">
-                                    <a href="~/products/penandpaperbook"><img src="/img/products/banners/ppa_1920_700.jpg" alt=""></a>
-                                    <div class="post-caption" style="background-color:darkgray">Book</div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="post-header">
-                                    <div class="post-title">
-                                        <h4><a href="~/products/penandpaperbook">    PEN, PAPER, & APP</a></h4>
-                                        <ul class="post-meta">
-                                            <li><i class="fa fa-book"></i> Book</li>
-                                            <li><i class="fa fa-info"></i> Educational Book </li>
-                                        </ul>
+                            @foreach (var b in Model.products)
+                            {
+                        <div class="post post-md no-border col-md-6 ">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="post-thumbnail">
+                                        <a href="~/products/UrhoySchooCurriculum"><img src="@b.SmallImage" alt=""></a>
+                                        <div class="post-caption" style="background-color:darkgray">@b.Category</div>
                                     </div>
                                 </div>
-                                <p>
-                                    This is the first full curriculum in Surayt, the Syriac Language of Tur-abdin. In this series, the child learns the letters and how to read and hear Syriac and speak on different topics.
-
-
-                                </p>
-                                <a href="~/products/penandpaperbook" class="btn btn-info btn-shadow">Info</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="post post-md no-border col-md-6 ">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="post-thumbnail">
-                                    <a href="~/products/kidssongsbook"><img src="/img/products/banners/kidssongsbook_1920_700.jpg" alt=""></a>
-                                    <div class="post-caption" style="background-color:darkgray">Book</div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="post-header">
-                                    <div class="post-title">
-                                        <h4><a href="~/products/kidssongsbook">Kids Songs Book</a></h4>
-                                        <ul class="post-meta">
-                                            <li><i class="fa fa-book"></i> Book</li>
-                                            <li><i class="fa fa-music"></i> Educational Book </li>
-                                        </ul>
+                                <div class="col-md-12">
+                                    <div class="post-header">
+                                        <div class="post-title">
+                                            <h4><a href="~/products/UrhoySchooCurriculum">@b.Title</a></h4>
+                                            <ul class="post-meta">
+                                                <li><i class="fa fa-book"></i> @b.Category</li>
+                                                <li><i class="fa fa-info"></i> @b.SubCategory </li>
+                                            </ul>
+                                        </div>
                                     </div>
+                                    <p>
+                                        @b.ShortDescription
+                                    </p>
+                                    <a asp-controller="Products" asp-action="details" asp-route-id="@b.Id" class="btn btn-info btn-shadow">Info</a>
                                 </div>
-                                <p>
-                                    A children's book that contains many songs and stories in addition to poetry. The content is displayed via text and graphics that express the content.
-
-                                </p>
-                                <a href="~/products/kidssongsbook" class="btn btn-info btn-shadow">Info</a>
                             </div>
                         </div>
-                    </div>
-                    <div class="post post-md no-border col-md-6 ">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="post-thumbnail">
-                                    <a href="~/products/betkanucoloringbook"><img src="/img/products/banners/nmcoloringbook_1920_700.jpg" alt=""></a>
-                                    <div class="post-caption" style="background-color:darkgray">Book</div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="post-header">
-                                    <div class="post-title">
-                                        <h4><a href="~/products/betkanucoloringbook">Nino & Mia Coloring Book</a></h4>
-                                        <ul class="post-meta">
-                                            <li><i class="fa fa-book"></i> Book</li>
-                                            <li><i class="fa fa-paint-brush"></i> Coloring Book </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <p>
-                                    A simple handout coloring book based on the first season of Nino & Mia.  The children will enjoy going through and coloring the 13 episodes of the Habits season of N&M,
-                                </p>
-                                <a href="~/products/betkanucoloringbook" class="btn btn-info btn-shadow">Info</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="post post-md no-border col-md-6 ">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="post-thumbnail">
-                                    <a href="~/Products/BETKANUConversationBooklet"><img src="/img/products/banners/bkconversationbook_1920_700.jpg" alt=""></a>
-                                    <div class="post-caption" style="background-color:darkgray">Book</div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="post-header">
-                                    <div class="post-title">
-                                        <h4><a href="~/Products/BETKANUConversationBooklet">BK Conversation Booklet</a></h4>
-                                        <ul class="post-meta">
-                                            <li><i class="fa fa-book"></i> Book</li>
-                                            <li><i class="fa fa-info"></i> Educational </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <p>
-                                    Simple entry level conversation booklet to be distributed in our local and global events; premiered in the Syriac Youth Meeting in Damascus (SYGG) in September 2019 in Syria.
-                                </p>
-                                <a href="~/Products/BETKANUConversationBooklet" class="btn btn-info btn-shadow">Info</a>
-                            </div>
-                        </div>
-                    </div>*@
-
+                            }
+                  
 
                 </div>
-
             </div>
         </div>
     </section>
-
 </div>
-
-
-
-
-
-
-
 
 
 

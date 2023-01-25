@@ -30,11 +30,6 @@ namespace BetKanu.Data.Repositories
         {
             return _db.Products.Where(p => p.Id == id).FirstOrDefault();
         }
-        //public Product GetDictionary()
-        //{
-        //    return _db.Products.OrderBy(p => p.Title).ToDictionary(pe => pe.Id, pe => pe.Title)
-        //}
-
         public List<Product> RecentProduct(int num)
         {
             return _db.Products.OrderByDescending(p => p.ReleaseDate).Take(num).ToList();
@@ -44,6 +39,11 @@ namespace BetKanu.Data.Repositories
         {
             //.Where(p => p.ProductId == id)
             return _db.ProductEpisodes.ToList();
+        }
+
+        public List<ProductEpisode>GetallByParentId(int id)
+        {
+            return _db.ProductEpisodes.Where(pe => pe.ProductId== id).ToList();
         }
 
         public ProductEpisode GetOneEpisode(int id)
