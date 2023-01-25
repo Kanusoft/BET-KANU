@@ -140,7 +140,7 @@
 {
     <section class="hero height-350 hero-game" style="background-image: url(@Model.CoverImage);">
     </section>
-
+  
     <section>
         <div class="container">
             <div class="row sidebar">
@@ -159,31 +159,19 @@
                       <p  style="text-align:left ; direction:ltr">  @Html.Raw(@Model.ShortDescription)  </p>
                              <div class="well" style="text-align:left ; direction:ltr">
                             <ul>
-                                <li>
-                                    FUN FOR KIDS
-                                </li>
-                                <li>
-                                    GREAT FOR TEACHERS
-                                </li>
-                                <li>
-                                    AMAZING FOR PARENTS
-                                </li>
-                            </ul>
-
-
+                                @Html.Raw(@Model.CreditsW)
+                            </ul>   
                         </div>
                         <p style="text-align:left ; direction:ltr">
-                            This must-have App is designed for all BET KANU publications and prints. The App includes these useful features:
+                            @Html.Raw(@Model.ScriptE)
                         </p>
                     <div class="well" style="text-align:left ; direction:ltr">
-                        @Html.Raw(@Model.LongDescription)
+                    @Html.Raw(@Model.CreditsE)
                     </div>
                     <div class="well" style="text-align:left ; direction:ltr">
-                        @Html.Raw(@Model.ScriptE)
+                           @Html.Raw(@Model.ScriptW)
                     </div>
-                        @* Features *@
-                        @Html.Raw(@Model.ScriptW)
-                        @* Features *@
+                    
                     </div>
                 </div>
                 <div class="col-md-4 rightside">
@@ -197,27 +185,39 @@
                          <p>
                            &nbsp;
                          </p>
-
-
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="well">
                                     <img src="@Model.img1" alt="">
 
                                 </div>
                             </div>
-
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    @if (Model.img4 == null)
+                                {
+                                       <div class="img-test"></div>
+                                }else{
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="well">
                                     <img src="@Model.img2" alt="">
 
                                 </div>
                             </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="well">
-                                    <img src="~/content/img/products/materials/reader3.jpg" alt="">
+                                }
 
+                            @if (Model.img4 == null)
+                            {
+                                <div class="img-test"></div>
+                            }
+                            else
+                            {
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="well">
+                                        <img src="@Model.img3" alt="">
+
+                                    </div>
                                 </div>
-                            </div>
+                            }
+
+                    
                        </div>
 
                     </div>

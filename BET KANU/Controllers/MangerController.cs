@@ -406,6 +406,7 @@ namespace BET_KANU.Controllers
             }
             return View(prodEp);
         }
+
         [HttpPost]
         public ActionResult EditEpisode(ProductEpisode episode)
         {
@@ -470,7 +471,7 @@ namespace BET_KANU.Controllers
         {
             if (ModelState.IsValid)
             { 
-                _unitOfWork.manger.DeleteEP(id);
+                _unitOfWork.manger.Delete(id);
                 TempData["Message"] = "The Product has been Delete successfully!";
             }
             return RedirectToAction("Index");

@@ -1,4 +1,5 @@
-﻿<head>
+﻿@model ProductVM
+<head>
     @{
         ViewBag.Title = "Publishing";
     }
@@ -15,34 +16,37 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="post post-md no-border col-md-6 ">
-                        <div class="row">
+                            @foreach(var b in Model.products)
+                            {
+                                <div class="post post-md no-border col-md-6">
+                                    <div class="row">
                             <div class="col-md-12">
                                 <div class="post-thumbnail">
-                                    <a href="~/products/UrhoySchooCurriculum"><img src="/img/products/banners/sheshltodorhoy_1920_700.jpg" alt=""></a>
-                                    <div class="post-caption" style="background-color:darkgray">Book</div>
+                                        <a asp-controller="Products" asp-action="details" asp-route-id="@b.Id"><img src="@b.SmallImage" alt=""></a>
+                                    <div class="post-caption" style="background-color:darkgray">@b.Category</div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="post-header">
                                     <div class="post-title">
-                                        <h4><a href="~/products/UrhoySchooCurriculum">Urhoy School Curriculum</a></h4>
+                                            <h4><a asp-controller="Products" asp-action="details" asp-route-id="@b.Id">@b.Title</a></h4>
                                         <ul class="post-meta">
-                                            <li><i class="fa fa-book"></i> Book</li>
-                                            <li><i class="fa fa-info"></i> Educational Book </li>
+                                            <li><i class="fa fa-book"></i> @b.Category</li>
+                                            <li><i class="fa fa-info"></i> @b.SubCategory </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <p>
-                                    It is a series of educational curriculum books that will be taught in schools, and this is the second book in which the child will learn in addition to letters and movements and will be able to read words with the way they are written.
-
-
+                                   @b.ShortDescription
                                 </p>
-                                <a href="~/products/UrhoySchooCurriculum" class="btn btn-info btn-shadow">Info</a>
+                                    <a asp-controller="Products" asp-action="details" asp-route-id="@b.Id" class="btn btn-info btn-shadow">Info</a>
                             </div>
-                        </div>
-                    </div>
-                    <div class="post post-md no-border col-md-6 ">
+                                    </div>
+                                </div>
+                            }
+                
+                            
+                 @*   <div class="post post-md no-border col-md-6 ">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="post-thumbnail">
@@ -148,7 +152,7 @@
                                 <a href="~/Products/BETKANUConversationBooklet" class="btn btn-info btn-shadow">Info</a>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
 
 
                 </div>
