@@ -22,14 +22,14 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="post-thumbnail">
-                                    <a href="~/products/betkanunames"><img src="@s.SmallImage" loading="lazy" alt=""></a>
+                                        <a asp-controller="Products" asp-action="details" asp-route-id="@s.Id"><img src="@s.SmallImage" loading="lazy" alt=""></a>
                                     <div class="post-caption" style="background-color:orange">@s.SubCategory</div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="post-header">
                                     <div class="post-title">
-                                        <h4><a href="~/products/betkanunames">@s.Title</a></h4>
+                                            <h4><a asp-controller="Products" asp-action="details" asp-route-id="@s.Id">@s.Title</a></h4>
                                         <ul class="post-meta">
                                             <li><i class="fa fa-mobile-phone"></i> Web</li>
                                          </ul>
@@ -38,7 +38,7 @@
                                 <p>@s.ShortDescription</p>
                                 <a style="background-color:#32a6de" asp-controller="Products" asp-action="details" asp-route-id="@s.Id" class="btn btn-info btn-shadow">Info</a>
                                 <a style="background-color: #f6a500" href="@s.Link1" class="btn btn-warning btn-shadow"> <i class="fa fa-globe"></i> Visit Website</a>
-                                    <a style="background-color: #0d5487" href="@s.Link2" class="btn btn-warning btn-shadow"> <i class="fa fa-globe"></i> Visit Website</a>
+                                <a style="background-color: #0d5487" href="@s.Link2" class="btn btn-warning btn-shadow"> <i class="fa fa-globe"></i> Visit Website</a>
                              </div>
                         </div>
                     </div>

@@ -24,8 +24,11 @@ namespace BET_KANU.Controllers
         }
         public ActionResult details(int id)
         {
-            var p = _unit.product.GetOne(id);
-            return View(p);
+            var vm = new ProductVM();
+            vm.product = _unit.product.GetOne(id);
+            vm.episode = _unit.product.GetallByParentId(id);
+            //var p = _unit.product.GetOne(id);
+            return View(vm);
         }
         public ActionResult About()
         {

@@ -111,9 +111,8 @@ namespace BetKanu.Models
         [NotMapped]
         public IFormFile? imgUrl5 { get; set; }
 
-       
 
-        //public int ParentId { get; set; }
-        //public Product Parent { get; set; }
+        //public int? ParentId { get; set; }
+        //public Product? Parent { get; set; }
     }
 }

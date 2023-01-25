@@ -1,11 +1,11 @@
-﻿@model Product
+﻿@model ProductVM
 @{
-    ViewBag.Title = Model.Title;
+    ViewBag.Title = Model.product.Title;
 }
 
-@if (Model.Category.ToString() == "Songs")
+@if (Model.product.Category.ToString() == "Songs")
 {
-    <section class="hero height-350 hero-game" style="background-image: url(@Model.CoverImage);">
+    <section class="hero height-350 hero-game" style="background-image: url(@Model.product.CoverImage);">
     </section>
     <section>
         <div class="container">
@@ -14,32 +14,32 @@
                     <div class="post post-single">
                         <div class="post-header">
                             <div class="post-title">
-                                <h2>@Model.Title</h2>
+                                <h2>@Model.product.Title</h2>
                                 <ul class="post-meta">
-                                    <li><i class="fa fa-music"></i> @Model.Category.ToString()</li>
-                                    <li><i class="fa fa-calendar-o"></i>@Model.ReleaseDate</li>
-                                    <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.SubCategory</span></li>
+                                    <li><i class="fa fa-music"></i> @Model.product.Category.ToString()</li>
+                                    <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate</li>
+                                    <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
                                 </ul>
                             </div>
                         </div>
                         <p>
-                            @Model.ShortDescription
+                            @Model.product.ShortDescription
                         </p>
                         <div class="well col-md-5" style="text-align:center ; direction:rtl" id="western">
                             <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Western Lyrics</h3>
                             <p class="Surayt font-size-22 font-size-22">
-                                @Html.Raw(@Model.ScriptW)
+                                @Html.Raw(@Model.product.ScriptW)
                             </p>
-                             <a class="btn btn-info" href="@Model.Wpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+                             <a class="btn btn-info" href="@Model.product.Wpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
                         </div>
                         <div class="col-lg-1"></div>
                         <div class="well col-md-5" style="text-align:center ; direction:rtl" id="eastern">
                             <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Eastern Lyrics</h3>
                             <p class="Surit font-size-22">
-                                @Html.Raw(@Model.ScriptE)
+                                @Html.Raw(@Model.product.ScriptE)
                             </p>
                             
-                             <a class="btn btn-info" href="@Model.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+                             <a class="btn btn-info" href="@Model.product.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
                         </div>
                     </div>
                 </div>
@@ -48,34 +48,34 @@
                         <div class="card">
                             <div class="card-img">
                                 <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/@Model.VideoW?rel=0&amp;showinfo=0" allowfullscreen></iframe>
+                                    <iframe class="embed-responsive-item" src="@Model.product.VideoW" allowfullscreen></iframe>
                                 </div>
                                 <div class="time">BET KANU</div>
                             </div>
                             <div class="caption">
                                 <h3 class="card-title">
-                                    @Model.Title - Western Syriac (Surayt)
+                                    @Model.product.Title - Western Syriac (Surayt)
                                 </h3>
                                 <ul>
-                                    <li><i class="fa fa-calendar-o"></i> @Model.ReleaseDate</li>
-                                    <li><i class="fa fa-eye"></i> @Model.ViewsW views</li>
+                                    <li><i class="fa fa-calendar-o"></i> @Model.product.ReleaseDate</li>
+                                    <li><i class="fa fa-eye"></i> @Model.product.ViewsW views</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="card">
                             <div class="card-img">
                                 <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/@Model.VideoE?rel=0&amp;showinfo=0" allowfullscreen></iframe>
+                                    <iframe class="embed-responsive-item" src="@Model.product.VideoE" allowfullscreen></iframe>
                                 </div>
                                 <div class="time">BET KANU</div>
                             </div>
                             <div class="caption">
                                 <h3 class="card-title">
-                                    @Model.Title - Eastern Syriac (Surit)
+                                    @Model.product.Title - Eastern Syriac (Surit)
                                 </h3>
                                 <ul>
-                                    <li><i class="fa fa-calendar-o"></i>@Model.ReleaseDate</li>
-                                    <li><i class="fa fa-eye"></i> @Model.ViewsE views</li>
+                                    <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate</li>
+                                    <li><i class="fa fa-eye"></i> @Model.product.ViewsE views</li>
                                 </ul>
                             </div>
                         </div>
@@ -104,7 +104,7 @@
                                     </strong>
                                 </p>
                                 <ul style="text-align:left ; direction:ltr">
-                                    @Html.Raw(@Model.CreditsW)
+                                    @Html.Raw(@Model.product.CreditsW)
                                 </ul>
                             </div>
                         </div>
@@ -116,7 +116,7 @@
                                     </strong>
                                 </p>
                                 <ul style="text-align:left ; direction:ltr">
-                                    @Html.Raw(@Model.CreditsE)
+                                    @Html.Raw(@Model.product.CreditsE)
                                 </ul>
                             </div>
                         </div>
@@ -136,9 +136,9 @@
     </section>
 }
 @* Start Software *@
-@if (Model.Category.ToString() == "Software")
+@if (Model.product.Category.ToString() == "Software")
 {
-    <section class="hero height-350 hero-game" style="background-image: url(@Model.CoverImage);">
+    <section class="hero height-350 hero-game" style="background-image: url(@Model.product.CoverImage);">
     </section>
 
     <section>
@@ -148,15 +148,15 @@
                     <div class="post post-single">
                         <div class="post-header">
                             <div class="post-title">
-                                <h2>@Model.Title</h2>
+                                <h2>@Model.product.Title</h2>
                                 <ul class="post-meta">
-                                    <li><i class="fa fa-mobile-phone"></i> @Model.Category.ToString()</li>
-                                    <li><i class="fa fa-calendar-o"></i>@Model.ReleaseDate</li>
-                                    <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.SubCategory</span></li>
+                                    <li><i class="fa fa-mobile-phone"></i> @Model.product.Category.ToString()</li>
+                                    <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate</li>
+                                    <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
                                 </ul>
                             </div>
                         </div>
-                      <p  style="text-align:left ; direction:ltr">  @Html.Raw(@Model.ShortDescription)  </p>
+                        <p style="text-align:left ; direction:ltr">  @Html.Raw(@Model.product.ShortDescription)  </p>
                              <div class="well" style="text-align:left ; direction:ltr">
                             <ul>
                                 <li>
@@ -176,13 +176,13 @@
                             This must-have App is designed for all BET KANU publications and prints. The App includes these useful features:
                         </p>
                     <div class="well" style="text-align:left ; direction:ltr">
-                        @Html.Raw(@Model.LongDescription)
+                            @Html.Raw(@Model.product.LongDescription)
                     </div>
                     <div class="well" style="text-align:left ; direction:ltr">
-                        @Html.Raw(@Model.ScriptE)
+                            @Html.Raw(@Model.product.ScriptE)
                     </div>
                         @* Features *@
-                        @Html.Raw(@Model.ScriptW)
+                        @Html.Raw(@Model.product.ScriptW)
                         @* Features *@
                     </div>
                 </div>
@@ -192,8 +192,8 @@
                             <p>
                               &nbsp;
                             </p>
-                        <a href="@Model.Link1" class="btn btn-warning btn-block">Get it on the App Store!</a>
-                        <a href="@Model.Link2" class="btn btn-warning btn-block">Get it on the Google Play!</a>
+                            <a href="@Model.product.Link1" class="btn btn-warning btn-block">Get it on the App Store!</a>
+                            <a href="@Model.product.Link2" class="btn btn-warning btn-block">Get it on the Google Play!</a>
                          <p>
                            &nbsp;
                          </p>
@@ -201,14 +201,14 @@
 
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="well">
-                                    <img src="@Model.img1" alt="">
+                                    <img src="@Model.product.img1" alt="">
 
                                 </div>
                             </div>
 
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="well">
-                                    <img src="@Model.img2" alt="">
+                                    <img src="@Model.product.img2" alt="">
 
                                 </div>
                             </div>
@@ -246,1183 +246,36 @@
 @* Enf Software *@
 
 @* Start Cartoon Series *@
-@if (Model.Category.ToString() == "CartoonSeries")
+@if (Model.product.Category.ToString() == "CartoonSeries")
 {
-
-        <div id="wrapper">
-        <section class="border-bottom-1 border-grey-300 padding-30">
-            <div class="container text-center">
-                <div class="container">
-                    <div class="headline no-margin">
-                        <h4><i class="fa fa-film"></i> Cartoon Series - Nino & Mia</h4>
-                        <div class="dropdown" style="display:inline">
-                            <button type="button" class="btn btn-outline btn-circle btn-icon-left" id="west" onclick="showhidelist(this.id)"><img src="/img/west.png" /></button>
-                            &nbsp;
-                            <button type="button" class="btn btn-outline btn-circle btn-icon-left" id="east" disabled onclick="hideshowlist(this.id)"><img src="/img/east.png" /></button>
-                        </div>
+    @foreach(var e in Model.episode)
+    {
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <div class="card card-video">
+                <div class="card-img">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="@e.VideoW;showinfo=0" allowfullscreen></iframe>
                     </div>
+                    @*<div class="time">Alphabet Series</div>*@
+                </div>
+                <div class="caption">
+                    <h3 class="card-title"><a href="@e.VideoW;showinfo=0">Olaf</a></h3>
+                    <ul>
+                        <li><i class="fa fa-clock-o"></i> Aug 26, 2019</li>
+                        <li><i class="fa fa-eye"></i> @e.Views views</li>
+                    </ul>
                 </div>
             </div>
-        </section>
-        <!-- wrapper -->
-        <div id="wrapper">
-
-            @*<div class="background-image" style="background-image: url(https://www.betkanu.com/content/img/cover/YouTubeCoverBETKANU.png);">
-
-
         </div>
+    }
 
-        <section class="padding-top-20 padding-bottom-20 border-bottom-1 border-grey-300">
-        <div class="container">
-        <div class="headline no-margin">
-        <h4><i class="fa fa-film"></i> Cartoon Series</h4>
-        <div class="dropdown" style="display:inline">
-        <button type="button" class="btn btn-outline btn-circle btn-icon-left" id="west" disabled onclick="hideshowlist(this.id)"><img src="/img/west.png" /></button>
-        &nbsp;
-        <button type="button" class="btn btn-outline btn-circle btn-icon-left" id="east" onclick="showhidelist(this.id)"><img src="/img/east.png" /></button>
-        </div>
-        </div>
-        </div>
-        </section>*@
-            @* Start Western Section *@
-            <section class="bg-grey-50" id="western" style="display:none">
-                @* Startt N&M - S1 - Western *@
-                <div class="container">
-                    <div class="card-group">
-                        <div class="row">
-                            <div class="post post-single col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="post-header post-author">
-                                    @*<a href="#" class="author" data-toggle="tooltip" title="YAKUZI"><img src="/img/products/ninoandmia.png" alt="" /></a>*@
-                                    <div class="post-title">
-                                        <h2><a href="#">Nino & Mia (Season 1) </a></h2>
-                                        <ul class="post-meta">
-                                            <li><i class="fa fa-film"></i> Cartoon Series</li>
-                                            <li><i class="fa fa-info"></i> Educational</li>
-                                            <li><i class="fa fa-child"></i> Children</li>
-                                        </ul>
-                                        <p>
-                                            Nino & Mia is the very first cartoon series in Syriac. Nino is the main character of the educational series, where he discovers the world by try and error. The fictional character Mia is his friend helping him in his way to a greater knowledge and learning.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/xgjsWHfFiOA?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/xgjsWHfFiOA?rel=0&amp;showinfo=0">Brushing Teeth</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 21, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 25000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/xsVTBXyp_QI?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/xsVTBXyp_QI?rel=0&amp;showinfo=0">Sleeping Early</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 28, 2016</li>
-                                            <li><i class="fa fa-eye"></i> 20000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/K9Tq5xRw6CU?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/K9Tq5xRw6CU?rel=0&amp;showinfo=0">No Littering</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Sep 4, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 11000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/FSnxYQT_J8Y?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/FSnxYQT_J8Y?rel=0&amp;showinfo=0">Respect Elders</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Sep 11, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 12000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/iwZHjRGuGao?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/iwZHjRGuGao?rel=0&amp;showinfo=0">Homework First</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Sep 18, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 14000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/fqjPu4-sx-w?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/fqjPu4-sx-w?rel=0&amp;showinfo=0">Draw on Paper</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Sep 25, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 17000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/6-3a3gO6fks?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/6-3a3gO6fks?rel=0&amp;showinfo=0">Washing Hands</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Oct 2, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 20000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/6qmERq_fj6Y?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/6qmERq_fj6Y?rel=0&amp;showinfo=0">Fire Safety</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Oct 9, 201</li>
-                                            <li><i class="fa fa-eye"></i> 20000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/6L3ZXiA4UNc?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/6L3ZXiA4UNc?rel=0&amp;showinfo=0">Plant and Don’t Cut</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Oct 17, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 14000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/uR7g2-K1zh0?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/uR7g2-K1zh0?rel=0&amp;showinfo=0">Share</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Oct 23, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 36000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/NOS6XtNvGdQ?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/NOS6XtNvGdQ?rel=0&amp;showinfo=0">Electricity Safety</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Oct 30, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 15000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/ni1KVJnZuRs?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/ni1KVJnZuRs?rel=0&amp;showinfo=0">Clean Up</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Nov 6, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 21000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/fQxWVZ1kW4Q?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/fQxWVZ1kW4Q?rel=0&amp;showinfo=0">Use Your Words </a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Nov 20, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 37000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @* Finish N&M Season 1 *@
-                @* Start N&M Season 2 *@
-                @* Finish N&M Season 1 *@
-                @* Start Season 2 *@
-                <div class="container padding-top-25">
-                    <div class="card-group">
-                        <div class="row">
-                            <div class="post post-single col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="post-header post-author">
-                                    @*<a href="#" class="author" data-toggle="tooltip" title="YAKUZI"><img src="/img/products/ninoandmia.png" alt="" /></a>*@
-                                    <div class="post-title">
-                                        <h2><a href="#">Nino & Mia (Season 2) </a></h2>
-                                        <ul class="post-meta">
-                                            <li><i class="fa fa-film"></i> Cartoon Series</li>
-                                            <li><i class="fa fa-info"></i> Educational</li>
-                                            <li><i class="fa fa-child"></i> Children</li>
-                                        </ul>
-                                        <p>
-                                            Nino & Mia is the very first cartoon series in Syriac. Nino is the main character of the educational series, where he discovers the world by try and error. The fictional character Mia is his friend helping him in his way to a greater knowledge and learning.
-                                        </p>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/SP_TDqCzyjQ?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S2</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/SP_TDqCzyjQ?rel=0&amp;showinfo=0">Christmas Preparations</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Dec 23, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 40000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/yUaTbEb2u24?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S2</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/yUaTbEb2u24?rel=0&amp;showinfo=0">Easter</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Mar 30, 2018</li>
-                                            <li><i class="fa fa-eye"></i> 50000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/q0AqK5yd3CU?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S2</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/q0AqK5yd3CU?rel=0&amp;showinfo=0">St. Mary's Day</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 14, 2018</li>
-                                            <li><i class="fa fa-eye"></i> 14000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/1iJ5qesV78E?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S2</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/1iJ5qesV78E?rel=0&amp;showinfo=0">Nino's birthday</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 21, 2018</li>
-                                            <li><i class="fa fa-eye"></i> 14000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/4DsxTvgAgAY?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S2</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/4DsxTvgAgAY?rel=0&amp;showinfo=0">Holy Cross Day</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Sep 13, 2018</li>
-                                            <li><i class="fa fa-eye"></i> 8000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/lgSsSPW1YIA?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S2</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/lgSsSPW1YIA?rel=0&amp;showinfo=0">Teachers' Day</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Oct 5, 2018</li>
-                                            <li><i class="fa fa-eye"></i> 20000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-                @* Finish Season 2 *@
-                @* Start Season 3 *@
-
-                <div class="container">
-                    <div class="card-group">
-                        <div class="row">
-                            <div class="post post-single col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="post-header post-author">
-                                    @*<a href="#" class="author" data-toggle="tooltip" title="YAKUZI"><img src="/img/products/ninoandmia.png" alt="" /></a>*@
-                                    <div class="post-title">
-                                        <h2><a href="#">Nino & Mia (Season 3) </a></h2>
-                                        <ul class="post-meta">
-                                            <li><i class="fa fa-film"></i> Cartoon Series</li>
-                                            <li><i class="fa fa-info"></i> Educational</li>
-                                            <li><i class="fa fa-child"></i> Children</li>
-                                        </ul>
-                                        <p>
-                                            Nino & Mia is the very first cartoon series in Syriac. Nino is the main character of the educational series, where he discovers the world by try and error. The fictional character Mia is his friend helping him in his way to a greater knowledge and learning.
-                                        </p>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/YkNpQRI91QA?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S3</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/YkNpQRI91QA?rel=0&amp;showinfo=0">The Rogation of Ninevites</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Feb 18, 2019</li>
-                                            <li><i class="fa fa-eye"></i> 7000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                
-         
-               
-
-                        </div>
-                    </div>
-                </div>
-
-                @* Finish Season 3 *@
-                @* Start Season 4 *@
-
-                <div class="container">
-                    <div class="card-group">
-                        <div class="row">
-                            <div class="post post-single col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="post-header post-author">
-                                    @*<a href="#" class="author" data-toggle="tooltip" title="YAKUZI"><img src="/img/products/ninoandmia.png" alt="" /></a>*@
-                                    <div class="post-title">
-                                        <h2><a href="#">Nino & Mia (Season 4) </a></h2>
-                                        <ul class="post-meta">
-                                            <li><i class="fa fa-film"></i> Cartoon Series</li>
-                                            <li><i class="fa fa-info"></i> Educational</li>
-                                            <li><i class="fa fa-child"></i> Children</li>
-                                        </ul>
-                                        <p>
-                                            In this new season, the children will learn about feelings/emotions with Nino & Mia. Nino learns about his feelings/emotions with the help of Mia through life examples. How to recognize and validate the feeling/emotion? What makes someone experience it? How to cope? Children will learn to recognize each feeling/emotion with the interactive series that will highlight the facial expressions, tone of voice, and body language. In this episode, Mia recognizes one of the basic emotions "Sadness" and tries to help Nino cope to reach "Happiness."
-                                        </p>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qf3AcmSnziE?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S4</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/qf3AcmSnziE?rel=0&amp;showinfo=0">Sadness & Happiness</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Oct 16, 2019</li>
-                                            <li><i class="fa fa-eye"></i> 7000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            @*<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                        <div class="card card-video">
-                        <div class="card-img">
-                        <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/qf3AcmSnziE?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                        </div>
-                        <div class="time">N&M - S3</div>
-                        </div>
-                        <div class="caption">
-                        <h3 class="card-title"><a href="https://www.youtube.com/embed/PeHbfQgmJtY?rel=0&amp;showinfo=0">Carpenter</a></h3>
-                        <ul>
-                        <li><i class="fa fa-clock-o"></i> Apr 4, 2019</li>
-                        <li><i class="fa fa-eye"></i> 7000 views</li>
-                        </ul>
-                        </div>
-                        </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                        <div class="card card-video">
-                        <div class="card-img">
-                        <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/I2rUcxfpQhk?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                        </div>
-                        <div class="time">N&M - S3</div>
-                        </div>
-                        <div class="caption">
-                        <h3 class="card-title"><a href="https://www.youtube.com/embed/I2rUcxfpQhk?rel=0&amp;showinfo=0">Pilot </a></h3>
-                        <ul>
-                        <li><i class="fa fa-clock-o"></i> May 23, 2019</li>
-                        <li><i class="fa fa-eye"></i> 6000 views</li>
-                        </ul>
-                        </div>
-                        </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                        <div class="card card-video">
-                        <div class="card-img">
-                        <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/AbNTH1fsHWw?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                        </div>
-                        <div class="time">N&M - S3</div>
-                        </div>
-                        <div class="caption">
-                        <h3 class="card-title"><a href="https://www.youtube.com/embed/AbNTH1fsHWw?rel=0&amp;showinfo=0">Astronaut </a></h3>
-                        <ul>
-                        <li><i class="fa fa-clock-o"></i> Jun 4, 2019</li>
-                        <li><i class="fa fa-eye"></i> 4000 views</li>
-                        </ul>
-                        </div>
-                        </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                        <div class="card card-video">
-                        <div class="card-img">
-                        <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/gxBmIGxSP_c?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                        </div>
-                        <div class="time">N&M - S3</div>
-                        </div>
-                        <div class="caption">
-                        <h3 class="card-title"><a href="https://www.youtube.com/embed/gxBmIGxSP_c?rel=0&amp;showinfo=0">Pottery </a></h3>
-                        <ul>
-                        <li><i class="fa fa-clock-o"></i> Jun 21, 2019</li>
-                        <li><i class="fa fa-eye"></i> 4000 views</li>
-                        </ul>
-                        </div>
-                        </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                        <div class="card card-video">
-                        <div class="card-img">
-                        <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/ytAXbXgKZtM?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                        </div>
-                        <div class="time">N&M - S3</div>
-                        </div>
-                        <div class="caption">
-                        <h3 class="card-title"><a href="https://www.youtube.com/embed/ytAXbXgKZtM?rel=0&amp;showinfo=0">Architect </a></h3>
-                        <ul>
-                        <li><i class="fa fa-clock-o"></i> Jul 4, 2019</li>
-                        <li><i class="fa fa-eye"></i> 3000 views</li>
-                        </ul>
-                        </div>
-                        </div>
-                        </div>*@
-
-                        </div>
-                    </div>
-                </div>
-
-                @* Finish Season 4 *@
-            </section>
-
-
-
-            @* Start Eastern Section *@
-            <section class="bg-grey-50" id="eastern">
-                <div class="container">
-                    <div class="card-group">
-                        <div class="row">
-                            <div class="post post-single col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="post-header post-author">
-                                    @*<a href="#" class="author" data-toggle="tooltip" title="YAKUZI"><img src="/img/products/ninoandmia.png" alt="" /></a>*@
-                                    <div class="post-title">
-                                        <h2><a href="#">Nino & Mia (Season 1) </a></h2>
-                                        <ul class="post-meta">
-                                            <li><i class="fa fa-film"></i> Cartoon Series</li>
-                                            <li><i class="fa fa-info"></i> Educational</li>
-                                            <li><i class="fa fa-child"></i> Children</li>
-                                        </ul>
-                                        <p>
-                                            Nino & Mia is the very first cartoon series in Syriac. Nino is the main character of the educational series, where he discovers the world by try and error. The fictional character Mia is his friend helping him in his way to a greater knowledge and learning.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Dr4alzrC-kg?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/Dr4alzrC-kg?rel=0&amp;showinfo=0">Brushing Teeth</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 21, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 25000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/8BNrSBTvHtU?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/8BNrSBTvHtU?rel=0&amp;showinfo=0">Sleeping Early</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 28, 2016</li>
-                                            <li><i class="fa fa-eye"></i> 20000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/6r6RYrAle18?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/6r6RYrAle18?rel=0&amp;showinfo=0">No Littering</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Sep 4, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 11000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/p2EfCxGbzP4?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/p2EfCxGbzP4?rel=0&amp;showinfo=0">Respect Elders</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Sep 11, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 12000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/_BJyLV101jo?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/_BJyLV101jo?rel=0&amp;showinfo=0">Homework First</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Sep 18, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 14000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/PHFViO_logw?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/PHFViO_logw?rel=0&amp;showinfo=0">Draw on Paper</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Sep 25, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 17000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/ujmSSTv6EDs?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/ujmSSTv6EDs?rel=0&amp;showinfo=0">Washing Hands</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Oct 2, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 20000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/GVb8eukcIxY?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/GVb8eukcIxY?rel=0&amp;showinfo=0">Fire Safety</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Oct 9, 201</li>
-                                            <li><i class="fa fa-eye"></i> 20000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/m-QdMXH_08Q?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/m-QdMXH_08Q?rel=0&amp;showinfo=0">Plant and Don’t Cut</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Oct 17, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 14000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/abEOfxzhYMQ?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/abEOfxzhYMQ?rel=0&amp;showinfo=0">Share</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Oct 23, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 36000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/lSK3vltIyYQ?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/lSK3vltIyYQ?rel=0&amp;showinfo=0">Electricity Safety</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Oct 30, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 15000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/rMHGhNWJe_E?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/rMHGhNWJe_E?rel=0&amp;showinfo=0">Clean Up</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Nov 6, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 21000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/fZaD-VwRIVA?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S1</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/fZaD-VwRIVA?rel=0&amp;showinfo=0">Use Your Words </a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Nov 20, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 37000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @* Finish N&M Season 1 *@
-                @* Start N&M Season 2 *@
-                @* Finish N&M Season 1 *@
-                @* Start Season 2 *@
-                <div class="container padding-top-25">
-                    <div class="card-group">
-                        <div class="row">
-                            <div class="post post-single col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="post-header post-author">
-                                    @*<a href="#" class="author" data-toggle="tooltip" title="YAKUZI"><img src="/img/products/ninoandmia.png" alt="" /></a>*@
-                                    <div class="post-title">
-                                        <h2><a href="#">Nino & Mia (Season 2) </a></h2>
-                                        <ul class="post-meta">
-                                            <li><i class="fa fa-film"></i> Cartoon Series</li>
-                                            <li><i class="fa fa-info"></i> Educational</li>
-                                            <li><i class="fa fa-child"></i> Children</li>
-                                        </ul>
-                                        <p>
-                                            Nino & Mia is the very first cartoon series in Syriac. Nino is the main character of the educational series, where he discovers the world by try and error. The fictional character Mia is his friend helping him in his way to a greater knowledge and learning.
-                                        </p>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/IhlRO7KBS0Q?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S2</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/IhlRO7KBS0Q?rel=0&amp;showinfo=0">Christmas Preparations</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Dec 23, 2017</li>
-                                            <li><i class="fa fa-eye"></i> 40000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/43N3hlrUN94?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S2</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/43N3hlrUN94?rel=0&amp;showinfo=0">Easter</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Mar 30, 2018</li>
-                                            <li><i class="fa fa-eye"></i> 50000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/a0_Vw8GEJlc?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S2</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/a0_Vw8GEJlc?rel=0&amp;showinfo=0">St. Mary's Day</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 14, 2018</li>
-                                            <li><i class="fa fa-eye"></i> 14000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/L8zN720bY6A?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S2</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/L8zN720bY6A?rel=0&amp;showinfo=0">Nino's birthday</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Aug 21, 2018</li>
-                                            <li><i class="fa fa-eye"></i> 14000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/LznSYZ3mUTg?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S2</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/LznSYZ3mUTg?rel=0&amp;showinfo=0">Holy Cross Day</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Sep 13, 2018</li>
-                                            <li><i class="fa fa-eye"></i> 8000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/yUvcQo6MaJE?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S2</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/yUvcQo6MaJE?rel=0&amp;showinfo=0">Teachers' Day</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Oct 5, 2018</li>
-                                            <li><i class="fa fa-eye"></i> 20000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-                @* Finish Season 2 *@
-                @* Start Season 3 *@
-
-                <div class="container">
-                    <div class="card-group">
-                        <div class="row">
-                            <div class="post post-single col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="post-header post-author">
-                                    @*<a href="#" class="author" data-toggle="tooltip" title="YAKUZI"><img src="/img/products/ninoandmia.png" alt="" /></a>*@
-                                    <div class="post-title">
-                                        <h2><a href="#">Nino & Mia (Season 3) </a></h2>
-                                        <ul class="post-meta">
-                                            <li><i class="fa fa-film"></i> Cartoon Series</li>
-                                            <li><i class="fa fa-info"></i> Educational</li>
-                                            <li><i class="fa fa-child"></i> Children</li>
-                                        </ul>
-                                        <p>
-                                            Nino & Mia is the very first cartoon series in Syriac. Nino is the main character of the educational series, where he discovers the world by try and error. The fictional character Mia is his friend helping him in his way to a greater knowledge and learning.
-                                        </p>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/RkwiLmeFCyQ?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S3</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/RkwiLmeFCyQ?rel=0&amp;showinfo=0">The Rogation of Ninevites</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Feb 18, 2019</li>
-                                            <li><i class="fa fa-eye"></i> 7000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/5aWN7PelajA?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S3</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/5aWN7PelajA?rel=0&amp;showinfo=0">Carpenter</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Apr 4, 2019</li>
-                                            <li><i class="fa fa-eye"></i> 7000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/uQBbBsU3vSc?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S3</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/uQBbBsU3vSc?rel=0&amp;showinfo=0">Pilot </a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> May 23, 2019</li>
-                                            <li><i class="fa fa-eye"></i> 6000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/ySOKOKICx_w?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S3</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/ySOKOKICx_w?rel=0&amp;showinfo=0">Astronaut </a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Jun 4, 2019</li>
-                                            <li><i class="fa fa-eye"></i> 4000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Of7ApVNgWFs?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S3</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/Of7ApVNgWFs?rel=0&amp;showinfo=0">Pottery </a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Jun 21, 2019</li>
-                                            <li><i class="fa fa-eye"></i> 4000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/o-KvjhaAluY?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S3</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/o-KvjhaAluY?rel=0&amp;showinfo=0">Architect </a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Jul 4, 2019</li>
-                                            <li><i class="fa fa-eye"></i> 3000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                @* Finish Season 3 *@
-                @* Start Season 4 *@
-
-                <div class="container">
-                    <div class="card-group">
-                        <div class="row">
-                            <div class="post post-single col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="post-header post-author">
-                                    @*<a href="#" class="author" data-toggle="tooltip" title="YAKUZI"><img src="/img/products/ninoandmia.png" alt="" /></a>*@
-                                    <div class="post-title">
-                                        <h2><a href="#">Nino & Mia (Season 4) </a></h2>
-                                        <ul class="post-meta">
-                                            <li><i class="fa fa-film"></i> Cartoon Series</li>
-                                            <li><i class="fa fa-info"></i> Educational</li>
-                                            <li><i class="fa fa-child"></i> Children</li>
-                                        </ul>
-                                        <p>
-                                            In this new season, the children will learn about feelings/emotions with Nino & Mia. Nino learns about his feelings/emotions with the help of Mia through life examples. How to recognize and validate the feeling/emotion? What makes someone experience it? How to cope? Children will learn to recognize each feeling/emotion with the interactive series that will highlight the facial expressions, tone of voice, and body language. In this episode, Mia recognizes one of the basic emotions "Sadness" and tries to help Nino cope to reach "Happiness."
-                                        </p>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/K6zQ1i1SBG4?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="time">N&M - S4</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title"><a href="https://www.youtube.com/embed/K6zQ1i1SBG4?rel=0&amp;showinfo=0">Sadness & Happiness</a></h3>
-                                        <ul>
-                                            <li><i class="fa fa-clock-o"></i> Oct 16, 2020</li>
-                                            <li><i class="fa fa-eye"></i> 7000 views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                @* Finish Season 4 *@
-            </section>
-        </div>
-    </div>
-  
 }
 @* End Cartoon Series *@
 @* Start Books *@
-@if ( Model.Category.ToString() == "Books")
+@if (Model.product.Category.ToString() == "Books")
 {
     <div id="wrapper">
-       <section class="hero height-350 hero-game" style="background-image: url(@Model.CoverImage);">
+        <section class="hero height-350 hero-game" style="background-image: url(@Model.product.CoverImage);">
        
         </section>
 
@@ -1433,33 +286,34 @@
                         <div class="post post-single">
                             <div class="post-header">
                                 <div class="post-title">
-                                    <h2>@Model.Title</h2>
+                                    <h2>@Model.product.Title</h2>
                                     <ul class="post-meta">
-                                        <li><i class="fa fa-book"></i>  @Model.Category.ToString()</li>
-                                        <li><i class="fa fa-calendar-o"></i> @Model.ReleaseDate</li>
-                                        <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.SubCategory</span></li>
+                                        <li><i class="fa fa-book"></i>  @Model.product.Category.ToString()</li>
+                                        <li><i class="fa fa-calendar-o"></i> @Model.product.ReleaseDate</li>
+                                        <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
                                     </ul>
                                 </div>
                             </div>
-                               @if(Model.Epdf == null){
+                            @if (Model.product.Epdf == null)
+                            {
                                                   <div class="img-test">   </div>
                                         }else{
                                                   <div class="well" style="text-align:left ; direction:ltr">
-                                
-                                    <h3>  @Model.ScriptE</h3>
-                                    <h3>  @Model.ScriptW</h3>
+
+                                    <h3>  @Model.product.ScriptE</h3>
+                                    <h3>  @Model.product.ScriptW</h3>
                                
                             </div>
                                         }
                             <div class="well" style="text-align:left ; direction:ltr">
                                 <p>
-                                  @Model.LongDescription
+                                    @Model.product.LongDescription
                                 </p>
                             </div>
                             <div class="well" style="text-align:left ; direction:ltr">
                                 <h4 style="text-align:left ; direction:ltr">Features:</h4>
                                 <ul>
-                                 @Html.Raw(@Model.CreditsW)
+                                    @Html.Raw(@Model.product.CreditsW)
                                 </ul>
                             </div>
                             <div class="well">
@@ -1469,7 +323,7 @@
                                     </strong>
                                 </p>
                                 <ul style="text-align:left ; direction:ltr ; text-transform:uppercase">
-                         @Html.Raw(@Model.CreditsE)
+                         @Html.Raw(@Model.product.CreditsE)
                    
                                 </ul> 
                             </div>
@@ -1489,13 +343,15 @@
                             <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="well">
-                                        <img src="@Model.img1" alt="">
-                                        @if(Model.Link1 == null){
+                                        <img src="@Model.product.img1" alt="">
+                                        @if (Model.product.Link1 == null)
+                                        {
                                                   <div class="img-test">   </div>
                                         }else{
                                                <a href="mailto:shmuniha@gmail.com" class="btn btn-warning btn-block">Order Now! <i class="fa fa-google"></i></a>
                                         }
-                                       @if(Model.Link2 == null){
+                                        @if (Model.product.Link2 == null)
+                                        {
                                                   <div class="img-test">   </div>
                                         }else{
                                             <a href="https://www.instagram.com/erzaehlungen_turabdin/" class="btn btn-instagram btn-block">Order Now! <i class="fa fa-instagram"></i> </a>
@@ -1506,39 +362,39 @@
 
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="well">
-                                        <img src="@Model.img2" alt="">
+                                        <img src="@Model.product.img2" alt="">
 
                                     </div>
                                 </div>
-                                 @if(Model.img3 == null)
+                                @if (Model.product.img3 == null)
                                 {
                                        <div class="img-test"></div>
                                 }else{
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="well" style="text-align:center">
-                                            <img src="@Model.img3" alt="">
+                                            <img src="@Model.product.img3" alt="">
 
                                         </div>
                                     </div>
                                 }
-                                @if (Model.img4 == null)
+                                @if (Model.product.img4 == null)
                                 {
                                        <div class="img-test"></div>
                                 }else{
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="well" style="text-align:center">
-                                            <img src="@Model.img4" alt="">
+                                            <img src="@Model.product.img4" alt="">
 
                                         </div>
                                     </div>
                                 }
-                                @if (Model.img5 == null)
+                                @if (Model.product.img5 == null)
                                 {
                                        <div class="img-test"></div>
                                 }else{
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="well" style="text-align:center">
-                                            <img src="@Model.img5" alt="">
+                                            <img src="@Model.product.img5" alt="">
 
                                         </div>
                                     </div>
