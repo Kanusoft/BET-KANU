@@ -11,9 +11,10 @@ namespace BetKanu.Data
     public class UnitOfWork : IUnitOfWork
     {
         private readonly BKdbContext _dbContext;
-        public IBKBundle? bKBundle { get; }
-        public IProduct? product { get; }
-        public IManger manger { get; }  
+        public IBKBundle bKBundle { get; }
+        public IProduct product { get; }
+        public IManger manger { get; }
+        public IShop Shop { get; }
 
         public UnitOfWork(BKdbContext dbContext)
         {
@@ -21,6 +22,7 @@ namespace BetKanu.Data
             bKBundle = new BookBundleDAO(dbContext);
             product = new ProductDAO(dbContext);
             manger = new MangerRepo(dbContext);
+            Shop= new ShopRepo(dbContext);
         }
     }
 }

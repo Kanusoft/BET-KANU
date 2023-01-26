@@ -1,9 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
+﻿using BET_KANU.ViewModels;
+using BetKanu.Models.Interface;
+using Microsoft.AspNetCore.Mvc;
+using BetKanu.Models.Common;
 namespace BET_KANU.Controllers
 {
     public class StudioController : Controller
     {
+        private readonly IUnitOfWork _unit;
+        public StudioController(IUnitOfWork unit)
+        {
+            _unit= unit;
+        }
         public ActionResult Index()
         {
             return View();
@@ -12,15 +19,17 @@ namespace BET_KANU.Controllers
         public ActionResult Songs()
         {
             ViewBag.Message = "Your application description page.";
-
-            return View();
+            var prod = new ProductVM();
+            prod.products = _unit.product.GetAll(Category.Songs);
+            return View(prod);
         }
 
         public ActionResult CartoonSeries()
         {
             ViewBag.Message = "Your contact page.";
-
-            return View();
+            var prod = new ProductVM();
+            prod.products = _unit.product.GetAll(Category.CartoonSeries);
+            return View(prod);
         }
         public ActionResult NinoandMia()
         {

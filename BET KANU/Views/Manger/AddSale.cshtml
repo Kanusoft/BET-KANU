@@ -1,0 +1,73 @@
+﻿@model Shop
+@{
+    ViewData["Title"] = "Create Sales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- file Uploads -->
+<link href="~/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
+<div id="wrapper">
+
+  <section class="bg-grey-500 promo">
+    <div class="container">
+        <h1 style="color:white"> &nbsp;create Sale Product</h1>
+    </div>
+  </section>
+
+  <section>
+
+     <form class="card" asp-action="AddSale" method="post" enctype="multipart/form-data">
+      
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           
+            
+              <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+              </div>
+         
+            
+              <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="FileUrl" class="dropify form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+              </div>
+         
+            
+              <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+              </div>
+           
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+          
+        
+     </form>
+ 
+  </section>
+</div>
+
+@section Scripts {
+    @{
+        <!-- file uploads js -->
+        <script src="~/plugins/fileuploads/js/dropify.js"></script>
+        <script>
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Drag and drop a file here or click',
+                    'replace': 'Drag and drop or click to replace',
+                    'remove': 'Remove',
+                    'error': 'Ooops, something wrong appended.'
+                },
+                error: {
+                    'fileSize': 'The file size is too big (2M max).'
+                }
+            });
+        </script>
+
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

@@ -87,9 +87,9 @@
                                                         <label asp-for="Status" class="control-label"></label>
                                                     </td>
                                                     <td>
-
-                                                    
-                                                        <input asp-for="Status" class="form-control" />
+                                                        <select class="form-control custom-select" asp-for="Status" asp-items="Html.GetEnumSelectList<Language>()">
+                                                            <option selected="selected">-None-</option>
+                                                        </select>
                                                         <span asp-validation-for="Status" class="text-danger"></span>
                                                     </td>
                                                 </tr>

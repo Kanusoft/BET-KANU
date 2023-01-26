@@ -36,7 +36,8 @@ namespace BET_KANU.Controllers
             var vm = new ProductVM()
             {
                 products = _unitOfWork.manger.GetAll(Select),
-                episode = _unitOfWork.product.GetEpisode()
+                episode = _unitOfWork.product.GetEpisode(),
+                Shops = _unitOfWork.Shop.GetAll()
             };
             return View(vm);
         }
@@ -477,6 +478,70 @@ namespace BET_KANU.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult AddSale()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddSale(Shop shop)
+        {
+            if(ModelState.IsValid)
+            {
+                _unitOfWork.manger.Add(shop);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(shop);
+        }
+
+        public ActionResult EditSales(int id)
+        {
+            if(id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var s = _unitOfWork.Shop.Getone(id);
+            if (s == null)
+            {
+                return NotFound();
+            }
+            return View(s);
+        }
+
+        [HttpPost]
+        public ActionResult EditSales(Shop shop)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.manger.EditShop(shop);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(shop);
+        }
+        public ActionResult DeleteSales(int id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var s = _unitOfWork.Shop.Getone(id);
+            if (s == null)
+            {
+                return NotFound();
+            }
+            return View(s);
+        }
+
+        [HttpPost]
+        public ActionResult RemoveSales(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.manger.DeleteShop(id);
+                TempData["Message"] = "The Sales has been Delete successfully!";
+            }
+            return RedirectToAction("Index");
+        }
 
         public async Task<IActionResult> LogOut()
         {

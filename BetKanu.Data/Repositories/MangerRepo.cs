@@ -53,6 +53,12 @@ namespace BetKanu.Data.Repositories
             }
             return product.ToList();
         }
+
+        /// <summary>
+        /// Products Management
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         public int Add(Product product)
         {
             if(product != null)
@@ -111,6 +117,11 @@ namespace BetKanu.Data.Repositories
             }            
         }
 
+        /// <summary>
+        /// Episodes Management
+        /// </summary>
+        /// <param name="episode"></param>
+        /// <returns></returns>
         public int Add(ProductEpisode episode)
         {
             if(episode != null)
@@ -140,7 +151,6 @@ namespace BetKanu.Data.Repositories
                 return false;
             }            
         }
-
         public bool EditEP(ProductEpisode episode)
         {
             try
@@ -153,6 +163,59 @@ namespace BetKanu.Data.Repositories
                 return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// Add items for sale
+        /// </summary>
+        /// <param name="shop"></param>
+        /// <returns></returns>
+        public int Add(Shop shop)
+        {
+            if (shop != null)
+            {
+                _bKdb.Add(shop);
+                _bKdb.SaveChanges();
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// Edit the Sales
+        /// </summary>
+        /// <param name="shop"></param>
+        /// <returns></returns>
+        public bool EditShop(Shop shop)
+        {
+            try
+            {
+                _bKdb.Shops.Update(shop);
+                _bKdb.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+        /// <summary>
+        /// Delete the Sales
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool DeleteShop(int id)
+        {
+            try
+            {
+                var s = _bKdb.Shops.FirstOrDefault(e => e.Id == id);
+                _bKdb.Remove(s);
+                _bKdb.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 }

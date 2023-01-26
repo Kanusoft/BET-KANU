@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ProductVM
+@{
     ViewBag.Title = "Shop";
 }
 <div id="wrapper">
@@ -132,15 +133,17 @@
             </div>
         </section>
         <section>
+            @foreach (var si in Model.Shops)
+            {
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-bottom-sm-30">
 
 
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 margin-bottom-sm-30">
 
-
+                    
                     <div class="widget  widget-game" style="background-color:white">
                         <div class=" ">
-                            <div class="title" style="color: darkblue; text-align: center">Eastern Syriac (Surit) | $13.99</div>
+                            <div class="title" style="color: darkblue; text-align: center">@si.Name | $@si.Price</div>
                             <div id="smart-button-container-2">
                                 <div style="text-align: center;">
                                     <div id="paypal-button-container-2"></div>
@@ -200,7 +203,7 @@
                         </ol>
                         <div class="carousel-inner" role="listbox">
                             <div class="item active">
-                                <img src="/img/shop/CDEasternCover.png" class="full-width" alt="First slide image">
+                                <img src="@si.ImageUrl" class="full-width" alt="First slide image">
 
                             </div>
                             @*<div class="item">
@@ -217,6 +220,7 @@
                     </div>
                 </div>
             </div>
+            }
         </section>
         <section>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-bottom-sm-30">

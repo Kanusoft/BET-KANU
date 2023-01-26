@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BetKanu.Models.Common;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,9 +31,13 @@ namespace BetKanu.Models
         [DisplayName("Westren Image")]
         public string? ImageW { get; set; }
 
-        public string? Status { get; set; }
+        public Language? Status { get; set; }
+
+        public DateTime ReleaseDate { get; set; }
         public int ProductId { get; set; }
         public Product? Product { get; set; }
+
+
 
         [NotMapped]
         public IFormFile? imgUrl { get; set; }

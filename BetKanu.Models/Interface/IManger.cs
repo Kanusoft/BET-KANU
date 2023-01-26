@@ -18,5 +18,9 @@ namespace BetKanu.Models.Interface
         int Add(ProductEpisode episode);
         bool DeleteEP(int id);
         bool EditEP(ProductEpisode episode);
+
+        int Add(Shop shop);
+        bool EditShop(Shop shop);
+        bool DeleteShop(int id);
     }
 }

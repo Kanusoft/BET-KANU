@@ -77,7 +77,7 @@
 
                                                     </td>
                                                     <td>
-                                                        <input asp-for="Status" class="form-control" />
+                                                        @Html.DropDownListFor(m => m.Status, new SelectList(Enum.GetValues(typeof(Language))),new {@class = "form-control"})
                                                         <span asp-validation-for="Status" class="text-danger"></span>
                                                     </td>
                                                 </tr>
