@@ -30,7 +30,7 @@
                             <p class="Surayt font-size-22 font-size-22">
                                 @Html.Raw(@Model.product.ScriptW)
                             </p>
-                             <a class="btn btn-info" href="@Model.product.Wpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+                            <a class="btn btn-info" href="@Model.product.Wpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
                         </div>
                         <div class="col-lg-1"></div>
                         <div class="well col-md-5" style="text-align:center ; direction:rtl" id="eastern">
@@ -38,8 +38,8 @@
                             <p class="Surit font-size-22">
                                 @Html.Raw(@Model.product.ScriptE)
                             </p>
-                            
-                             <a class="btn btn-info" href="@Model.product.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+
+                            <a class="btn btn-info" href="@Model.product.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
                         </div>
                     </div>
                 </div>
@@ -123,10 +123,10 @@
                     </div>
                 </div>
                 <div class="row margin-5">
-                  
+
                     <div class="col-md-4">
                         <ul class="share">
-    <li><a href="https://www.facebook.com/sharer.php?u=https://betkanu.com/products/@ViewBag.Title" class="btn btn-sm btn-social-icon btn-facebook" data-toggle="tooltip" title="Share on facebook"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="https://www.facebook.com/sharer.php?u=https://betkanu.com/products/@ViewBag.Title" class="btn btn-sm btn-social-icon btn-facebook" data-toggle="tooltip" title="Share on facebook"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="https://twitter.com/share?url=https://www.betkanu.com/products/@ViewBag.Title&amp;hashtags=BETKANU" class="btn btn-sm btn-social-icon btn-twitter" data-toggle="tooltip" title="Share on twitter"><i class="fa fa-twitter"></i></a></li>
                         </ul>
                     </div>
@@ -138,9 +138,20 @@
 @* Start Software *@
 @if (Model.product.Category.ToString() == "Software")
 {
-    <section class="hero height-350 hero-game" style="background-image: url(@Model.product.CoverImage);">
+        <section class="border-bottom-1 border-grey-300 padding-30">
+        <div class="container text-center">
+            <div class="container">
+                <div class="headline no-margin">
+                    <h4><i class="fa fa-film"></i> Cartoon Series - Nino & Mia</h4>
+                    <div class="dropdown" style="display:inline">
+                        <button type="button" class="btn btn-outline btn-circle btn-icon-left" id="west" onclick="showhidelist(this.id)"><img src="/img/west.png" /></button>
+                        &nbsp;
+                        <button type="button" class="btn btn-outline btn-circle btn-icon-left" id="east" disabled onclick="hideshowlist(this.id)"><img src="/img/east.png" /></button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
-
     <section>
         <div class="container">
             <div class="row sidebar">
@@ -156,47 +167,95 @@
                                 </ul>
                             </div>
                         </div>
-                        <p style="text-align:left ; direction:ltr">  @Html.Raw(@Model.product.ShortDescription)  </p>
-                             <div class="well" style="text-align:left ; direction:ltr">
-                            <ul>
-                                <li>
-                                    FUN FOR KIDS
-                                </li>
-                                <li>
-                                    GREAT FOR TEACHERS
-                                </li>
-                                <li>
-                                    AMAZING FOR PARENTS
-                                </li>
-                            </ul>
-
+                        <p style="text-align:left ; direction:ltr">          @Html.Raw(@Model.product.LongDescription) </p>
+                        <div class="well" style="text-align:left ; direction:ltr">
+                     
 
                         </div>
                         <p style="text-align:left ; direction:ltr">
-                            This must-have App is designed for all BET KANU publications and prints. The App includes these useful features:
-                        </p>
-                    <div class="well" style="text-align:left ; direction:ltr">
-                            @Html.Raw(@Model.product.LongDescription)
-                    </div>
-                    <div class="well" style="text-align:left ; direction:ltr">
                             @Html.Raw(@Model.product.ScriptE)
-                    </div>
+                        </p>
+                        <div class="well" style="text-align:left ; direction:ltr">
+                    
+                        </div>
+                        <div class="well" style="text-align:left ; direction:ltr">
+                       
+                        </div>
                         @* Features *@
                         @Html.Raw(@Model.product.ScriptW)
                         @* Features *@
                     </div>
+                    <div class="widget widget-list">
+                        <div class="title">Features</div>
+                        <div class="  col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <ul>
+                                <li>
+                                   
+                                    <ul class="widget-list-meta">
+                                        
+                                        <li class="widget-list-title"><strong>Updated August 17, 2021</strong></li>
+                                      
+                                    </ul>
+                                </li>
+                                <li>
+                                   
+                                    <div class="widget-list-meta">
+                                        <h4 class="widget-list-title"><strong>Size 52.7 M</strong></h4>
+                                        <p> </p>
+                                    </div>
+                                </li>
+                                <li>
+                                   
+                                    <div class="widget-list-meta">
+                                        <h4 class="widget-list-title"><strong>Installs 2,000+</strong></h4>
+                                        <p></p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="  col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
+                            <ul>
+                              
+
+                                <li>
+                                  
+                                    <div class="widget-list-meta">
+                                        <h4 class="widget-list-title"><strong>Current Version  2</strong></h4>
+                                        <p> </p>
+                                    </div>
+                                </li>
+                                <li>
+                                   
+                                    <div class="widget-list-meta">
+                                        <h4 class="widget-list-title"><strong>Requires Android 4.0.3 and up</strong></h4>
+                                        <p></p>
+                                    </div>
+                                </li>
+                                <li>
+                                   
+                                    <div class="widget-list-meta">
+                                        <h4 class="widget-list-title"><strong>Content Rating Rated for 4+</strong></h4>
+                                        <p> </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+   
+
                 <div class="col-md-4 rightside">
                     <div class="col-md-12">
-                       <div class="row">
+                        <div class="row">
                             <p>
-                              &nbsp;
+                                &nbsp;
                             </p>
                             <a href="@Model.product.Link1" class="btn btn-warning btn-block">Get it on the App Store!</a>
                             <a href="@Model.product.Link2" class="btn btn-warning btn-block">Get it on the Google Play!</a>
-                         <p>
-                           &nbsp;
-                         </p>
+                            <p>
+                                &nbsp;
+                            </p>
 
 
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -218,7 +277,7 @@
 
                                 </div>
                             </div>
-                       </div>
+                        </div>
 
                     </div>
                 </div>
@@ -247,34 +306,74 @@
 
 @* Start Cartoon Series *@
 @if (Model.product.Category.ToString() == "CartoonSeries")
-{
-      <div class="container">
-                <div class="card-group">
-                    <div class="row">
-    @foreach(var e in Model.episode)
-    {
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-            <div class="card card-video">
-                <div class="card-img">
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="@e.VideoW;showinfo=0" allowfullscreen></iframe>
+{ 
+  @*  <div id="wrapper">
+        <section class="border-bottom-1 border-grey-300 padding-30">
+            <div class="container text-center">
+                <div class="container">
+                    <div class="headline no-margin">
+                        <h4><i class="fa fa-film"></i> Cartoon Series - Nino & Mia</h4>
+                        <div class="dropdown" style="display:inline">
+                            <button type="button" class="btn btn-outline btn-circle btn-icon-left" id="west" onclick="showhidelist(this.id)"><img src="/img/west.png" /></button>
+                            &nbsp;
+                            <button type="button" class="btn btn-outline btn-circle btn-icon-left" id="east" disabled onclick="hideshowlist(this.id)"><img src="/img/east.png" /></button>
+                        </div>
                     </div>
-                    @*<div class="time">Alphabet Series</div>*@
-                </div>
-                <div class="caption">
-                    <h3 class="card-title"><a href="@e.VideoW;showinfo=0">Olaf</a></h3>
-                    <ul>
-                        <li><i class="fa fa-clock-o"></i> Aug 26, 2019</li>
-                        <li><i class="fa fa-eye"></i> @e.Views views</li>
-                    </ul>
                 </div>
             </div>
-        </div>
-    }
-    </div>
-     </div>
-    </div>
+        </section>
+        <div id="wrapper">
+            <section class="bg-grey-50">*@
+                <div class="container">
+                    <div class="card-group">
+                        <div class="row">
+  @*                          <div class="post post-single col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="post-header post-author">
+                                    <div class="post-title">
+                                        <h2><a href="#">Nino & Mia (Season 1) </a></h2>
+                                        <ul class="post-meta">
+                                            <li><i class="fa fa-film"></i> @Model.product.Category.ToString()</li>
+                                            <li><i class="fa fa-info"></i> Educational</li>
+                                            <li><i class="fa fa-child"></i> Children</li>
+                                        </ul>
+                                        <p>
+                                         @Model.product.LongDescription
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>*@
+                          
 
+                            @foreach (var e in Model.episode)
+                            {
+                                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                                <div class="card card-video">
+
+                                        <div class="card-img">
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                <iframe class="embed-responsive-item" src="@e.VideoW;showinfo=0" allowfullscreen></iframe>
+                                            </div>
+                                            @*<div class="time">Alphabet Series</div>*@
+                                        </div>
+                                        <div class="caption">
+                                            <h3 class="card-title"><a href="@e.VideoW;showinfo=0">Olaf</a></h3>
+                                            <ul>
+                                                <li><i class="fa fa-clock-o"></i> Aug 26, 2019</li>
+                                                <li><i class="fa fa-eye"></i> @e.Views views</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                            }
+                      
+                   
+                        </div>
+                    </div>
+                </div>
+    @*        </section>
+        </div>
+    </div>*@
 }
 @* End Cartoon Series *@
 @* Start Books *@
@@ -282,7 +381,6 @@
 {
     <div id="wrapper">
         <section class="hero height-350 hero-game" style="background-image: url(@Model.product.CoverImage);">
-       
         </section>
 
         <section>
@@ -302,15 +400,17 @@
                             </div>
                             @if (Model.product.Epdf == null)
                             {
-                                                  <div class="img-test">   </div>
-                                        }else{
-                                                  <div class="well" style="text-align:left ; direction:ltr">
+                                <div class="img-test">   </div>
+                            }
+                            else
+                            {
+                                <div class="well" style="text-align:left ; direction:ltr">
 
                                     <h3>  @Model.product.ScriptE</h3>
                                     <h3>  @Model.product.ScriptW</h3>
-                               
-                            </div>
-                                        }
+
+                                </div>
+                            }
                             <div class="well" style="text-align:left ; direction:ltr">
                                 <p>
                                     @Model.product.LongDescription
@@ -329,9 +429,9 @@
                                     </strong>
                                 </p>
                                 <ul style="text-align:left ; direction:ltr ; text-transform:uppercase">
-                         @Html.Raw(@Model.product.CreditsE)
-                   
-                                </ul> 
+                                    @Html.Raw(@Model.product.CreditsE)
+
+                                </ul>
                             </div>
                             <div class="well">
                                 <h2 style="text-align:center">      <img style="width:150px" src="/img/Products/banners/reader.png" /> </h2>
@@ -347,22 +447,26 @@
                         <div class="col-md-12">
                             <br>
                             <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="well">
                                         <img src="@Model.product.img1" alt="">
                                         @if (Model.product.Link1 == null)
                                         {
-                                                  <div class="img-test">   </div>
-                                        }else{
-                                               <a href="mailto:shmuniha@gmail.com" class="btn btn-warning btn-block">Order Now! <i class="fa fa-google"></i></a>
+                                            <div class="img-test">   </div>
+                                        }
+                                        else
+                                        {
+                                            <a href="mailto:shmuniha@gmail.com" class="btn btn-warning btn-block">Order Now! <i class="fa fa-google"></i></a>
                                         }
                                         @if (Model.product.Link2 == null)
                                         {
-                                                  <div class="img-test">   </div>
-                                        }else{
+                                            <div class="img-test">   </div>
+                                        }
+                                        else
+                                        {
                                             <a href="https://www.instagram.com/erzaehlungen_turabdin/" class="btn btn-instagram btn-block">Order Now! <i class="fa fa-instagram"></i> </a>
                                         }
-                                                 &nbsp;
+                                        &nbsp;
                                     </div>
                                 </div>
 
@@ -374,8 +478,10 @@
                                 </div>
                                 @if (Model.product.img3 == null)
                                 {
-                                       <div class="img-test"></div>
-                                }else{
+                                    <div class="img-test"></div>
+                                }
+                                else
+                                {
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="well" style="text-align:center">
                                             <img src="@Model.product.img3" alt="">
@@ -385,8 +491,10 @@
                                 }
                                 @if (Model.product.img4 == null)
                                 {
-                                       <div class="img-test"></div>
-                                }else{
+                                    <div class="img-test"></div>
+                                }
+                                else
+                                {
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="well" style="text-align:center">
                                             <img src="@Model.product.img4" alt="">
@@ -396,8 +504,10 @@
                                 }
                                 @if (Model.product.img5 == null)
                                 {
-                                       <div class="img-test"></div>
-                                }else{
+                                    <div class="img-test"></div>
+                                }
+                                else
+                                {
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="well" style="text-align:center">
                                             <img src="@Model.product.img5" alt="">
@@ -405,14 +515,14 @@
                                         </div>
                                     </div>
                                 }
-                    
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-    
+
         <section>
             <div class="container">
                 <div class="row">
@@ -435,7 +545,6 @@
 @* End Books *@
 
 <!-- /#wrapper -->
-
 @section scripts{
     <script>
         function hideshowlist() {

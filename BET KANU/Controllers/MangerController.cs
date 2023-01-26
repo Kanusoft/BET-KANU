@@ -470,7 +470,7 @@ namespace BET_KANU.Controllers
         public ActionResult DeleteEPpost(int id)
         {
             if (ModelState.IsValid)
-            {
+            { 
                 _unitOfWork.manger.DeleteEP(id);
                 TempData["Message"] = "The Product has been Delete successfully!";
             }

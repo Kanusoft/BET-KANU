@@ -19,7 +19,7 @@ namespace BetKanu.Models
         public string? Title { get; set; }
 
       
-        [DisplayName("Image")]
+        [DisplayName("Small Image")]
         public string? SmallImage { get; set; }
 
         [DisplayName("Cover Image")]
@@ -45,16 +45,16 @@ namespace BetKanu.Models
         [DisplayName("Long Description")]
         public string? LongDescription { get; set; }
 
-        [DisplayName("Eastren Script")]
+        [DisplayName("Eastren Script   Html")]
         public string? ScriptE { get; set; }
 
-        [DisplayName("Westrean Script")]
+        [DisplayName("Westrean Script   Html")]
         public string? ScriptW { get; set; }
 
-        [DisplayName("Eastren Credits")]
+        [DisplayName("Eastren Credits    Html")]
         public string? CreditsE { get; set; }
 
-        [DisplayName("Westrean Credits")]
+        [DisplayName("Westrean Credits   Html")]
         public string? CreditsW { get; set; }
 
         public string? Link1 { get; set; }
