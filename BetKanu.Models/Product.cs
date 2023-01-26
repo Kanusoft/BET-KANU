@@ -88,6 +88,18 @@ namespace BetKanu.Models
         [DisplayName("Image")]
         public string? img5 { get; set; }
 
+        public string? Author { get; set; }
+        public string? DesignedBy { get; set; }
+        public string? source { get; set; }
+        public string? Features1 { get; set; }
+        public string? Features2 { get; set; }
+        public string? Features3 { get; set; }
+        public string? Features4 { get; set; }
+        public string? Features5 { get; set; }
+        public string? Features6 { get; set; }
+        public string? Features7 { get; set; }
+        public string? Features8 { get; set; }
+
         [NotMapped]
         [DisplayName("Image")]
         public IFormFile? SmallUrl { get; set; }

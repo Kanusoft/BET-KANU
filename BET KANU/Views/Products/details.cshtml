@@ -248,6 +248,9 @@
 @* Start Cartoon Series *@
 @if (Model.product.Category.ToString() == "CartoonSeries")
 {
+      <div class="container">
+                <div class="card-group">
+                    <div class="row">
     @foreach(var e in Model.episode)
     {
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
@@ -268,6 +271,9 @@
             </div>
         </div>
     }
+    </div>
+     </div>
+    </div>
 
 }
 @* End Cartoon Series *@
@@ -427,7 +433,7 @@
     </div>
 }
 @* End Books *@
-}
+
 <!-- /#wrapper -->
 
 @section scripts{
