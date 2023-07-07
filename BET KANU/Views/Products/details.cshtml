@@ -423,14 +423,45 @@
 
                                 <div class="card-img">
                                     <div class="embed-responsive embed-responsive-16by9">
-                                        <iframe class="embed-responsive-item" src="@e.VideoW;showinfo=0" allowfullscreen></iframe>
+                                        @{
+                                            string youtubeUrl = @e.VideoW;
+                                            string embedUrl = string.Empty;
+
+                                            if (!string.IsNullOrEmpty(youtubeUrl))
+                                            {
+                                                if (youtubeUrl.Contains("youtu.be/"))
+                                                {
+                                                    // Short URL
+                                                    string videoId = youtubeUrl.Substring(youtubeUrl.LastIndexOf("/") + 1);
+                                                    embedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                }
+                                                else if (youtubeUrl.Contains("youtube.com/embed/"))
+                                                {
+                                                    // Long URL
+                                                    embedUrl = youtubeUrl;
+                                                }
+                                                else if (youtubeUrl.Contains("youtube.com/watch?v="))
+                                                {
+                                                    // Long URL with query parameters
+                                                    int embedIndex = youtubeUrl.IndexOf("youtube.com/watch?v=");
+                                                    string videoId = youtubeUrl.Substring(embedIndex + 20);
+                                                    int queryIndex = videoId.IndexOf("?");
+                                                    if (queryIndex != -1)
+                                                    {
+                                                        videoId = videoId.Substring(0, queryIndex);
+                                                    }
+                                                    embedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                }
+                                            }
+                                        }
+                                        <iframe class="embed-responsive-item" src=@embedUrl allowfullscreen></iframe>
                                     </div>
                                     @*<div class="time">Alphabet Series</div>*@
                                 </div>
                                 <div class="caption">
                                     <h3 class="card-title"><a href="@e.VideoW;showinfo=0">Olaf</a></h3>
                                     <ul>
-                                        <li><i class="fa fa-clock-o"></i> Aug 26, 2019</li>
+                                        <li><i class="fa fa-clock-o"></i> @e.ReleaseDate.Date</li>
                                         <li><i class="fa fa-eye"></i> @e.Views views</li>
                                     </ul>
                                 </div>
