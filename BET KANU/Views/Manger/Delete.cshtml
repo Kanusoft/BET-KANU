@@ -14,17 +14,17 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top-50" style="color:#6d6e71; text-align:center">
                     <div class="form-group">
-                            <label>   @Html.DisplayFor(model => model.Title)</label>
-                        </div>
-                        <div class="form-group">
-                            <label>    @Html.DisplayFor(model => model.ShortDescription)</label>
-                        </div>
+                        <label>   @Html.DisplayFor(model => model.Title)</label>
+                    </div>
+                    <div class="form-group">
+                        <label>    @Html.DisplayFor(model => model.ShortDescription)</label>
+                    </div>
                     <div class="text-center margin-top-30">
-                            <form asp-action="DeletePost" asp-route-id="@Model.Id">
+                        <form asp-action="DeletePost" asp-route-id="@Model.Id">
                             <input type="submit" onclick="PopUp()" value="Delete" class="btn btn-success btn-form marg-right5" /> |
                             <a asp-action="Index" class="btn btn-danger btn-form">Back To List</a>
-                         
-                            </form>
+
+                        </form>
                     </div>
                 </div>
             </div>
@@ -32,8 +32,8 @@
     </section>
 </div>
 
-                    <script>
-                           function PopUp(){
-                               alert("The Product has been Delete successfully!")
-                           }
-                    </script>
+<script>
+    function PopUp() {
+        alert("The Product has been Delete successfully!")
+    }
+</script>

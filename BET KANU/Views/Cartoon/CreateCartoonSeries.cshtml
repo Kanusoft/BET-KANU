@@ -1,27 +1,27 @@
-﻿@model ProductEpisode
-
+﻿@model Product
+<!-- file Uploads -->
 <link href="~/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
 
 <link rel="stylesheet" href="~/css/dashboard.css">
+
+
 @{
-    ViewData["Title"] = "EditEpisodee";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Create New Product";
 }
 
-<!-- file Uploads -->
 <div id="wrapper">
     <section class="bg-grey-500 promo">
         <div class="container">
-            <h1 style="color:white"> &nbsp;Edit Episode</h1>
+            <h1 style="color:white"> &nbsp;Create New Cartoon-Series </h1>
         </div>
     </section>
+
     <section>
         <div class="col-md-12">
-            <form class="card" asp-action="EditEpisode" enctype="multipart/form-data">
+            <form class="card" asp-action="CreateCartoonSeries" enctype="multipart/form-data" method="post">
                 <div class="container">
                     <div class="col-12">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-3 col-sm-12">
@@ -30,22 +30,26 @@
                                         <input asp-for="Title" class="form-control" />
                                         <span asp-validation-for="Title" class="text-danger"></span>
                                     </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-12">
                                     <div class="form-group">
-                                        <label asp-for="ImageE" class="control-label"></label>
-                                        <input type="file" asp-for="imgUrl" class="dropify form-control" />
-                                        <span asp-validation-for="ImageE" class="text-danger"></span>
+                                        <label asp-for="TargetAudince" class="control-label"></label>
+                                        <select class="form-control custom-select" asp-for="TargetAudince" asp-items="Html.GetEnumSelectList<Target>()">
+                                            <option selected="selected">-None-</option>
+                                        </select>
+                                        <span asp-validation-for="TargetAudince" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-sm-12">
                                     <div class="form-group">
-                                        <label asp-for="ImageW" class="control-label"></label>
-                                        <div>
-                                         
-                                            <input type="file" asp-for="imgUrl2" class="dropify form-control" />
-                                            <span asp-validation-for="ImageW" class="text-danger"></span>
-                                        </div>
+                                        <label asp-for="SmallImage" class="control-label"></label>
+                                        <input asp-for="SmallUrl" class="dropify form-control" />
+                                        <span asp-validation-for="SmallUrl" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-12">
+                                    <div class="form-group">
+                                        <label asp-for="CoverImage" class="control-label"></label>
+                                        <input asp-for="CoverUrl" class="dropify form-control" />
+                                        <span asp-validation-for="CoverUrl" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -63,104 +67,89 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <label asp-for="Status" class="control-label"></label>
+                                                        <label asp-for="SubCategory" class="control-label"></label>
                                                     </td>
                                                     <td>
-                                                      
-                                                        <input asp-for="Status" class="form-control" />
-                                                        <span asp-validation-for="Status" class="text-danger"></span>
+                                                        <input asp-for="SubCategory" class="form-control" />
+                                                        <span asp-validation-for="SubCategory" class="text-danger"></span>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <label asp-for="Status" class="control-label"></label>
-
+                                                        <label asp-for="ReleaseDate" class="control-label"></label>
                                                     </td>
                                                     <td>
-                                                        @Html.DropDownListFor(m => m.Status, new SelectList(Enum.GetValues(typeof(Language))),new {@class = "form-control"})
-                                                        <span asp-validation-for="Status" class="text-danger"></span>
-                                                    </td>
-                                                </tr>
-
-
-                                                <tr>
-                                                    <td>
-                                                        <label asp-for="ProductId" class="control-label"></label>
-                                                    </td>
-                                                    <td>
-
-                                                     
-                                                        <select asp-for="ProductId" class="form-control" asp-items="@ViewBag.ProductId"></select>
+                                                        <input asp-for="ReleaseDate" class="form-control" />
+                                                        <span asp-validation-for="ReleaseDate" class="text-danger"></span>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-
-                                                        <label asp-for="VideoW" class="control-label"></label>
+                                                        <label asp-for="LongDescription" class="control-label"></label>
                                                     </td>
                                                     <td>
-     
-                                                        <input asp-for="VideoW" class="form-control" />
-                                                        <span asp-validation-for="VideoW" class="text-danger"></span>
+                                                        <input asp-for="LongDescription" class="form-control" />
+                                                        <span asp-validation-for="LongDescription" class="text-danger"></span>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <label asp-for="VideoE" class="control-label"></label>
+                                                        <label asp-for="ShortDescription" class="control-label"></label>
                                                     </td>
                                                     <td>
-
-                                                  
-                                                        <input asp-for="VideoE" class="form-control" />
-                                                        <span asp-validation-for="VideoE" class="text-danger"></span>
+                                                        <input asp-for="ShortDescription" class="form-control" />
+                                                        <span asp-validation-for="ShortDescription" class="text-danger"></span>
                                                     </td>
                                                 </tr>
-
-                 
                                             </tbody>
                                         </table>
                                     </div>
-                                    <!--END table-responsive -->
+                                    <!--END table-responsive #3a4258-->
 
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class=" col-md-12">
+                            <div class=" col-md-6">
                                 <a asp-action="Index" class="BackToList">Back to List</a>
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="save" style="float:right;width: 19%;    background-color: #3a4258;
-                                 margin-right: 32px" class="btn btn-primary btn-shadow" />
+                            <input type="submit" value="Create" style="float:right;width: 19%;background-color: #3a4258;
+                               margin-right: 32px" class="btn btn-primary btn-shadow" />
                         </div>
+
                     </div>
+
                 </div>
+
             </form>
+
+
         </div>
     </section>
 </div>
 
 
 
-
 @section Scripts {
-        <!-- file uploads js -->
-            <script src="~/plugins/fileuploads/js/dropify.js"></script>
-            <script>
-                $('.dropify').dropify({
-                    messages: {
-                        'default': 'Drag and drop a file here or click',
-                        'replace': 'Drag and drop or click to replace',
-                        'remove': 'Remove',
-                        'error': 'Ooops, something wrong appended.'
-                    },
-                    error: {
-                        'fileSize': 'The file size is too big (2M max).'
-                    }
-                });
-            </script>
     @{
+        <!-- file uploads js -->
+        <script src="~/plugins/fileuploads/js/dropify.js"></script>
+        <script>
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Drag and drop a file here or click',
+                    'replace': 'Drag and drop or click to replace',
+                    'remove': 'Remove',
+                    'error': 'Ooops, something wrong appended.'
+                },
+                error: {
+                    'fileSize': 'The file size is too big (2M max).'
+                }
+            });
+        </script>
+
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-}
+    }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage;
-using System.ComponentModel.DataAnnotations;
 
 namespace BET_KANU.Services
 {
@@ -16,9 +15,8 @@ namespace BET_KANU.Services
             _storageContainerName = configuration.GetValue<string>("BlobContainerName");
         }
 
-     
-       
-        public async Task UploadBlobFileAsync(IFormFile files)
+           
+        public async Task UploadBlobImageAsync(IFormFile files)
         {
             try
             {
@@ -29,6 +27,8 @@ namespace BET_KANU.Services
                 CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
                 // Retrieve a reference to a container.
                 CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(_storageContainerName);
+                // Create the container if it doesn't already exist.
+               await cloudBlobContainer.CreateIfNotExistsAsync();
 
                 BlobContainerPermissions permissions = new BlobContainerPermissions
                 {
@@ -42,12 +42,47 @@ namespace BET_KANU.Services
                     dataFiles = target.ToArray();
                 }
                 // This also does not make a service call; it only creates a local object.
-                CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(systemFileName);
+                CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference("products/" + files.FileName);
+                await cloudBlockBlob.UploadFromByteArrayAsync(dataFiles, 0, dataFiles.Length);
+                }
+            catch (Exception)
+            {
+                throw new Exception("Image Upload Failed"); 
+            }
+        }
+
+        public async Task UploadBlobFileAsync(IFormFile files)
+        {
+            try
+            {
+                byte[] dataFiles;
+                // Retrieve storage account from connection string.
+                CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(_storageConnectionString);
+                // Create the blob client.
+                CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
+                // Retrieve a reference to a container.
+                CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(_storageContainerName);
+                // Create the container if it doesn't already exist.
+                await cloudBlobContainer.CreateIfNotExistsAsync();
+
+                BlobContainerPermissions permissions = new BlobContainerPermissions
+                {
+                    PublicAccess = BlobContainerPublicAccessType.Blob
+                };
+                string systemFileName = files.FileName;
+                await cloudBlobContainer.SetPermissionsAsync(permissions);
+                await using (var target = new MemoryStream())
+                {
+                    files.CopyTo(target);
+                    dataFiles = target.ToArray();
+                }
+                // This also does not make a service call; it only creates a local object.
+                CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference("PDF/" + files.FileName);
                 await cloudBlockBlob.UploadFromByteArrayAsync(dataFiles, 0, dataFiles.Length);
             }
             catch (Exception)
             {
-                throw new Exception("File Upload Failed"); 
+                throw new Exception("File Upload Failed");
             }
         }
 
@@ -71,24 +106,4 @@ namespace BET_KANU.Services
     }
 }
 
-public class BlobStorage
-{
 
-    [Display(Name = "File Name")]
-    public string FileName
-    {
-        get;
-        set;
-    }
-    [Display(Name = "File Size")]
-    public string FileSize
-    {
-        get;
-        set;
-    }
-    public string Modified
-    {
-        get;
-        set;
-    }
-}

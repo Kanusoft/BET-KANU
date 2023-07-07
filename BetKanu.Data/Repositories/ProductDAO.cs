@@ -1,11 +1,7 @@
 ﻿using BetKanu.Models;
 using BetKanu.Models.Common;
 using BetKanu.Models.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BetKanu.Data.Repositories
 {
@@ -17,38 +13,72 @@ namespace BetKanu.Data.Repositories
             _db = db;
         }
 
+        /// <summary>
+        /// Get list of Newest products 
+        /// </summary>
+        /// <returns></returns>
         public List<Product> GetAll()
         {
             return _db.Products.OrderByDescending(p => p.ReleaseDate).ToList();
                      
         }
+
+        /// <summary>
+        /// Get list of Products by Category
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
         public List<Product> GetAll(Category category)
         {
             return _db.Products.Where(p => p.Category == category).ToList();
         }
-        public Product GetOne(int id)
+
+        /// <summary>
+        /// Get one Product by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Product? GetOne(int id)
         {
             return _db.Products.Where(p => p.Id == id).FirstOrDefault();
         }
-        public List<Product> RecentProduct(int num)
+
+        /// <summary>
+        /// Get the Last ( Number ) of new Products 
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public List<Product> RecentProduct(int num, Category category)
         {
-            return _db.Products.OrderByDescending(p => p.ReleaseDate).Take(num).ToList();
+            return _db.Products.Where(P => P.Category == category).OrderByDescending(p => p.ReleaseDate).Take(num).ToList();
         }
 
+        /// <summary>
+        /// Get List of cartoon Episodes
+        /// </summary>
+        /// <returns></returns>
         public List<ProductEpisode> GetEpisode()
         {
-            //.Where(p => p.ProductId == id)
             return _db.ProductEpisodes.ToList();
         }
 
+        /// <summary>
+        /// Get all Episodes by Product parent Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public List<ProductEpisode>GetallByParentId(int id)
         {
             return _db.ProductEpisodes.Where(pe => pe.ProductId== id).ToList();
         }
-
-        public ProductEpisode GetOneEpisode(int id)
+        /// <summary>
+        /// Get one Episode by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ProductEpisode? GetOneEpisode(int? id)
         {
-            return _db.ProductEpisodes.FirstOrDefault((e => e.Id == id));
+            return _db.ProductEpisodes.FirstOrDefault(e => e.Id == id);
         }
     }
 }

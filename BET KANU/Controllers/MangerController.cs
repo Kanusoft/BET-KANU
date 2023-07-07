@@ -1,18 +1,13 @@
 ﻿using BetKanu.Models;
 using BetKanu.Models.Interface;
 using Microsoft.AspNetCore.Mvc;
-using System.Web.Helpers;
-
-
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using BET_KANU.Services;
-using BetKanu.Data;
-using System;
 using BET_KANU.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+using BetKanu.Models.Common;
 
 namespace BET_KANU.Controllers
 {
@@ -20,19 +15,16 @@ namespace BET_KANU.Controllers
     public class MangerController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly BKdbContext _bKdb;
-        private readonly IWebHostEnvironment _HostEnvironment;
         private readonly IBlobStorageService _blobStorage;
-        public MangerController(IUnitOfWork unitOfWork, IWebHostEnvironment HostEnvironment, IBlobStorageService blobStorage,BKdbContext bKdb)
+
+        public MangerController(IUnitOfWork unitOfWork, IBlobStorageService blobStorage)
         {
-            _bKdb = bKdb;
             _unitOfWork = unitOfWork;
-            _HostEnvironment = HostEnvironment;
             _blobStorage = blobStorage;
         }
+
         public ActionResult Index(string Select)
         {
-            //var Prod = _unitOfWork.manger.GetAll(Select);
             var vm = new ProductVM()
             {
                 products = _unitOfWork.manger.GetAll(Select),
@@ -42,273 +34,549 @@ namespace BET_KANU.Controllers
             return View(vm);
         }
 
-        public ActionResult Create()
+        [HttpGet]
+        public ActionResult CreateSong()
         {
             return View(new Product());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  ActionResult Create([Bind("Id,Title,SmallUrl,CoverUrl,imgUrl,imgUrl2,imgUrl3,imgUrl4,imgUrl5,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,CreditsE,CreditsW,Link1,Link2,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW")] Product p)
+        public async Task<ActionResult> CreateSong([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,CreditsE,CreditsW,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,WestreanPdfFile,EasternPdfFile")] Product song)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    if (p.SmallUrl != null)
+                    if (song.SmallUrl != null)
                     {
-                        string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
-                        string Pathimg = @"/Uploades/";
-                        string filename = Path.GetFileNameWithoutExtension(p.SmallUrl.FileName);
-                        string ex = Path.GetExtension(p.SmallUrl.FileName);
-                        p.SmallImage = Pathimg + filename + ex;
-                        filename = filename + ex;
-                        string path = Path.Combine(Rootpath, filename);
-                        p.SmallUrl.CopyTo(new FileStream(path, FileMode.Create));
-
+                        string ImagePath = await SaveImage(song.SmallUrl);
+                        song.SmallImage = ImagePath;
                     }
-                    if (p.CoverUrl != null)
+                    if (song.CoverUrl != null)
                     {
-                        string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
-                        string Pathimg = @"/Uploades/";
-                        string filename = Path.GetFileNameWithoutExtension(p.CoverUrl.FileName);
-                        string ex = Path.GetExtension(p.CoverUrl.FileName);
-                        p.CoverImage = Pathimg + filename + ex;
-                        filename = filename + ex;
-                        string path = Path.Combine(Rootpath, filename);
-                        p.CoverUrl.CopyTo(new FileStream(path, FileMode.Create));
-
+                        string ImagePath = await SaveImage(song.CoverUrl);
+                        song.CoverImage = ImagePath;
                     }
-                    if (p.imgUrl != null)
+                    if (song.WestreanPdfFile != null)
                     {
-                        string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
-                        string Pathimg = @"/Uploades/";
-                        string filename = Path.GetFileNameWithoutExtension(p.imgUrl.FileName);
-                        string ex = Path.GetExtension(p.imgUrl.FileName);
-                        p.img1 = Pathimg + filename + ex;
-                        filename = filename + ex;
-                        string path = Path.Combine(Rootpath, filename);
-                        p.imgUrl.CopyTo(new FileStream(path, FileMode.Create));
-
+                        string filename = await SaveFile(song.WestreanPdfFile);
+                        song.Wpdf = filename;
                     }
-                    if (p.imgUrl2 != null)
+                    if (song.EasternPdfFile != null)
                     {
-                        string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
-                        string Pathimg = @"/Uploades/";
-                        string filename = Path.GetFileNameWithoutExtension(p.imgUrl2.FileName);
-                        string ex = Path.GetExtension(p.imgUrl2.FileName);
-                        p.img2 = Pathimg + filename + ex;
-                        filename = filename + ex;
-                        string path = Path.Combine(Rootpath, filename);
-                        p.imgUrl2.CopyTo(new FileStream(path, FileMode.Create));
-
+                        string filename = await SaveFile(song.EasternPdfFile);
+                        song.Epdf = filename;
                     }
-                    if (p.imgUrl3 != null)
+                    song.Category = Category.Songs;
+                    var result = _unitOfWork.manger.Add(song);
+                    if (result > 0)
                     {
-                        string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
-                        string Pathimg = @"/Uploades/";
-                        string filename = Path.GetFileNameWithoutExtension(p.imgUrl3.FileName);
-                        string ex = Path.GetExtension(p.imgUrl3.FileName);
-                        p.img3 = Pathimg + filename + ex;
-                        filename = filename + ex;
-                        string path = Path.Combine(Rootpath, filename);
-                        p.imgUrl3.CopyTo(new FileStream(path, FileMode.Create));
-
+                        TempData["Messagee"] = song.Title + " " + "has been created successfully!";
+                        return RedirectToAction(nameof(Index));
                     }
-                    if (p.imgUrl4 != null)
-                    {
-                        string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
-                        string Pathimg = @"/Uploades/";
-                        string filename = Path.GetFileNameWithoutExtension(p.imgUrl4.FileName);
-                        string ex = Path.GetExtension(p.imgUrl4.FileName);
-                        p.img4 = Pathimg + filename + ex;
-                        filename = filename + ex;
-                        string path = Path.Combine(Rootpath, filename);
-                        p.imgUrl4.CopyTo(new FileStream(path, FileMode.Create));
-
-                    }
-                    if (p.imgUrl5 != null)
-                    {
-                        string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
-                        string Pathimg = @"/Uploades/";
-                        string filename = Path.GetFileNameWithoutExtension(p.imgUrl5.FileName);
-                        string ex = Path.GetExtension(p.imgUrl5.FileName);
-                        p.img5 = Pathimg + filename + ex;
-                        filename = filename + ex;
-                        string path = Path.Combine(Rootpath, filename);
-                        p.imgUrl5.CopyTo(new FileStream(path, FileMode.Create));
-                    }
-                    TempData["Messagee"] = p.Title + " " + "has been created successfully!";
-                    _unitOfWork.manger.Add(p);
-                    return RedirectToAction(nameof(Index));
                 }
                 catch (Exception)
                 {
                 }
             }
-            return View(p);
+            return View(song);
         }
-        private string SaveImage(IFormFile file)
-        {
-            //WebImage img = new WebImage(file.ContentDisposition);
-            //string webRoot = _HostEnvironment.WebRootPath;
-            //string? getFileName;
-            //getFileName = file.FileName;
-            //var Filename = Path.GetFileName(file.FileName);
-            //string newFileName = name.ToString() + Filename.Substring(Filename.LastIndexOf("."), 4);
-            //var path = Path.Combine((isCompletePath ? Serverpath : webRoot), newFileName);
-            //img.Save(path);
-            string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
-            string fullpath = Path.Combine(uploade, file.FileName);
-            file.CopyTo(new FileStream(fullpath, FileMode.Create));
 
-            return file.FileName;
+        [HttpGet]
+        public ActionResult CreateBook()
+        {
+            return View(new Product());
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateBook([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,CreditsE,CreditsW,Link1,Link2,EastrenImageFile,WestreanImageFile,imgUrl3,imgUrl4,imgUrl5,img1,img2,img3,img4,img5")] Product Book)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (Book.SmallUrl != null)
+                    {
+                        string ImagePath = await SaveImage(Book.SmallUrl);
+                        Book.SmallImage = ImagePath;
+                    }
+                    if (Book.CoverUrl != null)
+                    {
+                        string ImagePath = await SaveImage(Book.CoverUrl);
+                        Book.CoverImage = ImagePath;
+                    }
+                    if (Book.imgUrl != null)
+                    {
+                        string ImagePath = await SaveImage(Book.imgUrl);
+                        Book.img1 = ImagePath;
+                    }
+                    if (Book.imgUrl2 != null)
+                    {
+                        string ImagePath = await SaveImage(Book.imgUrl2);
+                        Book.img2 = ImagePath;
+                    }
+                    if (Book.imgUrl3 != null)
+                    {
+                        string ImagePath = await SaveImage(Book.imgUrl3);
+                        Book.img3 = ImagePath;
+                    }
+                    if (Book.imgUrl4 != null)
+                    {
+                        string ImagePath = await SaveImage(Book.imgUrl4);
+                        Book.img4 = ImagePath;
+                    }
+                    if (Book.imgUrl5 != null)
+                    {
+                        string ImagePath = await SaveImage(Book.imgUrl5);
+                        Book.img5 = ImagePath;
+                    }
+                    Book.Category = Category.Books;
+                    var result = _unitOfWork.manger.Add(Book);
+                    if (result > 0)
+                    {
+                        TempData["Messagee"] = Book.Title + " " + "has been created successfully!";
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+                catch (Exception)
+                {
+                    TempData["AlertMessage"] = "Ooops something went wrong !!";
+                    return View(Book);
+                }
+            }
+            return View(Book);
+        }
+
+        [HttpGet]
+        public ActionResult CreateSoftware()
+        {
+            return View(new Product());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateSoftware([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,CreditsE,CreditsW,Link1,Link2,Features1,Features2,Features3,Features4,Features5,Features6,Features7,Features8,EastrenImageFile,WestreanImageFile,imgUrl3,imgUrl4,imgUrl5,img1,img2,img3,img4,img5")] Product soft)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (soft.SmallUrl != null)
+                    {
+                        string ImagePath = await SaveImage(soft.SmallUrl);
+                        soft.SmallImage = ImagePath;
+                    }
+                    if (soft.CoverUrl != null)
+                    {
+                        string ImagePath = await SaveImage(soft.CoverUrl);
+                        soft.CoverImage = ImagePath;
+                    }
+                    if (soft.imgUrl != null)
+                    {
+                        string ImagePath = await SaveImage(soft.imgUrl);
+                        soft.img1 = ImagePath;
+                    }
+                    if (soft.imgUrl2 != null)
+                    {
+                        string ImagePath = await SaveImage(soft.imgUrl2);
+                        soft.img2 = ImagePath;
+                    }
+                    if (soft.imgUrl3 != null)
+                    {
+                        string ImagePath = await SaveImage(soft.imgUrl3);
+                        soft.img3 = ImagePath;
+                    }
+                    if (soft.imgUrl4 != null)
+                    {
+                        string ImagePath = await SaveImage(soft.imgUrl4);
+                        soft.img4 = ImagePath;
+                    }
+                    if (soft.imgUrl5 != null)
+                    {
+                        string ImagePath = await SaveImage(soft.imgUrl5);
+                        soft.img5 = ImagePath;
+                    }
+                    soft.Category = Category.Software;
+                    var result = _unitOfWork.manger.Add(soft);
+                    if (result > 0)
+                    {
+                        TempData["Messagee"] = soft.Title + " " + "has been created successfully!";
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+                catch (Exception)
+                {
+                    TempData["AlertMessage"] = "Ooops something went wrong !!";
+                    return View(soft);
+                }
+            }
+            return View(soft);
+        }
+
+        [HttpGet]
+        public ActionResult CreateCartoonSeries()
+        {
+            return View(new Product());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateCartoonSeries([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,VideoE,VideoW,ViewsE,ViewsW")] Product cartoonseries)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (cartoonseries.SmallUrl != null)
+                    {
+                        string ImagePath = await SaveImage(cartoonseries.SmallUrl);
+                        cartoonseries.SmallImage = ImagePath;
+                    }
+                    if (cartoonseries.CoverUrl != null)
+                    {
+                        string ImagePath = await SaveImage(cartoonseries.CoverUrl);
+                        cartoonseries.CoverImage = ImagePath;
+                    }
+
+                    cartoonseries.Category = Category.CartoonSeries;
+                    var result = _unitOfWork.manger.Add(cartoonseries);
+                    if (result > 0)
+                    {
+                        TempData["Messagee"] = cartoonseries.Title + " " + "has been created successfully!";
+                        return RedirectToAction("Index");
+                    }
+                }
+                catch (Exception)
+                {
+                    TempData["AlertMessage"] = "Ooops something went wrong !!";
+                    return View(cartoonseries);
+                }
+            }
+            return View(cartoonseries);
+        }
+
+
+        [HttpGet]
+        public ActionResult CreateEpisode()
+        {
+            var prod = new SelectList(_unitOfWork.product.GetAll()?.ToDictionary(p => p.Id, p => p.Title), "Key", "Value");
+            ViewBag.ProductId = prod;
+            return View(new ProductEpisode());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateEpisode(ProductEpisode cartoonepisode)
+        {
+            if (ModelState.IsValid)
+            {
+
+                if (cartoonepisode.EastrenImageFile != null)
+                {
+                    string ImagePath = await SaveImage(cartoonepisode.EastrenImageFile);
+                    cartoonepisode.ImageE = ImagePath;
+                }
+
+                if (cartoonepisode.WestreanImageFile != null)
+                {
+                    string ImagePath = await SaveImage(cartoonepisode.WestreanImageFile);
+                    cartoonepisode.ImageW = ImagePath;
+                }
+
+                var result = _unitOfWork.manger.AddEpisode(cartoonepisode);
+                if (result > 0)
+                {
+                    TempData["Messagee"] = cartoonepisode.Title + " " + "has been created successfully!";
+                    return RedirectToAction(nameof(Index));
+                }
+
+            }
+            return View(cartoonepisode);
+        }
+
+        [HttpGet]
+        public ActionResult EditEpisode(int id)
+        {
+            var prod = new SelectList(_unitOfWork.product.GetAll()?.ToDictionary(p => p.Id, p => p.Title), "Key", "Value");
+            ViewBag.ProductId = prod;
+            if (id == 0)
+            {
+                return NotFound();
+            }
+            var prodEp = _unitOfWork.product.GetOneEpisode(id);
+            if (prodEp == null)
+            {
+                return NotFound();
+            }
+            return View(prodEp);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditEpisode(ProductEpisode episode)
+        {
+            if (ModelState.IsValid)
+            {
+                if (episode.EastrenImageFile != null)
+                {
+                    string oldfile = _unitOfWork.product.GetOneEpisode(episode.Id)?.ImageE ?? string.Empty;
+                    if (!string.IsNullOrEmpty(oldfile))
+                    {
+                        await _blobStorage.DeleteDocumentAsync(oldfile);
+                    }
+                    var Imagepath = await SaveImage(episode.EastrenImageFile);
+                    episode.ImageE = Imagepath;
+
+                }
+                if (episode.WestreanImageFile != null)
+                {
+                    string oldfile = _unitOfWork.product.GetOneEpisode(episode.Id)?.ImageW ?? string.Empty;
+                    if (!string.IsNullOrEmpty(oldfile))
+                    {
+                        await _blobStorage.DeleteDocumentAsync(oldfile);
+                    }
+                    var Imagepath = await SaveImage(episode.WestreanImageFile);
+                    episode.ImageW = Imagepath;
+                }
+                if (_unitOfWork.manger.EditEP(episode))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            return View(episode);
+        }
+
+        /// <summary>
+        /// Save the Images to the Blob storage at products Container
+        /// </summary>
+        /// <param name="image"></param>
+        /// <returns></returns>
+        private async Task<string> SaveImage(IFormFile image)
+        {
+            string Pathimg = @"https://betkanublob.blob.core.windows.net/betkanublob/products/";
+            string filename = Path.GetFileNameWithoutExtension(image.FileName);
+            string ex = Path.GetExtension(image.FileName);
+            string ImgName = Pathimg + filename + ex;
+            await _blobStorage.UploadBlobImageAsync(image);
+            return ImgName;
+        }
+
+        /// <summary>
+        /// Save Pdf Files to the Blob storage at PDF Container
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        private async Task<string> SaveFile(IFormFile file)
+        {
+            string PathFile = @"https://betkanublob.blob.core.windows.net/betkanublob/PDF/";
+            string filename = Path.GetFileNameWithoutExtension(file.FileName);
+            string ex = Path.GetExtension(file.FileName);
+            string fileName = PathFile + filename + ex;
+            await _blobStorage.UploadBlobFileAsync(file);
+            return fileName;
+        }
+
+        [HttpGet]
         public ActionResult Edit(int id)
         {
-            if(id == null || id == 0)
+            if (id == 0)
             {
                 return NotFound();
             }
-            var mangerVm = _unitOfWork.manger.GetProductInfo(id);
-            if(mangerVm == null)
+            var mangerVm = _unitOfWork.product.GetOne(id);
+            if (mangerVm == null)
             {
                 return NotFound();
             }
-            
+
             return View(mangerVm);
         }
 
         [HttpPost]
-        public ActionResult Edit(MangerVM manger)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind("Id,Title,SmallImage,CoverImage,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,CreditsE,CreditsW,Link1,Link2,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,img1,img2,img3,img4,img5,Author,DesignedBy,source,Features1,Features2,Features3,Features4,Features5,Features6,Features7,Features8,SmallUrl,CoverUrl,EastrenImageFile,WestreanImageFile,imgUrl3,imgUrl4,imgUrl5,WestreanPdfFile,EasternPdfFile")] Product prod)
         {
-            if (ModelState.IsValid)
-            {               
-                string filename = string.Empty;
-                if (manger.product.SmallUrl != null)
+            if (ModelState.IsValid && prod != null)
+            {
+                try
                 {
-                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
-                    filename = manger.product.SmallUrl.FileName;
-                    string fullpath = Path.Combine(uploade, filename);
+                    if (prod.SmallUrl != null)
+                    {
+                        string oldfile = _unitOfWork.product.GetOne(prod.Id)?.SmallImage ?? string.Empty;
+                        if (!string.IsNullOrEmpty(oldfile))
+                        {
+                            await _blobStorage.DeleteDocumentAsync(oldfile);
+                        }
+                        var Imagepath = await SaveImage(prod.SmallUrl);
+                        prod.SmallImage = Imagepath;
+                    }
+                    else
+                    {
+                        string currectImage = _unitOfWork.product?.GetOne(prod.Id)?.SmallImage ?? string.Empty;
+                        // If the user did not change the image, keep the old image path
+                        prod.SmallImage = prod.SmallImage;
+                    }
 
-                    //Delete The Old File
-                    string oldFile = _unitOfWork.product.GetOne(manger.product.Id).SmallImage;
-                    string OldPath = Path.Combine(uploade, oldFile);
-                    if(fullpath != OldPath)
+                    
+                    if (prod.CoverUrl != null)
                     {
-                        System.IO.File.Delete(OldPath);
-                        //Save The New File
-                        manger.product.SmallUrl.CopyTo(new FileStream(fullpath, FileMode.Create));
+                        string oldfile = _unitOfWork.product?.GetOne(prod.Id)?.CoverImage ?? string.Empty;
+                        if (!string.IsNullOrEmpty(oldfile))
+                        {
+                            await _blobStorage.DeleteDocumentAsync(oldfile);
+                        }
+                        var Imagepath = await SaveImage(prod.CoverUrl);
+                        prod.CoverImage = Imagepath;
+                    }
+                    else
+                    {
+                        string currectCover = _unitOfWork.product?.GetOne(prod.Id)?.CoverImage ?? string.Empty;
+                        // If the user did not change the image, keep the old image path
+                        prod.CoverImage = currectCover;
+                    }
+
+                    if (prod.imgUrl != null)
+                    {
+                        string oldfile = _unitOfWork.product?.GetOne(prod.Id)?.img1 ?? string.Empty;
+                        if (!string.IsNullOrEmpty(oldfile))
+                        {
+                            await _blobStorage.DeleteDocumentAsync(oldfile);
+                        }
+                        var Imagepath = await SaveImage(prod.imgUrl);
+                        prod.img1 = Imagepath;
+                    }
+                    else
+                    {
+                        string currectImage = _unitOfWork.product?.GetOne(prod.Id)?.img1 ?? string.Empty;
+                        // If the user did not change the image, keep the old image path
+                        prod.img1 = prod.img1;
+                    }
+
+
+                    if (prod.imgUrl2 != null)
+                    {
+                        string oldfile = _unitOfWork.product?.GetOne(prod.Id)?.img2 ?? string.Empty;
+                        if (!string.IsNullOrEmpty(oldfile))
+                        {
+                            await _blobStorage.DeleteDocumentAsync(oldfile);
+                        }
+                        var Imagepath = await SaveImage(prod.imgUrl2);
+                        prod.img2 = Imagepath;
+                    }
+                    else
+                    {
+                        string currectImage = _unitOfWork.product?.GetOne(prod.Id)?.img2 ?? string.Empty;
+                        // If the user did not change the image, keep the old image path
+                        prod.img2 = prod.img2;
+                    }
+
+
+                    if (prod.imgUrl3 != null)
+                    {
+                        string oldfile = _unitOfWork.product?.GetOne(prod.Id)?.img3 ?? string.Empty;
+                        if (!string.IsNullOrEmpty(oldfile))
+                        {
+                            await _blobStorage.DeleteDocumentAsync(oldfile);
+                        }
+                        var Imagepath = await SaveImage(prod.imgUrl3);
+                        prod.img3 = Imagepath;
+                    }
+                    else
+                    {
+                        string currectImage = _unitOfWork.product?.GetOne(prod.Id)?.img3 ?? string.Empty;
+                        // If the user did not change the image, keep the old image path
+                        prod.img3 = prod.img3;
+                    }
+
+
+                    if (prod.imgUrl4 != null)
+                    {
+                        string oldfile = _unitOfWork.product?.GetOne(prod.Id)?.img4 ?? string.Empty;
+                        if (!string.IsNullOrEmpty(oldfile))
+                        {
+                            await _blobStorage.DeleteDocumentAsync(oldfile);
+                        }
+                        var Imagepath = await SaveImage(prod.imgUrl4);
+                        prod.img4 = Imagepath;
+                    }
+                    else
+                    {
+                        string currectImage = _unitOfWork.product?.GetOne(prod.Id)?.img4 ?? string.Empty;
+                        // If the user did not change the image, keep the old image path
+                        prod.img4 = prod.img4;
+                    }
+
+
+                    if (prod.imgUrl5 != null)
+                    {
+                        string oldfile = _unitOfWork.product?.GetOne(prod.Id)?.img5 ?? string.Empty;
+                        if (!string.IsNullOrEmpty(oldfile))
+                        {
+                            await _blobStorage.DeleteDocumentAsync(oldfile);
+                        }
+                        var Imagepath = await SaveImage(prod.imgUrl5);
+                        prod.img5 = Imagepath;
+                    }
+                    else
+                    {
+                        string currectImage = _unitOfWork.product?.GetOne(prod.Id)?.img5 ?? string.Empty;
+                        // If the user did not change the image, keep the old image path
+                        prod.img5 = prod.img5;
+                    }
+
+                    if (prod.WestreanPdfFile != null)
+                    {
+                        string oldfile = _unitOfWork.product?.GetOne(prod.Id)?.Wpdf ?? string.Empty;
+                        if (!string.IsNullOrEmpty(oldfile))
+                        {
+                            await _blobStorage.DeleteDocumentAsync(oldfile);
+                        }
+                        var Filepath = await SaveFile(prod.WestreanPdfFile);
+                        prod.Wpdf = Filepath;
+                    }
+                    else
+                    {
+                        string currectFilepath = _unitOfWork.product?.GetOne(prod.Id)?.Wpdf ?? string.Empty;
+                        prod.Wpdf = prod.Wpdf;
+                    }
+
+                    if (prod.EasternPdfFile != null)
+                    {
+                        string oldfile = _unitOfWork.product?.GetOne(prod.Id)?.Epdf ?? string.Empty;
+                        if (!string.IsNullOrEmpty(oldfile))
+                        {
+                            await _blobStorage.DeleteDocumentAsync(oldfile);
+                        }
+                        var Filepath = await SaveFile(prod.EasternPdfFile);
+                        prod.Epdf = Filepath;
+                    }
+                    else
+                    {
+                        string currectFilepath = _unitOfWork.product?.GetOne(prod.Id)?.Epdf ?? string.Empty;
+                        prod.Epdf = prod.Epdf;
+                    }
+
+                    if (_unitOfWork.manger.Edit(prod))
+                    {
+                        return RedirectToAction(nameof(Index));
                     }
                 }
-                string filename2 = string.Empty;
-                if (manger.product.CoverUrl != null)
+                catch (Exception)
                 {
-                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
-                    filename2 = manger.product.CoverUrl.FileName;
-                    string fullpath = Path.Combine(uploade, filename2);
-                    //Delete The Old File
-                    string oldFile = _unitOfWork.product.GetOne(manger.product.Id).CoverImage;
-                    string OldPath = Path.Combine(uploade, oldFile);
-                    if (fullpath != OldPath)
-                    {
-                        System.IO.File.Delete(OldPath);
-                        //Save The New File
-                        manger.product.CoverUrl.CopyTo(new FileStream(fullpath, FileMode.Create));
-                    }
+                    TempData["AlertMessage"] = "Ooops something went wrong !!";
+                    return View(prod);
                 }
-                string filename3 = string.Empty;
-                if (manger.product.imgUrl != null)
-                {
-                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
-                    filename3 = manger.product.imgUrl.FileName;
-                    string fullpath = Path.Combine(uploade, filename3);
-                    //Delete The Old File
-                    string oldFile = _unitOfWork.product.GetOne(manger.product.Id).img1;
-                    string OldPath = Path.Combine(uploade, oldFile);
-                    if (fullpath != OldPath)
-                    {
-                        System.IO.File.Delete(OldPath);
-                        //Save The New File
-                        manger.product.imgUrl.CopyTo(new FileStream(fullpath, FileMode.Create));
-                    }
-                }
-                string filename4 = string.Empty;
-                if (manger.product.imgUrl2 != null)
-                {
-                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
-                    filename4 = manger.product.imgUrl2.FileName;
-                    string fullpath = Path.Combine(uploade, filename4);
-                    //Delete The Old File
-                    string oldFile = _unitOfWork.product.GetOne(manger.product.Id).img2;
-                    string OldPath = Path.Combine(uploade, oldFile);
-                    if (fullpath != OldPath)
-                    {
-                        System.IO.File.Delete(OldPath);
-                        //Save The New File
-                        manger.product.imgUrl2.CopyTo(new FileStream(fullpath, FileMode.Create));
-                    }
-                }
-                string filename5 = string.Empty;
-                if (manger.product.imgUrl3 != null)
-                {
-                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
-                    filename5 = manger.product.imgUrl3.FileName;
-                    string fullpath = Path.Combine(uploade, filename5);
-                    //Delete The Old File
-                    string oldFile = _unitOfWork.product.GetOne(manger.product.Id).img3;
-                    string OldPath = Path.Combine(uploade, oldFile);
-                    if (fullpath != OldPath)
-                    {
-                        System.IO.File.Delete(OldPath);
-                        //Save The New File
-                        manger.product.imgUrl3.CopyTo(new FileStream(fullpath, FileMode.Create));
-                    }
-                }
-                string filename6 = string.Empty;
-                if (manger.product.imgUrl4 != null)
-                {
-                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
-                    filename6 = manger.product.imgUrl4.FileName;
-                    string fullpath = Path.Combine(uploade, filename6);
-                    //Delete The Old File
-                    string oldFile = _unitOfWork.product.GetOne(manger.product.Id).img4;
-                    string OldPath = Path.Combine(uploade, oldFile);
-                    if (fullpath != OldPath)
-                    {
-                        System.IO.File.Delete(OldPath);
-                        //Save The New File
-                        manger.product.imgUrl4.CopyTo(new FileStream(fullpath, FileMode.Create));
-                    }
-                }
-                string filename7 = string.Empty;
-                if (manger.product.imgUrl5 != null)
-                {
-                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
-                    filename5 = manger.product.imgUrl5.FileName;
-                    string fullpath = Path.Combine(uploade, filename5);
-                    //Delete The Old File
-                    string oldFile = _unitOfWork.product.GetOne(manger.product.Id).img5;
-                    string OldPath = Path.Combine(uploade, oldFile);
-                    if (fullpath != OldPath)
-                    {
-                        System.IO.File.Delete(OldPath);
-                        //Save The New File
-                        manger.product.imgUrl5.CopyTo(new FileStream(fullpath, FileMode.Create));
-                    }
-                }
-                if (_unitOfWork.manger.Edit(manger))
-                {
-                    return RedirectToAction(nameof(Index));
-                }                             
+
             }
-            return View(manger);
+            return View(prod);
         }
 
-       
+
         public ActionResult Delete(int id)
         {
-            if (id == null || id == 0)
+            if (id == 0)
             {
                 return NotFound();
             }
@@ -321,172 +589,41 @@ namespace BET_KANU.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeletePost(int id)
+        public async Task<ActionResult> DeletePost(int id)
         {
             if (ModelState.IsValid)
             {
-                var smallimg = _unitOfWork.product.GetOne(id).SmallImage;
-                if (smallimg != null)
+                var smallimg = _unitOfWork.product.GetOne(id)?.SmallImage ?? string.Empty;
+                if (smallimg != null && smallimg != "")
                 {
-                    FileInfo file = new FileInfo(smallimg);
-                    if (file.Exists)
-                    {
-                        file.Delete();
-                    }
+                    await _blobStorage.DeleteDocumentAsync(smallimg);
                 }
-                var coverimg = _unitOfWork.product.GetOne(id).CoverImage;
-                if (coverimg != null)
+                var coverimg = _unitOfWork.product.GetOne(id)?.CoverImage ?? string.Empty;
+                if (coverimg != null && coverimg != "")
                 {
-                    FileInfo file = new FileInfo(coverimg);
-                    if (file.Exists)
-                    {
-                        file.Delete();
-                    }
+                    await _blobStorage.DeleteDocumentAsync(coverimg);
                 }
-                _unitOfWork.manger.Delete(id);
-                TempData["Message"] =  "The Product has been Delete successfully!";
+                if (_unitOfWork.manger.Delete(id))
+                {
+                    TempData["Message"] = "The Product has been Delete successfully!";
+                }
+
             }
             return RedirectToAction("Index");
         }
 
-        public ActionResult CreateEpisode()
-        {
-            var prod = new SelectList(_unitOfWork.product.GetAll()?.ToDictionary(p => p.Id,p=>p.Title), "Key", "Value");
-            ViewBag.ProductId = prod;
-            return View(new ProductEpisode());
-        }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateEpisode(ProductEpisode episode)
-        {
-            if (ModelState.IsValid)
-            {
-                string filename = string.Empty;
-                if (episode.imgUrl != null)
-                {
-                    string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades/Episode");
-                    string Pathimg = @"/Uploades/Episode/";
-                    filename = Path.GetFileNameWithoutExtension(episode.imgUrl.FileName);
-                    string ex = Path.GetExtension(episode.imgUrl.FileName);
-                    episode.ImageE = Pathimg + filename + ex;
-                    filename = filename + ex;
-                    string path = Path.Combine(Rootpath, filename);
-                    episode.imgUrl.CopyTo(new FileStream(path, FileMode.Create));
-                }
-                string filename2 = string.Empty;
-                if (episode.imgUrl2 != null)
-                {
-                    string Rootpath = Path.Combine(_HostEnvironment.WebRootPath, "Uploades/Episode");
-                    string Pathimg = @"/Uploades/Episode/";
-                    filename2 = Path.GetFileNameWithoutExtension(episode.imgUrl2.FileName);
-                    string ex = Path.GetExtension(episode.imgUrl2.FileName);
-                    episode.ImageW = Pathimg + filename + ex;
-                    filename = filename + ex;
-                    string path = Path.Combine(Rootpath, filename);
-                    episode.imgUrl2.CopyTo(new FileStream(path, FileMode.Create));
-                }
-                TempData["Messagee"] = episode.Title + " " + "has been created successfully!";
-                _unitOfWork.manger.Add(episode);
-                return RedirectToAction(nameof(Index));
-            }          
-            return View(episode);
-        }
-        public ActionResult EditEpisode(int id)
-        {
-            var prod = new SelectList(_unitOfWork.product.GetAll()?.ToDictionary(p => p.Id, p => p.Title), "Key", "Value");
-            ViewBag.ProductId = prod;
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            var prodEp = _unitOfWork.product.GetOneEpisode(id);
-            if (prodEp == null)
-            {
-                return NotFound();
-            }
-            return View(prodEp);
-        }
 
-        [HttpPost]
-        public ActionResult EditEpisode(ProductEpisode episode)
-        {
-            if (ModelState.IsValid)
-            {       
-                string filename3 = string.Empty;
-                if (episode.imgUrl != null)
-                {
-                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
-                    filename3 = episode.imgUrl.FileName;
-                    string fullpath = Path.Combine(uploade, filename3);
-                    //Delete The Old File
-                    string oldFile = _unitOfWork.product.GetOneEpisode(episode.Id).ImageE;
-                    string OldPath = Path.Combine(uploade, oldFile);
-                    if (fullpath != OldPath)
-                    {
-                        System.IO.File.Delete(OldPath);
-                        //Save The New File
-                        episode.imgUrl.CopyTo(new FileStream(fullpath, FileMode.Create));
-                    }
-                }
-                string filename4 = string.Empty;
-                if (episode.imgUrl2 != null)
-                {
-                    string uploade = Path.Combine(_HostEnvironment.WebRootPath, "Uploades");
-                    filename4 = episode.imgUrl2.FileName;
-                    string fullpath = Path.Combine(uploade, filename4);
-                    //Delete The Old File
-                    string oldFile = _unitOfWork.product.GetOneEpisode(episode.Id).ImageW;
-                    string OldPath = Path.Combine(uploade, oldFile);
-                    if (fullpath != OldPath)
-                    {
-                        System.IO.File.Delete(OldPath);
-                        //Save The New File
-                        episode.imgUrl2.CopyTo(new FileStream(fullpath, FileMode.Create));
-                    }
-                }            
-            }
-                if (_unitOfWork.manger.EditEP(episode))
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-            return View(episode);
-        }
-                    
-        public ActionResult DeleteEpisode(int id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            var prodEp = _unitOfWork.product.GetOneEpisode(id);
-            if (prodEp == null)
-            {
-                return NotFound();
-            }
-            return View(prodEp);
-        }
-
-        [HttpPost]
-        public ActionResult DeleteEPpost(int id)
-        {
-            if (ModelState.IsValid)
-            { 
-                _unitOfWork.manger.DeleteEP(id);
-                TempData["Message"] = "The Product has been Delete successfully!";
-            }
-            return RedirectToAction("Index");
-        }
 
         public ActionResult AddSale()
         {
-            return View();
+            return View(new Shop());
         }
 
         [HttpPost]
         public ActionResult AddSale(Shop shop)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _unitOfWork.manger.Add(shop);
                 return RedirectToAction(nameof(Index));
@@ -494,9 +631,10 @@ namespace BET_KANU.Controllers
             return View(shop);
         }
 
+        [HttpGet]
         public ActionResult EditSales(int id)
         {
-            if(id == null || id == 0)
+            if (id == 0)
             {
                 return NotFound();
             }
@@ -520,7 +658,7 @@ namespace BET_KANU.Controllers
         }
         public ActionResult DeleteSales(int id)
         {
-            if (id == null || id == 0)
+            if (id == 0)
             {
                 return NotFound();
             }
@@ -533,12 +671,15 @@ namespace BET_KANU.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult RemoveSales(int id)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.manger.DeleteShop(id);
-                TempData["Message"] = "The Sales has been Delete successfully!";
+                if (_unitOfWork.manger.DeleteShop(id))
+                {
+                    TempData["Message"] = "The Sales has been Delete successfully!";
+                }
             }
             return RedirectToAction("Index");
         }

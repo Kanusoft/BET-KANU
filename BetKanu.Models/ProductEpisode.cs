@@ -1,13 +1,9 @@
 ﻿using BetKanu.Models.Common;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BetKanu.Models
 {
@@ -40,9 +36,9 @@ namespace BetKanu.Models
 
 
         [NotMapped]
-        public IFormFile? imgUrl { get; set; }
+        public IFormFile? EastrenImageFile { get; set; }
 
         [NotMapped]
-        public IFormFile? imgUrl2 { get; set; }
+        public IFormFile? WestreanImageFile { get; set; }
     }
 }

@@ -9,30 +9,31 @@
 
 <head>
 
-    
+
 </head>
 
 
 <div id="wrapper">
     <section class="bg-grey-500 promo">
         <div class="container">
-            <h1 style="color:white"> &nbsp;Create Episodee</h1>
+            <h1 style="color:white"> &nbsp;Create New Episodee</h1>
         </div>
     </section>
 
     <section>
         <div class="col-md-12">
             <form class="card" asp-action="CreateEpisode" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="parentId" value="@ViewBag.ProductId" />
                 <div class="container">
                     <div class="col-12">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-3 col-sm-12">
-                                
+
                                     <div class="form-group">
                                         <label asp-for="Title" class="control-label"></label>
-                                        <input asp-for="Title" class="form-control" />
+                                        <input asp-for="Title" name="Title" class="form-control" />
                                         <span asp-validation-for="Title" class="text-danger"></span>
                                     </div>
 
@@ -40,21 +41,21 @@
                                 <div class="col-lg-3 col-sm-12">
                                     <div class="form-group">
                                         <label asp-for="ImageE" class="control-label"></label>
-                                        <input asp-for="imgUrl" class="dropify form-control" />
+                                        <input asp-for="EastrenImageFile" name="imgUrl" class="dropify form-control" />
                                         <span asp-validation-for="ImageE" class="text-danger"></span>
                                     </div>
-                                 
+
                                 </div>
                                 <div class="col-lg-3 col-sm-12">
                                     <div class="form-group">
                                         <label asp-for="ImageW" class="control-label"></label>
-                                        <input asp-for="imgUrl2" class="dropify form-control" />
+                                        <input asp-for="WestreanImageFile" name="imgUrl2" class="dropify form-control" />
                                         <span asp-validation-for="ImageW" class="text-danger"></span>
                                     </div>
                                 </div>
-                     
-                             
-                           
+
+
+
 
                             </div>
                         </div>
@@ -75,13 +76,13 @@
                                                     </td>
                                                     <td>
                                                         <div class="form-group">
-                                                         
-                                                            <input asp-for="Views" class="form-control" />
+
+                                                            <input asp-for="Views" name="Views" class="form-control" />
                                                             <span asp-validation-for="Views" class="text-danger"></span>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                               
+
                                                 <tr>
                                                     <td>
                                                         <label asp-for="Status" class="control-label"></label>
@@ -93,25 +94,25 @@
                                                         <span asp-validation-for="Status" class="text-danger"></span>
                                                     </td>
                                                 </tr>
-                                
-                                                    <tr>
+                                                <tr>
                                                     <td>
                                                         <label asp-for="ProductId" class="control-label"></label>
+                                                        <input type="hidden" asp-for="ProductId" name="ProductId" value="@ViewBag.ProductId" />
                                                     </td>
                                                     <td>
-                                                  
-                                                        <select asp-for="ProductId" class="form-control" asp-items="@ViewBag.ProductId"></select>
+                                                        @*<select asp-for="ProductId" class="form-control" asp-items="@ViewBag.ProductId"></select>*@
+                                                        @ViewBag.parentname
                                                     </td>
                                                 </tr>
 
-                                  
+
                                                 <tr>
                                                     <td>
                                                         <label asp-for="VideoW" class="control-label"></label>
                                                     </td>
                                                     <td>
 
-                                                        <input asp-for="VideoW" class="form-control" />
+                                                        <input asp-for="VideoW" name="VideoW" class="form-control" />
                                                         <span asp-validation-for="VideoW" class="text-danger"></span>
                                                     </td>
                                                 </tr>
@@ -122,7 +123,7 @@
                                                     <td>
 
 
-                                                        <input asp-for="VideoE" class="form-control" />
+                                                        <input asp-for="VideoE" name="VideoE" class="form-control" />
                                                         <span asp-validation-for="VideoE" class="text-danger"></span>
                                                     </td>
                                                 </tr>
@@ -137,17 +138,13 @@
 
 
                         <div class="form-group">
-                            <div class=" col-md-12" >
-                                <a asp-action="Index" class="BackToList">Back to List</a>
-
+                            <div class=" col-md-12">
+                                <a asp-action="EditCartoonSeries" asp-route-id="@ViewBag.ProductId" class="BackToList">Back to Edit Series</a>
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Create" style="float:right;width: 19%;    background-color: #3a4258;
-                              margin-right: 32px" class="btn btn-primary btn-shadow" />
-                         
+                            <input type="submit" value="Create" style="float:right;width: 19%;    background-color: #3a4258;margin-right: 32px" class="btn btn-primary btn-shadow" />
                         </div>
-
                     </div>
                 </div>
             </form>

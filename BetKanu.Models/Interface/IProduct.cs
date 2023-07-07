@@ -7,8 +7,8 @@ namespace BetKanu.Models.Interface
         List<Product>? GetAll();
         List<Product>? GetAll(Category category);
         Product? GetOne(int id);
-        List<Product>? RecentProduct(int num);
-        ProductEpisode GetOneEpisode(int id);
+        List<Product> RecentProduct(int num, Category category);
+        ProductEpisode? GetOneEpisode(int? id);
         List<ProductEpisode> GetEpisode();
         List<ProductEpisode> GetallByParentId(int id);
     }

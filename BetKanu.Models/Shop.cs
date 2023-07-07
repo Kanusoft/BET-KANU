@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BetKanu.Models
 {
@@ -15,10 +12,16 @@ namespace BetKanu.Models
         public int Id { get; set; }
 
         [Required]
+        [DisplayName("Sale Title")]
         public string? Name { get; set; }
-
+        [DisplayName("Image")]
         public string? ImageUrl { get; set; }
+
+        [DisplayName("Price")]
         public int Price { get; set; }
+
+        [DisplayName("Release Date")]
+        public DateTime ReleaseDate { get; set; } = DateTime.UtcNow.Date;
 
         [NotMapped]
         public IFormFile? FileUrl { get; set; }

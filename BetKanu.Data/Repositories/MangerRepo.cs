@@ -3,11 +3,6 @@ using BetKanu.Models;
 using BetKanu.Models.Common;
 using BetKanu.Models.Interface;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BetKanu.Data.Repositories
 {
@@ -17,17 +12,17 @@ namespace BetKanu.Data.Repositories
 
         public MangerRepo(BKdbContext bKdb)
         {
-          _bKdb = bKdb;
+            _bKdb = bKdb;
         }
 
-        public Product GetOne(int id)
+        public Product? GetOne(int id)
         {
             return _bKdb.Products.Where(p => p.Id == id).FirstOrDefault();
         }
 
         public List<Product> GetAll(string Select)
         {
-            var product = from p in _bKdb.Products                                            
+            var product = from p in _bKdb.Products
                           select p;
             if (Select != null)
             {
@@ -38,7 +33,7 @@ namespace BetKanu.Data.Repositories
                         product = product.OrderBy(p => p.Title);
                         break;
                     case "Books":
-                       product = product.Where(pe => pe.Category.Equals(c));
+                        product = product.Where(pe => pe.Category.Equals(c));
                         break;
                     case "Songs":
                         product = product.Where(pe => pe.Category.Equals(c));
@@ -61,26 +56,54 @@ namespace BetKanu.Data.Repositories
         /// <returns></returns>
         public int Add(Product product)
         {
-            if(product != null)
-            {               
-                _bKdb.Products.Add(product);
-                _bKdb.SaveChanges();  
-            }            
+            if (product != null)
+            {
+                using (var dbTran = _bKdb.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        _bKdb.Products.Add(product);
+                        _bKdb.SaveChanges();
+                        dbTran.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        dbTran.Rollback();
+                    }
+                }
+                return product.Id;
+            }
             return 0;
         }
+
         public bool Edit(Product product)
         {
-            try
+            if (product != null)
             {
+                try
+                {
+                    var existingProduct = _bKdb.Products.Find(product.Id);
+                    if (existingProduct != null)
+                    {
+                        _bKdb.Entry(existingProduct).State = EntityState.Detached;
+                        _bKdb.Products.Update(product);
+                        _bKdb.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        _bKdb.Products.Update(product);
+                        _bKdb.SaveChanges();
+                        return true;
 
-                _bKdb.Products.Update(product);
-                _bKdb.SaveChanges();
+                    }
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
             }
-            catch (Exception)
-            {
-                return false;
-            }
-            return true;
+            return false;
         }
 
         public bool Delete(int id)
@@ -88,33 +111,22 @@ namespace BetKanu.Data.Repositories
             try
             {
                 var prod = _bKdb.Products.FirstOrDefault(x => x.Id == id);
-                _bKdb.Remove(prod);
-                _bKdb.SaveChanges();
-                return true;
+                if (prod != null)
+                {
+                    _bKdb.Remove(prod);
+                    _bKdb.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception)
             {
-                return false;
             }
-        } 
+            return false;
+        }
+
         public bool DoesExist(int id)
         {
             return _bKdb.Products.Any(p => p.Id == id);
-        }
-        
-        public bool Edit(MangerVM manger)
-        {
-            if(manger != null && DoesExist(manger.product.Id))
-            {
-                manger.product.ReleaseDate = (manger.product.ReleaseDate == null || manger.product.ReleaseDate == null ? DateTime.Now : manger.product.ReleaseDate);
-                _bKdb.Entry(manger.product).State = EntityState.Modified;
-                _bKdb.SaveChanges();
-                return true;
-            }
-            else
-            {
-                return false;
-            }            
         }
 
         /// <summary>
@@ -122,12 +134,24 @@ namespace BetKanu.Data.Repositories
         /// </summary>
         /// <param name="episode"></param>
         /// <returns></returns>
-        public int Add(ProductEpisode episode)
+        public int AddEpisode(ProductEpisode episode)
         {
-            if(episode != null)
+            if (episode != null)
             {
-                _bKdb.Add(episode);
-                _bKdb.SaveChanges();
+                using (var dbTran = _bKdb.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        _bKdb.Add(episode);
+                        _bKdb.SaveChanges();
+                        dbTran.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        dbTran.Rollback();
+                    }
+                }
+                return episode.Id;
             }
             return 0;
         }
@@ -137,32 +161,41 @@ namespace BetKanu.Data.Repositories
             return new MangerVM() { product = GetOne(ProdId) };
         }
 
-        public bool DeleteEP (int id)
+        public bool DeleteEP(int id)
         {
             try
             {
                 var ep = _bKdb.ProductEpisodes.FirstOrDefault(e => e.Id == id);
-                _bKdb.Remove(ep);
-                _bKdb.SaveChanges();
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }            
-        }
-        public bool EditEP(ProductEpisode episode)
-        {
-            try
-            {
-                _bKdb.ProductEpisodes.Update(episode);
-                _bKdb.SaveChanges();
+                if (ep != null)
+                {
+                    _bKdb.Remove(ep);
+                    _bKdb.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception)
             {
-                return false;
+
             }
-            return true;
+            return false;
+        }
+
+        public bool EditEP(ProductEpisode episode)
+        {
+            if (episode != null)
+            {
+                try
+                {
+                    _bKdb.ProductEpisodes.Update(episode);
+                    _bKdb.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -174,8 +207,20 @@ namespace BetKanu.Data.Repositories
         {
             if (shop != null)
             {
-                _bKdb.Add(shop);
-                _bKdb.SaveChanges();
+                using (var dbTran = _bKdb.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        _bKdb.Add(shop);
+                        _bKdb.SaveChanges();
+                        dbTran.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        dbTran.Rollback();
+                    }
+                }
+                return shop.Id;
             }
             return 0;
         }
@@ -187,17 +232,21 @@ namespace BetKanu.Data.Repositories
         /// <returns></returns>
         public bool EditShop(Shop shop)
         {
-            try
+            if (shop != null)
             {
-                _bKdb.Shops.Update(shop);
-                _bKdb.SaveChanges();
+                try
+                {
+                    _bKdb.Shops.Update(shop);
+                    _bKdb.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                }
             }
-            catch (Exception)
-            {
-                return false;
-            }
-            return true;
+            return false;
         }
+
         /// <summary>
         /// Delete the Sales
         /// </summary>
@@ -208,14 +257,19 @@ namespace BetKanu.Data.Repositories
             try
             {
                 var s = _bKdb.Shops.FirstOrDefault(e => e.Id == id);
-                _bKdb.Remove(s);
-                _bKdb.SaveChanges();
-                return true;
+                if (s != null)
+                {
+                    _bKdb.Remove(s);
+                    _bKdb.SaveChanges();
+                    return true;
+                }
+
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return false;
+
             }
+            return false;
         }
     }
 }

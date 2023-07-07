@@ -1,10 +1,7 @@
 ﻿using BetKanu.Models;
+using BetKanu.Models.Common;
 using BetKanu.Models.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BetKanu.Data.Repositories
 {
@@ -24,6 +21,11 @@ namespace BetKanu.Data.Repositories
         public Shop Getone(int id)
         {
             return _db.Shops.FirstOrDefault(s => s.Id == id);
+        }
+
+        public List<Shop> RecentProduct(int num)
+        {
+            return _db.Shops.OrderByDescending(p => p.ReleaseDate).Take(num).ToList();
         }
     }
 }

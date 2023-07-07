@@ -1,8 +1,6 @@
 using BET_KANU.Services;
 using BetKanu.Data;
-using BetKanu.Models;
 using BetKanu.Models.Interface;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +13,6 @@ builder.Services.AddMvc();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
-//builder.Services.AddSingleton<IWebHostEnvironment>();
 
 var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<BKdbContext>(options =>

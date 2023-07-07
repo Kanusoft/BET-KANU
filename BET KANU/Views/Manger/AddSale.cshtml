@@ -5,49 +5,57 @@
 }
 <!-- file Uploads -->
 <link href="~/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="~/css/dashboard.css">
+
 <div id="wrapper">
 
-  <section class="bg-grey-500 promo">
-    <div class="container">
-        <h1 style="color:white"> &nbsp;create Sale Product</h1>
-    </div>
-  </section>
+    <section class="bg-grey-500 promo">
+        <div class="container">
+            <h1 style="color:white"> &nbsp;create Sale Product</h1>
+        </div>
+    </section>
 
-  <section>
+    <section>
+        <div class="col-md-12">
+            <form class="card" asp-action="AddSale" method="post" enctype="multipart/form-data">
 
-     <form class="card" asp-action="AddSale" method="post" enctype="multipart/form-data">
-      
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           
-            
-              <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-              </div>
-         
-            
-              <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="FileUrl" class="dropify form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
-              </div>
-         
-            
-              <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-              </div>
-           
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-          
-        
-     </form>
- 
-  </section>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="ImageUrl" class="control-label"></label>
+                    <input asp-for="FileUrl" class="dropify form-control" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReleaseDate" class="control-label"></label>
+                    <input asp-for="ReleaseDate"  class="form-control" />
+                    <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+
+            </form>
+        </div>
+    </section>
 </div>
 
 @section Scripts {

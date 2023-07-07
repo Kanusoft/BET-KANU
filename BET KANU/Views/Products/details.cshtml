@@ -1,9 +1,9 @@
 ﻿@model ProductVM
 @{
-    ViewBag.Title = Model.product.Title;
+    ViewBag.Title = Model?.product?.Title;
 }
 
-@if (Model.product.Category.ToString() == "Songs")
+@if (Model?.product?.Category.ToString() == "Songs")
 {
     <section class="hero height-350 hero-game" style="background-image: url(@Model.product.CoverImage);">
     </section>
@@ -19,27 +19,32 @@
                                     <li><i class="fa fa-music"></i> @Model.product.Category.ToString()</li>
                                     <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate</li>
                                     <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
+                                    @if (Model?.product.TargetAudince != null)
+                                    {
+                                        <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.TargetAudince</span></li>
+                                    }
+
                                 </ul>
                             </div>
                         </div>
                         <p>
-                            @Model.product.ShortDescription
+                            @Model?.product.ShortDescription
                         </p>
                         <div class="well col-md-5" style="text-align:center ; direction:rtl" id="western">
                             <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Western Lyrics</h3>
                             <p class="Surayt font-size-22 font-size-22">
-                                @Html.Raw(@Model.product.ScriptW)
+                                @Html.Raw(@Model?.product.ScriptW)
                             </p>
-                            <a class="btn btn-info" href="@Model.product.Wpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+                            <a class="btn btn-info" href="@Model?.product.Wpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
                         </div>
                         <div class="col-lg-1"></div>
                         <div class="well col-md-5" style="text-align:center ; direction:rtl" id="eastern">
                             <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Eastern Lyrics</h3>
                             <p class="Surit font-size-22">
-                                @Html.Raw(@Model.product.ScriptE)
+                                @Html.Raw(@Model?.product.ScriptE)
                             </p>
 
-                            <a class="btn btn-info" href="@Model.product.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+                            <a class="btn btn-info" href="@Model?.product.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
                         </div>
                     </div>
                 </div>
@@ -48,34 +53,104 @@
                         <div class="card">
                             <div class="card-img">
                                 <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item" src="@Model.product.VideoW" allowfullscreen></iframe>
+                                    @{
+                                        string youtubeUrl = Model?.product.VideoW;
+                                        string embedUrl = string.Empty;
+
+                                        if (!string.IsNullOrEmpty(youtubeUrl))
+                                        {
+                                            if (youtubeUrl.Contains("youtu.be/"))
+                                            {
+                                                // Short URL
+                                                string videoId = youtubeUrl.Substring(youtubeUrl.LastIndexOf("/") + 1);
+                                                embedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                            }
+                                            else if (youtubeUrl.Contains("youtube.com/embed/"))
+                                            {
+                                                // Long URL
+                                                embedUrl = youtubeUrl;
+                                            }
+                                            else if (youtubeUrl.Contains("youtube.com/watch?v="))
+                                            {
+                                                // Long URL with query parameters
+                                                int embedIndex = youtubeUrl.IndexOf("youtube.com/watch?v=");
+                                                string videoId = youtubeUrl.Substring(embedIndex + 20);
+                                                int queryIndex = videoId.IndexOf("?");
+                                                if (queryIndex != -1)
+                                                {
+                                                    videoId = videoId.Substring(0, queryIndex);
+                                                }
+                                                embedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                            }
+                                        }
+                                    }
+                                    @if (!string.IsNullOrEmpty(embedUrl))
+                                    {
+                                        <iframe class="embed-responsive-item" src="@embedUrl" allowfullscreen></iframe>
+                                    }
+                                    @* <iframe class="embed-responsive-item" src="@Model?.product.VideoW" allowfullscreen></iframe>*@
                                 </div>
                                 <div class="time">BET KANU</div>
                             </div>
                             <div class="caption">
                                 <h3 class="card-title">
-                                    @Model.product.Title - Western Syriac (Surayt)
+                                    @Model?.product.Title - Western Syriac (Surayt)
                                 </h3>
                                 <ul>
-                                    <li><i class="fa fa-calendar-o"></i> @Model.product.ReleaseDate</li>
-                                    <li><i class="fa fa-eye"></i> @Model.product.ViewsW views</li>
+                                    <li><i class="fa fa-calendar-o"></i> @Model?.product.ReleaseDate</li>
+                                    <li><i class="fa fa-eye"></i> @Model?.product.ViewsW views</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="card">
                             <div class="card-img">
                                 <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item" src="@Model.product.VideoE" allowfullscreen></iframe>
+                                    @{
+                                        string EastyoutubeUrl = Model?.product?.VideoE;
+                                        string EastembedUrl = string.Empty;
+
+                                        if (!string.IsNullOrEmpty(EastyoutubeUrl))
+                                        {
+                                            if (EastyoutubeUrl.Contains("youtu.be/"))
+                                            {
+                                                // Short URL
+                                                string videoId = EastyoutubeUrl.Substring(EastyoutubeUrl.LastIndexOf("/") + 1);
+                                                embedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                            }
+                                            else if (EastyoutubeUrl.Contains("youtube.com/embed/"))
+                                            {
+                                                // Long URL
+                                                embedUrl = EastyoutubeUrl;
+                                            }
+                                            else if (EastyoutubeUrl.Contains("youtube.com/watch?v="))
+                                            {
+                                                // Long URL with query parameters
+                                                int embedIndex = EastyoutubeUrl.IndexOf("youtube.com/watch?v=");
+                                                string videoId = EastyoutubeUrl.Substring(embedIndex + 20);
+                                                int queryIndex = videoId.IndexOf("?");
+                                                if (queryIndex != -1)
+                                                {
+                                                    videoId = videoId.Substring(0, queryIndex);
+                                                }
+                                                embedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                            }
+                                        }
+                                    }
+                                    @if (!string.IsNullOrEmpty(embedUrl))
+                                    {
+                                        <iframe class="embed-responsive-item" src="@embedUrl" allowfullscreen></iframe>
+                                    }
+                                  @*  <iframe class="embed-responsive-item" src="@Model?.product.VideoE" allowfullscreen></iframe>*@
                                 </div>
                                 <div class="time">BET KANU</div>
                             </div>
                             <div class="caption">
                                 <h3 class="card-title">
-                                    @Model.product.Title - Eastern Syriac (Surit)
+                                    @Model?.product.Title - Eastern Syriac (Surit)
                                 </h3>
                                 <ul>
-                                    <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate</li>
-                                    <li><i class="fa fa-eye"></i> @Model.product.ViewsE views</li>
+                                    <li><i class="fa fa-calendar-o"></i>@Model?.product.ReleaseDate</li>
+                                    <li><i class="fa fa-eye"></i> @Model?.product.ViewsE views</li>
                                 </ul>
                             </div>
                         </div>
@@ -104,7 +179,7 @@
                                     </strong>
                                 </p>
                                 <ul style="text-align:left ; direction:ltr">
-                                    @Html.Raw(@Model.product.CreditsW)
+                                    @Html.Raw(@Model?.product.CreditsW)
                                 </ul>
                             </div>
                         </div>
@@ -116,7 +191,7 @@
                                     </strong>
                                 </p>
                                 <ul style="text-align:left ; direction:ltr">
-                                    @Html.Raw(@Model.product.CreditsE)
+                                    @Html.Raw(@Model?.product.CreditsE)
                                 </ul>
                             </div>
                         </div>
@@ -136,9 +211,9 @@
     </section>
 }
 @* Start Software *@
-@if (Model.product.Category.ToString() == "Software")
+@if (Model?.product?.Category.ToString() == "Software")
 {
-        <section class="border-bottom-1 border-grey-300 padding-30">
+    <section class="border-bottom-1 border-grey-300 padding-30">
         <div class="container text-center">
             <div class="container">
                 <div class="headline no-margin">
@@ -169,17 +244,13 @@
                         </div>
                         <p style="text-align:left ; direction:ltr">          @Html.Raw(@Model.product.LongDescription) </p>
                         <div class="well" style="text-align:left ; direction:ltr">
-                     
-
                         </div>
                         <p style="text-align:left ; direction:ltr">
                             @Html.Raw(@Model.product.ScriptE)
                         </p>
                         <div class="well" style="text-align:left ; direction:ltr">
-                    
                         </div>
                         <div class="well" style="text-align:left ; direction:ltr">
-                       
                         </div>
                         @* Features *@
                         @Html.Raw(@Model.product.ScriptW)
@@ -190,22 +261,22 @@
                         <div class="  col-lg-6 col-md-6 col-sm-6 col-xs-6">
                             <ul>
                                 <li>
-                                   
+
                                     <ul class="widget-list-meta">
-                                        
+
                                         <li class="widget-list-title"><strong>Updated August 17, 2021</strong></li>
-                                      
+
                                     </ul>
                                 </li>
                                 <li>
-                                   
+
                                     <div class="widget-list-meta">
                                         <h4 class="widget-list-title"><strong>Size 52.7 M</strong></h4>
                                         <p> </p>
                                     </div>
                                 </li>
                                 <li>
-                                   
+
                                     <div class="widget-list-meta">
                                         <h4 class="widget-list-title"><strong>Installs 2,000+</strong></h4>
                                         <p></p>
@@ -216,24 +287,24 @@
                         <div class="  col-lg-6 col-md-6 col-sm-6 col-xs-6">
 
                             <ul>
-                              
+
 
                                 <li>
-                                  
+
                                     <div class="widget-list-meta">
                                         <h4 class="widget-list-title"><strong>Current Version  2</strong></h4>
                                         <p> </p>
                                     </div>
                                 </li>
                                 <li>
-                                   
+
                                     <div class="widget-list-meta">
                                         <h4 class="widget-list-title"><strong>Requires Android 4.0.3 and up</strong></h4>
                                         <p></p>
                                     </div>
                                 </li>
                                 <li>
-                                   
+
                                     <div class="widget-list-meta">
                                         <h4 class="widget-list-title"><strong>Content Rating Rated for 4+</strong></h4>
                                         <p> </p>
@@ -243,7 +314,7 @@
                         </div>
                     </div>
                 </div>
-   
+
 
                 <div class="col-md-4 rightside">
                     <div class="col-md-12">
@@ -305,9 +376,9 @@
 @* Enf Software *@
 
 @* Start Cartoon Series *@
-@if (Model.product.Category.ToString() == "CartoonSeries")
-{ 
-  @*  <div id="wrapper">
+@if (Model?.product?.Category.ToString() == "CartoonSeries")
+{
+    @*  <div id="wrapper">
         <section class="border-bottom-1 border-grey-300 padding-30">
             <div class="container text-center">
                 <div class="container">
@@ -324,60 +395,63 @@
         </section>
         <div id="wrapper">
             <section class="bg-grey-50">*@
-                <div class="container">
-                    <div class="card-group">
-                        <div class="row">
-  @*                          <div class="post post-single col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="post-header post-author">
-                                    <div class="post-title">
-                                        <h2><a href="#">Nino & Mia (Season 1) </a></h2>
-                                        <ul class="post-meta">
-                                            <li><i class="fa fa-film"></i> @Model.product.Category.ToString()</li>
-                                            <li><i class="fa fa-info"></i> Educational</li>
-                                            <li><i class="fa fa-child"></i> Children</li>
-                                        </ul>
-                                        <p>
-                                         @Model.product.LongDescription
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>*@
-                          
+    <div class="container">
+        <div class="card-group">
+            <div class="row">
+                @*                          <div class="post post-single col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="post-header post-author">
+            <div class="post-title">
+            <h2><a href="#">Nino & Mia (Season 1) </a></h2>
+            <ul class="post-meta">
+            <li><i class="fa fa-film"></i> @Model.product.Category.ToString()</li>
+            <li><i class="fa fa-info"></i> Educational</li>
+            <li><i class="fa fa-child"></i> Children</li>
+            </ul>
+            <p>
+            @Model.product.LongDescription
+            </p>
+            </div>
+            </div>
+            </div>*@
 
-                            @foreach (var e in Model.episode)
-                            {
-                                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                <div class="card card-video">
+                @if (Model.episode != null)
+                {
+                    @foreach (var e in Model.episode)
+                    {
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                            <div class="card card-video">
 
-                                        <div class="card-img">
-                                            <div class="embed-responsive embed-responsive-16by9">
-                                                <iframe class="embed-responsive-item" src="@e.VideoW;showinfo=0" allowfullscreen></iframe>
-                                            </div>
-                                            @*<div class="time">Alphabet Series</div>*@
-                                        </div>
-                                        <div class="caption">
-                                            <h3 class="card-title"><a href="@e.VideoW;showinfo=0">Olaf</a></h3>
-                                            <ul>
-                                                <li><i class="fa fa-clock-o"></i> Aug 26, 2019</li>
-                                                <li><i class="fa fa-eye"></i> @e.Views views</li>
-                                            </ul>
-                                        </div>
+                                <div class="card-img">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item" src="@e.VideoW;showinfo=0" allowfullscreen></iframe>
                                     </div>
+                                    @*<div class="time">Alphabet Series</div>*@
                                 </div>
-                             
-                            }
-                      
-                   
+                                <div class="caption">
+                                    <h3 class="card-title"><a href="@e.VideoW;showinfo=0">Olaf</a></h3>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Aug 26, 2019</li>
+                                        <li><i class="fa fa-eye"></i> @e.Views views</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+
+                    }
+
+                }
+
+
+            </div>
+        </div>
+    </div>
     @*        </section>
         </div>
     </div>*@
 }
 @* End Cartoon Series *@
 @* Start Books *@
-@if (Model.product.Category.ToString() == "Books")
+@if (Model?.product?.Category.ToString() == "Books")
 {
     <div id="wrapper">
         <section class="hero height-350 hero-game" style="background-image: url(@Model.product.CoverImage);">

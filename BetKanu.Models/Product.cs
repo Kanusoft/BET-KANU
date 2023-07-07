@@ -1,13 +1,9 @@
 ﻿using BetKanu.Models.Common;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BetKanu.Models
 {
@@ -36,8 +32,7 @@ namespace BetKanu.Models
         public Target TargetAudince { get; set; }
 
         [DisplayName("Release Date")]
-        [DataType(DataType.Date)]
-        public DateTime ReleaseDate { get; set; }
+        public DateTime ReleaseDate { get; set; } = DateTime.UtcNow.Date;
 
         [DisplayName("Short Description")]
         public string? ShortDescription { get; set; }
@@ -45,16 +40,16 @@ namespace BetKanu.Models
         [DisplayName("Long Description")]
         public string? LongDescription { get; set; }
 
-        [DisplayName("Eastren Script   Html")]
+        [DisplayName("Eastren Script Html")]
         public string? ScriptE { get; set; }
 
-        [DisplayName("Westrean Script   Html")]
+        [DisplayName("Westrean Script Html")]
         public string? ScriptW { get; set; }
 
-        [DisplayName("Eastren Credits    Html")]
+        [DisplayName("Eastren Credits Html")]
         public string? CreditsE { get; set; }
 
-        [DisplayName("Westrean Credits   Html")]
+        [DisplayName("Westrean Credits Html")]
         public string? CreditsW { get; set; }
 
         public string? Link1 { get; set; }
@@ -122,6 +117,12 @@ namespace BetKanu.Models
 
         [NotMapped]
         public IFormFile? imgUrl5 { get; set; }
+
+        [NotMapped]
+        public IFormFile? WestreanPdfFile { get; set; }
+
+        [NotMapped]
+        public IFormFile? EasternPdfFile { get; set; }
 
 
         //public int? ParentId { get; set; }
