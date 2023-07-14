@@ -30,183 +30,147 @@
     }*@
     <section>
         <div class="container">
-            <div class="col-md-3" style="float:left">
-                <h5 style="color:brown; display:inline;">Create New Product</h5>
-                <div class="dropdown" style="position:relative;">
-                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                        Select Create Option
-                        @*<span class="caret"></span>*@
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li> <a asp-action="CreateSong" type="button"> Create New Song <i class="fa-solid fa-plus"></i></a></li>
-                        <li><a asp-action="CreateBook" type="button"> Create New Book <i class="fa-solid fa-plus"></i></a></li>
-                        <li> <a asp-action="CreateSoftware" type="button"> Create New Software <i class="fa-solid fa-plus"></i></a></li>
-                        <li><a asp-controller="Cartoon" asp-action="CreateCartoonSeries" type="button">Create new Cartoon-Series<i class="fa-solid fa-plus"></i></a></li>
-                       @* <li><a asp-controller="Cartoon" asp-action="CreateEpisode" type="button">Create new Cartoon Episode <i class="fa-solid fa-plus"></i></a></li>*@
-                        <li><a asp-action="AddSale" type="button">Create Sale Product <i class="fa-solid fa-plus"></i></a></li>
-                        <li class="divider"></li>
-                    </ul>
-                </div>
-            </div>
+
             <div class="col-md-12 create">
-                <div class="col-md-12">
+                <div class="outline">
+                    <div class="btn-list" style="float:left">
+                        <div class="dropdown" style="position:relative;">
+                            <button class="form-control custom-select dropdown-toggle" type="button" data-toggle="dropdown">
+                                Create New Product
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li> <a asp-action="CreateSong" type="button"> Create New Song <i class="fa-solid fa-plus"></i></a></li>
+                                <li><a asp-action="CreateBook" type="button"> Create New Book <i class="fa-solid fa-plus"></i></a></li>
+                                <li> <a asp-action="CreateSoftware" type="button"> Create New Software <i class="fa-solid fa-plus"></i></a></li>
+                                <li><a asp-controller="Cartoon" asp-action="CreateCartoonSeries" type="button">Create new Cartoon-Series <i class="fa-solid fa-plus"></i></a></li>
+                                @* <li><a asp-controller="Cartoon" asp-action="CreateEpisode" type="button">Create new Cartoon Episode <i class="fa-solid fa-plus"></i></a></li>*@
+                                <li><a asp-action="AddSale" type="button">Create Sale Product <i class="fa-solid fa-plus"></i></a></li>
+                                <li class="divider"></li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="btn-list">
                         @* <a asp-action="CreateSong" type="button" class="btn btn-success"> Create New Song <i class="fa-solid fa-plus"></i></a>
                         <a asp-action="CreateBook" type="button" class="btn btn-success"> Create New Book <i class="fa-solid fa-plus"></i></a>
                         <a asp-action="CreateSoftware" type="button" class="btn btn-success"> Create New Software <i class="fa-solid fa-plus"></i></a>
                         <a asp-action="CreateEpisode" type="button" class="btn btn-success">Create new Cartoon Episode <i class="fa-solid fa-plus"></i></a>
                         <a asp-action="AddSale" type="button" class="btn btn-success">Create Sale Product <i class="fa-solid fa-plus"></i></a>*@
-                        <div class="btn-list" id="btn1" style="float:right">
-                            <div class="sorting clearfix center-grid">
-                                <div class="radio_wrap btn btn-success" style="margin-right:10px" data-radio="radio_1">
 
-                                    <span class="radio_mark">
-                                        Product
-                                    </span>
-                                </div>
-                                <div class="radio_wrap btn btn-success" data-radio="radio_2">
-                                    <span class="radio_mark">
-                                        Epicode
-                                    </span>
-                                </div>
-                                <div class="radio_wrap btn btn-success" data-radio="radio_3">
-                                    <span class="radio_mark">
-                                        Sales Item
-                                    </span>
-                                </div>
+                        <div class="btn-list sorting clearfix center-grid" id="btn1" style="float:right">
+                            <div class="radio_wrap btn btn-success" style="margin-right:10px" data-radio="radio_1">
+
+                                <span class="radio_mark">
+                                    Product
+                                </span>
+                            </div>
+                            <div class="radio_wrap btn btn-success" data-radio="radio_2">
+                                <span class="radio_mark">
+                                    Sales Item
+                                </span>
                             </div>
                         </div>
+
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <div class="card">
 
-                        <div class="content">
-                            <div class="radio_content radio_1">
+                <div class="card">
 
-                                <div class="card-body" style="color:white">
-                                    <div class="table-responsive">
-                                        <div class="col-md-3" style="float:right">
-                                            <div class="dropdown">
-                                                <a href="#" class="form-control custom-select" data-toggle="dropdown"><i class="fa fa-pencil"></i> </a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="@Url.Action("Index","Manger",new{Select = "Books"})">Books</a></li>
-                                                    <li><a href="@Url.Action("Index","Manger",new{Select = "Songs"})">Songs</a></li>
-                                                    <li><a href="@Url.Action("Index","Manger",new{Select = "CartoonSeries"})">Cartoon Series</a></li>
-                                                    <li><a href="@Url.Action("Index","Manger",new{Select = "Software"})">Software</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <table id="example2" class="table table-striped table-bordered" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.product.Id)</th>
-                                                    <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.product.Title)</th>
-                                                    <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.product.Category)</th>
-                                                    <th class="wd-20p " style="color:white">@Html.DisplayNameFor(model => model.product.TargetAudince)</th>
-                                                    @*<th>@Html.DisplayNameFor(model => model.SmallImage)</th>*@
-                                                    <th class="wd-10p" style="color:white">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var i in Model.products)
-                                                {
-                                                    <tr>
-                                                        <td>@Html.DisplayFor(model => i.Id)</td>
-                                                        <td>@Html.DisplayFor(model => i.Title)</td>
-                                                        <td>@Html.DisplayFor(model => i.Category)</td>
-                                                        <td>@Html.DisplayFor(model => i.TargetAudince)</td>
-                                                        @*<td><a href="@Html.DisplayFor(model => i.SmallImage)"> <img src="@Html.DisplayFor(model => i.SmallImage)"/></a></td>*@
-                                                        
-                                                        @if(Model.products[0].Category == Category.CartoonSeries)
-                                                        {
-                                                            <td>
-                                                                <a class="btn btn-icon btn-info   " asp-controller="Cartoon" asp-action="EditCartoonSeries" asp-route-id="@i.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
-                                                                <a class="btn btn-icon btn-orange btn-danger  " asp-controller="Cartoon" asp-action="Delete" asp-route-id="@i.Id"><i class="fa-solid fa-trash-can"></i>Delete</a>
-                                                            </td>
-                                                        }
-                                                        else
-                                                        {
-                                                            <td>
-                                                                <a class="btn btn-icon btn-info   " asp-controller="Manger" asp-action="Edit" asp-route-id="@i.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
-                                                                <a class="btn btn-icon btn-orange btn-danger  " asp-controller="Manger" asp-action="Delete" asp-route-id="@i.Id"><i class="fa-solid fa-trash-can"></i>Delete</a>
-                                                            </td>
-                                                        }
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="radio_content radio_2">
-                                <div class="card-body" style="color:white">
-                                    <div class="table-responsive">
-                                        <table id="example2" class="table table-striped table-bordered" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.productEp.Id)</th>
-                                                    <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.productEp.Title)</th>
-                                                    <th class="wd-20p " style="color:white">@Html.DisplayNameFor(model => model.productEp.ProductId)</th>
-                                                    @*<th>@Html.DisplayNameFor(model => model.SmallImage)</th>*@
-                                                    <th class="wd-10p" style="color:white">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var i in Model.episode)
-                                                {
-                                                    <tr>
-                                                        <td>@Html.DisplayFor(model => i.Id)</td>
-                                                        <td>@Html.DisplayFor(model => i.Title)</td>
-                                                        <td>@Html.DisplayFor(model => i.ProductId)</td>
-                                                        @*<td><a href="@Html.DisplayFor(model => i.SmallImage)"> <img src="@Html.DisplayFor(model => i.SmallImage)"/></a></td>*@
-                                                        <td>
-                                                            <a class="btn btn-icon btn-info   " asp-controller="Manger" asp-action="EditEpisode" asp-route-id="@i.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
-                                                            <a class="btn btn-icon btn-orange btn-danger  " asp-controller="Manger" asp-action="DeleteEpisode" asp-route-id="@i.Id"><i class="fa-solid fa-trash-can"></i>Delete</a>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                    <div class="content">
+                        <div class="radio_content radio_1">
 
-                            </div>
-                        </div>
-                        <div class="radio_content radio_3">
                             <div class="card-body" style="color:white">
                                 <div class="table-responsive">
-                                    <table id="example3" class="table table-striped table-bordered" style="width:100%">
+                                    <div class="col-md-3" style="float:right">
+                                        <div class="dropdown">
+                                            <a href="#" class="form-control custom-select" data-toggle="dropdown" id="dropdown-menu"><i class="fa fa-pencil"></i> </a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="@Url.Action("Index","Manger",new{Select = "Books"})">Books</a></li>
+                                                <li><a href="@Url.Action("Index","Manger",new{Select = "Songs"})">Songs</a></li>
+                                                <li><a href="@Url.Action("Index","Manger",new{Select = "CartoonSeries"})">Cartoon Series</a></li>
+                                                <li><a href="@Url.Action("Index","Manger",new{Select = "Software"})">Software</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                    <table id="example" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.Shop.Id)</th>
-                                                <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.Shop.Name)</th>
-                                                <th class="wd-20p " style="color:white">@Html.DisplayNameFor(model => model.Shop.Price)</th>
+                                                <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.product.Id)</th>
+                                                <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.product.Title)</th>
+                                                <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.product.Category)</th>
+                                                <th class="wd-20p " style="color:white">@Html.DisplayNameFor(model => model.product.TargetAudince)</th>
                                                 @*<th>@Html.DisplayNameFor(model => model.SmallImage)</th>*@
                                                 <th class="wd-10p" style="color:white">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var si in Model.Shops)
+                                            @foreach (var i in Model.products)
                                             {
                                                 <tr>
-                                                    <td>@Html.DisplayFor(model => si.Id)</td>
-                                                    <td>@Html.DisplayFor(model => si.Name)</td>
-                                                    <td>@Html.DisplayFor(model => si.Price)</td>
+                                                    <td>@Html.DisplayFor(model => i.Id)</td>
+                                                    <td>@Html.DisplayFor(model => i.Title)</td>
+                                                    <td>@Html.DisplayFor(model => i.Category)</td>
+                                                    <td>@Html.DisplayFor(model => i.TargetAudince)</td>
                                                     @*<td><a href="@Html.DisplayFor(model => i.SmallImage)"> <img src="@Html.DisplayFor(model => i.SmallImage)"/></a></td>*@
-                                                    <td>
-                                                        <a class="btn btn-icon btn-info   " asp-controller="Manger" asp-action="EditSale" asp-route-id="@si.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
-                                                        <a class="btn btn-icon btn-orange btn-danger  " asp-controller="Manger" asp-action="DeleteSales" asp-route-id="@si.Id"><i class="fa-solid fa-trash-can"></i>Delete</a>
-                                                    </td>
+
+                                                    @if (Model.products[0].Category == Category.CartoonSeries)
+                                                    {
+                                                        <td>
+                                                            <a class="btn btn-icon btn-info   " asp-controller="Cartoon" asp-action="EditCartoonSeries" asp-route-id="@i.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
+                                                            <a class="btn btn-icon btn-orange btn-danger  " asp-controller="Cartoon" asp-action="Delete" asp-route-id="@i.Id"><i class="fa-solid fa-trash-can"></i>Delete</a>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>
+                                                            <a class="btn btn-icon btn-info   " asp-controller="Manger" asp-action="Edit" asp-route-id="@i.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
+                                                            <a class="btn btn-icon btn-orange btn-danger  " asp-controller="Manger" asp-action="Delete" asp-route-id="@i.Id"><i class="fa-solid fa-trash-can"></i>Delete</a>
+                                                        </td>
+                                                    }
                                                 </tr>
                                             }
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-
                         </div>
+
                     </div>
+                    <div class="radio_content radio_2">
+                        <div class="card-body" style="color:white">
+                            <div class="table-responsive">
+                                <table id="example2" class="table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.Shop.Id)</th>
+                                            <th class="wd-15p" style="color:white">@Html.DisplayNameFor(model => model.Shop.Name)</th>
+                                            <th class="wd-20p " style="color:white">@Html.DisplayNameFor(model => model.Shop.Price)</th>
+                                            @*<th>@Html.DisplayNameFor(model => model.SmallImage)</th>*@
+                                            <th class="wd-10p" style="color:white">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var si in Model.Shops)
+                                        {
+                                            <tr>
+                                                <td>@Html.DisplayFor(model => si.Id)</td>
+                                                <td>@Html.DisplayFor(model => si.Name)</td>
+                                                <td>@Html.DisplayFor(model => si.Price)</td>
+                                                @*<td><a href="@Html.DisplayFor(model => i.SmallImage)"> <img src="@Html.DisplayFor(model => i.SmallImage)"/></a></td>*@
+                                                <td>
+                                                    <a class="btn btn-icon btn-info" asp-controller="Manger" asp-action="EditSale" asp-route-id="@si.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
+                                                    <a class="btn btn-icon btn-orange btn-danger  " asp-controller="Manger" asp-action="DeleteSales" asp-route-id="@si.Id"><i class="fa-solid fa-trash-can"></i>Delete</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -214,10 +178,8 @@
     </section>
     <partial name="_LoginPartial" />
 </div>
-<table class="">
-</table>
-@section scripts{
 
+@section scripts{
     <!-- Data tables -->
     <script src="~/plugins/datatable/jquery.dataTables.min.js"></script>
     <script src="~/plugins/datatable/dataTables.bootstrap4.min.js"></script>
@@ -243,17 +205,12 @@
             $('#example').DataTable();
         });
     </script>
+
     <script>
         $(function (e) {
             $('#example2').DataTable();
         });
-    </script>
-    <script>
-
-
-        $(function (e) {
-            $('#example3').DataTable();
-        });
 
     </script>
+
    }

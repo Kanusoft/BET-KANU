@@ -3820,6 +3820,7 @@ timeline__item:after {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
+	white-space: nowrap;
 }
 
 	.custom-select:focus {

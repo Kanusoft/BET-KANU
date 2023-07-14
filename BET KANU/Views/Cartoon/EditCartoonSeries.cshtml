@@ -1,8 +1,9 @@
 ﻿@model MangerVM
+
+<!-- Data table css -->
+<link href="~/plugins/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" />
 <link href="~/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
-
 <link rel="stylesheet" href="~/css/dashboard.css">
-
 
 
 <head>
@@ -22,9 +23,10 @@
         @if (Model.product != null)
         {
             <div class="col-md-12">
-                <form class="card" asp-action="EditCartoonSeries" enctype="multipart/form-data" method="post">
-                    <div class="container">
-                        <div class="col-12">
+
+                <div class="container">
+                    <div class="col-12">
+                        <form class="card" asp-action="EditCartoonSeries" enctype="multipart/form-data" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="@Model.product.Id" />
                             <div class="card-body">
@@ -133,47 +135,92 @@
                                 <input type="submit" value="save" style="float:right;width: 19%;    background-color: #3a4258;
                              margin-right: 32px" class="btn btn-primary btn-shadow" />
                             </div>
-                        </div>
+                            @if (Model.productEpisode != null)
+                            {
+
+                                <div class="card-body" style="color:white">
+                                    <div class="table-responsive">
+                                        <table id="EditCarton" class="table table-striped table-bordered" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="wd-15p" style="color:white">Title Episodes</th>
+                                                    <th class="wd-15p" style="color:white">Video</th>
+                                                    <th class="wd-20p " style="color:white">Title</th>
+                                                    <th class="wd-20p " style="color:white">Status</th>
+                                                    <th class="wd-10p" style="color:white">ReleaseDate Date</th>
+                                                    <th class="wd-10p" style="color:white"></th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var episode in Model.productEpisode)
+                                                {
+                                                    <tr>
+                                                        <td>@Model?.product?.Title-Episodes</td>
+                                                        <td><video src="@episode.VideoW"></video></td>
+                                                        <td>@episode.Title</td>
+                                                        <td>@episode.Status</td>
+                                                        <td>@episode.ReleaseDate.Date</td>
+                                                        <td>
+                                                            <a class="btn btn-icon btn-info" asp-action="EditEpisode" asp-route-id="@episode.Id" asp-route-parentId="@Model?.product?.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            }
+                        </form>
                     </div>
-                </form>
+                </div>
+
             </div>
         }
     </section>
 
-    <section>
-        @if (Model.productEpisode != null)
-        {
-            @foreach (var episode in Model.productEpisode)
-            {
-                <div>
-                    <span>@Model?.product?.Title-Episodes</span>
-                </div>
-                <div>
-                    <div>
-                        <video src="@episode.VideoW"></video>
-                    </div>
-                    <div>
-                        <span>@episode.Title</span>
-                    </div>
-                    <div>
-                        <span>@episode.Status</span>
-                    </div>
-                    <div>
-                        <span>@episode.ReleaseDate.Date</span>
-                    </div>
-                    <div>
-                        <a asp-action="EditEpisode" asp-route-id="@episode.Id" asp-route-parentId="@Model?.product?.Id">Edit</a>
-                    </div>
-                    @*<div>
-            <a asp-action="DeleteEpisode" asp-route-id="@episode.Id" asp-route-parentId="@Model?.product?.Id">Delete</a>
-            </div>*@
-                </div>
-            }
-        }
-    </section>
-</div>
 
+</div>
+@if (Model.productEpisode != null)
+{
+    @foreach (var episode in Model.productEpisode)
+    {
+        <div>
+            <span>@Model?.product?.Title-Episodes</span>
+        </div>
+        <div>
+            <div>
+                <video src="@episode.VideoW"></video>
+            </div>
+            <div>
+                <span>@episode.Title</span>
+            </div>
+            <div>
+                <span>@episode.Status</span>
+            </div>
+            <div>
+                <span>@episode.ReleaseDate.Date</span>
+            </div>
+            <div>
+                <a asp-action="EditEpisode" asp-route-id="@episode.Id" asp-route-parentId="@Model?.product?.Id">Edit</a>
+            </div>
+            @*<div>
+    <a asp-action="DeleteEpisode" asp-route-id="@episode.Id" asp-route-parentId="@Model?.product?.Id">Delete</a>
+    </div>*@
+        </div>
+    }
+}
 @section Scripts {
+    <!-- Data tables -->
+    <script src="~/plugins/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatable/dataTables.bootstrap4.min.js"></script>
+    <!-- Data table js -->
+    <script>
+        $(function (e) {
+            $('#EditCarton').DataTable();
+        });
+    </script>
     @{
         <!-- file uploads js -->
         <script src="~/plugins/fileuploads/js/dropify.js"></script>

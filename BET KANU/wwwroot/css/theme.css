@@ -6405,6 +6405,11 @@ footer .widget .title {
 	font-size: 20px;
 	line-height: 26px;
 }
+	.btn-list {
+		 display: table; 
+		 width: 100%; 
+		text-align: center;
+	}
 }
 
 @media (max-width: 460px) {	
