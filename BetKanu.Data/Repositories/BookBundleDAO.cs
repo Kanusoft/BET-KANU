@@ -47,7 +47,7 @@ namespace BetKanu.Data.Repositories
                         InternalVideo = bundle.InternalVideo,
                         TextLanguage = bundle.TextLanguage.Trim(),
                         TextURL = book.URL + bundle.TextURL,
-                        VideoURL = bundle.VideoURL
+                        VideoURL = book.URL + bundle.VideoURL
                     };
             return b.FirstOrDefault();         
         }
@@ -69,7 +69,7 @@ namespace BetKanu.Data.Repositories
                         InternalVideo = bundle.InternalVideo,
                         TextLanguage = bundle.TextLanguage.Trim(),
                         TextURL = book.URL + bundle.TextURL,
-                        VideoURL = bundle.VideoURL
+                        VideoURL = book.URL + bundle.VideoURL
                     };
             return b.ToList();
         }
@@ -90,7 +90,7 @@ namespace BetKanu.Data.Repositories
                         InternalVideo = bundle.InternalVideo,
                         TextLanguage = bundle.TextLanguage.Trim(),
                         TextURL = book.URL + bundle.TextURL,
-                        VideoURL = bundle.VideoURL
+                        VideoURL = book.URL + bundle.VideoURL ?? null
                     };
             return b.ToList();
         }

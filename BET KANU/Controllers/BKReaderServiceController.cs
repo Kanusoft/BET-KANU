@@ -1,10 +1,11 @@
 ﻿using BetKanu.Models.Interface;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
+
 
 namespace BET_KANU.Controllers
 {
+    [RoutePrefix("api/BKReader")]
     public class BKReaderServiceController : ApiController
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -20,7 +21,9 @@ namespace BET_KANU.Controllers
         /// </summary>
         /// <param name="bookId"></param>
         /// <returns></returns>
-        public HttpResponseMessage Get()
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("")]
+        public System.Net.Http.HttpResponseMessage Get()
         {
             //Here i need to redirect to a aspx page.
             Request.Headers.TryGetValues("FROM", out IEnumerable<string>? from);
@@ -42,7 +45,9 @@ namespace BET_KANU.Controllers
         }
 
         // GET api/BKReader?bookid=6
-        public HttpResponseMessage Get(int bookId)
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("")]
+        public System.Net.Http.HttpResponseMessage Get(int bookId)
         {
             //Here i need to redirect to a aspx page.
             Request.Headers.TryGetValues("FROM", out IEnumerable<string>? from);
@@ -65,7 +70,9 @@ namespace BET_KANU.Controllers
         }
 
         // GET api/BKReader?bookid=6&chapterNo
-        public HttpResponseMessage Get(int bookId, int chapterNo, bool IsTemp)
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("")]
+        public System.Net.Http.HttpResponseMessage Get(int bookId, int chapterNo, bool IsTemp)
         {
             //Here i need to redirect to a aspx page.
             Request.Headers.TryGetValues("FROM", out IEnumerable<string>? from);
@@ -88,7 +95,9 @@ namespace BET_KANU.Controllers
         }
 
         // GET api/BKReader?bookid=6&page=1&sec=4
-        public HttpResponseMessage Get(int bookId, int page, int sec = 1)
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("")]
+        public System.Net.Http.HttpResponseMessage Get(int bookId, int page, int sec = 1)
         {
             //Here i need to redirect to a aspx page.
             Request.Headers.TryGetValues("FROM", out IEnumerable<string>? from);
