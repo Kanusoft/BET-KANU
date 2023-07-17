@@ -41,7 +41,7 @@
                                 <div class="col-lg-3 col-sm-12">
                                     <div class="form-group">
                                         <label asp-for="ImageE" class="control-label"></label>
-                                        <input asp-for="EastrenImageFile" name="imgUrl" class="dropify form-control" />
+                                        <input asp-for="EastrenImageFile" name="EastrenImageFile" class="dropify form-control" />
                                         <span asp-validation-for="ImageE" class="text-danger"></span>
                                     </div>
 
@@ -49,7 +49,7 @@
                                 <div class="col-lg-3 col-sm-12">
                                     <div class="form-group">
                                         <label asp-for="ImageW" class="control-label"></label>
-                                        <input asp-for="WestreanImageFile" name="imgUrl2" class="dropify form-control" />
+                                        <input asp-for="WestreanImageFile" name="WestreanImageFile" class="dropify form-control" />
                                         <span asp-validation-for="ImageW" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@
                                                         <label asp-for="Status" class="control-label"></label>
                                                     </td>
                                                     <td>
-                                                        <select class="form-control custom-select" asp-for="Status" asp-items="Html.GetEnumSelectList<Language>()">
+                                                        <select class="form-control custom-select" asp-for="Status" name="Status" asp-items="Html.GetEnumSelectList<Language>()">
                                                             <option selected="selected">-None-</option>
                                                         </select>
                                                         <span asp-validation-for="Status" class="text-danger"></span>
