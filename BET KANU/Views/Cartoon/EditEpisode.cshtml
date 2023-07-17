@@ -27,14 +27,14 @@
                                 <div class="col-lg-3 col-sm-12">
                                     <div class="form-group">
                                         <label asp-for="Title" class="control-label"></label>
-                                        <input asp-for="Title" class="form-control" />
+                                        <input asp-for="Title" name="Title" class="form-control" />
                                         <span asp-validation-for="Title" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-sm-12">
                                     <div class="form-group">
                                         <label asp-for="ImageE" class="control-label"></label>
-                                        <input type="file" asp-for="EastrenImageFile" class="dropify form-control" />
+                                        <input type="file" asp-for="EastrenImageFile" name="EastrenImageFile" class="dropify form-control" />
                                         <span asp-validation-for="ImageE" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -42,7 +42,7 @@
                                     <div class="form-group">
                                         <label asp-for="ImageW" class="control-label"></label>
                                         <div>
-                                            <input type="file" asp-for="WestreanImageFile" class="dropify form-control" />
+                                            <input type="file" asp-for="WestreanImageFile" name="WestreanImageFile" class="dropify form-control" />
                                             <span asp-validation-for="ImageW" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -62,6 +62,24 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
+                                                        <label asp-for="Views" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+                                                        <input asp-for="Views" name="Views" class="form-control" />
+                                                        <span asp-validation-for="Views" class="text-danger"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label asp-for="ReleaseDate" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+                                                        <input asp-for="ReleaseDate" name="ReleaseDate" class="form-control" />
+                                                        <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
                                                         <label asp-for="Status" class="control-label"></label>
                                                     </td>
                                                     <td>
@@ -79,8 +97,6 @@
                                                         <span asp-validation-for="Status" class="text-danger"></span>
                                                     </td>
                                                 </tr>
-
-
                                                 <tr>
                                                     <td>
                                                         <label asp-for="ProductId" class="control-label"></label>
@@ -96,7 +112,7 @@
                                                         <label asp-for="VideoW" class="control-label"></label>
                                                     </td>
                                                     <td>
-                                                        <input asp-for="VideoW" class="form-control" />
+                                                        <input asp-for="VideoW" name="VideoW" class="form-control" />
                                                         <span asp-validation-for="VideoW" class="text-danger"></span>
                                                     </td>
                                                 </tr>
@@ -105,7 +121,7 @@
                                                         <label asp-for="VideoE" class="control-label"></label>
                                                     </td>
                                                     <td>
-                                                        <input asp-for="VideoE" class="form-control" />
+                                                        <input asp-for="VideoE" name="VideoE" class="form-control" />
                                                         <span asp-validation-for="VideoE" class="text-danger"></span>
                                                     </td>
                                                 </tr>
@@ -115,7 +131,6 @@
                                         </table>
                                     </div>
                                     <!--END table-responsive -->
-
                                 </div>
                             </div>
                         </div>

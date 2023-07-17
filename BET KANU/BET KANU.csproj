@@ -35,7 +35,6 @@
   <ItemGroup>
     <Folder Include="Views\About\" />
     <Folder Include="Views\Studio\" />
-    <Folder Include="wwwroot\Uploades\Episode\" />
   </ItemGroup>
 
 </Project>

@@ -53,10 +53,6 @@
                                         <span asp-validation-for="ImageW" class="text-danger"></span>
                                     </div>
                                 </div>
-
-
-
-
                             </div>
                         </div>
                         <div class="card-body" style="color:white">
@@ -82,7 +78,18 @@
                                                         </div>
                                                     </td>
                                                 </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label asp-for="ReleaseDate" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group">
 
+                                                            <input asp-for="ReleaseDate" name="ReleaseDate" class="form-control" />
+                                                            <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                                 <tr>
                                                     <td>
                                                         <label asp-for="Status" class="control-label"></label>
@@ -104,8 +111,6 @@
                                                         @ViewBag.parentname
                                                     </td>
                                                 </tr>
-
-
                                                 <tr>
                                                     <td>
                                                         <label asp-for="VideoW" class="control-label"></label>
@@ -131,7 +136,6 @@
                                         </table>
                                     </div>
                                     <!--END table-responsive -->
-
                                 </div>
                             </div>
                         </div>
