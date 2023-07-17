@@ -4,9 +4,7 @@ using BetKanu.Models;
 using BetKanu.Models.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using BET_KANU.ViewModels;
-using BetKanu.Data;
 
 namespace BET_KANU.Controllers
 {
@@ -29,7 +27,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateCartoonSeries([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,VideoE,VideoW,ViewsE,ViewsW")] Product cartoonseries)
+        public async Task<ActionResult> CreateCartoonSeries([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,VideoE,VideoW,ViewsE,ViewsW")]Product cartoonseries)
         {
             if (ModelState.IsValid)
             {
@@ -77,7 +75,6 @@ namespace BET_KANU.Controllers
             {
                 return NotFound();
             }
-
             return View(vm);
         }
 
@@ -122,7 +119,6 @@ namespace BET_KANU.Controllers
                     TempData["AlertMessage"] = "Ooops something went wrong !!";
                     return View(prod);
                 }
-
             }
             return View(prod);
         }
@@ -161,15 +157,21 @@ namespace BET_KANU.Controllers
                     TempData["Messagee"] = cartoonepisode.Title + " " + "has been created successfully!";
                     return RedirectToAction("Index", "Manger");
                 }
-
+                else
+                {
+                    var parentProduct = _unit.product.GetOne(parentId);
+                    ViewBag.parentId = parentProduct?.Title?.ToString();
+                    ViewBag.ProductId = parentId;
+                    return View(cartoonepisode);
+                }
             }
             else
             {
                 var parentProduct = _unit.product.GetOne(parentId);
                 ViewBag.parentId = parentProduct?.Title?.ToString();
+                ViewBag.ProductId = parentId;
                 return View(cartoonepisode);
             }
-            return View(cartoonepisode);
         }
 
 
@@ -215,7 +217,7 @@ namespace BET_KANU.Controllers
                 }
                 if (episode.WestreanImageFile != null)
                 {
-                    string oldfile = _unit.product.GetOneEpisode(episode.Id)?.ImageW ?? string.Empty;
+                    string oldfile = _unit?.product?.GetOneEpisode(episode.Id)?.ImageW ?? string.Empty;
                     if (!string.IsNullOrEmpty(oldfile))
                     {
                         await _blob.DeleteDocumentAsync(oldfile);
@@ -233,14 +235,21 @@ namespace BET_KANU.Controllers
                 {
                     return RedirectToAction("Index", "Manger");
                 }
+                else
+                {
+                    var parentProduct = _unit.product.GetOne(parentId);
+                    ViewBag.parentname = parentProduct?.Title?.ToString();
+                    ViewBag.parentId = parentId;
+                    return View(episode);
+                }
             }
             else
             {
+                var parentProduct = _unit.product.GetOne(parentId);
+                ViewBag.parentname = parentProduct?.Title?.ToString();
                 ViewBag.parentId = parentId;
                 return View(episode);
             }
-
-            return View(episode);
         }
 
         public ActionResult DeleteEpisode(int id)

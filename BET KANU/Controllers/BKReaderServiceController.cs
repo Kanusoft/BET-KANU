@@ -1,124 +1,83 @@
 ﻿using BetKanu.Models.Interface;
-using System.Net;
-using System.Web.Http;
-
+using Microsoft.AspNetCore.Mvc;
 
 namespace BET_KANU.Controllers
 {
-    [RoutePrefix("api/BKReader")]
-    public class BKReaderServiceController : ApiController
+    [Route("api/BkReader")]
+    [ApiController]
+    public class BkReaderServiceController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        public BKReaderServiceController(IUnitOfWork unitOfWork)
+
+        public BkReaderServiceController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
         // GET api/BKReader
-        /// <summary>
-        /// Get list of books.
-        /// book image-short explanation about book- download pdf button - download book offline - see the book in webpage)
-        /// </summary>
-        /// <param name="bookId"></param>
-        /// <returns></returns>
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("")]
-        public System.Net.Http.HttpResponseMessage Get()
+        [HttpGet]
+        public ActionResult Get(int? bookId, int? page, int? sec, int? chapterNo)
         {
-            //Here i need to redirect to a aspx page.
-            Request.Headers.TryGetValues("FROM", out IEnumerable<string>? from);
-            var headerValue = from?.FirstOrDefault();
-            if (from != null && headerValue == "BETKANU")
+            if (Request.Headers.TryGetValue("FROM", out var headervalue))
             {
-                var books = _unitOfWork.bKBundle.GetBooks();
+                if (headervalue == "BETKANU")
+                {
+                    if (bookId.HasValue)
+                    {
+                        if (sec == null)
+                        {
+                            sec = 1;
+                        }
+                        if (page.HasValue && sec.HasValue)
+                        {
+                            var bundle = _unitOfWork.bKBundle.GetBundle(bookId.Value, page.Value, sec.Value) ?? null;
 
-                var response = Request.CreateResponse(HttpStatusCode.OK, books);
+                            if(bundle is null)
+                                return BadRequest("No Content");                           
 
-                return response;
+                            return Ok(bundle);
+                        }
+                        else if (chapterNo.HasValue)
+                        {
+                            var bundles = _unitOfWork.bKBundle.GetBundles(bookId.Value, chapterNo.Value) ?? null;
+
+                            if (bundles is null)
+                                return BadRequest("No Content");
+
+                            return Ok(bundles);
+                        }
+                        else
+                        {
+                            // Handle the request with bookId parameter only
+                            var bundle = _unitOfWork.bKBundle.GetBundles(bookId.Value);
+
+                            if(bundle.Count() == 0)
+                                return BadRequest("No Content");
+
+                            return Ok(bundle.FirstOrDefault());
+                        }
+                    }
+                    else
+                    {
+                        // Handle the request without any parameters
+                        var books = _unitOfWork.bKBundle.GetBooks();
+
+                        if (books.Count() == 0)
+                            return BadRequest("No Content");
+
+                        return Ok(books);
+                    }
+                }
+                else
+                {
+                    return Ok(@"https://betkanu.com/home/reader");
+                }
             }
-            else
+            else 
             {
-                var response = Request.CreateResponse(HttpStatusCode.Moved);
-                response.Headers.Location = new Uri("https://betkanu.com/home/reader");
-                return response;
+                return Ok(@"https://betkanu.com/home/reader");
             }
-        }
-
-        // GET api/BKReader?bookid=6
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("")]
-        public System.Net.Http.HttpResponseMessage Get(int bookId)
-        {
-            //Here i need to redirect to a aspx page.
-            Request.Headers.TryGetValues("FROM", out IEnumerable<string>? from);
-            var headerValue = from?.FirstOrDefault();
-
-            if (from != null && headerValue == "BETKANU")
-            {
-                var bundles = _unitOfWork.bKBundle.GetBundles(bookId);
-
-                var response = Request.CreateResponse(HttpStatusCode.OK, bundles.FirstOrDefault());
-
-                return response;
-            }
-            else
-            {
-                var response = Request.CreateResponse(HttpStatusCode.Moved);
-                response.Headers.Location = new Uri("https://betkanu.com/home/reader");
-                return response;
-            }
-        }
-
-        // GET api/BKReader?bookid=6&chapterNo
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("")]
-        public System.Net.Http.HttpResponseMessage Get(int bookId, int chapterNo, bool IsTemp)
-        {
-            //Here i need to redirect to a aspx page.
-            Request.Headers.TryGetValues("FROM", out IEnumerable<string>? from);
-            var headerValue = from?.FirstOrDefault();
-            if (from != null && headerValue == "BETKANU")
-            {
-
-                var bundles = _unitOfWork.bKBundle.GetBundles(bookId, chapterNo);
-
-                var response = Request.CreateResponse(HttpStatusCode.OK, bundles);
-
-                return response;
-            }
-            else
-            {
-                var response = Request.CreateResponse(HttpStatusCode.Moved);
-                response.Headers.Location = new Uri("https://betkanu.com/home/reader");
-                return response;
-            }
-        }
-
-        // GET api/BKReader?bookid=6&page=1&sec=4
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("")]
-        public System.Net.Http.HttpResponseMessage Get(int bookId, int page, int sec = 1)
-        {
-            //Here i need to redirect to a aspx page.
-            Request.Headers.TryGetValues("FROM", out IEnumerable<string>? from);
-            var headerValue = from?.FirstOrDefault();
-            if (from != null && headerValue == "BETKANU")
-            {
-
-                var bundle = _unitOfWork.bKBundle.GetBundle(bookId, page, sec);
-
-                bundle.TextLanguage = bundle.TextLanguage;
-
-                var response = Request.CreateResponse(HttpStatusCode.OK, bundle);
-
-                return response;
-            }
-            else
-            {
-                var response = Request.CreateResponse(HttpStatusCode.Moved);
-                response.Headers.Location = new Uri("https://betkanu.com/home/reader");
-                return response;
-            }
+          
         }
     }
 }
