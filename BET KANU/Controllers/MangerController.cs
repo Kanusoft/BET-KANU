@@ -396,7 +396,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind("Id,Title,SmallImage,CoverImage,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,CreditsE,CreditsW,Link1,Link2,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,img1,img2,img3,img4,img5,Author,DesignedBy,source,Features1,Features2,Features3,Features4,Features5,Features6,Features7,Features8,SmallUrl,CoverUrl,EastrenImageFile,WestreanImageFile,imgUrl3,imgUrl4,imgUrl5,WestreanPdfFile,EasternPdfFile")] Product prod)
+        public async Task<ActionResult> Edit([Bind("Id,Title,SmallImage,CoverImage,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,CreditsE,CreditsW,Link1,Link2,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,img1,img2,img3,img4,img5,Author,DesignedBy,source,Features1,Features2,Features3,Features4,Features5,Features6,Features7,Features8,SmallUrl,CoverUrl,EastrenImageFile,WestreanImageFile,imgUrl,imgUrl2,imgUrl3,imgUrl4,imgUrl5,WestreanPdfFile,EasternPdfFile")] Product prod)
         {
             if (ModelState.IsValid && prod != null)
             {
@@ -416,10 +416,10 @@ namespace BET_KANU.Controllers
                     {
                         string currectImage = _unitOfWork.product?.GetOne(prod.Id)?.SmallImage ?? string.Empty;
                         // If the user did not change the image, keep the old image path
-                        prod.SmallImage = prod.SmallImage;
+                        prod.SmallImage = currectImage;
                     }
 
-                    
+
                     if (prod.CoverUrl != null)
                     {
                         string oldfile = _unitOfWork.product?.GetOne(prod.Id)?.CoverImage ?? string.Empty;
@@ -451,7 +451,7 @@ namespace BET_KANU.Controllers
                     {
                         string currectImage = _unitOfWork.product?.GetOne(prod.Id)?.img1 ?? string.Empty;
                         // If the user did not change the image, keep the old image path
-                        prod.img1 = prod.img1;
+                        prod.img1 = currectImage;
                     }
 
 
@@ -469,7 +469,7 @@ namespace BET_KANU.Controllers
                     {
                         string currectImage = _unitOfWork.product?.GetOne(prod.Id)?.img2 ?? string.Empty;
                         // If the user did not change the image, keep the old image path
-                        prod.img2 = prod.img2;
+                        prod.img2 = currectImage;
                     }
 
 
@@ -487,7 +487,7 @@ namespace BET_KANU.Controllers
                     {
                         string currectImage = _unitOfWork.product?.GetOne(prod.Id)?.img3 ?? string.Empty;
                         // If the user did not change the image, keep the old image path
-                        prod.img3 = prod.img3;
+                        prod.img3 = currectImage;
                     }
 
 
@@ -505,7 +505,7 @@ namespace BET_KANU.Controllers
                     {
                         string currectImage = _unitOfWork.product?.GetOne(prod.Id)?.img4 ?? string.Empty;
                         // If the user did not change the image, keep the old image path
-                        prod.img4 = prod.img4;
+                        prod.img4 = currectImage;
                     }
 
 
@@ -523,7 +523,7 @@ namespace BET_KANU.Controllers
                     {
                         string currectImage = _unitOfWork.product?.GetOne(prod.Id)?.img5 ?? string.Empty;
                         // If the user did not change the image, keep the old image path
-                        prod.img5 = prod.img5;
+                        prod.img5 = currectImage;
                     }
 
                     if (prod.WestreanPdfFile != null)
@@ -539,7 +539,7 @@ namespace BET_KANU.Controllers
                     else
                     {
                         string currectFilepath = _unitOfWork.product?.GetOne(prod.Id)?.Wpdf ?? string.Empty;
-                        prod.Wpdf = prod.Wpdf;
+                        prod.Wpdf = currectFilepath;
                     }
 
                     if (prod.EasternPdfFile != null)
@@ -555,11 +555,12 @@ namespace BET_KANU.Controllers
                     else
                     {
                         string currectFilepath = _unitOfWork.product?.GetOne(prod.Id)?.Epdf ?? string.Empty;
-                        prod.Epdf = prod.Epdf;
+                        prod.Epdf = currectFilepath;
                     }
 
                     if (_unitOfWork.manger.Edit(prod))
                     {
+                        TempData["Messagee"] = prod.Title + "has been Updated successfully!";
                         return RedirectToAction(nameof(Index));
                     }
                 }
@@ -572,7 +573,6 @@ namespace BET_KANU.Controllers
             }
             return View(prod);
         }
-
 
         public ActionResult Delete(int id)
         {
@@ -589,6 +589,7 @@ namespace BET_KANU.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeletePost(int id)
         {
             if (ModelState.IsValid)
@@ -612,19 +613,22 @@ namespace BET_KANU.Controllers
             return RedirectToAction("Index");
         }
 
-
-
-
+        [HttpGet]
         public ActionResult AddSale()
         {
             return View(new Shop());
         }
 
         [HttpPost]
-        public ActionResult AddSale(Shop shop)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddSale([Bind("Name,ImageUrl,Price,ReleaseDate,FileUrl")]Shop shop)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && shop != null)
             {
+                if (shop.FileUrl != null)
+                {
+                    shop.ImageUrl = await SaveImage(shop.FileUrl);
+                }
                 _unitOfWork.manger.Add(shop);
                 return RedirectToAction(nameof(Index));
             }
@@ -647,12 +651,33 @@ namespace BET_KANU.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditSales(Shop shop)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditSales([Bind("Name,ImageUrl,Price,ReleaseDate,FileUrl")] Shop shop)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.manger.EditShop(shop);
-                return RedirectToAction(nameof(Index));
+
+                if (shop.FileUrl != null)
+                {
+                    string oldfile = _unitOfWork.Shop.Getone(shop.Id).ImageUrl ?? string.Empty;
+                    if (!string.IsNullOrEmpty(oldfile))
+                    {
+                        await _blobStorage.DeleteDocumentAsync(oldfile);
+                    }
+                    var Imagepath = await SaveImage(shop.FileUrl);
+                    shop.ImageUrl = Imagepath;
+                }
+                else
+                {
+                    string currectImage = _unitOfWork.Shop.Getone(shop.Id).ImageUrl ?? string.Empty;
+                    shop.ImageUrl = currectImage;
+                }
+
+                if (_unitOfWork.manger.EditShop(shop))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+
             }
             return View(shop);
         }

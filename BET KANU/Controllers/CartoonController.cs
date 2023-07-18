@@ -134,7 +134,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateEpisode([Bind("Title,Views,VideoE,VideoW,ImageE,ImageW,Status,ReleaseDate,ProductId,EastrenImageFile,WestreanImageFile")] ProductEpisode cartoonepisode, int parentId)
+        public async Task<ActionResult> CreateEpisode([Bind("Title,Views,VideoE,VideoW,ImageE,ImageW,Status,ReleaseDate,ProductId,EastrenImageFile,WestreanImageFile")]ProductEpisode cartoonepisode, int parentId)
         {
             if (ModelState.IsValid)
             {
@@ -196,7 +196,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditEpisode([Bind("Id,Title,Views,VideoE,VideoW,ImageE,ImageW,Status,ReleaseDate,ProductId,EastrenImageFile,WestreanImageFile")] ProductEpisode episode, int parentId)
+        public async Task<ActionResult> EditEpisode([Bind("Id,Title,Views,VideoE,VideoW,ImageE,ImageW,Status,ReleaseDate,ProductId,EastrenImageFile,WestreanImageFile")]ProductEpisode episode, int parentId)
         {
             if (ModelState.IsValid)
             {

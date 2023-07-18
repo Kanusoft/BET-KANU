@@ -20,6 +20,7 @@
                 <div class="container">
                     <div class="col-12">
             <form class="card" asp-action="CreateSoftware" enctype="multipart/form-data" method="post">
+                        @Html.AntiForgeryToken()
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="card-body">
                             <div class="row">
