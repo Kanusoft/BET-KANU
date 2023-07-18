@@ -159,23 +159,17 @@ namespace BET_KANU.Controllers
                 }
                 else
                 {
-                    var parentProduct = _unit.product.GetOne(parentId);
-                    ViewBag.parentId = parentProduct?.Title?.ToString();
-                    ViewBag.ProductId = parentId;
+                    ResetView(parentId);
                     return View(cartoonepisode);
                 }
             }
             else
             {
-                var parentProduct = _unit.product.GetOne(parentId);
-                ViewBag.parentId = parentProduct?.Title?.ToString();
-                ViewBag.ProductId = parentId;
+                ResetView(parentId);
                 return View(cartoonepisode);
             }
         }
-
-
-
+     
         [HttpGet]
         public ActionResult EditEpisode(int id, int parentId)
         {
@@ -237,17 +231,13 @@ namespace BET_KANU.Controllers
                 }
                 else
                 {
-                    var parentProduct = _unit.product.GetOne(parentId);
-                    ViewBag.parentname = parentProduct?.Title?.ToString();
-                    ViewBag.parentId = parentId;
+                    ResetView(parentId);
                     return View(episode);
                 }
             }
             else
             {
-                var parentProduct = _unit.product.GetOne(parentId);
-                ViewBag.parentname = parentProduct?.Title?.ToString();
-                ViewBag.parentId = parentId;
+                ResetView(parentId);
                 return View(episode);
             }
         }
@@ -305,6 +295,13 @@ namespace BET_KANU.Controllers
             string ImgName = Pathimg + filename + ex;
             await _blob.UploadBlobImageAsync(image);
             return ImgName;
+        }
+
+        public void ResetView(int parentId)
+        {
+            var parentProduct = _unit.product.GetOne(parentId);
+            ViewBag.parentId = parentProduct?.Title?.ToString();
+            ViewBag.ProductId = parentId;
         }
     }
 }

@@ -62,7 +62,7 @@ namespace BET_KANU.Controllers
                         // Handle the request without any parameters
                         var books = _unitOfWork.bKBundle.GetBooks();
 
-                        if (books.Count() == 0)
+                        if(books.Count() == 0)
                             return BadRequest("No Content");
 
                         return Ok(books);

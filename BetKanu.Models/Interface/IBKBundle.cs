@@ -10,8 +10,8 @@ namespace BetKanu.Models.Interface
     {
         Book GetBook(int id);
         IEnumerable<Book> GetBooks();
-        Bundle GetBundle(int id);
-        BKRBundle GetBundle(int BookId, int pageNo, int SecNo);
+        Bundle? GetBundle(int? id);
+        BKRBundle? GetBundle(int? BookId, int? pageNo, int? SecNo);
         IEnumerable<BKRBundle> GetBundles(int bookId, int chapterNo);
         IEnumerable<BKRBundle> GetBundles(int bookId);
     }

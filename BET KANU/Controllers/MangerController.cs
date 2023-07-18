@@ -303,12 +303,12 @@ namespace BET_KANU.Controllers
             ViewBag.ProductId = prod;
             if (id == 0)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
             var prodEp = _unitOfWork.product.GetOneEpisode(id);
             if (prodEp == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
             return View(prodEp);
         }
@@ -383,12 +383,12 @@ namespace BET_KANU.Controllers
         {
             if (id == 0)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
             var mangerVm = _unitOfWork.product.GetOne(id);
             if (mangerVm == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
 
             return View(mangerVm);
@@ -578,12 +578,12 @@ namespace BET_KANU.Controllers
         {
             if (id == 0)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
             var prod = _unitOfWork.product.GetOne(id);
             if (prod == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
             return View(prod);
         }
@@ -640,12 +640,12 @@ namespace BET_KANU.Controllers
         {
             if (id == 0)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
             var s = _unitOfWork.Shop.Getone(id);
             if (s == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
             return View(s);
         }

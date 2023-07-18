@@ -1,10 +1,12 @@
-﻿@model ProductVM
+﻿@using Microsoft.AspNetCore.Html;
+@model ProductVM
 @{
     ViewBag.Title = Model?.product?.Title;
 }
 
 @if (Model?.product?.Category.ToString() == "Songs")
 {
+
     <section class="hero height-350 hero-game" style="background-image: url(@Model.product.CoverImage);">
     </section>
     <section>
@@ -17,23 +19,22 @@
                                 <h2>@Model.product.Title</h2>
                                 <ul class="post-meta">
                                     <li><i class="fa fa-music"></i> @Model.product.Category.ToString()</li>
-                                    <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate</li>
+                                    <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate.ToString("MMM d, yyyy")</li>
                                     <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
                                     @if (Model?.product.TargetAudince != null)
                                     {
                                         <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.TargetAudince</span></li>
                                     }
-
                                 </ul>
                             </div>
                         </div>
                         <p>
-                            @Model?.product.ShortDescription
+                            @Model?.product.LongDescription
                         </p>
                         <div class="well col-md-5" style="text-align:center ; direction:rtl" id="western">
                             <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Western Lyrics</h3>
-                            <p class="Surayt font-size-22 font-size-22">
-                                @Html.Raw(@Model?.product.ScriptW)
+                            <p class="Surayt font-size-22">
+                                @Html.Raw(Model?.product.ScriptW)
                             </p>
                             <a class="btn btn-info" href="@Model?.product.Wpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
                         </div>
@@ -41,7 +42,7 @@
                         <div class="well col-md-5" style="text-align:center ; direction:rtl" id="eastern">
                             <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Eastern Lyrics</h3>
                             <p class="Surit font-size-22">
-                                @Html.Raw(@Model?.product.ScriptE)
+                                @Html.Raw(Model?.product.ScriptE)
                             </p>
 
                             <a class="btn btn-info" href="@Model?.product.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
@@ -97,7 +98,7 @@
                                     @Model?.product.Title - Western Syriac (Surayt)
                                 </h3>
                                 <ul>
-                                    <li><i class="fa fa-calendar-o"></i> @Model?.product.ReleaseDate</li>
+                                    <li><i class="fa fa-calendar-o"></i> @Model?.product.ReleaseDate.ToString("MMM d, yyyy")</li>
                                     <li><i class="fa fa-eye"></i> @Model?.product.ViewsW views</li>
                                 </ul>
                             </div>
@@ -149,7 +150,7 @@
                                     @Model?.product.Title - Eastern Syriac (Surit)
                                 </h3>
                                 <ul>
-                                    <li><i class="fa fa-calendar-o"></i>@Model?.product.ReleaseDate</li>
+                                    <li><i class="fa fa-calendar-o"></i>@Model?.product.ReleaseDate.ToString("MMM d, yyyy")</li>
                                     <li><i class="fa fa-eye"></i> @Model?.product.ViewsE views</li>
                                 </ul>
                             </div>
@@ -237,7 +238,7 @@
                                 <h2>@Model.product.Title</h2>
                                 <ul class="post-meta">
                                     <li><i class="fa fa-mobile-phone"></i> @Model.product.Category.ToString()</li>
-                                    <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate</li>
+                                    <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate.ToString("MMM d, yyyy")</li>
                                     <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
                                 </ul>
                             </div>
@@ -499,7 +500,7 @@
                                     <h2>@Model.product.Title</h2>
                                     <ul class="post-meta">
                                         <li><i class="fa fa-book"></i>  @Model.product.Category.ToString()</li>
-                                        <li><i class="fa fa-calendar-o"></i> @Model.product.ReleaseDate</li>
+                                        <li><i class="fa fa-calendar-o"></i> @Model.product.ReleaseDate.ToString("MMM d, yyyy")</li>
                                         <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
                                     </ul>
                                 </div>
