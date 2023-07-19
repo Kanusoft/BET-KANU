@@ -2,6 +2,8 @@
 using System.Web.Mvc;
 using System.IO;
 using System.Text;
+using System.Net;
+using System.Collections.Specialized;
 
 namespace BET_KANU.Controllers
 {
@@ -37,13 +39,34 @@ namespace BET_KANU.Controllers
             return new EmptyResult();
         }
 
-        // Implement the IPN request verification (you need to define this method)
+
         private bool VerifyIPNRequest(string ipnData)
         {
-            // Implement IPN verification logic here
-            // Verify the IPN message using PayPal API or other methods
-            // Return true if the IPN message is authentic, false otherwise
-            return true;
+            // Set the URL for PayPal's IPN verification endpoint
+            string verificationUrl = "https://www.paypal.com/cgi-bin/webscr";
+
+            // Set the request data to send back to PayPal for verification
+            NameValueCollection requestData = new NameValueCollection
+            {
+                { "cmd", "_notify-validate" },
+                { "ipnData", ipnData }
+            };
+
+            // Create a WebClient instance to send the verification request
+            using (WebClient client = new WebClient())
+            {
+                // Set the encoding
+                client.Encoding = Encoding.UTF8;
+
+                // Post the verification request to PayPal
+                byte[] responseBytes = client.UploadValues(verificationUrl, "POST", requestData);
+
+                // Convert the response to a string
+                string response = Encoding.UTF8.GetString(responseBytes);
+
+                // Check if the response is "VERIFIED" to confirm the IPN authenticity
+                return response.Equals("VERIFIED");
+            }
         }
     }
 }
