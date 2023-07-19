@@ -54,6 +54,12 @@ namespace BET_KANU.Controllers
             ViewBag.Message = "Your application description page.";
             return View();
         }
+
+        public ActionResult SpecialThanks()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
