@@ -13,7 +13,7 @@ namespace BET_KANU.Controllers
         }
 
       
-        public ActionResult Index1()
+        public ActionResult Index()
         {
             var p = new ProductVM();
             p.products = _unit.product.GetAll();
@@ -21,13 +21,15 @@ namespace BET_KANU.Controllers
         }
 
         [HttpGet]
-        public ActionResult details(int id)
+        public ActionResult Details(int id)
         {
             var vm = new ProductVM();
             vm.product = _unit.product.GetOne(id);
             vm.episode = _unit.product.GetallByParentId(id);
             return View(vm);
         }
+
+      
 
     }
 }
