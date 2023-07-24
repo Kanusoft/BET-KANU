@@ -23,7 +23,7 @@
     <section>
         <div class="col-md-12">
             <form class="card" asp-action="CreateEpisode" enctype="multipart/form-data" method="post">
-                <input type="hidden" name="parentId" value="@ViewBag.ProductId" />
+                <input type="hidden" asp-for="ProductId" name="ProductId" value="@ViewBag.ProductId" />
                 <div class="container">
                     <div class="col-12">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -104,7 +104,7 @@
                                                 <tr>
                                                     <td>
                                                         <label asp-for="ProductId" class="control-label"></label>
-                                                        <input type="hidden" asp-for="ProductId" name="ProductId" value="@ViewBag.ProductId" />
+                                                        <input type="hidden" name="parentId" value="@ViewBag.ProductId" />
                                                     </td>
                                                     <td>
                                                         @*<select asp-for="ProductId" class="form-control" asp-items="@ViewBag.ProductId"></select>*@

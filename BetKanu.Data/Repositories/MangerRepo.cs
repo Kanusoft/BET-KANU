@@ -186,7 +186,17 @@ namespace BetKanu.Data.Repositories
             {
                 try
                 {
-                    _bKdb.ProductEpisodes.Update(episode);
+                    var exsitsepisode = _bKdb.ProductEpisodes.Find(episode.Id);
+                    if (exsitsepisode != null) 
+                    {
+                        _bKdb.Entry(exsitsepisode).State = EntityState.Detached;
+                        _bKdb.ProductEpisodes.Update(episode);
+                    }
+                    else
+                    {
+                        _bKdb.ProductEpisodes.Update(episode);
+                    }
+                    
                     _bKdb.SaveChanges();
                     return true;
                 }

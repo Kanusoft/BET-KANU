@@ -86,6 +86,8 @@ namespace BetKanu.Models
         public string? Author { get; set; }
         public string? DesignedBy { get; set; }
         public string? SponsoredBY { get; set; }
+
+        public string? Source { get; set; }
         public string? Features1 { get; set; }
         public string? Features2 { get; set; }
         public string? Features3 { get; set; }
