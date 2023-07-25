@@ -95,7 +95,6 @@ namespace BetKanu.Data.Repositories
                         _bKdb.Products.Update(product);
                         _bKdb.SaveChanges();
                         return true;
-
                     }
                 }
                 catch (Exception)
