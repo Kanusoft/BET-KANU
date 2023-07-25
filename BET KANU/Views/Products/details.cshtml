@@ -1,14 +1,14 @@
-﻿@model ProductVM
+﻿@using Microsoft.AspNetCore.Html;
+@model ProductVM
 @{
     ViewBag.Title = Model?.product?.Title;
 }
 
 @if (Model?.product?.Category.ToString() == "Songs")
 {
-    <div class="carousel slide post-thumbnail">
-        <img src="@Model.product.CoverImage" alt="Cover Image" style="width: 100%; height: fit-content;">
-    </div>
 
+    <section class="hero height-350 hero-game" style="background-image: url(@Model.product.CoverImage);">
+    </section>
     <section>
         <div class="container">
             <div class="row sidebar">
@@ -19,147 +19,150 @@
                                 <h2>@Model.product.Title</h2>
                                 <ul class="post-meta">
                                     <li><i class="fa fa-music"></i> @Model.product.Category.ToString()</li>
-                                    <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate</li>
+                                    <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate.ToString("MMM d, yyyy")</li>
                                     <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
                                     @if (Model?.product.TargetAudince != null)
                                     {
                                         <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.TargetAudince</span></li>
                                     }
-
                                 </ul>
                             </div>
                         </div>
                         <p>
-                            @Model?.product.ShortDescription
+                            @Model?.product.LongDescription
                         </p>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="well" style="text-align:center; direction:rtl" id="western">
-                                    <h3 style="text-align:center; direction:ltr" class="padding-bottom-10">Western Lyrics</h3>
-                                    <p class="Surayt font-size-22">
-                                        @Html.Raw(@Model?.product.ScriptW)
-                                    </p>
-                                    <a class="btn btn-info" href="@Model?.product.Wpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="well" style="text-align:center; direction:rtl" id="eastern">
-                                    <h3 style="text-align:center; direction:ltr" class="padding-bottom-10">Eastern Lyrics</h3>
-                                    <p class="Surit font-size-22">
-                                        @Html.Raw(@Model?.product.ScriptE)
-                                    </p>
-                                    <a class="btn btn-info" href="@Model?.product.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
-                                </div>
+                             <div class="row">
+                            <div class="well col-md-4 col-sm-12" style="text-align:center ; direction:rtl" id="western">
+                            <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Western Lyrics</h3>
+                            <p class="Surayt font-size-22">
+                                @Html.Raw(Model?.product.ScriptW)
+                            </p>
+                            <a class="btn btn-info" href="@Model?.product.Wpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+                        </div>
+                            <div class="col-lg-1"></div>
+                            <div class="well col-md-4 col-sm-12" style="text-align:center ; direction:rtl" id="eastern">
+                            <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Eastern Lyrics</h3>
+                            <p class="Surit font-size-22">
+                                @Html.Raw(Model?.product.ScriptE)
+                            </p>
+
+                            <a class="btn btn-info" href="@Model?.product.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 rightside">
+                <div class="col-md-4 rightside">
                     <div class="widget widget-card">
-                        <div class="card">
-                            <div class="card-img">
-                                <div class="embed-responsive embed-responsive-16by9">
-                                    @{
-                                        string youtubeUrl = Model?.product.VideoW;
-                                        string embedUrl = string.Empty;
+                        @if (Model?.product.VideoW != null)
+                        {
+                            <div class="card">
+                                <div class="card-img">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        @{
+                                            string youtubeUrl = Model?.product.VideoW ?? string.Empty;
+                                            string embedWestUrl = string.Empty;
 
-                                        if (!string.IsNullOrEmpty(youtubeUrl))
-                                        {
-                                            if (youtubeUrl.Contains("youtu.be/"))
+                                            if (!string.IsNullOrEmpty(youtubeUrl))
                                             {
-                                                // Short URL
-                                                string videoId = youtubeUrl.Substring(youtubeUrl.LastIndexOf("/") + 1);
-                                                embedUrl = $"https://www.youtube.com/embed/{videoId}";
-                                            }
-                                            else if (youtubeUrl.Contains("youtube.com/embed/"))
-                                            {
-                                                // Long URL
-                                                embedUrl = youtubeUrl;
-                                            }
-                                            else if (youtubeUrl.Contains("youtube.com/watch?v="))
-                                            {
-                                                // Long URL with query parameters
-                                                int embedIndex = youtubeUrl.IndexOf("youtube.com/watch?v=");
-                                                string videoId = youtubeUrl.Substring(embedIndex + 20);
-                                                int queryIndex = videoId.IndexOf("?");
-                                                if (queryIndex != -1)
+                                                if (youtubeUrl.Contains("youtu.be/"))
                                                 {
-                                                    videoId = videoId.Substring(0, queryIndex);
+                                                    // Short URL
+                                                    string videoId = youtubeUrl.Substring(youtubeUrl.LastIndexOf("/") + 1);
+                                                    embedWestUrl = $"https://www.youtube.com/embed/{videoId}";
                                                 }
-                                                embedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                else if (youtubeUrl.Contains("youtube.com/embed/"))
+                                                {
+                                                    // Long URL
+                                                    embedWestUrl = youtubeUrl;
+                                                }
+                                                else if (youtubeUrl.Contains("youtube.com/watch?v="))
+                                                {
+                                                    // Long URL with query parameters
+                                                    int embedIndex = youtubeUrl.IndexOf("youtube.com/watch?v=");
+                                                    string videoId = youtubeUrl.Substring(embedIndex + 20);
+                                                    int queryIndex = videoId.IndexOf("?");
+                                                    if (queryIndex != -1)
+                                                    {
+                                                        videoId = videoId.Substring(0, queryIndex);
+                                                    }
+                                                    embedWestUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                }
                                             }
                                         }
-                                    }
-                                    @if (!string.IsNullOrEmpty(embedUrl))
-                                    {
-                                        <iframe class="embed-responsive-item" src="@embedUrl" allowfullscreen></iframe>
-                                    }
-                                    @* <iframe class="embed-responsive-item" src="@Model?.product.VideoW" allowfullscreen></iframe>*@
-                                </div>
-                                <div class="time">BET KANU</div>
-                            </div>
-                            <div class="caption">
-                                <h3 class="card-title">
-                                    @Model?.product.Title - Western Syriac (Surayt)
-                                </h3>
-                                <ul>
-                                    <li><i class="fa fa-calendar-o"></i> @Model?.product.ReleaseDate</li>
-                                    <li><i class="fa fa-eye"></i> @Model?.product.ViewsW views</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-img">
-                                <div class="embed-responsive embed-responsive-16by9">
-                                    @{
-                                        string EastyoutubeUrl = Model?.product?.VideoE;
-                                        string EastembedUrl = string.Empty;
-
-                                        if (!string.IsNullOrEmpty(EastyoutubeUrl))
+                                        @if (!string.IsNullOrEmpty(embedWestUrl))
                                         {
-                                            if (EastyoutubeUrl.Contains("youtu.be/"))
+                                            <iframe class="embed-responsive-item" src="@embedWestUrl" allowfullscreen></iframe>
+                                        }
+                                        @* <iframe class="embed-responsive-item" src="@Model?.product.VideoW" allowfullscreen></iframe>*@
+                                    </div>
+                                    <div class="time">BET KANU</div>
+                                </div>
+                                <div class="caption">
+                                    <h3 class="card-title">
+                                        @Model?.product.Title - Western Syriac (Surayt)
+                                    </h3>
+                                    <ul>
+                                        <li><i class="fa fa-calendar-o"></i> @Model?.product.ReleaseDate.ToString("MMM d, yyyy")</li>
+                                        <li><i class="fa fa-eye"></i> @Model?.product.ViewsW views</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                        @if (Model?.product.VideoE != null)
+                        {
+                            <div class="card">
+                                <div class="card-img">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        @{
+                                            string EastyoutubeUrl = Model?.product?.VideoE ?? string.Empty;
+                                            string EastembedUrl = string.Empty;
+
+                                            if (!string.IsNullOrEmpty(EastyoutubeUrl))
                                             {
-                                                // Short URL
-                                                string videoId = EastyoutubeUrl.Substring(EastyoutubeUrl.LastIndexOf("/") + 1);
-                                                embedUrl = $"https://www.youtube.com/embed/{videoId}";
-                                            }
-                                            else if (EastyoutubeUrl.Contains("youtube.com/embed/"))
-                                            {
-                                                // Long URL
-                                                embedUrl = EastyoutubeUrl;
-                                            }
-                                            else if (EastyoutubeUrl.Contains("youtube.com/watch?v="))
-                                            {
-                                                // Long URL with query parameters
-                                                int embedIndex = EastyoutubeUrl.IndexOf("youtube.com/watch?v=");
-                                                string videoId = EastyoutubeUrl.Substring(embedIndex + 20);
-                                                int queryIndex = videoId.IndexOf("?");
-                                                if (queryIndex != -1)
+                                                if (EastyoutubeUrl.Contains("youtu.be/"))
                                                 {
-                                                    videoId = videoId.Substring(0, queryIndex);
+                                                    // Short URL
+                                                    string videoId = EastyoutubeUrl.Substring(EastyoutubeUrl.LastIndexOf("/") + 1);
+                                                    EastembedUrl = $"https://www.youtube.com/embed/{videoId}";
                                                 }
-                                                embedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                else if (EastyoutubeUrl.Contains("youtube.com/embed/"))
+                                                {
+                                                    // Long URL
+                                                    EastembedUrl = EastyoutubeUrl;
+                                                }
+                                                else if (EastyoutubeUrl.Contains("youtube.com/watch?v="))
+                                                {
+                                                    // Long URL with query parameters
+                                                    int embedIndex = EastyoutubeUrl.IndexOf("youtube.com/watch?v=");
+                                                    string videoId = EastyoutubeUrl.Substring(embedIndex + 20);
+                                                    int queryIndex = videoId.IndexOf("?");
+                                                    if (queryIndex != -1)
+                                                    {
+                                                        videoId = videoId.Substring(0, queryIndex);
+                                                    }
+                                                    EastembedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                }
                                             }
                                         }
-                                    }
-                                    @if (!string.IsNullOrEmpty(embedUrl))
-                                    {
-                                        <iframe class="embed-responsive-item" src="@embedUrl" allowfullscreen></iframe>
-                                    }
-                                  @*  <iframe class="embed-responsive-item" src="@Model?.product.VideoE" allowfullscreen></iframe>*@
+                                        @if (!string.IsNullOrEmpty(EastembedUrl))
+                                        {
+                                            <iframe class="embed-responsive-item" src="@EastembedUrl" allowfullscreen></iframe>
+                                        }
+                                        @*  <iframe class="embed-responsive-item" src="@Model?.product.VideoE" allowfullscreen></iframe>*@
+                                    </div>
+                                    <div class="time">BET KANU</div>
                                 </div>
-                                <div class="time">BET KANU</div>
+                                <div class="caption">
+                                    <h3 class="card-title">
+                                        @Model?.product.Title - Eastern Syriac (Surit)
+                                    </h3>
+                                    <ul>
+                                        <li><i class="fa fa-calendar-o"></i>@Model?.product.ReleaseDate.ToString("MMM d, yyyy")</li>
+                                        <li><i class="fa fa-eye"></i> @Model?.product.ViewsE views</li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="caption">
-                                <h3 class="card-title">
-                                    @Model?.product.Title - Eastern Syriac (Surit)
-                                </h3>
-                                <ul>
-                                    <li><i class="fa fa-calendar-o"></i>@Model?.product.ReleaseDate</li>
-                                    <li><i class="fa fa-eye"></i> @Model?.product.ViewsE views</li>
-                                </ul>
-                            </div>
-                        </div>
+                        }
                         <a href="https://www.youtube.com/c/betkanu" class="btn btn-danger btn-block">BET KANU YouTube Channel</a>
                     </div>
                 </div>
@@ -177,7 +180,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-4 col-sm-12">
                             <div class="well">
                                 <p>
                                     <strong>
@@ -189,7 +192,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-4 col-sm-12">
                             <div class="well">
                                 <p>
                                     <strong>
@@ -243,7 +246,7 @@
                                 <h2>@Model.product.Title</h2>
                                 <ul class="post-meta">
                                     <li><i class="fa fa-mobile-phone"></i> @Model.product.Category.ToString()</li>
-                                    <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate</li>
+                                    <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate.ToString("MMM d, yyyy")</li>
                                     <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
                                 </ul>
                             </div>
@@ -505,7 +508,7 @@
                                     <h2>@Model.product.Title</h2>
                                     <ul class="post-meta">
                                         <li><i class="fa fa-book"></i>  @Model.product.Category.ToString()</li>
-                                        <li><i class="fa fa-calendar-o"></i> @Model.product.ReleaseDate</li>
+                                        <li><i class="fa fa-calendar-o"></i> @Model.product.ReleaseDate.ToString("MMM d, yyyy")</li>
                                         <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
                                     </ul>
                                 </div>

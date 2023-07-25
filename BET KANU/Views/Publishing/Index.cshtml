@@ -22,14 +22,14 @@
                     <div class="post post-md no-border col-md-6">
                         <div class="col-12">
                             <div class="post-thumbnail">
-                                <a href="~/products/UrhoySchooCurriculum"><img src="@b.SmallImage" alt=""></a>
+                                <a asp-controller="Products" asp-action="details" asp-route-id="@b.Id" ><img src="@b.SmallImage" alt=""></a>
                                 <div class="post-caption" style="background-color:darkgray">@b.Category</div>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="post-header">
                                 <div class="post-title">
-                                    <h4><a href="~/products/UrhoySchooCurriculum">@b.Title</a></h4>
+                                    <h4><a asp-controller ="Products" asp-action="details" asp-route-id="@b.Id">@b.Title</a></h4>
                                     <ul class="post-meta">
                                         <li><i class="fa fa-book"></i> @b.Category</li>
                                         <li><i class="fa fa-info"></i> @b.SubCategory </li>
@@ -44,9 +44,6 @@
 
                     </div>
                 }
-
-
-
             </div>
         </div>
     </section>

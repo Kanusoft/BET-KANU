@@ -78,9 +78,9 @@
     --bs-body-font-size: 1rem;
     --bs-body-font-weight: 400;
     --bs-body-line-height: 1.5;
-    --bs-body-color: #212529;
+    --bs-body-color: #fff;
     --bs-body-color-rgb: 33, 37, 41;
-    --bs-body-bg: #fff;
+    --bs-body-bg: rgba(56, 64, 86,0.9);
     --bs-body-bg-rgb: 255, 255, 255;
     --bs-emphasis-color: #000;
     --bs-emphasis-color-rgb: 0, 0, 0;
@@ -126,10 +126,10 @@
 
 [data-bs-theme=dark] {
     color-scheme: dark;
-    --bs-body-color: #adb5bd;
-    --bs-body-color-rgb: 173, 181, 189;
-    --bs-body-bg: #212529;
-    --bs-body-bg-rgb: 33, 37, 41;
+    --bs-body-color: #fff;
+    --bs-body-color-rgb: 255, 255, 255;
+    --bs-body-bg: #fff;
+    --bs-body-bg-rgb: 255, 255, 255;
     --bs-emphasis-color: #fff;
     --bs-emphasis-color-rgb: 255, 255, 255;
     --bs-secondary-color: rgba(173, 181, 189, 0.75);
@@ -791,6 +791,9 @@ progress {
 @media (min-width: 1200px) {
     .container-xl, .container-lg, .container-md, .container-sm, .container {
         max-width: 1140px;
+    }
+    header .logo {
+        padding: 0 15px 0 150px !important;
     }
 }
 
@@ -2106,7 +2109,7 @@ progress {
     }
 }
 
-.table {
+/*.table {
     --bs-table-color-type: initial;
     --bs-table-bg-type: initial;
     --bs-table-color-state: initial;
@@ -2125,7 +2128,7 @@ progress {
     margin-bottom: 1rem;
     vertical-align: top;
     border-color: var(--bs-table-border-color);
-}
+}*/
 
     .table > :not(caption) > * > * {
         padding: 0.5rem 0.5rem;
@@ -2797,7 +2800,10 @@ textarea.form-control-lg {
     display: inline-block;
     margin-right: 1rem;
 }
-
+.btn-block {
+    display: block;
+    width: 100%;
+}
 .btn-check {
     position: absolute;
     clip: rect(0, 0, 0, 0);
@@ -3845,7 +3851,7 @@ textarea.form-control-lg {
 }
 
     .dropdown-menu[data-bs-popper] {
-        top: 100%;
+        top: 95%;
         left: 0;
         margin-top: var(--bs-dropdown-spacer);
     }
@@ -4400,7 +4406,7 @@ textarea.form-control-lg {
 .tab-content > .active {
     display: block;
 }
-
+/*
 .navbar {
     --bs-navbar-padding-x: none;
     --bs-navbar-padding-y: none;
@@ -4428,7 +4434,7 @@ textarea.form-control-lg {
     align-items: center;
     justify-content: space-between;
     padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x);
-}
+}*/
 
     .navbar > .container,
     .navbar > .container-fluid,
@@ -4896,7 +4902,7 @@ textarea.form-control-lg {
     --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-.card {
+/*.card {
     --bs-card-spacer-y: 1rem;
     --bs-card-spacer-x: 1rem;
     --bs-card-title-spacer-y: 0.5rem;
@@ -4926,7 +4932,7 @@ textarea.form-control-lg {
     background-color: var(--bs-card-bg);
     background-clip: border-box;
     border-radius: var(--bs-card-border-radius)
-}
+}*/
     .card > hr {
         margin-right: 0;
         margin-left: 0;
@@ -6182,7 +6188,7 @@ textarea.form-control-lg {
     outline: 0;
 }
 
-.modal-backdrop {
+/*.modal-backdrop {
     --bs-backdrop-zindex: 1050;
     --bs-backdrop-bg: #000;
     --bs-backdrop-opacity: 0.5;
@@ -6201,7 +6207,7 @@ textarea.form-control-lg {
 
     .modal-backdrop.show {
         opacity: var(--bs-backdrop-opacity);
-    }
+    }*/
 
 .modal-header {
     display: flex;
@@ -6874,10 +6880,12 @@ textarea.form-control-lg {
         text-indent: -999px;
         cursor: pointer;
         background-color: #fff;
+        border-radius: 6px;
         background-clip: padding-box;
         border: 0;
         border-top: 10px solid transparent;
         border-bottom: 10px solid transparent;
+        marker:none!important;
         opacity: 0.5;
         transition: opacity 0.6s ease;
     }

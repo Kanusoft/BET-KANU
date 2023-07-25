@@ -20,20 +20,21 @@
             <div class="container">
                 <div class="col-12">
                     <form class="card" asp-action="AddSale" method="post" enctype="multipart/form-data">
+                        @Html.AntiForgeryToken()
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-3 col-sm-12">
                                     <div class="form-group">
                                         <label asp-for="Name" class="control-label"></label>
-                                        <input asp-for="Name" class="form-control" />
+                                        <input asp-for="Name" name="Name" class="form-control" />
                                         <span asp-validation-for="Name" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-sm-12">
                                     <div class="form-group">
                                         <label asp-for="ImageUrl" class="control-label"></label>
-                                        <input asp-for="FileUrl" class="dropify form-control" />
+                                        <input asp-for="FileUrl" name="FileUrl" class="dropify form-control" />
                                         <span asp-validation-for="ImageUrl" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -57,7 +58,7 @@
                                                         <label asp-for="Price" class="control-label"></label>
                                                     </td>
                                                     <td>
-                                                        <input asp-for="Price" class="form-control" />
+                                                        <input asp-for="Price" name="Price" class="form-control" />
                                                         <span asp-validation-for="Price" class="text-danger"></span>
                                                     </td>
                                                 </tr>
@@ -66,7 +67,7 @@
                                                         <label asp-for="ReleaseDate" class="control-label"></label>
                                                     </td>
                                                     <td>
-                                                        <input asp-for="ReleaseDate" class="form-control" />
+                                                        <input asp-for="ReleaseDate" name="ReleaseDate" class="form-control" />
                                                         <span asp-validation-for="ReleaseDate" class="text-danger"></span>
                                                     </td>
                                                 </tr>

@@ -118,7 +118,6 @@ form input:not(#terms,#remember) {
 	margin: 0 0 20px;
 	padding: 10px 15px;
 	border-radius: 7px;
-	border: 1px solid var(--light-color);
 }
 
 form input::placeholder {

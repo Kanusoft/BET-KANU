@@ -97,14 +97,6 @@
 	--font-family-monospace: Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
-/**, *::before, *::after {
-	box-sizing: border-box;
-}*/
-
-
-
-
-
 
 .nav-sidebar li ul li:last-child {
 	border-bottom: 0px;
@@ -285,8 +277,8 @@ input,  select, optgroup, textarea {
 	font-family: inherit;
 	font-size: inherit;
 	line-height: inherit;
-	color: gray;
-	width: 30em;
+	color: gray;/*
+	width: 30em;*/
 }
 
 button, input {
@@ -2533,7 +2525,7 @@ select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.for
 	font-size: 0.9375rem;
 	line-height: 1.84615385;
 	border-radius: 3px;
-	box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+/*	box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);*/
 	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
@@ -2631,6 +2623,42 @@ a.btn.disabled, fieldset:disabled a.btn {
 		.btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus, .show > .btn-secondary.dropdown-toggle:focus {
 			box-shadow: 0 0 0 2px rgba(134, 142, 150, 0.1);
 		}
+
+
+.btn.btn-Create {
+	background-color: #424b65;
+	color: #fff !important;
+	border-color: #7984a0;
+}
+
+.btn-Create:hover {
+	color: #fff;
+	background-color: #7984a0;
+	border-color: #00a0cc;
+}
+
+.btn-Create:focus, .btn-Create.focus {
+	box-shadow: 0 0 0 2px rgba(134, 142, 150, 0.1);
+}
+
+.btn-Create.disabled, .btn-secondary:disabled {
+	color: #fff;
+	background-color: #7984a0;
+	border-color: #7984a0;
+}
+
+.btn-Create:not(:disabled):not(.disabled):active, .btn-Create:not(:disabled):not(.disabled).active, .show > .btn-Create.dropdown-toggle {
+	color: #fff;
+	background-color: #7984a0;
+	border-color: #666e76;
+}
+
+	.btn-Create:not(:disabled):not(.disabled):active:focus, .btn-Create:not(:disabled):not(.disabled).active:focus, .show > .btn-Create.dropdown-toggle:focus {
+		box-shadow: 0 0 0 2px rgba(134, 142, 150, 0.1);
+	}
+
+
+
 
 .btn-success {
 	color: #fff;
@@ -3147,7 +3175,6 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 
 .collapse:not(.show) {
 	display: none;
-	background: #424b65;
 }
 
 .collapsing {
@@ -4145,8 +4172,6 @@ div.dataTables_wrapper div.dataTables_filter input {
 	align-items: center;
 	-ms-flex-pack: justify;
 	justify-content: space-between;
-	padding: 0.5rem 1rem;
-
 }
 
 	.navbar > .container, .navbar > .container-fluid {

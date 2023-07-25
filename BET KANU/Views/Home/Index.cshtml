@@ -9,17 +9,18 @@
     <link href="/plugins/owl-carousel/owl.carousel.css" rel="stylesheet">
 </head>
 <div id="wrapper">
-    <div id="full-carousel" class="ken-burns carousel slide full-carousel carousel-fade" data-ride="carousel">
+    <!-- Bootstrap 5 -->
+    <div id="full-carousel" class=" carousel slide full-carousel carousel-fade" data-bs-ride="carousel">
         <ol class="carousel-indicators">
-            <li data-target="#full-carousel" data-slide-to="0" class="active"></li>
-            <li data-target="#full-carousel" data-slide-to="1"></li>
-            <li data-target="#full-carousel" data-slide-to="2"></li>
+            <li data-bs-target="#full-carousel" data-bs-slide-to="0" class="active"></li>
+            <li data-bs-target="#full-carousel" data-bs-slide-to="1"></li>
+            <li data-bs-target="#full-carousel" data-bs-slide-to="2"></li>
         </ol>
         <div class="carousel-inner" id="test1">
-            <div class="item active inactiveUntilOnLoad center-block" id="test">
-                <img src="/img/home/slide1.jpg" alt="">
+            <div class="carousel-item active" id="test">
+                <img class="ken-burns" src="/img/home/slide1.jpg" alt="">
                 <div class="container">
-                    <div class="carousel-caption" style="text-align:center ; position:fixed ; padding-bottom:175px">
+                    <div class="carousel-caption" style="text-align:center ; position:sticky ; padding-bottom:175px">
                         <h1 data-animation="animated animate1 bounceInDown">Syriac for the digital age</h1>
                         <p data-animation="animated animate7 fadeIn">Let's make our beautiful Syriac language ready for the digital age.</p>
                         <a href="~/about/betkanu" data-toggle="modal" class="btn btn-primary btn-lg btn-rounded" data-animation="animated animate10 fadeIn">About BET KANU</a>
@@ -27,42 +28,34 @@
                 </div>
             </div>
 
-            <div class="item center-block" id="test2">
-                <img src="/img/home/slide2.jpg" alt="">
+            <div class="carousel-item" id="test2">
+                <img class="ken-burns" src="/img/home/slide2.jpg" alt="">
                 <div class="container">
-                    <div class="carousel-caption" style="text-align:center ; position:fixed ; padding-bottom:175px">
+                    <div class="carousel-caption" style="text-align:center ; position:sticky ; padding-bottom:175px">
                         <h1 data-animation="animated animate1 fadeInDown">SOFTWARE</h1>
                         <p data-animation="animated animate7 fadeIn">
                             This track focuses on creating various digital tools to make Syriac linguistic resources easily accessible online for all ages.
-
                         </p>
                         <a href="/software" data-toggle="modal" class="btn btn-warning btn-lg btn-rounded" data-animation="animated animate10 fadeIn">See More</a>
                     </div>
                 </div>
             </div>
 
-            <div class="item center-block" id="test3">
-                <img src="/img/home/slide3.jpg" alt="">
+            <div class="carousel-item" id="test3">
+                <img class="ken-burns" src="/img/home/slide3.jpg" alt="">
                 <div class="container">
-                    <div class="carousel-caption" style="text-align:center ; position:fixed ; padding-bottom:175px">
+                    <div class="carousel-caption" style="text-align:center ; position:sticky ; padding-bottom:175px">
                         <h1 data-animation="animated animate1 fadeIn">Studio</h1>
                         <p data-animation="animated animate7 fadeIn">
                             This track focuses on creating songs, tales, and cartoons to preserve our language and revive our culture.
-
                         </p>
                         <a href="/studio" data-toggle="modal" class="btn btn-success btn-lg btn-rounded" data-animation="animated animate10 fadeIn">See More</a>
                     </div>
                 </div>
             </div>
-
-            <a class="left carousel-control" href="#full-carousel" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            </a>
-            <a class="right carousel-control" href="#full-carousel" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            </a>
         </div>
     </div>
+
     &nbsp;
     <section class=" ">
         @if (Model.Song != null)
@@ -71,11 +64,11 @@
             {
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8 col-lg-offset-2">
+                       
                             <div class="title outline" style="padding-bottom:10px; padding-top:1px">
                                 <h4><i class="fa fa-check-circle"></i>Recent Products</h4>
                             </div>
-                        </div>
+                    
                     </div>
                     <div class="card-group">
                         <div class="row">
@@ -83,7 +76,7 @@
                                 <div class="carousel slide post-thumbnail hidden-sm hidden-xs" data-ride="carousel">
                                     <a asp-controller="Products" asp-action="details" asp-route-id="@song.Id">  <img src="@song.SmallImage" /></a>
                                 </div>
-                                <div class="carousel slide post-thumbnail hidden-lg hidden-md" data-ride="carousel">
+                                <div class="carousel slide post-thumbnail d-block d-sm-block d-md-none" data-ride="carousel">
                                     <a asp-controller="Products" asp-action="details" asp-route-id="@song.Id">   <img src="@song.CoverImage" /></a>
                                 </div>
                             </div>
@@ -102,22 +95,22 @@
 
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8 col-lg-offset-2">
+                   
                             <div class="title outline" style="padding-bottom:10px; padding-top:1px">
                                 <h4><i class="fa fa-check-circle"></i>@book.Title</h4>
                             </div>
-                        </div>
+                   
                     </div>
                     <div class="card-group">
                         <div class="row">
 
                             <div class="container">
 
-                                <div class="carousel slide post-thumbnail hidden-sm hidden-xs" data-ride="carousel">
+                                <div class="carousel slide post-thumbnail d-none d-md-block d-lg-block d-xl-block d-xxl-block" data-ride="carousel">
 
                                     <a asp-controller="Products" asp-action="details" asp-route-id="@book.Id">  <img src="@book.SmallImage" /></a>
                                 </div>
-                                <div class="carousel slide post-thumbnail hidden-lg hidden-md" data-ride="carousel">
+                                <div class="carousel slide post-thumbnail d-block d-sm-block d-md-none" data-ride="carousel">
                                     <a asp-controller="Products" asp-action="details" asp-route-id="@book.Id">   <img src="@book.CoverImage" /></a>
                                 </div>
                             </div>
@@ -142,11 +135,11 @@
                 <div class="row">
                     <div class="container">
 
-                        <div class="carousel slide post-thumbnail hidden-sm hidden-xs" data-ride="carousel">
+                        <div class="carousel slide post-thumbnail d-none d-md-block d-lg-block d-xl-block d-xxl-block" data-ride="carousel">
 
                             <a href="/shop">    <img src="/img/shop/shop350.jpg" /></a>
                         </div>
-                        <div class="carousel slide post-thumbnail hidden-lg hidden-md" data-ride="carousel">
+                        <div class="carousel slide post-thumbnail d-block d-sm-block d-md-none" data-ride="carousel">
                             <a href="/shop">  <img src="/img/shop/shop700.jpg" /></a>
                         </div>
                     </div>
@@ -171,11 +164,11 @@
                         <div class="row">
                             <div class="container">
 
-                                <div class="carousel slide post-thumbnail hidden-sm hidden-xs" data-ride="carousel" style="margin-bottom:10px">
+                                <div class="carousel slide post-thumbnail d-none d-md-block d-lg-block d-xl-block d-xxl-block" data-ride="carousel" style="margin-bottom:10px">
 
                                     <a asp-controller="Products" asp-action="details" asp-route-id="@soft.Id">  <img src="@soft.SmallImage" /></a>
                                 </div>
-                                <div class="carousel slide post-thumbnail hidden-lg hidden-md" data-ride="carousel">
+                                <div class="carousel slide post-thumbnail d-block d-sm-block d-md-none" data-ride="carousel">
                                     <a asp-controller="Products" asp-action="details" asp-route-id="@soft.Id">   <img src="@soft.CoverImage" /></a>
                                 </div>
                             </div>
@@ -194,7 +187,7 @@
 
     <div class="container">
         <div class="row padding-top-10">
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 margin-bottom-sm-30">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xl-4 margin-bottom-sm-30 margin-bottom-sm-30">
                 <div class="widget widget-game" style="background-image: url(/img/home/home3.jpg);">
                     <div class="overlay">
                         <div class="bold text-uppercase ">“If a population of only 1,000 people respects their language and transmits it 100%, that language may not be at risk of becoming endangered.”</div>
@@ -218,7 +211,7 @@
 
             </div>
 
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 margin-bottom-sm-30">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xl-4 margin-bottom-sm-30 margin-bottom-sm-30">
                 <div class="widget widget-game" style="background-image: url(/img/home/2.jpg); ">
                     <div class="overlay">
                         <div class="title">SYRIAC FOR THE DIGITAL AGE!</div>
@@ -238,7 +231,7 @@
 
             </div>
 
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 margin-bottom-sm-30">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xl-4 margin-bottom-sm-30 margin-bottom-sm-30">
                 <div class="widget widget-games">
                     <ul style="padding-bottom:10px">
                         <li style="background-image: url(/img/products/banners/betkanureader_1920_700.jpg); ">

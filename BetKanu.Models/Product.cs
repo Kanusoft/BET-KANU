@@ -15,10 +15,10 @@ namespace BetKanu.Models
         public string? Title { get; set; }
 
       
-        [DisplayName("Small Image")]
+        [DisplayName("Small Image 700px")]
         public string? SmallImage { get; set; }
 
-        [DisplayName("Cover Image")]
+        [DisplayName("Cover Image 350px")]
         public string? CoverImage { get; set; }
 
         [Required]

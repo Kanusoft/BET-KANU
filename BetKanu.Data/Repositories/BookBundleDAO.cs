@@ -24,12 +24,12 @@ namespace BetKanu.Data.Repositories
             return books.ToList();
         }
 
-        public Bundle GetBundle(int id)
+        public Bundle? GetBundle(int? id)
         {
             return _db.Bundles.FirstOrDefault(b => b.Id == id);
         }
 
-        public BKRBundle GetBundle(int BookId, int pageNo, int SecNo)
+        public BKRBundle? GetBundle(int? BookId, int? pageNo, int? SecNo)
         {
             var b = from bundle in _db.Bundles
                     join book in _db.Books on bundle.BookId equals book.Id

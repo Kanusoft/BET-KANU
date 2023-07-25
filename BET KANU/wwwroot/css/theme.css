@@ -1613,7 +1613,7 @@ label {
 .table-bordered > tfoot > tr > th,
 .table-bordered > thead > tr > td,
 .table-bordered > thead > tr > th {
-	border-color: #3a4258;
+	border-color: #a8a8a9;
 }
 
 
@@ -2571,14 +2571,19 @@ header {
 		float: left;
 		height: 60px;
 		line-height: 60px;
-		padding: 0 15px 0 0 !important;
+		padding: 0 15px 0 0;
 		background: transparent !important;
 	}
 
 	header .container {
 		position: relative;
 	}
-
+	header .container-fluid {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+	}
 	header ul {
 		list-style-type: none;
 		margin: 0;
@@ -2588,20 +2593,14 @@ header {
 	header a {
 		line-height: 60px;
 		padding: 0 12px;
-		color: #B1B1B1;
+		color: #fff;
 		font-size: 15px;
 		font-weight: 500;
 		display: inline-block;
+		text-decoration: none;
 	}
 
-		header a.active,
-		header a:hover,
-		header a:focus,
-		header a:active {
-			color: #FFF;
-			font-size: 15px;
-			padding: 0 12px;
-		}
+	
 
 	header ul li a i.fa-angle-down {
 		margin-left: 5px;
@@ -2827,7 +2826,6 @@ nav {
 				font-size: 15px;
 				font-weight: 500;
 				position: relative;
-				text-decoration: none;
 			}
 
 				nav ul li a.active,
@@ -2919,10 +2917,10 @@ nav {
 			border-radius: 0px !important;
 			-webkit-border-radius: 0px !important;
 		}
-
-		nav ul li .dropdown-menu.default li {
-			width: 100%;
-		}
+	nav ul li .dropdown-nav-menu > li {
+		width: 100%!important;
+	}
+		
 
 	nav .container {
 		position: relative;
@@ -5885,10 +5883,10 @@ section#video {
 	}
 
 .carousel-indicators {
+	list-style-type: none;
 	right: 0;
 	bottom: 0px;
 }
-
 /* owl carousel */
 .slider {
 	position: relative;
@@ -5988,6 +5986,18 @@ section#video {
 		height: 10px;
 		margin: 1px;
 	}
+.carousel-indicators li {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	margin: 1px;
+	text-indent: -999px;
+	cursor: pointer;
+	background-color: #000\9;
+	background-color: rgba(0,0,0,0);
+	border: 1px solid #fff;
+	border-radius: 10px;
+}
 
 .carousel-control.right,
 .carousel-control.left {
@@ -6013,7 +6023,7 @@ section#video {
 		position: absolute;
 		z-index: 999;
 		/*	height: 100%;
-*/ top: 0;
+*/ top: 251px;
 		bottom: 0;
 		left: 0;
 		right: 0;
@@ -6095,7 +6105,12 @@ section#video {
 	-o-transition: all 15s;
 	transition: all 15s;
 }
-
+.ken-burns {
+	-webkit-transition: all 15s;
+	-moz-transition: all 15s;
+	-o-transition: all 15s;
+	transition: all 15s;
+}
 .ken-burns.carousel .item img,
 .ken-burns.carousel .item.active.inactiveUntilOnLoad img {
 	-webkit-transform: scale(1);
@@ -6728,8 +6743,8 @@ footer {
 	}
 
 		.footer-bottom ul a {
-			color: #FFF !Important;
-			background: none !important;
+			color: #FFF;
+			background: none;
 		}
 		
 /* --- elements --- */
@@ -7386,6 +7401,11 @@ footer {
 		footer .widget > div {
 			margin-bottom: 30px;
 		}
+	.navbar-nav li.dropdown-submenu:hover .dropdown-menu {
+		display: contents !important;
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 @media (max-width: 590px) {
@@ -10021,3 +10041,80 @@ footer {
 	#aboutDropdownToggle:checked + .dropdown-menu {
 		display: block;
 	}
+
+.dropdown:hover .dropdown-toggle{
+	display:block;
+}
+.modal-body .modal-line {
+	width: 100%;
+	display: block;
+	align-items: center;
+	justify-content: flex-start;
+	padding: 7px 0;
+	cursor: pointer;
+	transition: all .5s ease;
+}
+
+.modal-body .modal-line:hover {
+	color: #fefefe;
+}
+.SideBar_modal {
+	background-color: #1c1e21;
+	width: 50%;
+	padding: 0!important;
+}
+
+.modal-open .SideBar_modal {
+	background-color: #1c1e21;
+	width: 50%;
+	overflow-y: scroll!important;
+}
+.SideBar_modal .modal-header {
+	border: none;
+	box-shadow: none;
+}
+.SideBar_modal .modal-body {
+	padding: 0;
+	background-color: #1c1e21;
+}
+.SideBar_modal .modal-content {
+	border: none;
+	box-shadow: none;
+	background-color: #1c1e21;
+}
+.SideBar_modal .btn-close:focus {
+	box-shadow: none;
+}
+.SideBar_modal .dropdown-menu {
+	background-color: #1c1e21;
+	width: 100%;
+}
+	.SideBar_modal .dropdown-menu .dropdown-item {
+		font-size: 13px;
+		color: rgba(255,255,255, 0.6) !important;
+		background-color: #1a1b1e !important;
+	}
+		.SideBar_modal .dropdown-menu .dropdown-item:hover {
+			background-color: #000000 !important;
+		}
+
+
+.navbar-nav li.dropdown:hover .dropdown-menu {
+	display: block;
+	opacity: 1;
+	transform: translateY(0);
+}
+
+
+/*.dropdown-submenu .dropdown-menu {
+	top: 0; 
+	left: 100%;
+	margin-top: -1px;
+	display: none;
+	opacity: 0;
+	transform: translateY(-10px);
+	transition: opacity 0.2s, transform 0.2s;
+}
+*/
+
+
