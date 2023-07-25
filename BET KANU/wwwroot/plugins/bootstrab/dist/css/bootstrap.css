@@ -350,7 +350,6 @@ sup {
 
 a {
     color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
-    text-decoration: underline;
 }
 
     a:hover {
@@ -9013,7 +9012,7 @@ textarea.form-control-lg {
 }
 
 .pt-3 {
-    padding-top: 1rem !important;
+    padding-top: 0.6rem !important;
 }
 
 .pt-4 {

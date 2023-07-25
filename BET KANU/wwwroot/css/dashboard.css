@@ -272,12 +272,13 @@ button {
 		outline: 5px auto -webkit-focus-ring-color;
 	}
 
-input,  select, optgroup, textarea {
+input, select, optgroup, textarea {
 	margin: 0;
 	font-family: inherit;
 	font-size: inherit;
+	border: none;
 	line-height: inherit;
-	color: gray;/*
+	color: gray; /*
 	width: 30em;*/
 }
 
@@ -2626,7 +2627,7 @@ a.btn.disabled, fieldset:disabled a.btn {
 
 
 .btn.btn-Create {
-	background-color: #424b65;
+	background-color: #3a4258;
 	color: #fff !important;
 	border-color: #7984a0;
 }
@@ -26821,8 +26822,13 @@ Inbox Message Style
 	}
 }
 
-.BackToList{
-	color:#fff;
+.BackToList {
+	color: #fff;
+	background-color: #3a4258;
+	margin: 0px 10px;
+	padding: 10px;
+	border-radius: 4px;
+	text-decoration: none;
 }
 	.BackToList:hover {
 		color: #8f98c1;

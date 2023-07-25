@@ -5,228 +5,357 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="author" content="">
 
-    <meta property="og:title" content="BET KANU" />
     <meta property="og:description" content="BET KANU is a team of creatives with a mission to build a foundation to advance the endangered dialects of the colloquial Syriac language." />
-    <link rel="shortcut icon" href="/img/Betkanuicon.png">
+    <link rel="shortcut icon" href="https://www.betkanu.com/Content/img/CoverandBanner/Bet-Kanu2.png">
+    <meta property="og:image" content="~/content/img/betkanuicon.png" />
+    <title>@ViewBag.title - BET KANU</title>
 
-    <title>BET KANU - @ViewBag.Title </title>
-    <!-- FAVICON -->
-    <link rel="shortcut icon" href="img/favicon.ico">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.betkanu.com/content/img/betkanuicon.png">
+    <link rel="icon" type="image/png" href="/img/betkanuicon.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/betkanuicon.png" sizes="16x16">
 
     <!-- CORE CSS -->
-    <link href="/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    @*<link href="~/Content/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">*@
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700' rel='stylesheet' type='text/css'>
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/plugins/bootstrab/dist/css/bootstrap.css">
+    <link href="/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
+    <link href="~/plugins/DataTables/css/datatables.min.css" rel="stylesheet">
     <!-- PLUGINS -->
     <link href="/plugins/animate/animate.min.css" rel="stylesheet">
     <link href="/plugins/owl-carousel/owl.carousel.css" rel="stylesheet">
-    <link href="/plugins/ekko-lightbox/ekko-lightbox.min.css" rel="stylesheet">
     <!-- THEME CSS -->
     <link href="/css/theme.css" rel="stylesheet">
     <link href="/css/custom.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
-
-
 <body>
-    <header>
-        <div class="container">
-            <span class="bar hide"></span>
-            @*<a href="~/" class="logo"><img src="~/content/img/Betkanulogo.png" alt=""></a>*@
-            <nav>
-                <div class="nav-control">
-                    <ul>
-                        <li><a href="~/">Home</a></li>
-                        <li class="dropdown">
-                            <a href="~/studio/index" class="dropdown-toggle">Studio</a>
-                            <ul class="dropdown-menu default">
-                                <li class="dropdown-submenu">
-                                    <a href="~/studio/songs"><i class="fa fa-music"></i> Songs</a>
+    <header style="background-color:whitesmoke">
+        <div>
+            <span class="bar hide mobile-toggler d-lg-none" data-bs-toggle="modal" data-bs-target="#exampleModalhi"> </span>
 
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a href="~/studio/series"><i class="fa fa-video-camera"></i> Series</a>
+            <!-- Modal -->
+            <div class="SideBar_modal modal fade" id="exampleModalhi" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
 
+                        <div class="modal-body">
+
+                            <div class="modal-line collapse navbar-collapse" id="navbarNav">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <a alt="Products Page" href="~/products/Index">Products</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a alt="Studio" class="dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                           data-bs-toggle="dropdown" aria-expanded="false">
+                                            Studio
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <li><a alt="BETKANU Studio" class="dropdown-item" href="~/studio">About Studio</a></li>
+                                            <li class="dropdown-submenu">
+                                                <a alt="BETKANU Cartoon" class="dropdown-item dropdown-toggle" href="~/studio/cartoonseries">Cartoon Series</a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a alt="BETKANU ninoandmia" class="dropdown-item" href="~/studio/ninoandmia">Nino and Mia</a></li>
+                                                    <li><a alt="BETKANU alphabetseries" class="dropdown-item" href="~/studio/alphabetseries">Alphabet Series</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a alt="BETKANU Songs" class="dropdown-item" href="~/studio/songs">Songs</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a alt="BETKANU Software" href="~/Software">Software</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a alt="BETKANU Publishing" href="~/Publishing">Publishing</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a alt="BETKANU About" class="dropdown-toggle" href="#" id="navbarDropdownAbout" role="button"
+                                           data-bs-toggle="dropdown" aria-expanded="false">
+                                            About
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownAbout">
+
+                                            <li class="col-md-12">
+                                                <ul>
+                                                    <li><a alt="BETKANU Partners" class="dropdown-item" href="~/about/partners">Partners</a></li>
+                                                    <li><a alt="BETKANU Contributors" class="dropdown-item" href="~/about/Contributors">Contributors</a></li>
+                                                    <li><a alt="BETKANU Special" class="dropdown-item" href="~/about/SpecialThanks">Special Thanks</a></li>
+                                                    <li style="background-color:#faa61a"><a alt="BETKANU Donate" class="dropdown-item" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B2LWBB7C4J29G&source=url">Donate</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="col-md-12">
+                                                <ul>
+                                                    <li><a alt="BETKANU About" class="dropdown-item" href="~/about/betkanu">BET KANU</a></li>
+                                                    <li><a alt="BETKANU Team" class="dropdown-item" href="~/about/Team">Team</a></li>
+                                                    <li><a alt="BETKANU Center" class="dropdown-item" href="~/about/ourcenter">Our Center</a></li>
+                                                </ul>
+                                            </li>
+
+
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a alt="BETKANU Contact" href="~/Home/contact">Contact</a>
+                                    </li>
+                                    <li class="nav-item" style="background-color:#faa61a">
+                                        <a alt="BETKANU Shop" href="https://betkanu.square.site/s/shop">Shop</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a alt="BETKANU ADMIN" href="~/Manger/Index">Admin UI</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <a alt="BETKANU Website" href="~/" class="logo d-none d-xxl-none d-xl-none d-lg-none"><img src="/img/betkanulogomainLG-01.png" alt="BETKANU MainLogo"></a>
+
+            <a alt="BETKANU Website" href="~/" class="logo d-md-block d-sm-block"><img src="/img/betkanulogomainLG.png" alt="BETKANU MainLogo"></a>
+            <nav class="navbar navbar-expand-lg navbar-light">
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a alt="Products Page" href="~/products/Index">Products</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a alt="Studio" class="dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Studio
+                            </a>
+                            <ul class="dropdown-menu dropdown-nav-menu" aria-labelledby="navbarDropdown">
+                                <li><a alt="BETKANU Studio" class="dropdown-item" href="~/studio">About Studio</a></li>
+                                <li class="dropdown-submenu">
+                                    <a alt="BETKANU Cartoon" class="dropdown-item" href="~/studio/cartoonseries">Cartoon Series</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a alt="BETKANU ninoandmia" class="dropdown-item" href="~/studio/ninoandmia">Nino and Mia</a></li>
+                                        <li><a alt="BETKANU alphabetseries" class="dropdown-item" href="~/studio/alphabetseries">Alphabet Series</a></li>
+                                    </ul>
                                 </li>
+                                <li><a alt="BETKANU Songs" class="dropdown-item" href="~/studio/songs">Songs</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a alt="BETKANU Software" href="~/Software">Software</a>
+                        </li>
+                        <li class="nav-item">
+                            <a alt="BETKANU Publishing" href="~/Publishing">Publishing</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a alt="BETKANU About" class="dropdown-toggle" href="#" id="navbarDropdownAbout" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                About
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownAbout">
+
+                                <li class="col-md-6">
+                                    <ul>
+                                        <li><a alt="BETKANU Partners" class="dropdown-item" href="~/about/partners">Partners</a></li>
+                                        <li><a alt="BETKANU Contributors" class="dropdown-item" href="~/about/Contributors">Contributors</a></li>
+                                        <li><a alt="BETKANU Special" class="dropdown-item" href="~/about/SpecialThanks">Special Thanks</a></li>
+                                        <li style="background-color:#faa61a"><a alt="BETKANU Donate" class="dropdown-item" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B2LWBB7C4J29G&source=url">Donate</a></li>
+                                    </ul>
+                                </li>
+                                <li class="col-md-6">
+                                    <ul>
+                                        <li><a alt="BETKANU About" class="dropdown-item" href="~/about/betkanu">BET KANU</a></li>
+                                        <li><a alt="BETKANU Team" class="dropdown-item" href="~/about/Team">Team</a></li>
+                                        <li><a alt="BETKANU Center" class="dropdown-item" href="~/about/ourcenter">Our Center</a></li>
+                                    </ul>
+                                </li>
+
 
                             </ul>
                         </li>
-                        @*<li class="dropdown mega-dropdown">
-                        <a href="~/studio">Studio</a>
-                        <ul class="dropdown-menu mega-dropdown-menu category">
-                            <li class="col-md-6">
-                                <a href="~/studio/songs">
-                                    <img src="~/content/img/game/menu-1.jpg" alt="">
-                                    <div class="caption">
-                                        <span class="label label-warning">PC</span>
-                                        <h3>Songs</h3>
-                                        <p>Lorem ipsum dolor sit amet, adipise elit.</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="col-md-6">
-                                <a href="~/studio/series">
-                                    <img src="~/content/img/game/menu-2.jpg" alt="">
-                                    <div class="caption">
-                                        <span class="label label-primary">PS4</span>
-                                        <h3>Series</h3>
-                                        <p>Lorem ipsum dolor sit amet, adipise elit.</p>
-                                    </div>
-                                </a>
-                            </li>
-                            @*<li class="col-md-3">
-                                    <a href="games-single.html">
-                                        <img src="~/content/img/game/menu-3.jpg" alt="">
-                                        <div class="caption">
-                                            <span class="label label-success">Xbox</span>
-                                            <h3>Max Payne 3</h3>
-                                            <p>Lorem ipsum dolor sit amet, adipise elit.</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="col-md-3">
-                                    <a href="games-single.html">
-                                        <img src="~/content/img/game/menu-4.jpg" alt="">
-                                        <div class="caption">
-                                            <span class="label label-danger">Steam</span>
-                                            <h3>Hitman Absolution</h3>
-                                            <p>Lorem ipsum dolor sit amet, adipise elit.</p>
-                                        </div>
-                                    </a>
-                                </li>*@
-                        @*</ul>
-                        </li>*@
-
-                        <li><a href="~/">Software</a></li>
-                        <li><a href="~/">Publishing</a></li>
-                        <li class="dropdown">
-                            <a href="~/about" class="dropdown-toggle">About</a>
-                            <ul class="dropdown-menu default">
-                                <li class="dropdown-submenu">
-                                    <a href="~/about/betkanu"><i class="fa fa-globe"></i> BET KANU</a>
-
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a href="~/about/team"><i class="fa fa-user"></i> Team</a>
-
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a href="~/about/partenrs"><i class="fa fa-group"></i> Partners</a>
-
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a href="~/about/Contributors"><i class="fa fa-list"></i> Contributors</a>
-
-                                </li>
-
-                            </ul>
+                        <li class="nav-item">
+                            <a alt="BETKANU Contact" href="~/Home/contact">Contact</a>
                         </li>
-                        <li><a href="~/home/contact">Contact</a></li>
-
+                        <li class="nav-item" style="background-color:#faa61a">
+                            <a alt="BETKANU Shop" href="https://betkanu.square.site/s/shop">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a alt="BETKANU ADMIN" href="~/Manger/Index">Admin UI</a>
+                        </li>
                     </ul>
                 </div>
+
             </nav>
-            <div class="nav-right">
-                <a href="~/" class="logo"><img src="/img/Betkanulogo.png" alt=""></a>
-            </div>
+
         </div>
     </header>
     <div class="forum-body">
         @RenderBody()
-        <hr />
     </div>
-    <footer>
+    <footer style="background-color:#0d5487">
         <div class="container">
-            <div class="widget row">
-                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                    <h4 class="title">@*The House of Creation*@</h4>
-                    <p style="text-align:justify">Bet is the Akkadian word for house and is used today by Syriac speakers. Kanu is also an Akkadian word that means to be firm, to establish, to be permanent which has a connection with the Classical Syriac word of Kiyana/Kiyanu which means the creative force. The Slogan of our Team is The House of Creation.</p>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-6">
+                    <p style="text-align:justify">
+                        BET KANU Inc is a non-profit organization, and to continue with our mission we depend soley on support from people like you. Help us cover the costs of our website and mobile app servers, or support our future projects.
+
+                        Let's make our beautiful Syriac language ready for the digital age.
+                    </p>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+
+                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                                <input type="hidden" name="cmd" value="_s-xclick" />
+                                <input type="hidden" name="hosted_button_id" value="B2LWBB7C4J29G" />
+                                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+                                <img alt="paypal logo" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+                            </form>
+                        </div>
+                        <div class="col-md-8 col-sm-6 col-xs-6">
+                            <div class="post-thumbnail">
+                                <img alt="BETKANU Qr Code" src="/img/Donate_QRCode.png" style="width:50%" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <br> <br>
+                    <h4 class="title">BET KANU newsletter</h4>
+                    <p>Send us your Email, and Subscribe now!</p>
+                    <div class="btn-inline form-inverse">
+                        <input type="email" name="Email" id="Email" class="form-control" placeholder="Email..." />
+
+                        <button type="submit" class="btn btn-success" id="myEmailForm2"><i class="fa fa-envelope"></i></button>
+                        <div name="messageResult2" id="messageResult2"></div>
+                    </div>
                 </div>
 
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <h4 class="title"></h4>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <ul class="nav">
-                                <li><a href="~/studio">Home&nbsp;&nbsp;</a></li>
-                                <li><a href="~/software">About</a></li>
-                                <li><a href="~/Publishing">contact</a></li>
+                        <div class="col-lg-6 col-md-6 col-sm-6 d-flex align-items-center justify-content-center">
+                            <ul class="nav col-lg-6 col-md-6 col-sm-4">
+                                <li><a alt="BETKANU Home" href="~/">BET KANU Home</a></li>
+                                <li><a alt="BETKANU About" href="~/about/betkanu">About BET KANU</a></li>
+                                <li><a alt="BETKANU Team" href="~/about/team">Team</a></li>
+                                <li><a alt="BETKANU Partners" href="~/about/partners">Partners </a></li>
+                                <li><a alt="BETKANU Contributers" href="~/about/contributors">Contributers </a></li>
                             </ul>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <ul class="nav">
-                                <li><a href="~/studio">Studio</a></li>
-                                <li><a href="~/software">Software</a></li>
-                                <li><a href="~/Publishing">Publishing</a></li>
+                        <div class="col-lg-6 col-md-6 col-sm-6 d-flex align-items-center justify-content-center">
+                            <ul class="nav col-lg-6 col-md-6 col-sm-6">
+                                <li><a alt="BETKANU Songs" href="~/studio/songs">Songs</a></li>
+                                <li><a alt="BETKANU Cartoon" href="~/studio/cartoonseries">Cartoon Series</a></li>
+                                <li><a alt="BETKANU Software" href="~/software">Software</a></li>
+                                <li><a alt="BETKANU Publishing" href="~/Publishing">Publishing</a></li>
+                                <li><a alt="BETKANU contact" href="~/home/contact">contact</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <h4 class="title">Contact with us</h4>
-                    <p>We would like to hear from you!</p>
-                    <form method="post" class="btn-inline form-inverse">
-                        <input type="text" class="form-control" placeholder="Email..." />
-                        <button type="submit" class="btn btn-link"><i class="fa fa-envelope"></i></button>
-                    </form>
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xl-3">
+                    <a alt="BETKANU twitter" class="twitter-timeline" data-bs-width="600" data-bs-dnt="true" data-bs-tweet-limit="1" href="https://twitter.com/BetKanu?ref_src=twsrc%5Etfw">Tweets by BetKanu</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 </div>
+                <div name="messageResult" id="messageResult"></div>
             </div>
         </div>
 
         <div class="footer-bottom">
             <div class="container">
                 <ul class="list-inline">
-                    <li><a href="https://www.youtube.com/c/betkanu" class="btn btn-circle btn-social-icon" data-toggle="tooltip" title="Subscribe on YouTube"><i class="fa fa-youtube"></i></a></li>
-                    <li><a href="https://www.facebook.com/BetKanu/" class="btn btn-circle btn-social-icon" data-toggle="tooltip" title="Follow us on Facebook"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="https://twitter.com/BetKanu" class="btn btn-circle btn-social-icon" data-toggle="tooltip" title="Follow us on Twitter"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="https://www.instagram.com/betkanu/" class="btn btn-circle btn-social-icon" data-toggle="tooltip" title="Follow us on instagram"><i class="fa fa-instagram"></i></a></li>
+                    <li><a alt="BETKANU youtube" href="https://www.youtube.com/c/betkanu" class="btn btn-circle btn-social-icon" data-bs-toggle="tooltip" title="Subscribe on YouTube"><i class="fa fa-youtube"></i></a></li>
+                    <li><a alt="BETKANU facebook" href="https://www.facebook.com/BetKanu/" class="btn btn-circle btn-social-icon" data-bs-toggle="tooltip" title="Follow us on Facebook"><i class="fa fa-facebook"></i></a></li>
+                    <li><a alt="BETKANU twitter" href="https://twitter.com/BetKanu" class="btn btn-circle btn-social-icon" data-bs-toggle="tooltip" title="Follow us on Twitter"><i class="fa fa-twitter"></i></a></li>
+                    <li><a alt="BETKANU instagram" href="https://www.instagram.com/betkanu/" class="btn btn-circle btn-social-icon" data-bs-toggle="tooltip" title="Follow us on instagram"><i class="fa fa-instagram"></i></a></li>
                 </ul>
                 &copy;@DateTime.Now.Year BET KANU. All rights reserved.
             </div>
         </div>
     </footer>
+    <script src="/plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+    <script src="~/plugins/DataTables/js/dataTables.bootstrap.min.js"></script>
 
+    <script src="/plugins/bootstrab/dist/js/bootstrap.js"></script>
+    <script src="/plugins/bootstrab/dist/js/bootstrap.min.js"></script>
+    <script src="/plugins/bootstrab/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/core.min.js"></script>
+    <script src="/plugins/owl-carousel/owl.carousel.min.js"></script>
+    <script type="text/javascript">
 
+        const email = $('#Email').val();
+        $.ajax({
+            url: 'https://www.dargushti.com/api/v6/subscribe',
+            type: 'post',
+            data: {
+                email,
+            },
+            headers: {
+                'x-api-key': 'API_KEY_SECRET',
+            },
+            dataType: 'json',
+            success(data) {
+                if (data.result) {
+                    $('#messageResult2').html('<a>Success</a>');
+                } else {
+                    $('#messageResult2').html('<a> </a>');
+                }
+            },
+        });
+    </script>
+    <script>
+        (function ($) {
+            "use strict";
+            var owl = $(".owl-carousel");
 
+            owl.owlCarousel({
+                items: 4, //4 items above 1000px browser width
+                itemsDesktop: [1000, 3], //3 items between 1000px and 0
+                itemsTablet: [600, 1], //1 items between 600 and 0
+                itemsMobile: false // itemsMobile disabled - inherit from itemsTablet option
+            });
 
-        @*<script src="~/content/plugins/jquery/jquery-3.1.0.min.js"></script>
-        <script src="~/content/plugins/bootstrap/js/bootstrap.min.js"></script>
-        <script src="~/content/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
-        <script src="~/content/js/core.min.js"></script>
-        <script src="~/content/plugins/owl-carousel/owl.carousel.min.js"></script>*@
-        @*<script src="~/content/plugins/twitter/twitter.js"></script>*@
-        <script>
-            (function ($) {
-                "use strict";
-                var owl = $(".owl-carousel");
+            $(".next").click(function () {
+                owl.trigger('owl.next');
+                return false;
+            })
+            $(".prev").click(function () {
+                owl.trigger('owl.prev');
+                return false;
+            })
+        })(jQuery);
+    </script>
+    <script>
+        $("#myEmailForm2").click(function () {
 
-                owl.owlCarousel({
-                    autoPlay: 3000,
-                    items: 1, //4 items above 1000px browser width
-                    itemsDesktop: [1000, 3], //3 items between 1000px and 0
-                    itemsTablet: [600, 1], //1 items between 600 and 0
-                    itemsMobile: false // itemsMobile disabled - inherit from itemsTablet option
-                });
-
-                $(document).delegate('*[data-toggle="lightbox"]', 'click', function (event) {
-                    event.preventDefault();
-                    $(this).ekkoLightbox();
-                });
-
-                $(window).scroll(function () {
-                    if ($(this).scrollTop() > 350) {
-                        $('body').addClass('fixed-tab');
+            const email = $('#Email').val();
+            $.ajax({
+                url: 'https://www.dargushti.com/api/v6/subscribe',
+                type: 'post',
+                data: {
+                    email,
+                },
+                headers: {
+                    'x-api-key': 'API_KEY_SECRET',
+                },
+                dataType: 'json',
+                success(data) {
+                    if (data.result) {
+                        $('#messageResult2').html('<a>Success</a>');
                     } else {
-                        $('body').removeClass('fixed-tab');
+                        $('#messageResult2').html('<a> </a>');
                     }
-                });
-            })(jQuery);
-        </script>
-        @RenderSection("scripts", required: false)
-    </body>
+                },
+            });
+
+        })
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
 </html>

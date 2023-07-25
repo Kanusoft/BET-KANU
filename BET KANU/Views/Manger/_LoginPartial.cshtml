@@ -2,7 +2,7 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<ul class="navbar">
+<ul class="d-flex justify-content-center">
 @if (SignInManager.IsSignedIn(User))
 {
 @*    <li class="">

@@ -51,7 +51,7 @@ body {
 }
 
 a {
-	color: #313131;
+	color: #0a5c8c;
 	-webkit-transition: 0.25s;
 	transition: 0.25s;
 }
@@ -1613,7 +1613,7 @@ label {
 .table-bordered > tfoot > tr > th,
 .table-bordered > thead > tr > td,
 .table-bordered > thead > tr > th {
-	border-color: #a8a8a9;
+	border-color: #7984a036;
 }
 
 
@@ -1964,7 +1964,7 @@ label {
 }
 
 .form-inverse .form-control {
-	background: rgba(0,0,0, 0.1) ;
+	background: rgba(0,0,0, 0.1) !important;
 	color: #7e7e7e ;
 	border: 0 ;
 }
@@ -7027,7 +7027,7 @@ footer {
 
 	nav {
 		z-index: 999 !important;
-		display: block !important;
+		display: none !important;
 		position: fixed;
 		background: #1C1E21;
 		transform: translateX(-250px);
@@ -7490,6 +7490,9 @@ footer {
 		display: table;
 		width: 100%;
 		text-align: center;
+	}
+	.modal-open .SideBar_modal {
+		width: 80%!important;
 	}
 }
 
