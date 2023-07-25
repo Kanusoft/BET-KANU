@@ -28,7 +28,7 @@
                     <div class="col-12">
                         <form class="card" asp-action="EditCartoonSeries" enctype="multipart/form-data" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input type="hidden" asp-for="@Model.product.Id" />
+                            <input type="hidden" asp-for="@Model.product.Id"/>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-3 col-sm-12">
@@ -52,7 +52,7 @@
                                     <div class="col-lg-3 col-sm-12">
                                         <div class="form-group">
                                             <label asp-for="@Model.product.SmallImage" class="control-label"></label>
-                                            <input asp-for="@Model.product.SmallUrl" type="file" class="dropify" id="ImageUrl" name="ImageUrl" src="@Model.product.SmallImage" data-height='180' />
+                                            <input asp-for="@Model.SmallUrl" type="file" class="dropify" id="ImageUrl" name="SmallUrl" data-height='180' />
                                             <span asp-validation-for="@Model.product.SmallImage" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -60,7 +60,7 @@
                                         <div class="form-group">
                                             <label asp-for="@Model.product.CoverImage" class="control-label"></label>
                                             <div>
-                                                <input asp-for="@Model.product.CoverUrl" type="file" class="dropify" id="ImageUrl2" name="ImageUrl2" src="@Model.product.CoverImage" data-height='180' />
+                                                <input asp-for="@Model.CoverUrl" type="file" class="dropify" id="ImageUrl2" name="CoverUrl" data-height='180' />
                                                 <span asp-validation-for="@Model.product.CoverImage" class="text-danger"></span>
                                             </div>
                                         </div>

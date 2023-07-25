@@ -5,6 +5,7 @@ using BetKanu.Models.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using BET_KANU.ViewModels;
+using BetKanu.Data;
 
 namespace BET_KANU.Controllers
 {
@@ -80,32 +81,44 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditCartoonSeries(MangerVM prod)
+        public async Task<ActionResult> EditCartoonSeries(MangerVM prod,IFormFile? SmallUrl, IFormFile? CoverUrl)
         {
             if (ModelState.IsValid && prod.product != null)
             {
                 try
                 {
-                    if (prod.product.SmallUrl != null)
+                    if (SmallUrl != null)
                     {
                         string oldfile = _unit.product.GetOne(prod.product.Id)?.SmallImage ?? string.Empty;
                         if (!string.IsNullOrEmpty(oldfile))
                         {
                             await _blob.DeleteDocumentAsync(oldfile);
                         }
-                        var Imagepath = await SaveImage(prod.product.SmallUrl);
+                        var Imagepath = await SaveImage(SmallUrl);
                         prod.product.SmallImage = Imagepath;
                     }
-
-                    if (prod.product.CoverUrl != null)
+                    else
                     {
-                        string oldfile = _unit.product.GetOne(prod.product.Id)?.CoverImage ?? string.Empty;
+                        string currectImage = _unit.product?.GetOne(prod.product.Id)?.SmallImage ?? string.Empty;
+                        // If the user did not change the image, keep the old image path
+                        prod.product.SmallImage = currectImage;
+                    }
+
+                    if (CoverUrl != null)
+                    {
+                        string oldfile = _unit.product?.GetOne(prod.product.Id)?.CoverImage ?? string.Empty;
                         if (!string.IsNullOrEmpty(oldfile))
                         {
                             await _blob.DeleteDocumentAsync(oldfile);
                         }
-                        var Imagepath = await SaveImage(prod.product.CoverUrl);
+                        var Imagepath = await SaveImage(CoverUrl);
                         prod.product.CoverImage = Imagepath;
+                    }
+                    else
+                    {
+                        string currectCover = _unit.product?.GetOne(prod.product.Id)?.CoverImage ?? string.Empty;
+                        // If the user did not change the image, keep the old image path
+                        prod.product.CoverImage = currectCover;
                     }
 
 
@@ -150,7 +163,7 @@ namespace BET_KANU.Controllers
                     string ImagePath = await SaveImage(cartoonepisode.WestreanImageFile);
                     cartoonepisode.ImageW = ImagePath;
                 }
-               
+
                 var result = _unit.manger.AddEpisode(cartoonepisode);
                 if (result > 0)
                 {
@@ -159,7 +172,7 @@ namespace BET_KANU.Controllers
                 }
                 else
                 {
-                   await  ResetView(parentId);
+                    await ResetView(parentId);
                     return View(cartoonepisode);
                 }
             }
@@ -231,13 +244,13 @@ namespace BET_KANU.Controllers
                 }
                 else
                 {
-                  await  ResetView(parentId);
+                    await ResetView(parentId);
                     return View(episode);
                 }
             }
             else
             {
-              await  ResetView(parentId);
+                await ResetView(parentId);
                 return View(episode);
             }
         }
