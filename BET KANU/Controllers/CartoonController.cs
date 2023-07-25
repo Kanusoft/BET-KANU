@@ -27,7 +27,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateCartoonSeries([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,VideoE,VideoW,ViewsE,ViewsW")]Product cartoonseries)
+        public async Task<ActionResult> CreateCartoonSeries([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,VideoE,VideoW,ViewsE,ViewsW")] Product cartoonseries)
         {
             if (ModelState.IsValid)
             {
@@ -128,13 +128,13 @@ namespace BET_KANU.Controllers
         {
             var parentProduct = _unit.product.GetOne(parentId);
             ViewBag.parentname = parentProduct?.Title?.ToString();
-            ViewBag.ProductId = parentId;  
+            ViewBag.ProductId = parentId;
             return View(new ProductEpisode());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateEpisode([Bind("Title,Views,VideoE,VideoW,ImageE,ImageW,Status,ReleaseDate,ProductId,EastrenImageFile,WestreanImageFile")]ProductEpisode cartoonepisode, int parentId)
+        public async Task<ActionResult> CreateEpisode([Bind("Title,Views,VideoE,VideoW,ImageE,ImageW,Status,ReleaseDate,ProductId,EastrenImageFile,WestreanImageFile")] ProductEpisode cartoonepisode, int parentId)
         {
             if (ModelState.IsValid)
             {
@@ -150,26 +150,26 @@ namespace BET_KANU.Controllers
                     string ImagePath = await SaveImage(cartoonepisode.WestreanImageFile);
                     cartoonepisode.ImageW = ImagePath;
                 }
-
+               
                 var result = _unit.manger.AddEpisode(cartoonepisode);
                 if (result > 0)
                 {
                     TempData["Messagee"] = cartoonepisode.Title + " " + "has been created successfully!";
-                    return RedirectToAction("Index", "Manger");
+                    return RedirectToAction("EditCartoonSeries", new { id = parentId });
                 }
                 else
                 {
-                    ResetView(parentId);
+                   await  ResetView(parentId);
                     return View(cartoonepisode);
                 }
             }
             else
             {
-                ResetView(parentId);
+                await ResetView(parentId);
                 return View(cartoonepisode);
             }
         }
-     
+
         [HttpGet]
         public ActionResult EditEpisode(int id, int parentId)
         {
@@ -190,7 +190,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditEpisode([Bind("Id,Title,Views,VideoE,VideoW,ImageE,ImageW,Status,ReleaseDate,ProductId,EastrenImageFile,WestreanImageFile")]ProductEpisode episode, int parentId)
+        public async Task<ActionResult> EditEpisode([Bind("Id,Title,Views,VideoE,VideoW,ImageE,ImageW,Status,ReleaseDate,ProductId,EastrenImageFile,WestreanImageFile")] ProductEpisode episode, int parentId)
         {
             if (ModelState.IsValid)
             {
@@ -224,20 +224,20 @@ namespace BET_KANU.Controllers
                     var currentImage = _unit.product?.GetOneEpisode(episode.Id)?.ImageW ?? string.Empty;
                     episode.ImageW = currentImage;
                 }
-
+                episode.ProductId = parentId;
                 if (_unit.manger.EditEP(episode))
                 {
-                    return RedirectToAction("Index", "Manger");
+                    return RedirectToAction("EditCartoonSeries", new { id = parentId });
                 }
                 else
                 {
-                    ResetView(parentId);
+                  await  ResetView(parentId);
                     return View(episode);
                 }
             }
             else
             {
-                ResetView(parentId);
+              await  ResetView(parentId);
                 return View(episode);
             }
         }
@@ -297,10 +297,10 @@ namespace BET_KANU.Controllers
             return ImgName;
         }
 
-        public void ResetView(int parentId)
+        private async Task ResetView(int parentId)
         {
             var parentProduct = _unit.product.GetOne(parentId);
-            ViewBag.parentId = parentProduct?.Title?.ToString();
+            ViewBag.parentname = parentProduct?.Title?.ToString();
             ViewBag.ProductId = parentId;
         }
     }

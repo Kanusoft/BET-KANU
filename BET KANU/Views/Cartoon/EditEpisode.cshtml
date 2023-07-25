@@ -21,7 +21,7 @@
                 <div class="container">
                     <div class="col-12">
                              <form class="card" asp-action="EditEpisode" enctype="multipart/form-data">
-                        <input type="hidden" asp-for="Id" name="Id" />
+                                 <input type="hidden" asp-for="Id" name="Id"/>
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                         <div class="card-body">
@@ -79,16 +79,7 @@
                                                         <input asp-for="ReleaseDate" name="ReleaseDate" class="form-control" />
                                                         <span asp-validation-for="ReleaseDate" class="text-danger"></span>
                                                     </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <label asp-for="Status" class="control-label"></label>
-                                                    </td>
-                                                    <td>
-                                                        <input asp-for="Status" class="form-control" />
-                                                        <span asp-validation-for="Status" class="text-danger"></span>
-                                                    </td>
-                                                </tr>
+                                                </tr> 
                                                 <tr>
                                                     <td>
                                                         <label asp-for="Status" class="control-label"></label>
@@ -102,7 +93,7 @@
                                                 <tr>
                                                     <td>
                                                         <label asp-for="ProductId" class="control-label"></label>
-                                                        <input type="hidden" asp-for="ProductId" name="ProductId" value="@ViewBag.parentId" />
+                                                        <input type="hidden" name="parentId" value="@ViewBag.parentId" />
                                                     </td>
                                                     <td>
                                                         @*<select asp-for="ProductId" class="form-control" asp-items="@ViewBag.ProductId"></select>*@

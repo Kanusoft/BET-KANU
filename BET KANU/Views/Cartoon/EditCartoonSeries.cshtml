@@ -170,47 +170,15 @@
                                         </table>
                                     </div>
                                 </div>
-
                             }
                         </form>
                     </div>
                 </div>
-
             </div>
         }
     </section>
-
-
 </div>
-@if (Model.productEpisode != null)
-{
-    @foreach (var episode in Model.productEpisode)
-    {
-        <div>
-            <span>@Model?.product?.Title-Episodes</span>
-        </div>
-        <div>
-            <div>
-                <video src="@episode.VideoW"></video>
-            </div>
-            <div>
-                <span>@episode.Title</span>
-            </div>
-            <div>
-                <span>@episode.Status</span>
-            </div>
-            <div>
-                <span>@episode.ReleaseDate.Date</span>
-            </div>
-            <div>
-                <a asp-action="EditEpisode" asp-route-id="@episode.Id" asp-route-parentId="@Model?.product?.Id">Edit</a>
-            </div>
-            @*<div>
-    <a asp-action="DeleteEpisode" asp-route-id="@episode.Id" asp-route-parentId="@Model?.product?.Id">Delete</a>
-    </div>*@
-        </div>
-    }
-}
+
 @section Scripts {
     <!-- Data tables -->
     <script src="~/plugins/datatable/jquery.dataTables.min.js"></script>
