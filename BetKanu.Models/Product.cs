@@ -89,11 +89,11 @@ namespace BetKanu.Models
         public string? SponsoredBY { get; set; }
 
         public string? Source { get; set; }
-        public string? Features1 { get; set; }
-        public string? Features2 { get; set; }
-        public string? Features3 { get; set; }
-        public string? Features4 { get; set; }
-        public string? Features5 { get; set; }
+        public string? Features { get; set; }
+        public string? ProductBy { get; set; }
+        public string? Created { get; set; }
+        public string? Link3 { get; set; }
+        public string? SongsList { get; set; }
         public string? Features6 { get; set; }
         public string? Features7 { get; set; }
         public string? Features8 { get; set; }

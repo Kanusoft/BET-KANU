@@ -157,19 +157,19 @@ namespace BetKanu.Data.Migrations
                     b.Property<string>("Epdf")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Features1")
+                    b.Property<string>("Features")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Features2")
+                    b.Property<string>("ProductBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Features3")
+                    b.Property<string>("Created")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Features4")
+                    b.Property<string>("Link3")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Features5")
+                    b.Property<string>("SongsList")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Features6")

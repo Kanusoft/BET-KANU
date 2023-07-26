@@ -52,6 +52,17 @@ namespace BetKanu.Data.Repositories
         {
             return _db.Products.Where(P => P.Category == category).OrderByDescending(p => p.ReleaseDate).Take(num).ToList();
         }
+        
+        public Product? GetoneProductByName(string? name)
+        {
+            return _db.Products.Where(p => p.Title == name).FirstOrDefault();
+        }
+        public List<Product>? GetProductsByName(string? name)
+        {
+            return _db.Products
+            .Where(p => p.Title.StartsWith(name))
+            .ToList();
+        }
 
         /// <summary>
         /// Get List of cartoon Episodes
@@ -71,6 +82,11 @@ namespace BetKanu.Data.Repositories
         {
             return _db.ProductEpisodes.Where(pe => pe.ProductId== id).ToList();
         }
+
+        public List<ProductEpisode> GetByParentIdandLang(int id , Language Lang) 
+        {
+            return _db.ProductEpisodes.Where(pe => pe.ProductId == id && pe.Status == Lang).OrderBy(pe => pe.ReleaseDate).ToList();
+        }
         /// <summary>
         /// Get one Episode by Id
         /// </summary>
@@ -80,5 +96,8 @@ namespace BetKanu.Data.Repositories
         {
             return _db.ProductEpisodes.FirstOrDefault(e => e.Id == id);
         }
+
+
+       
     }
 }
