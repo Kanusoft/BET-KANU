@@ -23,31 +23,31 @@ namespace BetKanu.Data.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "Features1",
+                name: "Features",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "Features2",
+                name: "ProductBy",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "Features3",
+                name: "Created",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "Features4",
+                name: "Link3",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "Features5",
+                name: "SongsList",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
@@ -89,23 +89,23 @@ namespace BetKanu.Data.Migrations
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "Features1",
+                name: "Features",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "Features2",
+                name: "ProductBy",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "Features3",
+                name: "Created",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "Features4",
+                name: "Link3",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "Features5",
+                name: "SongsList",
                 table: "Products");
 
             migrationBuilder.DropColumn(
