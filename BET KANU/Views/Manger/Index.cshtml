@@ -12,17 +12,18 @@
     </section>
     @if (TempData["Messagee"] != null)
     {
-        <div>
+        <div class="alert alert-success">
 
-            alert('@Html.Raw(TempData["Messagee"])')
+          @Html.Raw(TempData["Messagee"])
         </div>
     }
-    @*    @if (TempData["Messagee"] != null)
+    @if (TempData["AlertMessage"] != null)
     {
-    <div>
-    <h2 style="color:red">@TempData["Messagee"]</h2>
-    </div>
-    }*@
+        <div class="alert alert-danger">
+
+            @Html.Raw(TempData["AlertMessage"])
+        </div>
+    } 
     <section>
         <div class="container">
 
