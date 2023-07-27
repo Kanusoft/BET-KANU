@@ -592,6 +592,15 @@ namespace BET_KANU.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeletePost(int id)
         {
+            if (id == 0)
+            {
+                return RedirectToAction("Index");
+            }
+            var prod = _unitOfWork.product.GetOne(id);
+            if (prod == null)
+            {
+                return RedirectToAction("Index");
+            }
             if (ModelState.IsValid)
             {
                 var smallimg = _unitOfWork.product.GetOne(id)?.SmallImage ?? string.Empty;
@@ -699,6 +708,15 @@ namespace BET_KANU.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RemoveSales(int id)
         {
+            if (id == 0)
+            {
+                return NotFound();
+            }
+            var s = _unitOfWork.Shop.Getone(id);
+            if (s == null)
+            {
+                return NotFound();
+            }
             if (ModelState.IsValid)
             {
                 if (_unitOfWork.manger.DeleteShop(id))

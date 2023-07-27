@@ -10,6 +10,9 @@ namespace BET_KANU.ViewModels
         public ProductEpisode? productEp { get; set; }
         public List<ProductEpisode>? episode { get; set; }
 
+        public List<ProductEpisode>? WestrenEpisodes { get; set; }
+        public List<ProductEpisode>? EastrenEpisodes { get; set; }
+
         public List<Shop>? Shops { get; set; }
         public Shop? Shop { get; set; }
 

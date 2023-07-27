@@ -273,6 +273,15 @@ namespace BET_KANU.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteEPpost(int id, int parentId)
         {
+            if (id == 0)
+            {
+                return NotFound();
+            }
+            var prodEp = _unit.product.GetOneEpisode(id);
+            if (prodEp == null)
+            {
+                return NotFound();
+            }
             if (ModelState.IsValid)
             {
                 var westreanimg = _unit.product.GetOneEpisode(id)?.ImageW ?? string.Empty;
