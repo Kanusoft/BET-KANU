@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Web.Mvc;
-using System.IO;
 using System.Text;
 using System.Net;
 using System.Collections.Specialized;
