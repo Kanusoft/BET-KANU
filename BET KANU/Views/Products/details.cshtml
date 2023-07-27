@@ -220,7 +220,7 @@
 @* Start Software *@
 @if (Model?.product?.Category.ToString() == "Software")
 {
-    <section class="border-bottom-1 border-grey-300 padding-30">
+    @*  <section class="border-bottom-1 border-grey-300 padding-30">
         <div class="container text-center">
             <div class="container">
                 <div class="headline no-margin">
@@ -233,6 +233,8 @@
                 </div>
             </div>
         </div>
+    </section>*@
+      <section class="hero height-350 hero-game" style="background-image: url(@Model.product.CoverImage);">
     </section>
     <section>
         <div class="container">
@@ -249,67 +251,69 @@
                                 </ul>
                             </div>
                         </div>
+                        @if (Model.product.Author != null || Model.product.DesignedBy != null)
+                        {
+                            <div class="well" style="text-align:left; direction:ltr">
+                                @if (Model.product.Author != null)
+                                {
+                                    <span>@Model.product.Author</span>
+                                }
+                                @if (Model.product.DesignedBy != null)
+                                {
+                                    <span>@Model.product.DesignedBy</span>
+                                }
+                            </div>
+                        }
+                        @if (Model.product.Created != null || Model.product.ProductBy != null)
+                        {
+                            <div class="well" style="text-align:left; direction:ltr">
+                                @if (Model.product.Created != null)
+                                {
+                                    <span>@Model.product.Created</span>
+                                }
+                                @if (Model.product.ProductBy != null)
+                                {
+                                    <span>@Model.product.ProductBy</span>
+                                }
+                            </div>
+                        }
+                        <div class="well" style="text-align:left ; direction:ltr">
+                            <p style="text-align:left ; direction:ltr">       
+                                @Html.Raw(@Model.product.LongDescription) </p>
+                        </div>    
+                        @if (Model?.product.Info1 != null)
+                        {
+                            <div class="well" style="text-align:left ; direction:ltr">
+                                <p style="text-align:left ; direction:ltr">
+                                    @Html.Raw(@Model.product.Info1)
+                                </p>
+                            </div>
+                        }  @if (Model?.product.Info2 != null)
+                        {
+                            <div class="well" style="text-align:left ; direction:ltr">
 
-                        <div class="well" style="text-align:left ; direction:ltr">
-                            <p style="text-align:left ; direction:ltr">          @Html.Raw(@Model.product.LongDescription) </p>
+                                @Html.Raw(@Model.product.Info2)
+                              
+                            </div>
+                        }
+                        @if (Model?.product.Info3 != null)
+                        {
+                            <div class="well" style="text-align:left ; direction:ltr">
+
+                                @Html.Raw(@Model.product.Info3)
+
+                            </div>
+                        }
+                        <div class="widget widget-list">
+
+                            @Html.Raw(@Model.product.Features)
+
                         </div>
-                        <p style="text-align:left ; direction:ltr">
-                            @Html.Raw(@Model.product.ScriptE)
-                        </p>
-                        <div class="well" style="text-align:left ; direction:ltr">
-                        </div>
-                        <div class="well" style="text-align:left ; direction:ltr">
-                        </div>
-                        @* Features *@
-                        @Html.Raw(@Model.product.ScriptW)
-                        @* Features *@
+
+
+
                     </div>
-                    <div class="widget widget-list">
-                        <div class="title">Features</div>
-                        <div class="  col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <ul>
-                                <li>
-                                    <ul class="widget-list-meta">
-                                        <li class="widget-list-title"><strong>Updated August 17, 2021</strong></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <div class="widget-list-meta">
-                                        <h4 class="widget-list-title"><strong>Size 52.7 M</strong></h4>
-                                        <p> </p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="widget-list-meta">
-                                        <h4 class="widget-list-title"><strong>Installs 2,000+</strong></h4>
-                                        <p></p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="  col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <ul>
-                                <li>
-                                    <div class="widget-list-meta">
-                                        <h4 class="widget-list-title"><strong>Current Version  2</strong></h4>
-                                        <p> </p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="widget-list-meta">
-                                        <h4 class="widget-list-title"><strong>Requires Android 4.0.3 and up</strong></h4>
-                                        <p></p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="widget-list-meta">
-                                        <h4 class="widget-list-title"><strong>Content Rating Rated for 4+</strong></h4>
-                                        <p> </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="col-md-4 rightside">
                     <div class="col-md-12">
@@ -317,8 +321,18 @@
                             <p>
                                 &nbsp;
                             </p>
-                            <a href="@Model.product.Link1" class="btn btn-warning btn-block">Get it on the App Store!</a>
-                            <a href="@Model.product.Link2" class="btn btn-warning btn-block">Get it on the Google Play!</a>
+                            @if (Model?.product.Link1 != null)
+                            {
+                                <a href="@Model.product.Link1" class="btn btn-warning btn-block">Get it on the App Store!</a>
+                            }
+                            @if (Model?.product.Link2 != null)
+                        {
+                            <a href="@Model.product.Link2" class="btn btn-warning btn-block mt-1">Get it on the Google Play!</a>
+                        }
+                            @if (Model?.product.Link3 != null)
+                        {
+                                <a href="@Model.product.Link3" class="btn btn-warning btn-block mt-1">Visit Website</a>
+                        }
                             <p>
                                 &nbsp;
                             </p>
@@ -424,7 +438,7 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>  
+                        </div>
                     }
                 }
             </div>
