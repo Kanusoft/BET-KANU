@@ -20,10 +20,10 @@
     <section>
 
         <div class="col-md-12">
-          
-                <div class="container">
-                    <div class="col-12">
-                        <form class="card" asp-action="CreateBook" enctype="multipart/form-data" method="post">
+
+            <div class="container">
+                <div class="col-12">
+                    <form class="card" asp-action="CreateBook" enctype="multipart/form-data" method="post">
                         @Html.AntiForgeryToken()
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="card-body">
@@ -33,7 +33,7 @@
                                         <label asp-for="Title" class="control-label"></label>
                                         <input asp-for="Title" class="form-control" />
                                         <span asp-validation-for="Title" class="text-danger"></span>
-                                    </div>  
+                                    </div>
                                     <div class="form-group">
                                         <label asp-for="TargetAudince" class="control-label"></label>
                                         <select class="form-control custom-select" asp-for="TargetAudince" asp-items="Html.GetEnumSelectList<Target>()">
@@ -262,23 +262,22 @@
 
                                 </div>
                             </div>
-                        </div>
-                          <div class="form-group">
-                            <div class="row">
+                            <div class="row text-center">
                                 <div class="col-md-6">
-                                    <a asp-action="Index"  class="BackToList">Back to List</a>
+                                    <a asp-action="Index" class="btn btn-Create btn-shadow w-50">Back to List</a>
                                 </div>
+
                                 <div class="col-md-6">
-                                    <input type="submit" value="Create" style="float:right;width: 19%;" class="BackToList" />
+                                    <input type="submit" value="save" class="btn btn-Create btn-shadow w-50" />
                                 </div>
                             </div>
                         </div>
-                          </form>
-                    </div>
-
+                    </form>
                 </div>
 
-          
+            </div>
+
+
 
 
         </div>
