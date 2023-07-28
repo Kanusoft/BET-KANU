@@ -1,10 +1,6 @@
 ﻿@model Product
 <link href="~/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
-
 <link rel="stylesheet" href="~/css/dashboard.css">
-
-
-
 <head>
     @{
         ViewData["Title"] = "Edit";
@@ -109,7 +105,6 @@
                                             <span asp-validation-for="@Model.img5" class="text-danger"></span>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="card-body" style="color:white">
@@ -138,6 +133,51 @@
                                                         <td>
                                                             <input asp-for="@Model.ReleaseDate" class="form-control" />
                                                             <span asp-validation-for="@Model.ReleaseDate" class="text-danger"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <label asp-for="@Model.SponsoredBY" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+                                                            <input asp-for="@Model.SponsoredBY" class="form-control" />
+                                                            <span asp-validation-for="@Model.SponsoredBY"></span>
+                                                        </td>
+                                                    </tr>
+                                                                <tr>
+                                                        <td>
+                                                            <label asp-for="@Model.Author" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+                                                            <input asp-for="@Model.Author" class="form-control" />
+                                                            <span asp-validation-for="@Model.Author"></span>
+                                                        </td>
+                                                    </tr>
+                                                                <tr>
+                                                        <td>
+                                                            <label asp-for="@Model.DesignedBy" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+                                                            <input asp-for="@Model.DesignedBy" class="form-control" />
+                                                            <span asp-validation-for="@Model.DesignedBy"></span>
+                                                        </td>
+                                                    </tr>
+                                                           <tr>
+                                                        <td>
+                                                            <label asp-for="@Model.ProductBy" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+                                                            <input asp-for="@Model.ProductBy" class="form-control" />
+                                                            <span asp-validation-for="@Model.ProductBy"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <label asp-for="@Model.Created" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+                                                            <input asp-for="@Model.Created" class="form-control" />
+                                                            <span asp-validation-for="@Model.Created"></span>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -253,15 +293,6 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <label asp-for="@Model.SponsoredBY" class="control-label"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input asp-for="@Model.SponsoredBY"  class="form-control" />
-                                                            <span asp-validation-for="@Model.SponsoredBY"></span>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
                                                             <label asp-for="@Model.Source" class="control-label"></label>
                                                         </td>
                                                         <td>
@@ -285,6 +316,15 @@
                                                         <td>
                                                             <input asp-for="@Model.Link2" class="form-control" />
                                                             <span asp-validation-for="@Model.Link2"></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <label asp-for="@Model.Link3" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+                                                            <input asp-for="@Model.Link3" class="form-control" />
+                                                            <span asp-validation-for="@Model.Link3"></span>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -314,7 +354,6 @@
         }
     </section>
 </div>
-
 @section Scripts {
     @{
         <!-- file uploads js -->
@@ -333,7 +372,6 @@
             });
         </script>
         <script type="text/javascript">
-
             $(document).ready(function () {
                 var source = document.getElementById("ImageURL").src;
                 var source2 = document.getElementById("ImageURL2").src;
@@ -349,7 +387,6 @@
                 $(".dropify-render:eq(2)").append("<img src=" + source3 + " height=\"100%\" />");
             });
         </script>
-
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     }

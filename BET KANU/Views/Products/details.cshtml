@@ -251,7 +251,7 @@
                                 </ul>
                             </div>
                         </div>
-                        @if (Model.product.Author != null || Model.product.DesignedBy != null)
+                        @if (Model.product.Author != null || Model.product.DesignedBy != null || Model.product.SponsoredBY != null)
                         {
                             <div class="well" style="text-align:left; direction:ltr">
                                 @if (Model.product.Author != null)
@@ -261,6 +261,10 @@
                                 @if (Model.product.DesignedBy != null)
                                 {
                                     <span>@Model.product.DesignedBy</span>
+                                }   
+                                @if (Model.product.SponsoredBY != null)
+                                {
+                                    <span>@Model.product.SponsoredBY</span>
                                 }
                             </div>
                         }

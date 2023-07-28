@@ -52,8 +52,10 @@ namespace BetKanu.Models
 
         [DisplayName("Westrean Credits Html")]
         public string? CreditsW { get; set; }
+        [DisplayName("Google Play Link")]
 
         public string? Link1 { get; set; }
+        [DisplayName("App Store Link")]
         public string? Link2 { get; set; }
 
         [DisplayName("Westrean Pdf Link")]
@@ -85,17 +87,25 @@ namespace BetKanu.Models
         public string? img5 { get; set; }
 
         public string? Author { get; set; }
+        [DisplayName("Designed By")]
         public string? DesignedBy { get; set; }
+        [DisplayName("Sponsored By")]
         public string? SponsoredBY { get; set; }
 
         public string? Source { get; set; }
         public string? Features { get; set; }
+        [DisplayName("Product By")]
         public string? ProductBy { get; set; }
+        [DisplayName("Created By")]
         public string? Created { get; set; }
+        [DisplayName("Website Link")]
         public string? Link3 { get; set; }
         public string? SongsList { get; set; }
+        [DisplayName("Info 1")]
         public string? Info1 { get; set; }
+        [DisplayName("Info 2")]
         public string? Info2 { get; set; }
+        [DisplayName("Info 3")]
         public string? Info3 { get; set; }
 
         [NotMapped]
