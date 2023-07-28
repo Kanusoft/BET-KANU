@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using BET_KANU.Services;
 using BET_KANU.ViewModels;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using BetKanu.Models.Common;
 
 namespace BET_KANU.Controllers
@@ -157,7 +156,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateSoftware([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,CreditsE,CreditsW,Source,SponsoredBY,Link1,Link2,Features,ProductBy,Created,Link3,SongsList,Info1,Info2,Info3,EastrenImageFile,WestreanImageFile,imgUrl3,imgUrl4,imgUrl5,img1,img2,img3,img4,img5")] Product soft)
+        public async Task<ActionResult> CreateSoftware([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,CreditsE,CreditsW,Source,SponsoredBY,Link1,Link2,Features,ProductBy,Created,Link3,SongsList,Info1,Info2,Info3,EastrenImageFile,WestreanImageFile,imgUrl,imgUrl2,imgUrl3,imgUrl4,imgUrl5,img1,img2,img3,img4,img5")] Product soft)
         {
             if (ModelState.IsValid)
             {
@@ -215,138 +214,6 @@ namespace BET_KANU.Controllers
             return View(soft);
         }
 
-        [HttpGet]
-        public ActionResult CreateCartoonSeries()
-        {
-            return View(new Product());
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateCartoonSeries([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,VideoE,VideoW,ViewsE,ViewsW")] Product cartoonseries)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    if (cartoonseries.SmallUrl != null)
-                    {
-                        string ImagePath = await SaveImage(cartoonseries.SmallUrl);
-                        cartoonseries.SmallImage = ImagePath;
-                    }
-                    if (cartoonseries.CoverUrl != null)
-                    {
-                        string ImagePath = await SaveImage(cartoonseries.CoverUrl);
-                        cartoonseries.CoverImage = ImagePath;
-                    }
-
-                    cartoonseries.Category = Category.CartoonSeries;
-                    var result = _unitOfWork.manger.Add(cartoonseries);
-                    if (result > 0)
-                    {
-                        TempData["Messagee"] = cartoonseries.Title + " " + "has been created successfully!";
-                        return RedirectToAction("Index");
-                    }
-                }
-                catch (Exception)
-                {
-                    TempData["AlertMessage"] = "Ooops something went wrong !!";
-                    return View(cartoonseries);
-                }
-            }
-            return View(cartoonseries);
-        }
-
-
-        [HttpGet]
-        public ActionResult CreateEpisode()
-        {
-            var prod = new SelectList(_unitOfWork.product.GetAll()?.ToDictionary(p => p.Id, p => p.Title), "Key", "Value");
-            ViewBag.ProductId = prod;
-            return View(new ProductEpisode());
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateEpisode(ProductEpisode cartoonepisode)
-        {
-            if (ModelState.IsValid)
-            {
-
-                if (cartoonepisode.EastrenImageFile != null)
-                {
-                    string ImagePath = await SaveImage(cartoonepisode.EastrenImageFile);
-                    cartoonepisode.ImageE = ImagePath;
-                }
-
-                if (cartoonepisode.WestreanImageFile != null)
-                {
-                    string ImagePath = await SaveImage(cartoonepisode.WestreanImageFile);
-                    cartoonepisode.ImageW = ImagePath;
-                }
-
-                var result = _unitOfWork.manger.AddEpisode(cartoonepisode);
-                if (result > 0)
-                {
-                    TempData["Messagee"] = cartoonepisode.Title + " " + "has been created successfully!";
-                    return RedirectToAction(nameof(Index));
-                }
-
-            }
-            return View(cartoonepisode);
-        }
-
-        [HttpGet]
-        public ActionResult EditEpisode(int id)
-        {
-            var prod = new SelectList(_unitOfWork.product.GetAll()?.ToDictionary(p => p.Id, p => p.Title), "Key", "Value");
-            ViewBag.ProductId = prod;
-            if (id == 0)
-            {
-                return RedirectToAction("Index");
-            }
-            var prodEp = _unitOfWork.product.GetOneEpisode(id);
-            if (prodEp == null)
-            {
-                return RedirectToAction("Index");
-            }
-            return View(prodEp);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditEpisode(ProductEpisode episode)
-        {
-            if (ModelState.IsValid)
-            {
-                if (episode.EastrenImageFile != null)
-                {
-                    string oldfile = _unitOfWork.product.GetOneEpisode(episode.Id)?.ImageE ?? string.Empty;
-                    if (!string.IsNullOrEmpty(oldfile))
-                    {
-                        await _blobStorage.DeleteDocumentAsync(oldfile);
-                    }
-                    var Imagepath = await SaveImage(episode.EastrenImageFile);
-                    episode.ImageE = Imagepath;
-
-                }
-                if (episode.WestreanImageFile != null)
-                {
-                    string oldfile = _unitOfWork.product.GetOneEpisode(episode.Id)?.ImageW ?? string.Empty;
-                    if (!string.IsNullOrEmpty(oldfile))
-                    {
-                        await _blobStorage.DeleteDocumentAsync(oldfile);
-                    }
-                    var Imagepath = await SaveImage(episode.WestreanImageFile);
-                    episode.ImageW = Imagepath;
-                }
-                if (_unitOfWork.manger.EditEP(episode))
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-            }
-            return View(episode);
-        }
 
         /// <summary>
         /// Save the Images to the Blob storage at products Container
@@ -396,7 +263,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind("Id,Title,SmallImage,CoverImage,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,Source,SponsoredBY,,ScriptE,ScriptW,CreditsE,CreditsW,Link1,Link2,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,img1,img2,img3,img4,img5,Author,DesignedBy,source,Features,ProductBy,Created,Link3,SongsList,Info1,Info2,Info3,SmallUrl,CoverUrl,EastrenImageFile,WestreanImageFile,imgUrl,imgUrl2,imgUrl3,imgUrl4,imgUrl5,WestreanPdfFile,EasternPdfFile")] Product prod)
+        public async Task<ActionResult> Edit([Bind("Id,Title,SmallImage,CoverImage,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,Source,SponsoredBY,,ScriptE,ScriptW,CreditsE,CreditsW,Link1,Link2,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,img1,img2,img3,img4,img5,Author,DesignedBy,source,Features,ProductBy,Created,Link3,SongsList,Info1,Info2,Info3,SmallUrl,CoverUrl,EastrenImageFile,WestreanImageFile,imgUrl,imgUrl2,imgUrl3,imgUrl4,imgUrl5,WestreanPdfFile,EasternPdfFile")]Product prod)
         {
             if (ModelState.IsValid && prod != null)
             {
@@ -574,20 +441,6 @@ namespace BET_KANU.Controllers
             return View(prod);
         }
 
-        public ActionResult Delete(int id)
-        {
-            if (id == 0)
-            {
-                return RedirectToAction("Index");
-            }
-            var prod = _unitOfWork.product.GetOne(id);
-            if (prod == null)
-            {
-                return RedirectToAction("Index");
-            }
-            return View(prod);
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeletePost(int id)
@@ -689,19 +542,6 @@ namespace BET_KANU.Controllers
 
             }
             return View(shop);
-        }
-        public ActionResult DeleteSales(int id)
-        {
-            if (id == 0)
-            {
-                return NotFound();
-            }
-            var s = _unitOfWork.Shop.Getone(id);
-            if (s == null)
-            {
-                return NotFound();
-            }
-            return View(s);
         }
 
         [HttpPost]
