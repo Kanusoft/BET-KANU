@@ -234,7 +234,7 @@
             </div>
         </div>
     </section>*@
-      <section class="hero height-350 hero-game" style="background-image: url(@Model.product.CoverImage);">
+    <section class="hero height-350 hero-game" style="background-image: url(@Model.product.CoverImage);">
     </section>
     <section>
         <div class="container">
@@ -278,9 +278,10 @@
                             </div>
                         }
                         <div class="well" style="text-align:left ; direction:ltr">
-                            <p style="text-align:left ; direction:ltr">       
-                                @Html.Raw(@Model.product.LongDescription) </p>
-                        </div>    
+                            <p style="text-align:left ; direction:ltr">
+                                @Html.Raw(@Model.product.LongDescription)
+                            </p>
+                        </div>
                         @if (Model?.product.Info1 != null)
                         {
                             <div class="well" style="text-align:left ; direction:ltr">
@@ -293,7 +294,7 @@
                             <div class="well" style="text-align:left ; direction:ltr">
 
                                 @Html.Raw(@Model.product.Info2)
-                              
+
                             </div>
                         }
                         @if (Model?.product.Info3 != null)
@@ -326,32 +327,31 @@
                                 <a href="@Model.product.Link1" class="btn btn-warning btn-block">Get it on the App Store!</a>
                             }
                             @if (Model?.product.Link2 != null)
-                        {
-                            <a href="@Model.product.Link2" class="btn btn-warning btn-block mt-1">Get it on the Google Play!</a>
-                        }
+                            {
+                                <a href="@Model.product.Link2" class="btn btn-warning btn-block mt-1">Get it on the Google Play!</a>
+                            }
                             @if (Model?.product.Link3 != null)
-                        {
+                            {
                                 <a href="@Model.product.Link3" class="btn btn-warning btn-block mt-1">Visit Website</a>
-                        }
+                            }
                             <p>
                                 &nbsp;
                             </p>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="well">
-                                    <img src="@Model.product.img1" alt="">
+                                    <img src="@Model?.product.img1" alt="">
 
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="well">
-                                    <img src="@Model.product.img2" alt="">
+                                    <img src="@Model?.product.img2" alt="">
 
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="well">
-                                    <img src="~/content/img/products/materials/reader3.jpg" alt="">
-
+                                    <img src="@Model?.product.img3" alt="">
                                 </div>
                             </div>
                         </div>
