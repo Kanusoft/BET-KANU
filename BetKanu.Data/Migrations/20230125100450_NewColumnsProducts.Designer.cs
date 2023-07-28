@@ -160,7 +160,7 @@ namespace BetKanu.Data.Migrations
                     b.Property<string>("Features")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Product");
+                  //  b.Property<string>("Product");
                     b.Property<string>("ProductBy")
                         .HasColumnType("nvarchar(max)");
 

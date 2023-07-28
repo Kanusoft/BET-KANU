@@ -1671,7 +1671,7 @@ label {
 }
 
 .modal-body {
-	background: #FFF;
+	/*background: #FFF;*/
 	border-bottom: 0;
 	padding: 30px 25px;
 }
