@@ -73,15 +73,15 @@ namespace BetKanu.Models
 
         [DisplayName("Westrean Video Views")]
         public int ViewsW { get; set; }
-        [DisplayName("Image")]
+        [DisplayName("Image1")]
         public string? img1 { get; set; }
-        [DisplayName("Image")]
+        [DisplayName("Image2")]
         public string? img2 { get; set; }
-        [DisplayName("Image")]
+        [DisplayName("Image3")]
         public string? img3 { get; set; }
-        [DisplayName("Image")]
+        [DisplayName("Image4")]
         public string? img4 { get; set; }
-        [DisplayName("Image")]
+        [DisplayName("Image5")]
         public string? img5 { get; set; }
 
         public string? Author { get; set; }
