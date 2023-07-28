@@ -94,9 +94,9 @@ namespace BetKanu.Models
         public string? Created { get; set; }
         public string? Link3 { get; set; }
         public string? SongsList { get; set; }
-        public string? Features6 { get; set; }
-        public string? Features7 { get; set; }
-        public string? Features8 { get; set; }
+        public string? Info1 { get; set; }
+        public string? Info2 { get; set; }
+        public string? Info3 { get; set; }
 
         [NotMapped]
         [DisplayName("Image")]

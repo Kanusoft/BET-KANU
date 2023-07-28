@@ -173,13 +173,13 @@ namespace BetKanu.Data.Migrations
                     b.Property<string>("SongsList")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Features6")
+                    b.Property<string>("Info1")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Features7")
+                    b.Property<string>("Info2")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Features8")
+                    b.Property<string>("Info3")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Link1")

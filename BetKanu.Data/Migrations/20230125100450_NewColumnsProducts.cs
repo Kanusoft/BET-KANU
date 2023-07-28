@@ -53,19 +53,19 @@ namespace BetKanu.Data.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "Features6",
+                name: "Info1",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "Features7",
+                name: "Info2",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "Features8",
+                name: "Info3",
                 table: "Products",
                 type: "nvarchar(max)",
                 nullable: true);
@@ -109,15 +109,15 @@ namespace BetKanu.Data.Migrations
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "Features6",
+                name: "Info1",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "Features7",
+                name: "Info2",
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "Features8",
+                name: "Info3",
                 table: "Products");
 
             migrationBuilder.DropColumn(

@@ -91,7 +91,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateBook([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,CreditsE,CreditsW,Author,DesignedBy,Features,ProductBy,Created,Link3,SongsList,Features6,EastrenImageFile,WestreanImageFile,imgUrl3,imgUrl4,imgUrl5,img1,img2,img3,img4,img5")] Product Book)
+        public async Task<ActionResult> CreateBook([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,CreditsE,CreditsW,Author,DesignedBy,Features,ProductBy,Created,Link3,SongsList,Info1,EastrenImageFile,WestreanImageFile,imgUrl3,imgUrl4,imgUrl5,img1,img2,img3,img4,img5")] Product Book)
         {
             if (ModelState.IsValid)
             {
@@ -157,7 +157,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateSoftware([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,CreditsE,CreditsW,Source,SponsoredBY,Link1,Link2,Features,ProductBy,Created,Link3,SongsList,Features6,Features7,Features8,EastrenImageFile,WestreanImageFile,imgUrl3,imgUrl4,imgUrl5,img1,img2,img3,img4,img5")] Product soft)
+        public async Task<ActionResult> CreateSoftware([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,CreditsE,CreditsW,Source,SponsoredBY,Link1,Link2,Features,ProductBy,Created,Link3,SongsList,Info1,Info2,Info3,EastrenImageFile,WestreanImageFile,imgUrl3,imgUrl4,imgUrl5,img1,img2,img3,img4,img5")] Product soft)
         {
             if (ModelState.IsValid)
             {
@@ -396,7 +396,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind("Id,Title,SmallImage,CoverImage,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,Source,SponsoredBY,,ScriptE,ScriptW,CreditsE,CreditsW,Link1,Link2,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,img1,img2,img3,img4,img5,Author,DesignedBy,source,Features,ProductBy,Created,Link3,SongsList,Features6,Features7,Features8,SmallUrl,CoverUrl,EastrenImageFile,WestreanImageFile,imgUrl,imgUrl2,imgUrl3,imgUrl4,imgUrl5,WestreanPdfFile,EasternPdfFile")] Product prod)
+        public async Task<ActionResult> Edit([Bind("Id,Title,SmallImage,CoverImage,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,Source,SponsoredBY,,ScriptE,ScriptW,CreditsE,CreditsW,Link1,Link2,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,img1,img2,img3,img4,img5,Author,DesignedBy,source,Features,ProductBy,Created,Link3,SongsList,Info1,Info2,Info3,SmallUrl,CoverUrl,EastrenImageFile,WestreanImageFile,imgUrl,imgUrl2,imgUrl3,imgUrl4,imgUrl5,WestreanPdfFile,EasternPdfFile")] Product prod)
         {
             if (ModelState.IsValid && prod != null)
             {
