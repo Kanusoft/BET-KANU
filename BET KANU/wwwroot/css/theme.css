@@ -54,6 +54,7 @@ a {
 	color: #0a5c8c;
 	-webkit-transition: 0.25s;
 	transition: 0.25s;
+	text-decoration: none;
 }
 
 	button,

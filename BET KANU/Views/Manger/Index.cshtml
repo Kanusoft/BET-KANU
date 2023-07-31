@@ -10,23 +10,23 @@
             <h1 style="color:white"> &nbsp;List</h1>
         </div>
     </section>
-    @if (TempData["Messagee"] != null)
-    {
-        <div class="alert alert-success">
 
-          @Html.Raw(TempData["Messagee"])
-        </div>
-    }
-    @if (TempData["AlertMessage"] != null)
-    {
-        <div class="alert alert-danger">
-
-            @Html.Raw(TempData["AlertMessage"])
-        </div>
-    } 
     <section>
         <div class="container">
+            @if (TempData["Messagee"] != null)
+            {
+                <div class="alert alert-success">
 
+                    @Html.Raw(TempData["Messagee"])<i class="fa fa-pencil"></i>
+                </div>
+            }
+            @if (TempData["AlertMessage"] != null)
+            {
+                <div class="alert alert-danger">
+
+                    @Html.Raw(TempData["AlertMessage"])<i class="fa fa-pencil"></i>
+                </div>
+            }
             <div class="col-md-12 create">
 
                 <div class="btn-list">
@@ -203,11 +203,11 @@
                                             <td>
                                                 <a class="btn btn-icon btn-info" asp-controller="Manger" asp-action="EditSale" asp-route-id="@si.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
                                                 @*<a class="btn btn-icon btn-orange btn-danger  " asp-controller="Manger" asp-action="DeleteSales" asp-route-id="@si.Id"><i class="fa-solid fa-trash-can"></i>Delete</a>*@
-                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop-@(si.Id)">
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdropp-@(si.Id)">
                                                     Delete
                                                 </button>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="staticBackdrop-@(si.Id)" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal fade" id="staticBackdropp-@(si.Id)" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">

@@ -261,7 +261,7 @@
                                 @if (Model.product.DesignedBy != null)
                                 {
                                     <span>@Model.product.DesignedBy</span>
-                                }   
+                                }
                                 @if (Model.product.SponsoredBY != null)
                                 {
                                     <span>@Model.product.SponsoredBY</span>
@@ -387,119 +387,158 @@
 @* Start Cartoon Series *@
 @if (Model?.product?.Category.ToString() == "CartoonSeries")
 {
-    <div class="container">
-        <div class="card-group">
-            <div class="row">
-                @if (Model.WestrenEpisodes != null)
-                {
-                    @foreach (var e in Model.WestrenEpisodes)
-                    {
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                            <div class="card card-video">
-                                <div class="card-img">
-                                    <div class="embed-responsive embed-responsive-16by9">
-                                        @{
-                                            string youtubeUrl = @e.VideoW ?? string.Empty;
-                                            string embedUrl = string.Empty;
+    <section class="border-bottom-1 border-grey-300 padding-30">
+        <div class="container text-center">
+            <div class="container">
+                <div class="headline no-margin">
+                    <h4><i class="fa fa-film"></i> Cartoon Series - Alphabet Series</h4>
+                    <div class="dropdown" style="display:inline">
+                        <button type="button" class="btn btn-outline btn-circle btn-icon-left" id="west" onclick="showhidelist(this.id)"><img src="/img/west.png" /></button>
+                        &nbsp;
+                        <button type="button" class="btn btn-outline btn-circle btn-icon-left" id="east" disabled onclick="hideshowlist(this.id)"><img src="/img/east.png" /></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                                            if (!string.IsNullOrEmpty(youtubeUrl))
-                                            {
-                                                if (youtubeUrl.Contains("youtu.be/"))
-                                                {
-                                                    // Short URL
-                                                    string videoId = youtubeUrl.Substring(youtubeUrl.LastIndexOf("/") + 1);
-                                                    embedUrl = $"https://www.youtube.com/embed/{videoId}";
-                                                }
-                                                else if (youtubeUrl.Contains("youtube.com/embed/"))
-                                                {
-                                                    // Long URL
-                                                    embedUrl = youtubeUrl;
-                                                }
-                                                else if (youtubeUrl.Contains("youtube.com/watch?v="))
-                                                {
-                                                    // Long URL with query parameters
-                                                    int embedIndex = youtubeUrl.IndexOf("youtube.com/watch?v=");
-                                                    string videoId = youtubeUrl.Substring(embedIndex + 20);
-                                                    int queryIndex = videoId.IndexOf("?");
-                                                    if (queryIndex != -1)
+    <div id="wrapper">
+        <div class="container">
+            <div class="card-group">
+                <div class="post post-single col-lg-12 col-md-12 col-sm-12 mt-5">
+                    <div class="post-header post-author">
+
+                        <div class="post-title">
+                            <h2><a href="#">Alphabet Series</a></h2>
+                            <ul class="post-meta">
+                                <li><i class="fa fa-film"></i> Cartoon Series</li>
+                                <li><i class="fa fa-info"></i> Educational</li>
+                                <li><i class="fa fa-child"></i> Children</li>
+                            </ul>
+                            <p>
+                                @Model.product.LongDescription
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <section id="western" style="display:none">
+                    @if (Model.WestrenEpisodes != null)
+                    {
+                        <div class="row">
+                            @foreach (var e in Model.WestrenEpisodes)
+                            {
+                                <div class="col-md-6 col-lg-3">
+                                    <div class="card card-video">
+                                        <div class="card-img">
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                @{
+                                                    string youtubeUrl = @e.VideoW ?? string.Empty;
+                                                    string embedUrl = string.Empty;
+
+                                                    if (!string.IsNullOrEmpty(youtubeUrl))
                                                     {
-                                                        videoId = videoId.Substring(0, queryIndex);
+                                                        if (youtubeUrl.Contains("youtu.be/"))
+                                                        {
+                                                            // Short URL
+                                                            string videoId = youtubeUrl.Substring(youtubeUrl.LastIndexOf("/") + 1);
+                                                            embedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                        }
+                                                        else if (youtubeUrl.Contains("youtube.com/embed/"))
+                                                        {
+                                                            // Long URL
+                                                            embedUrl = youtubeUrl;
+                                                        }
+                                                        else if (youtubeUrl.Contains("youtube.com/watch?v="))
+                                                        {
+                                                            // Long URL with query parameters
+                                                            int embedIndex = youtubeUrl.IndexOf("youtube.com/watch?v=");
+                                                            string videoId = youtubeUrl.Substring(embedIndex + 20);
+                                                            int queryIndex = videoId.IndexOf("?");
+                                                            if (queryIndex != -1)
+                                                            {
+                                                                videoId = videoId.Substring(0, queryIndex);
+                                                            }
+                                                            embedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                        }
                                                     }
-                                                    embedUrl = $"https://www.youtube.com/embed/{videoId}";
                                                 }
-                                            }
-                                        }
-                                        <iframe class="embed-responsive-item" src="@embedUrl" allowfullscreen></iframe>
+                                                <iframe class="embed-responsive-item" src="@embedUrl" allowfullscreen></iframe>
+                                            </div>
+                                            @*<div class="time">Alphabet Series</div>*@
+                                        </div>
+                                        <div class="caption">
+                                            <h3 class="card-title"><a href="@e.VideoW;showinfo=0">@e.Title</a></h3>
+                                            <ul>
+                                                <li><i class="fa fa-clock-o"></i> @e.ReleaseDate.ToString("MMMM d, yyyy")</li>
+                                                <li><i class="fa fa-eye"></i> @e.Views views</li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    @*<div class="time">Alphabet Series</div>*@
                                 </div>
-                                <div class="caption">
-                                    <h3 class="card-title"><a href="@e.VideoW;showinfo=0">@e.Title</a></h3>
-                                    <ul>
-                                        <li><i class="fa fa-clock-o"></i> @e.ReleaseDate.ToString("MMMM d, yyyy")</li>
-                                        <li><i class="fa fa-eye"></i> @e.Views views</li>
-                                    </ul>
-                                </div>
-                            </div>
+                            }
                         </div>
                     }
-                }
-                <hr />
-                @if (Model.EastrenEpisodes != null)
-                {
-                    @foreach (var e in Model.EastrenEpisodes)
+                </section>
+                <section id="eastern">
+                    @if (Model.EastrenEpisodes != null)
                     {
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                            <div class="card card-video">
+                        <div class="row">
+                            @foreach (var e in Model.EastrenEpisodes)
+                            {
+                                <div class="col-md-6 col-lg-3">
+                                    <div class="card card-video">
+                                        <div class="card-img">
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                @{
+                                                    string EastyoutubeUrl = @e.VideoE ?? string.Empty;
+                                                    string EastembedUrl = string.Empty;
 
-                                <div class="card-img">
-                                    <div class="embed-responsive embed-responsive-16by9">
-                                        @{
-                                            string EastyoutubeUrl = @e.VideoE ?? string.Empty;
-                                            string EastembedUrl = string.Empty;
-
-                                            if (!string.IsNullOrEmpty(EastyoutubeUrl))
-                                            {
-                                                if (EastyoutubeUrl.Contains("youtu.be/"))
-                                                {
-                                                    // Short URL
-                                                    string videoId = EastyoutubeUrl.Substring(EastyoutubeUrl.LastIndexOf("/") + 1);
-                                                    EastembedUrl = $"https://www.youtube.com/embed/{videoId}";
-                                                }
-                                                else if (EastyoutubeUrl.Contains("youtube.com/embed/"))
-                                                {
-                                                    // Long URL
-                                                    EastembedUrl = EastyoutubeUrl;
-                                                }
-                                                else if (EastyoutubeUrl.Contains("youtube.com/watch?v="))
-                                                {
-                                                    // Long URL with query parameters
-                                                    int embedIndex = EastyoutubeUrl.IndexOf("youtube.com/watch?v=");
-                                                    string videoId = EastyoutubeUrl.Substring(embedIndex + 20);
-                                                    int queryIndex = videoId.IndexOf("?");
-                                                    if (queryIndex != -1)
+                                                    if (!string.IsNullOrEmpty(EastyoutubeUrl))
                                                     {
-                                                        videoId = videoId.Substring(0, queryIndex);
+                                                        if (EastyoutubeUrl.Contains("youtu.be/"))
+                                                        {
+                                                            // Short URL
+                                                            string videoId = EastyoutubeUrl.Substring(EastyoutubeUrl.LastIndexOf("/") + 1);
+                                                            EastembedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                        }
+                                                        else if (EastyoutubeUrl.Contains("youtube.com/embed/"))
+                                                        {
+                                                            // Long URL
+                                                            EastembedUrl = EastyoutubeUrl;
+                                                        }
+                                                        else if (EastyoutubeUrl.Contains("youtube.com/watch?v="))
+                                                        {
+                                                            // Long URL with query parameters
+                                                            int embedIndex = EastyoutubeUrl.IndexOf("youtube.com/watch?v=");
+                                                            string videoId = EastyoutubeUrl.Substring(embedIndex + 20);
+                                                            int queryIndex = videoId.IndexOf("?");
+                                                            if (queryIndex != -1)
+                                                            {
+                                                                videoId = videoId.Substring(0, queryIndex);
+                                                            }
+                                                            EastembedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                        }
                                                     }
-                                                    EastembedUrl = $"https://www.youtube.com/embed/{videoId}";
                                                 }
-                                            }
-                                        }
-                                        <iframe class="embed-responsive-item" src="@EastembedUrl" allowfullscreen></iframe>
+                                                <iframe class="embed-responsive-item" src="@EastembedUrl" allowfullscreen></iframe>
+
+                                            </div>
+                                            @*<div class="time">Alphabet Series</div>*@
+
+                                        </div>
+                                        <div class="caption">
+                                            <h3 class="card-title"><a href="@e.VideoE;showinfo=0">@e.Title</a></h3>
+                                            <ul>
+                                                <li><i class="fa fa-clock-o"></i> @e.ReleaseDate.ToString("MMMM d, yyyy")</li>
+                                                <li><i class="fa fa-eye"></i> @e.Views views</li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    @*<div class="time">Alphabet Series</div>*@
                                 </div>
-                                <div class="caption">
-                                    <h3 class="card-title"><a href="@e.VideoE;showinfo=0">@e.Title</a></h3>
-                                    <ul>
-                                        <li><i class="fa fa-clock-o"></i> @e.ReleaseDate.ToString("MMMM d, yyyy")</li>
-                                        <li><i class="fa fa-eye"></i> @e.Views views</li>
-                                    </ul>
-                                </div>
-                            </div>
+                            }
                         </div>
                     }
-                }
+                </section>
             </div>
         </div>
     </div>
