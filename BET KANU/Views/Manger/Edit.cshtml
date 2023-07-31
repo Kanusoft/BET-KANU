@@ -6,6 +6,32 @@
         ViewData["Title"] = "Edit";
     }
 </head>
+<style>
+    .dropify-render {
+        position: relative;
+    }
+
+        .dropify-render img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .dropify-render .dropify-infos {
+            z-index: 2;
+        }
+
+    /* Hide the default "Remove" button */
+    .dropify-wrapper .dropify-clear {
+        display: none;
+    }
+</style>
+
+
 
 <div id="wrapper">
     <section class="bg-grey-500 promo">
@@ -49,59 +75,90 @@
                                     <div class="col-lg-3 col-sm-12">
                                         <div class="form-group">
                                             <label asp-for="@Model.SmallImage" class="control-label"></label>
-                                            <input asp-for="@Model.SmallUrl" type="file" class="dropify" id="ImageUrl" name="SmallUrl" data-height='180' />
+                                            <div class="dropify-wrapper">
+                                                <div class="dropify-render">
+                                                    <img id="previewImage" src="@Model.SmallImage" />
+                                                    <input asp-for="@Model.SmallUrl" type="file" class="dropify" id="ImageUrl" name="SmallUrl" data-height="180" />
+                                                </div>
+                                            </div>
                                             <span asp-validation-for="@Model.SmallImage" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-12">
                                         <div class="form-group">
                                             <label asp-for="@Model.CoverImage" class="control-label"></label>
-                                            <div>
-                                                <input asp-for="@Model.CoverUrl" type="file" class="dropify" id="ImageUrl2" name="CoverUrl" data-height='180' />
-                                                <span asp-validation-for="@Model.CoverImage" class="text-danger"></span>
+                                            <div class="dropify-wrapper">
+                                                <div class="dropify-render">
+                                                    <img id="coverPreviewImage" src="@Model.CoverImage" />
+                                                    <input asp-for="@Model.CoverUrl" type="file" class="dropify" id="ImageUrl2" name="CoverUrl" data-height="180" />
+                                                </div>
                                             </div>
+                                            <span asp-validation-for="@Model.CoverImage" class="text-danger"></span>
                                         </div>
+
                                     </div>
+
                                     <div class="col-lg-3 col-sm-12">
                                         <div class="form-group">
                                             <label asp-for="@Model.img1" class="control-label"></label>
-                                            <div>
-                                                <input asp-for="@Model.imgUrl" type="file" class="dropify" id="ImageUrl3" name="imgUrl" data-height='180' />
-                                                <span asp-validation-for="@Model.img1" class="text-danger"></span>
+                                            <div class="dropify-wrapper">
+                                                <div class="dropify-render">
+                                                    <img id="PreviewImage1" src="@Model.img1" />
+                                                    <input asp-for="@Model.imgUrl" type="file" class="dropify" id="ImageUrl3" name="imgUrl" data-height='180' />
+                                                </div>
+
                                             </div>
+                                            <span asp-validation-for="@Model.img1" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-12">
                                         <div class="form-group">
                                             <label asp-for="@Model.img2" class="control-label"></label>
-                                            <div>
-                                                <input asp-for="@Model.imgUrl2" type="file" class="dropify" id="CoverImage" name="imgUrl2" data-height='180' />
-                                                <span asp-validation-for="@Model.img2" class="text-danger"></span>
+                                            <div class="dropify-wrapper">
+                                                <div class="dropify-render">
+                                                    <img id="PreviewImage2" src="@Model.img2" />
+                                                    <input asp-for="@Model.imgUrl2" type="file" class="dropify" id="CoverImage" name="imgUrl2" data-height='180' />
+
+                                                </div>
                                             </div>
+                                            <span asp-validation-for="@Model.img2" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-12">
                                         <div class="form-group">
                                             <label asp-for="@Model.img3" class="control-label"></label>
-                                            <div>
-                                                <input asp-for="@Model.imgUrl3" type="file" class="dropify" id="img3" name="imgUrl3" data-height='180' />
-                                                <span asp-validation-for="@Model.img3" class="text-danger"></span>
+                                            <div class="dropify-wrapper">
+                                                <div class="dropify-render">
+                                                    <img id="PreviewImage3" src="@Model.img3" />
+                                                    <input asp-for="@Model.imgUrl3" type="file" class="dropify" id="img3" name="imgUrl3" data-height='180' />
+
+                                                </div>
                                             </div>
+                                            <span asp-validation-for="@Model.img3" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-12">
                                         <div class="form-group">
                                             <label asp-for="@Model.img4" class="control-label"></label>
-                                            <div>
-                                                <input asp-for="@Model.imgUrl4" type="file" class="dropify" id="img4" name="imgUrl4" data-height='180' />
-                                                <span asp-validation-for="@Model.img4" class="text-danger"></span>
+                                            <div class="dropify-wrapper">
+                                                <div class="dropify-render">
+                                                    <img id="PreviewImage4" src="@Model.img4" />
+                                                    <input asp-for="@Model.imgUrl4" type="file" class="dropify" id="img4" name="imgUrl4" data-height='180' />
+
+                                                </div>
                                             </div>
+                                            <span asp-validation-for="@Model.img4" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-12">
                                         <div class="form-group">
                                             <label asp-for="@Model.img5" class="control-label"></label>
-                                            <input asp-for="@Model.imgUrl5" type="file" class="dropify" id="img5" name="imgUrl5" data-height='180' />
+                                            <div class="dropify-wrapper">
+                                                <div class="dropify-render">
+                                                    <img id="PreviewImage5" src="@Model.img5" />
+                                                    <input asp-for="@Model.imgUrl5" type="file" class="dropify" id="img5" name="imgUrl5" data-height='180' />
+                                                </div>
+                                            </div>
                                             <span asp-validation-for="@Model.img5" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -144,7 +201,7 @@
                                                             <span asp-validation-for="@Model.SponsoredBY"></span>
                                                         </td>
                                                     </tr>
-                                                                <tr>
+                                                    <tr>
                                                         <td>
                                                             <label asp-for="@Model.Author" class="control-label"></label>
                                                         </td>
@@ -153,7 +210,7 @@
                                                             <span asp-validation-for="@Model.Author"></span>
                                                         </td>
                                                     </tr>
-                                                                <tr>
+                                                    <tr>
                                                         <td>
                                                             <label asp-for="@Model.DesignedBy" class="control-label"></label>
                                                         </td>
@@ -162,7 +219,7 @@
                                                             <span asp-validation-for="@Model.DesignedBy"></span>
                                                         </td>
                                                     </tr>
-                                                           <tr>
+                                                    <tr>
                                                         <td>
                                                             <label asp-for="@Model.ProductBy" class="control-label"></label>
                                                         </td>
@@ -296,7 +353,7 @@
                                                             <label asp-for="@Model.Source" class="control-label"></label>
                                                         </td>
                                                         <td>
-                                                            <input asp-for="@Model.Source"  class="form-control" />
+                                                            <input asp-for="@Model.Source" class="form-control" />
                                                             <span asp-validation-for="@Model.Source"></span>
                                                         </td>
                                                     </tr>
@@ -336,16 +393,16 @@
                                 </div>
                                 <div class="row text-center">
                                     <div class="col-md-6">
-                                        <a  asp-action="Index" class="btn btn-Create btn-shadow w-50">Back to List</a>
+                                        <a asp-action="Index" class="btn btn-Create btn-shadow w-50">Back to List</a>
                                     </div>
-                                 
+
                                     <div class="col-md-6">
                                         <input type="submit" value="save" class="btn btn-Create btn-shadow w-50" />
                                     </div>
                                 </div>
                             </div>
 
-                        
+
                         </form>
                     </div>
                 </div>
@@ -356,6 +413,10 @@
 </div>
 @section Scripts {
     @{
+       
+
+        <script src="/plugins/fileuploads/js/Edit.dropify.js"></script>
+
         <!-- file uploads js -->
         <script src="~/plugins/fileuploads/js/dropify.js"></script>
         <script>

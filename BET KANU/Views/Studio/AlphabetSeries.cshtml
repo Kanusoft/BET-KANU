@@ -31,9 +31,12 @@
                         <div class="post-title">
                             <h2><a href="#">Alphabet Series</a></h2>
                             <ul class="post-meta">
-                                <li><i class="fa fa-film"></i> Cartoon Series</li>
-                                <li><i class="fa fa-info"></i> Educational</li>
-                                <li><i class="fa fa-child"></i> Children</li>
+                                <li><i class="fa fa-film"></i> @Model.product.Category.ToString()</li>
+                                <li><i class="fa fa-info"></i> @Model.product.SubCategory</li>
+                                  @if (Model?.product.TargetAudince != null)
+                                    {
+                                        <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.TargetAudince</span></li>
+                                    }
                             </ul>
                             <p>
                                 @Model.product.LongDescription
