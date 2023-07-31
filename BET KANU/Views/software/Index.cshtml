@@ -40,8 +40,18 @@
                                 </div>
                                 <p>@s.ShortDescription</p>
                                 <a style="background-color:#32a6de" asp-controller="Products" asp-action="details" asp-route-id="@s.Id" class="btn btn-info btn-shadow">Info</a>
-                                <a style="background-color: #f6a500" href="@s.Link1" class="btn btn-warning btn-shadow"> <i class="fa fa-globe"></i> App Store!</a>
-                                <a style="background-color: #0d5487" href="@s.Link2" class="btn btn-warning btn-shadow"> <i class="fa fa-globe"></i> Google Play!</a>
+                                @if (s.Link1 != null)
+                                {
+                                    <a style="background-color: #f6a500" href="@s.Link1" class="btn btn-warning btn-shadow"><i class="fa fa-apple"></i> App Store!</a>
+                                }
+                                @if (s.Link2 != null)
+                                {
+                                    <a style="background-color: #0d5487" href="@s.Link2" class="btn btn-warning btn-shadow"><i class="fa fa-android"></i> Google Play!</a>
+                                }
+                                @if (s.Link3 != null)
+                                {
+                                    <a style="background-color: #0d5487" href="@s.Link3" class="btn btn-warning btn-shadow"><i class="fa fa-globe"></i> Visit Website</a>
+                                }
                              </div>
                         </div>
                     </div>

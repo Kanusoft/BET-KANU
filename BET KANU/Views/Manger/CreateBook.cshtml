@@ -134,6 +134,26 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
+                                                        <label asp-for="ProductBy" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+                                                        <input asp-for="ProductBy" class="form-control" />
+                                                        <span asp-validation-for="ProductBy" class="text-danger"></span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label asp-for="Created" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+                                                        <input asp-for="Created" class="form-control" />
+                                                        <span asp-validation-for="Created" class="text-danger"></span>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
                                                         <label asp-for="ReleaseDate" class="control-label"></label>
                                                     </td>
                                                     <td>
@@ -159,7 +179,7 @@
                                                         <span asp-validation-for="ShortDescription" class="text-danger"></span>
                                                     </td>
                                                 </tr>
-                                                <tr>
+                          @*                      <tr>
                                                     <td>
                                                         <label asp-for="ScriptW" class="control-label"></label>
                                                     </td>
@@ -176,7 +196,7 @@
                                                         <input asp-for="ScriptE" class="form-control" />
                                                         <span asp-validation-for="ScriptE" class="text-danger"></span>
                                                     </td>
-                                                </tr>
+                                                </tr>*@
                                                 <tr>
                                                     <td>
                                                         <label asp-for="CreditsW" class="control-label"></label>
@@ -187,7 +207,7 @@
                                                         <span asp-validation-for="CreditsW" class="text-danger"></span>
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                    @*            <tr>
                                                     <td>
                                                         <label asp-for="CreditsE" class="control-label"></label>
                                                     </td>
@@ -195,7 +215,7 @@
                                                         <input asp-for="CreditsE" class="form-control" />
                                                         <span asp-validation-for="CreditsE" class="text-danger"></span>
                                                     </td>
-                                                </tr>
+                                                </tr>*@
                                                 <tr>
                                                     <td>
                                                         <label asp-for="Features" class="control-label"></label>
@@ -205,36 +225,7 @@
                                                         <span asp-validation-for="Features" class="text-danger"></span>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        <label asp-for="ProductBy" class="control-label"></label>
-                                                    </td>
-                                                    <td>
-                                                        <input asp-for="ProductBy" class="form-control" />
-                                                        <span asp-validation-for="ProductBy" class="text-danger"></span>
-
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <label asp-for="Created" class="control-label"></label>
-                                                    </td>
-                                                    <td>
-                                                        <input asp-for="Created" class="form-control" />
-                                                        <span asp-validation-for="Created" class="text-danger"></span>
-
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <label asp-for="Link3" class="control-label"></label>
-                                                    </td>
-                                                    <td>
-                                                        <input asp-for="Link3" class="form-control" />
-                                                        <span asp-validation-for="Link3" class="text-danger"></span>
-
-                                                    </td>
-                                                </tr>
+                                
                                                 <tr>
                                                     <td>
                                                         <label asp-for="SongsList" class="control-label"></label>
@@ -252,6 +243,39 @@
                                                     <td>
                                                         <input asp-for="Info1" class="form-control" />
                                                         <span asp-validation-for="Info1" class="text-danger"></span>
+
+                                                    </td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td>
+                                                        <label asp-for="Link1" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+                                                        <input asp-for="Link1" class="form-control" />
+                                                        <span asp-validation-for="Link1" class="text-danger"></span>
+
+                                                    </td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td>
+                                                        <label asp-for="Link2" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+                                                        <input asp-for="Link2" class="form-control" />
+                                                        <span asp-validation-for="Link2" class="text-danger"></span>
+
+                                                    </td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td>
+                                                        <label asp-for="Link3" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+                                                        <input asp-for="Link3" class="form-control" />
+                                                        <span asp-validation-for="Link3" class="text-danger"></span>
 
                                                     </td>
                                                 </tr>

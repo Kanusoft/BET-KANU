@@ -90,8 +90,8 @@
     --bs-secondary-bg-rgb: 233, 236, 239;
     --bs-tertiary-color: rgba(33, 37, 41, 0.5);
     --bs-tertiary-color-rgb: 33, 37, 41;
-    --bs-tertiary-bg: #f8f9fa;
-    --bs-tertiary-bg-rgb: 248, 249, 250;
+    --bs-tertiary-bg: #424b65;
+    --bs-tertiary-bg-rgb: 66, 75, 101;
     --bs-heading-color: inherit;
     --bs-link-color: #0d6efd;
     --bs-link-color-rgb: 13, 110, 253;
@@ -440,6 +440,7 @@ td,
 th {
     border-color: inherit;
     border-style: solid;
+    color: white;
     border-width: 0;
 }
 
