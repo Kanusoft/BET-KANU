@@ -16,10 +16,10 @@ namespace BetKanu.Models
         public string? Title { get; set; }
 
       
-        [DisplayName("Small Image 700px")]
+        [DisplayName("Home Page Image (700px)")]
         public string? SmallImage { get; set; }
 
-        [DisplayName("Cover Image 350px")]
+        [DisplayName("Cover Image (350px)")]
         public string? CoverImage { get; set; }
 
         [Required]
@@ -75,15 +75,15 @@ namespace BetKanu.Models
 
         [DisplayName("Westrean Video Views")]
         public int ViewsW { get; set; }
-        [DisplayName("Image1")]
+        [DisplayName("Image 1")]
         public string? img1 { get; set; }
-        [DisplayName("Image2")]
+        [DisplayName("Image 2")]
         public string? img2 { get; set; }
-        [DisplayName("Image3")]
+        [DisplayName("Image 3")]
         public string? img3 { get; set; }
-        [DisplayName("Image4")]
+        [DisplayName("Image 4")]
         public string? img4 { get; set; }
-        [DisplayName("Image5")]
+        [DisplayName("Image 5")]
         public string? img5 { get; set; }
 
         public string? Author { get; set; }
