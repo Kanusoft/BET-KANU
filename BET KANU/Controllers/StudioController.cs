@@ -39,7 +39,7 @@ namespace BET_KANU.Controllers
         {
             ViewBag.Message = "Your contact page.";
             var VM = new StudioViewModel();
-            VM.Products = _unit.product.GetProductsByName("NINO & MIA");
+            VM.Products = _unit.product.GetProductsByName("NINO & MIA (");
             return View(VM);
         }
 
