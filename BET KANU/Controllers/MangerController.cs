@@ -427,7 +427,7 @@ namespace BET_KANU.Controllers
 
                     if (_unitOfWork.manger.Edit(prod))
                     {
-                        TempData["Messagee"] = prod.Title + "has been Updated successfully!";
+                        TempData["Messagee"] = prod.Title + " " + "has been Updated successfully!";
                         return RedirectToAction(nameof(Index));
                     }
                 }
