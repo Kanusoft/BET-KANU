@@ -52,10 +52,10 @@ namespace BetKanu.Models
 
         [DisplayName("Westrean Credits Html")]
         public string? CreditsW { get; set; }
-        [DisplayName("Google Play Link")]
+        [DisplayName("Google Play Link For Software, Order Eastern Surit For Book")]
 
         public string? Link1 { get; set; }
-        [DisplayName("App Store Link")]
+        [DisplayName("App Store Link For Software, Order Western Surayt For Book")]
         public string? Link2 { get; set; }
 
         [DisplayName("Westrean Pdf Link")]
@@ -98,7 +98,7 @@ namespace BetKanu.Models
         public string? ProductBy { get; set; }
         [DisplayName("Created By")]
         public string? Created { get; set; }
-        [DisplayName("Website Link")]
+        [DisplayName("Website Link For Software,Order From BetKanu shop For Book")]
         public string? Link3 { get; set; }
         public string? SongsList { get; set; }
         [DisplayName("Info 1")]

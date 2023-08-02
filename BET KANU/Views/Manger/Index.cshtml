@@ -17,14 +17,14 @@
             {
                 <div class="alert alert-success">
 
-                    @Html.Raw(TempData["Messagee"])<i class="fa fa-pencil"></i>
+                    @Html.Raw(TempData["Messagee"]) <i class="fa fa-check"></i>
                 </div>
             }
             @if (TempData["AlertMessage"] != null)
             {
                 <div class="alert alert-danger">
 
-                    @Html.Raw(TempData["AlertMessage"])<i class="fa fa-pencil"></i>
+                    @Html.Raw(TempData["AlertMessage"]) <i class="fa fa-check"></i>
                 </div>
             }
             <div class="col-md-12 create">
@@ -115,11 +115,11 @@
                                                         <a class="btn btn-icon btn-info   " asp-controller="Cartoon" asp-action="EditCartoonSeries" asp-route-id="@i.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
                                                        @* <a class="btn btn-icon btn-orange btn-danger  " asp-controller="Cartoon" asp-action="Delete" asp-route-id="@i.Id"><i class="fa-solid fa-trash-can"></i>Delete</a>*@
                                                         <!-- Button to trigger the modal -->
-                                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop-@(i.Id)">
                                                             Delete
                                                         </button>
                                                         <!-- Modal -->
-                                                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                        <div class="modal fade" id="staticBackdrop-@(i.Id)" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
@@ -127,10 +127,11 @@
                                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                       Are you sure you want to Delete This @i.Title Product ?
+                                                                        Are you sure you want to Delete This @i.Title @i.Category ?
                                                                     </div>
                                                                     <div class="modal-footer">
-                                                                        <form asp-action="DeletePost" asp-controller="Manager" asp-route-id="@i.Id" method="post">
+                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                        <form asp-action="DeletePost" asp-controller="Manger" asp-route-id="@i.Id" method="post">
                                                                             <button type="submit" class="btn btn-danger">Delete</button>
                                                                         </form>
                                                                     </div>
@@ -156,7 +157,7 @@
                                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        Are you sure you want to Delete This @i.Title Product ?
+                                                                        Are you sure you want to Delete This @i.Title @i.Category ?
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

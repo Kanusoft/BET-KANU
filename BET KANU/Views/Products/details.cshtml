@@ -180,32 +180,29 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-12">
                             <div class="well">
-                                <p>
-                                    <strong>
-                                        Western
-                                    </strong>
-                                </p>
-                                <ul style="text-align:left ; direction:ltr">
+                            
+                              
                                     @Html.Raw(@Model?.product.CreditsW)
-                                </ul>
+                             
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <div class="well">
-                                <p>
-                                    <strong>
-                                        Eastern
-                                    </strong>
-                                </p>
-                                <ul style="text-align:left ; direction:ltr">
+                            
                                     @Html.Raw(@Model?.product.CreditsE)
-                                </ul>
+                           
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <div class="row">
                 <div class="row margin-5">
-
+                    <div class="col-md-8">   </div>
                     <div class="col-md-4">
                         <ul class="share">
                             <li><a href="https://www.facebook.com/sharer.php?u=https://betkanu.com/products/@ViewBag.Title" class="btn btn-sm btn-social-icon btn-facebook" data-toggle="tooltip" title="Share on facebook"><i class="fa fa-facebook"></i></a></li>
@@ -213,6 +210,7 @@
                         </ul>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -391,7 +389,7 @@
         <div class="container text-center">
             <div class="container">
                 <div class="headline no-margin">
-                    <h4><i class="fa fa-film"></i> Cartoon Series - Alphabet Series</h4>
+                    <h4><i class="fa fa-film"></i> Cartoon Series - @Model.product.Title</h4>
                     <div class="dropdown" style="display:inline">
                         <button type="button" class="btn btn-outline btn-circle btn-icon-left" id="west" onclick="showhidelist(this.id)"><img src="/img/west.png" /></button>
                         &nbsp;
@@ -409,11 +407,11 @@
                     <div class="post-header post-author">
 
                         <div class="post-title">
-                            <h2><a href="#">Alphabet Series</a></h2>
+                            <h2><a href="#">@Model.product.Title</a></h2>
                             <ul class="post-meta">
-                                <li><i class="fa fa-film"></i> Cartoon Series</li>
-                                <li><i class="fa fa-info"></i> Educational</li>
-                                <li><i class="fa fa-child"></i> Children</li>
+                                <li><i class="fa fa-film"></i> @Model.product.Category</li>
+                                <li><i class="fa fa-info"></i> @Model.product.SubCategory</li>
+                                <li><i class="fa fa-child"></i> @Model.product.TargetAudince</li>
                             </ul>
                             <p>
                                 @Model.product.LongDescription
@@ -639,7 +637,6 @@
                             <div class="well">
                                 <h2 style="text-align:center">      <img style="width:150px" src="/img/Products/banners/reader.png" /> </h2>
                                 <h4 style="text-align: center; padding-top: 10px; padding-bottom: 10px ">   BET KANU Reader App </h4>
-
                                 <a href="https://apps.apple.com/tr/app/bet-kanu-reader/id1452612542" class="btn btn-warning btn-block">Get it on the App Store!</a>
                                 <a href="https://play.google.com/store/apps/details?id=com.BETKANU.BK_READER&hl=en&gl=US" class="btn btn-warning btn-block mt-1">Get it on the Google Play!</a>
 
@@ -660,9 +657,7 @@
                                     {
                                         <a href="@Model.product.Link2" class="btn btn-warning btn-block mt-1"> Western Surayt - Order Now! </a>
                                     }
-                                    <a href="mailto:shmuniha@gmail.com" class="btn btn-warning btn-block mt-1">Order Now! <i class="fa fa-google"></i></a>
-                                    <a href="https://www.instagram.com/erzaehlungen_turabdin/" class="btn btn-instagram btn-block mt-1">Order Now! <i class="fa fa-instagram"></i> </a>
-                                    @if (Model.product.Link3 != null)
+                                @if (Model.product.Link3 != null)
                                     {
                                         <a href="@Model.product.Link3" class="btn btn-success btn-block mt-1">Order Now! </a>
                                     }
@@ -716,6 +711,8 @@
                                         </div>
                                     </div>
                                 }
+                                <a href="mailto:shmuniha@gmail.com" class="btn btn-warning btn-block mt-1">Order Now! <i class="fa fa-google"></i></a>
+                                <a href="https://www.instagram.com/erzaehlungen_turabdin/" class="btn btn-instagram btn-block mt-1">Order Now! <i class="fa fa-instagram"></i> </a>
 
 
                             </div>

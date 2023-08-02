@@ -1,76 +1,45 @@
-$(document).ready(function () {
-    // Initialize Dropify for both inputs
-    $('.dropify').dropify();
+   $(document).ready(function () {
+        $('.dropify').dropify();
 
-    // Handle image preview for the small input
-    $('#ImageUrl').change(function () {
-        if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#previewImage').attr('src', e.target.result);
+    function handleImagePreview(inputId, previewId) {
+        $(inputId).change(function () {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(previewId).attr('src', e.target.result);
+                };
+                reader.readAsDataURL(this.files[0]);
+
+                $(this).next('.dropify-infos').hide();
+            } else {
+                $(this).next('.dropify-infos').show();
             }
-            reader.readAsDataURL(this.files[0]);
-        }
+        });
+
+    $(inputId).on('dropify.afterClear', function (event, element) {
+        $(previewId).attr('src', '');
+    $(this).next('.dropify-infos').show(); 
+      });
+    }
+
+    handleImagePreview('#ImageUrl', '#previewImage');
+    handleImagePreview('#ImageUrl2', '#coverPreviewImage');
+    handleImagePreview('#ImageUrl3', '#PreviewImage1');
+    handleImagePreview('#CoverImage', '#PreviewImage2');
+    handleImagePreview('#img3', '#PreviewImage3');
+    handleImagePreview('#img4', '#PreviewImage4');
+    handleImagePreview('#img5', '#PreviewImage5');
+
+    $('form').on('submit', function (e) {
+      
     });
 
-    // Handle image preview for the cover input
-    $('#ImageUrl2').change(function () {
-        if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#coverPreviewImage').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
-        }
+    $('.dropify-clear').on('click', function () {
+      var inputId = '#' + $(this).attr('data-target');
+    var previewId = '#' + $(inputId).data('dropify').preview;
+
+    $(previewId).attr('src', '');
+    $(inputId).next('.dropify-infos').show(); 
     });
-    // Handle image preview for the first input
-    $('#ImageUrl3').change(function () {
-        if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#PreviewImage1').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
-        }
-    });
-    // Handle image preview for the second input
-    $('#CoverImage').change(function () {
-        if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#PreviewImage2').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
-        }
-    });
-    // Handle image preview for the third input
-    $('#img3').change(function () {
-        if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#PreviewImage3').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
-        }
-    });
-    // Handle image preview for the fourth input
-    $('#img4').change(function () {
-        if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#PreviewImage4').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
-        }
-    });
-    // Handle image preview for the fifth input
-    $('#img5').change(function () {
-        if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#PreviewImage5').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(this.files[0]);
-        }
-    });
-});
+  });
+
