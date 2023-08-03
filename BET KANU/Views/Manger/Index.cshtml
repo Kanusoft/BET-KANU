@@ -109,7 +109,7 @@
                                                 <td>@Html.DisplayFor(model => i.TargetAudince)</td>
                                                 @*<td><a href="@Html.DisplayFor(model => i.SmallImage)"> <img src="@Html.DisplayFor(model => i.SmallImage)"/></a></td>*@
 
-                                                @if (Model.products[0].Category == Category.CartoonSeries)
+                                                @if (i.Category == Category.CartoonSeries)
                                                 {
                                                     <td>
                                                         <a class="btn btn-icon btn-info   " asp-controller="Cartoon" asp-action="EditCartoonSeries" asp-route-id="@i.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
