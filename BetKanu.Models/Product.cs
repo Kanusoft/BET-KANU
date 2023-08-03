@@ -93,6 +93,7 @@ namespace BetKanu.Models
         public string? SponsoredBY { get; set; }
 
         public string? Source { get; set; }
+        [DisplayName("Features Html")]
         public string? Features { get; set; }
         [DisplayName("Product By")]
         public string? ProductBy { get; set; }
@@ -101,11 +102,11 @@ namespace BetKanu.Models
         [DisplayName("Website Link For Software,Order From BetKanu shop For Book")]
         public string? Link3 { get; set; }
         public string? SongsList { get; set; }
-        [DisplayName("Info 1")]
+        [DisplayName("Info 1 Html")]
         public string? Info1 { get; set; }
-        [DisplayName("Info 2")]
+        [DisplayName("Info 2 Html")]
         public string? Info2 { get; set; }
-        [DisplayName("Info 3")]
+        [DisplayName("Info 3 Html")]
         public string? Info3 { get; set; }
 
         [NotMapped]

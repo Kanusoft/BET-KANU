@@ -60,7 +60,7 @@
                                             <span asp-validation-for="@Model.SmallImage" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-sm-12" data-categories="Books Songs Software" style="display: none;">
+                                    <div class="col-lg-3 col-sm-12" data-categories="Books Software" style="display: none;">
                                         <div class="form-group">
                                             <label asp-for="@Model.CoverImage" class="control-label"></label>
                                             <div class="dropify-wrapper">
@@ -74,7 +74,7 @@
 
                                     </div>
 
-                                    <div class="col-lg-3 col-sm-12" data-categories="Books Songs Software" style="display: none;">
+                                    <div class="col-lg-3 col-sm-12" data-categories="Books Software" style="display: none;">
                                         <div class="form-group">
                                             <label asp-for="@Model.img1" class="control-label"></label>
                                             <div class="dropify-wrapper">
@@ -87,7 +87,7 @@
                                             <span asp-validation-for="@Model.img1" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-sm-12" data-categories="Books Songs Software" style="display: none;">
+                                    <div class="col-lg-3 col-sm-12" data-categories="Books Software" style="display: none;">
                                         <div class="form-group">
                                             <label asp-for="@Model.img2" class="control-label"></label>
                                             <div class="dropify-wrapper">
@@ -100,7 +100,7 @@
                                             <span asp-validation-for="@Model.img2" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-sm-12" data-categories="Books Songs Software" style="display: none;">
+                                    <div class="col-lg-3 col-sm-12" data-categories="Books Software" style="display: none;">
                                         <div class="form-group">
                                             <label asp-for="@Model.img3" class="control-label"></label>
                                             <div class="dropify-wrapper">
@@ -113,7 +113,7 @@
                                             <span asp-validation-for="@Model.img3" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-sm-12" data-categories="Books Songs Software" style="display: none;">
+                                    <div class="col-lg-3 col-sm-12" data-categories="Books Software" style="display: none;">
                                         <div class="form-group">
                                             <label asp-for="@Model.img4" class="control-label"></label>
                                             <div class="dropify-wrapper">
@@ -126,7 +126,7 @@
                                             <span asp-validation-for="@Model.img4" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-sm-12" data-categories="Books Songs Software" style="display: none;">
+                                    <div class="col-lg-3 col-sm-12" data-categories="Books Software" style="display: none;">
                                         <div class="form-group">
                                             <label asp-for="@Model.img5" class="control-label"></label>
                                             <div class="dropify-wrapper">
@@ -173,7 +173,7 @@
                                                             <label asp-for="@Model.SponsoredBY" class="control-label"></label>
                                                         </td>
                                                         <td>
-                                                            <input asp-for="@Model.SponsoredBY" class="form-control" />
+                                                            <input asp-for="@Model.SponsoredBY" class="form-control" placeholder="Sponsor: Sponsor Name" />
                                                             <span asp-validation-for="@Model.SponsoredBY"></span>
                                                         </td>
                                                     </tr>
@@ -182,7 +182,7 @@
                                                             <label asp-for="@Model.Author" class="control-label"></label>
                                                         </td>
                                                         <td>
-                                                            <input asp-for="@Model.Author" class="form-control" />
+                                                            <input asp-for="@Model.Author" class="form-control" placeholder="Author: Author Name" />
                                                             <span asp-validation-for="@Model.Author"></span>
                                                         </td>
                                                     </tr>
@@ -191,7 +191,7 @@
                                                             <label asp-for="@Model.DesignedBy" class="control-label"></label>
                                                         </td>
                                                         <td>
-                                                            <input asp-for="@Model.DesignedBy" class="form-control" />
+                                                            <input asp-for="@Model.DesignedBy" class="form-control" placeholder="Designed By: Designed By Name" />
                                                             <span asp-validation-for="@Model.DesignedBy"></span>
                                                         </td>
                                                     </tr>
@@ -200,7 +200,7 @@
                                                             <label asp-for="@Model.ProductBy" class="control-label"></label>
                                                         </td>
                                                         <td>
-                                                            <input asp-for="@Model.ProductBy" class="form-control" />
+                                                            <input asp-for="@Model.ProductBy" class="form-control" placeholder="Product By: Product By Name" />
                                                             <span asp-validation-for="@Model.ProductBy"></span>
                                                         </td>
                                                     </tr>
@@ -209,7 +209,7 @@
                                                             <label asp-for="@Model.Created" class="control-label"></label>
                                                         </td>
                                                         <td>
-                                                            <input asp-for="@Model.Created" class="form-control" />
+                                                            <input asp-for="@Model.Created" class="form-control" placeholder="Created By: Created By Name" />
                                                             <span asp-validation-for="@Model.Created"></span>
                                                         </td>
                                                     </tr>
@@ -231,6 +231,33 @@
                                                             <span asp-validation-for="@Model.ShortDescription"></span>
                                                         </td>
                                                     </tr>
+                                                             <tr data-categories="Books Software" style="display: none;">
+                                                        <td>
+                                                            <label asp-for="@Model.Info1" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+                                                            <input asp-for="@Model.Info1" class="form-control" />
+                                                            <span asp-validation-for="@Model.Info1"></span>
+                                                        </td>
+                                                    </tr>
+                                                             <tr data-categories="Books Software" style="display: none;">
+                                                        <td>
+                                                            <label asp-for="@Model.Info2" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+                                                            <input asp-for="@Model.Info2" class="form-control" />
+                                                            <span asp-validation-for="@Model.Info2"></span>
+                                                        </td>
+                                                    </tr>
+                                                             <tr data-categories="Books Software" style="display: none;">
+                                                        <td>
+                                                            <label asp-for="@Model.Info3" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+                                                            <input asp-for="@Model.Info3" class="form-control" />
+                                                            <span asp-validation-for="@Model.Info3"></span>
+                                                        </td>
+                                                    </tr>
                                                     <tr data-categories="Songs" style="display: none;">
                                                         <td>
                                                             <label asp-for="@Model.ScriptW" class="control-label"></label>
@@ -247,15 +274,6 @@
                                                         <td>
                                                             <input asp-for="@Model.Features" class="form-control" />
                                                             <span asp-validation-for="@Model.Features"></span>
-                                                        </td>
-                                                    </tr>
-                                                    <tr data-categories="Books" style="display: none;">
-                                                        <td>
-                                                            <label asp-for="@Model.SongsList" class="control-label"></label>
-                                                        </td>
-                                                        <td>
-                                                            <input asp-for="@Model.SongsList" class="form-control" />
-                                                            <span asp-validation-for="@Model.SongsList"></span>
                                                         </td>
                                                     </tr>
                                                     <tr data-categories="Songs" style="display: none;">
@@ -277,6 +295,7 @@
                                                             <span asp-validation-for="@Model.CreditsW"></span>
                                                         </td>
                                                     </tr>
+                                               
                                                     <tr data-categories="Songs" style="display: none;">
                                                         <td>
                                                             <label asp-for="@Model.CreditsE" class="control-label"></label>
@@ -286,7 +305,17 @@
                                                             <span asp-validation-for="@Model.CreditsE"></span>
                                                         </td>
                                                     </tr>
-                                                    <tr data-categories="Songs CartoonSeries" style="display: none;">
+                                                    <tr data-categories="Books" style="display: none;">
+                                                        <td>
+                                                            <label asp-for="@Model.SongsList" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+                                                            <input asp-for="@Model.SongsList" class="form-control" />
+                                                            <span asp-validation-for="@Model.SongsList"></span>
+                                                        </td>
+                                                    </tr>
+                                             
+                                                    <tr data-categories="Songs" style="display: none;">
                                                         <td>
 
                                                             <label asp-for="@Model.VideoW" class="control-label"></label>
@@ -296,7 +325,7 @@
                                                             <span asp-validation-for="@Model.VideoW"></span>
                                                         </td>
                                                     </tr>
-                                                    <tr data-categories="Songs CartoonSeries" style="display: none;">
+                                                    <tr data-categories="Songs" style="display: none;">
                                                         <td>
                                                             <label asp-for="@Model.VideoE" class="control-label"></label>
                                                         </td>

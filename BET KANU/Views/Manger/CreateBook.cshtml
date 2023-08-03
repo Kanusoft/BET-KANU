@@ -116,10 +116,19 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
+                                                        <label asp-for="ReleaseDate" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+                                                        <input asp-for="ReleaseDate" class="form-control" />
+                                                        <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
                                                         <label asp-for="Author" class="control-label"></label>
                                                     </td>
                                                     <td>
-                                                        <input asp-for="Author" class="form-control" />
+                                                        <input asp-for="Author" class="form-control" placeholder="Author: Author Name" />
                                                         <span asp-validation-for="Author" class="text-danger"></span>
                                                     </td>
                                                 </tr>
@@ -128,7 +137,7 @@
                                                         <label asp-for="DesignedBy" class="control-label"></label>
                                                     </td>
                                                     <td>
-                                                        <input asp-for="DesignedBy" class="form-control" />
+                                                        <input asp-for="DesignedBy" class="form-control" placeholder="Designed By: Designed By Name" />
                                                         <span asp-validation-for="DesignedBy" class="text-danger"></span>
                                                     </td>
                                                 </tr>
@@ -137,7 +146,7 @@
                                                         <label asp-for="ProductBy" class="control-label"></label>
                                                     </td>
                                                     <td>
-                                                        <input asp-for="ProductBy" class="form-control" />
+                                                        <input asp-for="ProductBy" class="form-control" placeholder="Product By: Product By Name" />
                                                         <span asp-validation-for="ProductBy" class="text-danger"></span>
 
                                                     </td>
@@ -147,20 +156,12 @@
                                                         <label asp-for="Created" class="control-label"></label>
                                                     </td>
                                                     <td>
-                                                        <input asp-for="Created" class="form-control" />
+                                                        <input asp-for="Created" class="form-control" placeholder="Created By: Created By Name" />
                                                         <span asp-validation-for="Created" class="text-danger"></span>
 
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        <label asp-for="ReleaseDate" class="control-label"></label>
-                                                    </td>
-                                                    <td>
-                                                        <input asp-for="ReleaseDate" class="form-control" />
-                                                        <span asp-validation-for="ReleaseDate" class="text-danger"></span>
-                                                    </td>
-                                                </tr>
+                                           
                                                 <tr>
                                                     <td>
                                                         <label asp-for="LongDescription" class="control-label"></label>
@@ -179,24 +180,15 @@
                                                         <span asp-validation-for="ShortDescription" class="text-danger"></span>
                                                     </td>
                                                 </tr>
-                          @*                      <tr>
+                                                       <tr>
                                                     <td>
-                                                        <label asp-for="ScriptW" class="control-label"></label>
+                                                        <label asp-for="Features" class="control-label"></label>
                                                     </td>
                                                     <td>
-                                                        <input asp-for="ScriptW" class="form-control" />
-                                                        <span asp-validation-for="ScriptW" class="text-danger"></span>
+                                                        <input asp-for="Features" class="form-control" />
+                                                        <span asp-validation-for="Features" class="text-danger"></span>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        <label asp-for="ScriptE" class="control-label"></label>
-                                                    </td>
-                                                    <td>
-                                                        <input asp-for="ScriptE" class="form-control" />
-                                                        <span asp-validation-for="ScriptE" class="text-danger"></span>
-                                                    </td>
-                                                </tr>*@
                                                 <tr>
                                                     <td>
                                                         <label asp-for="CreditsW" class="control-label"></label>
@@ -207,25 +199,6 @@
                                                         <span asp-validation-for="CreditsW" class="text-danger"></span>
                                                     </td>
                                                 </tr>
-                                    @*            <tr>
-                                                    <td>
-                                                        <label asp-for="CreditsE" class="control-label"></label>
-                                                    </td>
-                                                    <td>
-                                                        <input asp-for="CreditsE" class="form-control" />
-                                                        <span asp-validation-for="CreditsE" class="text-danger"></span>
-                                                    </td>
-                                                </tr>*@
-                                                <tr>
-                                                    <td>
-                                                        <label asp-for="Features" class="control-label"></label>
-                                                    </td>
-                                                    <td>
-                                                        <input asp-for="Features" class="form-control" />
-                                                        <span asp-validation-for="Features" class="text-danger"></span>
-                                                    </td>
-                                                </tr>
-                                
                                                 <tr>
                                                     <td>
                                                         <label asp-for="SongsList" class="control-label"></label>
@@ -238,17 +211,6 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <label asp-for="Info1" class="control-label"></label>
-                                                    </td>
-                                                    <td>
-                                                        <input asp-for="Info1" class="form-control" />
-                                                        <span asp-validation-for="Info1" class="text-danger"></span>
-
-                                                    </td>
-                                                </tr>
-                                                
-                                                <tr>
-                                                    <td>
                                                         <label asp-for="Link1" class="control-label"></label>
                                                     </td>
                                                     <td>
@@ -257,7 +219,6 @@
 
                                                     </td>
                                                 </tr>
-                                                
                                                 <tr>
                                                     <td>
                                                         <label asp-for="Link2" class="control-label"></label>

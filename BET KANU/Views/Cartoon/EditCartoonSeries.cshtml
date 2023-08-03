@@ -10,7 +10,7 @@
         ViewData["Title"] = "Edit";
     }
 </head>
-<style>
+@*<style>
     .dropify-render {
         position: relative;
     }
@@ -29,11 +29,10 @@
             z-index: 2;
         }
 
-    /* Hide the default "Remove" button */
     .dropify-wrapper .dropify-clear {
         display: none;
     }
-</style>
+</style>*@
 <div id="wrapper">
     <section class="bg-grey-500 promo">
         <div class="container">
@@ -83,19 +82,7 @@
                                             <span asp-validation-for="@Model.product.SmallImage" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-sm-12">
-                                        <div class="form-group">
-                                            <label asp-for="@Model.product.CoverImage" class="control-label"></label>
-                                            <div class="dropify-wrapper">
-                                                <div class="dropify-render">
-                                                    <img id="coverPreviewImage" src="@Model.CoverUrl" />
-                                                    <input asp-for="@Model.CoverUrl" type="file" class="dropify" id="ImageUrl2" name="CoverUrl" data-height="180" />
-                                                </div>
-
-                                            </div>
-                                            <span asp-validation-for="@Model.product.CoverImage" class="text-danger"></span>
-                                        </div>
-                                    </div>
+                   
                                 </div>
                             </div>
                             <div class="card-body" style="color:white">

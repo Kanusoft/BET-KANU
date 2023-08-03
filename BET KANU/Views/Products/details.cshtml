@@ -9,159 +9,161 @@
     </section>
     <section>
         <div class="container">
-            <div class="row sidebar">
-                <div class="col-lg-8 leftside">
-                    <div class="post post-single">
-                        <div class="post-header">
-                            <div class="post-title">
-                                <h2>@Model.product.Title</h2>
-                                <ul class="post-meta">
-                                    <li><i class="fa fa-music"></i> @Model.product.Category.ToString()</li>
-                                    <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate.ToString("MMM d, yyyy")</li>
-                                    <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
-                                    @if (Model?.product.TargetAudince != null)
-                                    {
-                                        <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.TargetAudince</span></li>
-                                    }
-                                </ul>
+            <div class="col-lg-12">
+                <div class="row container sidebar">
+                    <div class="col-lg-8 leftside">
+                        <div class="post post-single">
+                            <div class="post-header">
+                                <div class="post-title">
+                                    <h2>@Model.product.Title</h2>
+                                    <ul class="post-meta">
+                                        <li><i class="fa fa-music"></i> @Model.product.Category.ToString()</li>
+                                        <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate.ToString("MMM d, yyyy")</li>
+                                        <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
+                                        @if (Model?.product.TargetAudince != null)
+                                        {
+                                            <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.TargetAudince</span></li>
+                                        }
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <p>
-                            @Model?.product.LongDescription
-                        </p>
-                        <div class="row">
-                            <div class="well col-md-4 col-sm-12" style="text-align:center ; direction:rtl" id="western">
-                                <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Western Lyrics</h3>
-                                <p class="Surayt font-size-22">
-                                    @Html.Raw(Model?.product.ScriptW)
-                                </p>
-                                <a class="btn btn-info" href="@Model?.product.Wpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
-                            </div>
-                            <div class="col-lg-1"></div>
-                            <div class="well col-md-4 col-sm-12" style="text-align:center ; direction:rtl" id="eastern">
-                                <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Eastern Lyrics</h3>
-                                <p class="Surit font-size-22">
-                                    @Html.Raw(Model?.product.ScriptE)
-                                </p>
+                            <p>
+                                @Model?.product.LongDescription
+                            </p>
+                            <div class="container row">
+                                <div class="well col-md-5 col-sm-12" style="text-align:center ; direction:rtl" id="western">
+                                    <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Western Lyrics</h3>
+                                    <p class="Surayt font-size-22">
+                                        @Html.Raw(Model?.product.ScriptW)
+                                    </p>
+                                    <a class="btn btn-info" href="@Model?.product.Wpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+                                </div>
+                                <div class="col-lg-1"></div>
+                                <div class="well col-md-5 col-sm-12" style="text-align:center ; direction:rtl" id="eastern">
+                                    <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Eastern Lyrics</h3>
+                                    <p class="Surit font-size-22">
+                                        @Html.Raw(Model?.product.ScriptE)
+                                    </p>
 
-                                <a class="btn btn-info" href="@Model?.product.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+                                    <a class="btn btn-info" href="@Model?.product.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 rightside">
-                    <div class="widget widget-card">
-                        @if (Model?.product.VideoW != null)
-                        {
-                            <div class="card">
-                                <div class="card-img">
-                                    <div class="embed-responsive embed-responsive-16by9">
-                                        @{
-                                            string youtubeUrl = Model?.product.VideoW ?? string.Empty;
-                                            string embedWestUrl = string.Empty;
+                    <div class="col-lg-4 rightside">
+                        <div class="widget widget-card">
+                            @if (Model?.product.VideoW != null)
+                            {
+                                <div class="card">
+                                    <div class="card-img">
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                            @{
+                                                string youtubeUrl = Model?.product.VideoW ?? string.Empty;
+                                                string embedWestUrl = string.Empty;
 
-                                            if (!string.IsNullOrEmpty(youtubeUrl))
-                                            {
-                                                if (youtubeUrl.Contains("youtu.be/"))
+                                                if (!string.IsNullOrEmpty(youtubeUrl))
                                                 {
-                                                    // Short URL
-                                                    string videoId = youtubeUrl.Substring(youtubeUrl.LastIndexOf("/") + 1);
-                                                    embedWestUrl = $"https://www.youtube.com/embed/{videoId}";
-                                                }
-                                                else if (youtubeUrl.Contains("youtube.com/embed/"))
-                                                {
-                                                    // Long URL
-                                                    embedWestUrl = youtubeUrl;
-                                                }
-                                                else if (youtubeUrl.Contains("youtube.com/watch?v="))
-                                                {
-                                                    // Long URL with query parameters
-                                                    int embedIndex = youtubeUrl.IndexOf("youtube.com/watch?v=");
-                                                    string videoId = youtubeUrl.Substring(embedIndex + 20);
-                                                    int queryIndex = videoId.IndexOf("?");
-                                                    if (queryIndex != -1)
+                                                    if (youtubeUrl.Contains("youtu.be/"))
                                                     {
-                                                        videoId = videoId.Substring(0, queryIndex);
+                                                        // Short URL
+                                                        string videoId = youtubeUrl.Substring(youtubeUrl.LastIndexOf("/") + 1);
+                                                        embedWestUrl = $"https://www.youtube.com/embed/{videoId}";
                                                     }
-                                                    embedWestUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                    else if (youtubeUrl.Contains("youtube.com/embed/"))
+                                                    {
+                                                        // Long URL
+                                                        embedWestUrl = youtubeUrl;
+                                                    }
+                                                    else if (youtubeUrl.Contains("youtube.com/watch?v="))
+                                                    {
+                                                        // Long URL with query parameters
+                                                        int embedIndex = youtubeUrl.IndexOf("youtube.com/watch?v=");
+                                                        string videoId = youtubeUrl.Substring(embedIndex + 20);
+                                                        int queryIndex = videoId.IndexOf("?");
+                                                        if (queryIndex != -1)
+                                                        {
+                                                            videoId = videoId.Substring(0, queryIndex);
+                                                        }
+                                                        embedWestUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                    }
                                                 }
                                             }
-                                        }
-                                        @if (!string.IsNullOrEmpty(embedWestUrl))
-                                        {
-                                            <iframe class="embed-responsive-item" src="@embedWestUrl" allowfullscreen></iframe>
-                                        }
-                                        @* <iframe class="embed-responsive-item" src="@Model?.product.VideoW" allowfullscreen></iframe>*@
-                                    </div>
-                                    <div class="time">BET KANU</div>
-                                </div>
-                                <div class="caption">
-                                    <h3 class="card-title">
-                                        @Model?.product.Title - Western Syriac (Surayt)
-                                    </h3>
-                                    <ul>
-                                        <li><i class="fa fa-calendar-o"></i> @Model?.product.ReleaseDate.ToString("MMM d, yyyy")</li>
-                                        <li><i class="fa fa-eye"></i> @Model?.product.ViewsW views</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        }
-                        @if (Model?.product.VideoE != null)
-                        {
-                            <div class="card">
-                                <div class="card-img">
-                                    <div class="embed-responsive embed-responsive-16by9">
-                                        @{
-                                            string EastyoutubeUrl = Model?.product?.VideoE ?? string.Empty;
-                                            string EastembedUrl = string.Empty;
-
-                                            if (!string.IsNullOrEmpty(EastyoutubeUrl))
+                                            @if (!string.IsNullOrEmpty(embedWestUrl))
                                             {
-                                                if (EastyoutubeUrl.Contains("youtu.be/"))
+                                                <iframe class="embed-responsive-item" src="@embedWestUrl" allowfullscreen></iframe>
+                                            }
+                                            @* <iframe class="embed-responsive-item" src="@Model?.product.VideoW" allowfullscreen></iframe>*@
+                                        </div>
+                                        <div class="time">BET KANU</div>
+                                    </div>
+                                    <div class="caption">
+                                        <h3 class="card-title">
+                                            @Model?.product.Title - Western Syriac (Surayt)
+                                        </h3>
+                                        <ul>
+                                            <li><i class="fa fa-calendar-o"></i> @Model?.product.ReleaseDate.ToString("MMM d, yyyy")</li>
+                                            <li><i class="fa fa-eye"></i> @Model?.product.ViewsW views</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            }
+                            @if (Model?.product.VideoE != null)
+                            {
+                                <div class="card">
+                                    <div class="card-img">
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                            @{
+                                                string EastyoutubeUrl = Model?.product?.VideoE ?? string.Empty;
+                                                string EastembedUrl = string.Empty;
+
+                                                if (!string.IsNullOrEmpty(EastyoutubeUrl))
                                                 {
-                                                    // Short URL
-                                                    string videoId = EastyoutubeUrl.Substring(EastyoutubeUrl.LastIndexOf("/") + 1);
-                                                    EastembedUrl = $"https://www.youtube.com/embed/{videoId}";
-                                                }
-                                                else if (EastyoutubeUrl.Contains("youtube.com/embed/"))
-                                                {
-                                                    // Long URL
-                                                    EastembedUrl = EastyoutubeUrl;
-                                                }
-                                                else if (EastyoutubeUrl.Contains("youtube.com/watch?v="))
-                                                {
-                                                    // Long URL with query parameters
-                                                    int embedIndex = EastyoutubeUrl.IndexOf("youtube.com/watch?v=");
-                                                    string videoId = EastyoutubeUrl.Substring(embedIndex + 20);
-                                                    int queryIndex = videoId.IndexOf("?");
-                                                    if (queryIndex != -1)
+                                                    if (EastyoutubeUrl.Contains("youtu.be/"))
                                                     {
-                                                        videoId = videoId.Substring(0, queryIndex);
+                                                        // Short URL
+                                                        string videoId = EastyoutubeUrl.Substring(EastyoutubeUrl.LastIndexOf("/") + 1);
+                                                        EastembedUrl = $"https://www.youtube.com/embed/{videoId}";
                                                     }
-                                                    EastembedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                    else if (EastyoutubeUrl.Contains("youtube.com/embed/"))
+                                                    {
+                                                        // Long URL
+                                                        EastembedUrl = EastyoutubeUrl;
+                                                    }
+                                                    else if (EastyoutubeUrl.Contains("youtube.com/watch?v="))
+                                                    {
+                                                        // Long URL with query parameters
+                                                        int embedIndex = EastyoutubeUrl.IndexOf("youtube.com/watch?v=");
+                                                        string videoId = EastyoutubeUrl.Substring(embedIndex + 20);
+                                                        int queryIndex = videoId.IndexOf("?");
+                                                        if (queryIndex != -1)
+                                                        {
+                                                            videoId = videoId.Substring(0, queryIndex);
+                                                        }
+                                                        EastembedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                    }
                                                 }
                                             }
-                                        }
-                                        @if (!string.IsNullOrEmpty(EastembedUrl))
-                                        {
-                                            <iframe class="embed-responsive-item" src="@EastembedUrl" allowfullscreen></iframe>
-                                        }
-                                        @*  <iframe class="embed-responsive-item" src="@Model?.product.VideoE" allowfullscreen></iframe>*@
+                                            @if (!string.IsNullOrEmpty(EastembedUrl))
+                                            {
+                                                <iframe class="embed-responsive-item" src="@EastembedUrl" allowfullscreen></iframe>
+                                            }
+                                            @*  <iframe class="embed-responsive-item" src="@Model?.product.VideoE" allowfullscreen></iframe>*@
+                                        </div>
+                                        <div class="time">BET KANU</div>
                                     </div>
-                                    <div class="time">BET KANU</div>
+                                    <div class="caption">
+                                        <h3 class="card-title">
+                                            @Model?.product.Title - Eastern Syriac (Surit)
+                                        </h3>
+                                        <ul>
+                                            <li><i class="fa fa-calendar-o"></i>@Model?.product.ReleaseDate.ToString("MMM d, yyyy")</li>
+                                            <li><i class="fa fa-eye"></i> @Model?.product.ViewsE views</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="caption">
-                                    <h3 class="card-title">
-                                        @Model?.product.Title - Eastern Syriac (Surit)
-                                    </h3>
-                                    <ul>
-                                        <li><i class="fa fa-calendar-o"></i>@Model?.product.ReleaseDate.ToString("MMM d, yyyy")</li>
-                                        <li><i class="fa fa-eye"></i> @Model?.product.ViewsE views</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        }
-                        <a href="https://www.youtube.com/c/betkanu" class="btn btn-danger btn-block">BET KANU YouTube Channel</a>
+                            }
+                            <a href="https://www.youtube.com/c/betkanu" class="btn btn-danger btn-block">BET KANU YouTube Channel</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -180,17 +182,17 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-12">
                             <div class="well">
-                            
-                              
-                                    @Html.Raw(@Model?.product.CreditsW)
-                             
+
+
+                                @Html.Raw(@Model?.product.CreditsW)
+
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <div class="well">
-                            
-                                    @Html.Raw(@Model?.product.CreditsE)
-                           
+
+                                @Html.Raw(@Model?.product.CreditsE)
+
                             </div>
                         </div>
                     </div>
@@ -551,170 +553,172 @@
 
         <section>
             <div class="container">
-                <div class="row sidebar">
-                    <div class="col-lg-8 leftside">
-                        <div class="post post-single">
-                            <div class="post-header">
-                                <div class="post-title">
-                                    <h2>@Model.product.Title</h2>
-                                    <ul class="post-meta">
-                                        <li><i class="fa fa-book"></i>  @Model.product.Category.ToString()</li>
-                                        <li><i class="fa fa-calendar-o"></i> @Model.product.ReleaseDate.ToString("MMM d, yyyy")</li>
-                                        <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
-                                    </ul>
+                <div class="col-lg-12">
+                    <div class="row container sidebar">
+                        <div class="col-lg-8 leftside">
+                            <div class="post post-single">
+                                <div class="post-header">
+                                    <div class="post-title">
+                                        <h2>@Model.product.Title</h2>
+                                        <ul class="post-meta">
+                                            <li><i class="fa fa-book"></i>  @Model.product.Category.ToString()</li>
+                                            <li><i class="fa fa-calendar-o"></i> @Model.product.ReleaseDate.ToString("MMM d, yyyy")</li>
+                                            <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            @*         @if (Model.product.Epdf == null)
-                        {
-                        <div class="img-test">   </div>
-                        }
-                        else
-                        {
-                        <div class="well" style="text-align:left ; direction:ltr">
-
-                        <h3>  @Model.product.ScriptE</h3>
-                        <h3>  @Model.product.ScriptW</h3>
-
-                        </div>
-                        }*@
-                            @if (Model.product.Author != null || Model.product.DesignedBy != null)
+                                @*         @if (Model.product.Epdf == null)
                             {
-                                <div class="well" style="text-align:left; direction:ltr">
-                                    @if (Model.product.Author != null)
-                                    {
-                                        <h4>Author By: <span>@Model.product.Author</span></h4>
-                                    }
-                                    @if (Model.product.DesignedBy != null)
-                                    {
-                                        <h4>Designed By: <span>@Model.product.DesignedBy</span></h4>
-                                    }
-                                </div>
+                            <div class="img-test">   </div>
                             }
-                            @if (Model.product.Created != null || Model.product.ProductBy != null)
+                            else
                             {
-                                <div class="well" style="text-align:left; direction:ltr">
-                                    @if (Model.product.Created != null)
-                                    {
-                                        <h4>Created By: <span>@Model.product.Created</span></h4>
-                                    }
-                                    @if (Model.product.ProductBy != null)
-                                    {
-                                        <h4>ProductBy : <span>@Model.product.ProductBy</span></h4>
-                                    }
-                                </div>
-                            }
-                            <div class="well" style="text-align:left ; direction:ltr">
-                                <p>
-                                    @Model.product.LongDescription
-                                </p>
-                            </div>
                             <div class="well" style="text-align:left ; direction:ltr">
 
-                                <ul>
-                                    @Html.Raw(@Model.product.Features)
-                                </ul>
+                            <h3>  @Model.product.ScriptE</h3>
+                            <h3>  @Model.product.ScriptW</h3>
+
                             </div>
-                            @if (Model.product.SongsList != null)
-                            {
-                                <div class="well">
+                            }*@
+                                @if (Model.product.Author != null || Model.product.DesignedBy != null)
+                                {
+                                    <div class="well" style="text-align:left; direction:ltr">
+                                        @if (Model.product.Author != null)
+                                        {
+                                            <h4>Author By: <span>@Model.product.Author</span></h4>
+                                        }
+                                        @if (Model.product.DesignedBy != null)
+                                        {
+                                            <h4>Designed By: <span>@Model.product.DesignedBy</span></h4>
+                                        }
+                                    </div>
+                                }
+                                @if (Model.product.Created != null || Model.product.ProductBy != null)
+                                {
+                                    <div class="well" style="text-align:left; direction:ltr">
+                                        @if (Model.product.Created != null)
+                                        {
+                                            <h4>Created By: <span>@Model.product.Created</span></h4>
+                                        }
+                                        @if (Model.product.ProductBy != null)
+                                        {
+                                            <h4>ProductBy : <span>@Model.product.ProductBy</span></h4>
+                                        }
+                                    </div>
+                                }
+                                <div class="well" style="text-align:left ; direction:ltr">
+                                    <p>
+                                        @Model.product.LongDescription
+                                    </p>
+                                </div>
+                                <div class="well" style="text-align:left ; direction:ltr">
 
-                                    <ul style="text-align:left ; direction:ltr ; text-transform:uppercase">
-                                        @Html.Raw(@Model.product.SongsList)
-
+                                    <ul>
+                                        @Html.Raw(@Model.product.Features)
                                     </ul>
                                 </div>
-                            }
-                            @if (Model.product.CreditsW != null)
-                            {
+                                @if (Model.product.SongsList != null)
+                                {
+                                    <div class="well">
+
+                                        <ul style="text-align:left ; direction:ltr ; text-transform:uppercase">
+                                            @Html.Raw(@Model.product.SongsList)
+
+                                        </ul>
+                                    </div>
+                                }
+                                @if (Model.product.CreditsW != null)
+                                {
+                                    <div class="well">
+
+                                        <ul style="text-align:left ; direction:ltr ; text-transform:uppercase">
+                                            @Html.Raw(@Model.product.CreditsW)
+
+                                        </ul>
+                                    </div>
+                                }
                                 <div class="well">
+                                    <h2 style="text-align:center">      <img style="width:150px" src="/img/Products/banners/reader.png" /> </h2>
+                                    <h4 style="text-align: center; padding-top: 10px; padding-bottom: 10px ">   BET KANU Reader App </h4>
+                                    <a href="https://apps.apple.com/tr/app/bet-kanu-reader/id1452612542" class="btn btn-warning btn-block">Get it on the App Store!</a>
+                                    <a href="https://play.google.com/store/apps/details?id=com.BETKANU.BK_READER&hl=en&gl=US" class="btn btn-warning btn-block mt-1">Get it on the Google Play!</a>
 
-                                    <ul style="text-align:left ; direction:ltr ; text-transform:uppercase">
-                                        @Html.Raw(@Model.product.CreditsW)
-
-                                    </ul>
                                 </div>
-                            }
-                            <div class="well">
-                                <h2 style="text-align:center">      <img style="width:150px" src="/img/Products/banners/reader.png" /> </h2>
-                                <h4 style="text-align: center; padding-top: 10px; padding-bottom: 10px ">   BET KANU Reader App </h4>
-                                <a href="https://apps.apple.com/tr/app/bet-kanu-reader/id1452612542" class="btn btn-warning btn-block">Get it on the App Store!</a>
-                                <a href="https://play.google.com/store/apps/details?id=com.BETKANU.BK_READER&hl=en&gl=US" class="btn btn-warning btn-block mt-1">Get it on the Google Play!</a>
-
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4 rightside">
-                        <div class="col-md-12">
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    @if (Model.product.Link1 != null)
+                        <div class="col-lg-4 rightside">
+                            <div class="col-md-12">
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        @if (Model.product.Link1 != null)
+                                        {
+                                            <a href="@Model.product.Link1" class="btn btn-primary btn-block"> Eastern Surit - Order Now! </a>
+                                        }
+
+                                        @if (Model.product.Link2 != null)
+                                        {
+                                            <a href="@Model.product.Link2" class="btn btn-warning btn-block mt-1"> Western Surayt - Order Now! </a>
+                                        }
+                                        @if (Model.product.Link3 != null)
+                                        {
+                                            <a href="@Model.product.Link3" class="btn btn-success btn-block mt-1">Order Now! </a>
+                                        }
+
+                                        &nbsp;
+                                    </div>
+                                    @if (Model.product.img1 != null)
                                     {
-                                        <a href="@Model.product.Link1" class="btn btn-primary btn-block"> Eastern Surit - Order Now! </a>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="well">
+                                                <img src="@Model.product.img1" alt="">
+
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (Model.product.img2 != null)
+                                    {
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="well">
+                                                <img src="@Model.product.img2" alt="">
+
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (Model.product.img3 != null)
+                                    {
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="well" style="text-align:center">
+                                                <img src="@Model.product.img3" alt="">
+
+                                            </div>
+                                        </div>
                                     }
 
-                                    @if (Model.product.Link2 != null)
+                                    @if (Model.product.img4 != null)
                                     {
-                                        <a href="@Model.product.Link2" class="btn btn-warning btn-block mt-1"> Western Surayt - Order Now! </a>
-                                    }
-                                @if (Model.product.Link3 != null)
-                                    {
-                                        <a href="@Model.product.Link3" class="btn btn-success btn-block mt-1">Order Now! </a>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="well" style="text-align:center">
+                                                <img src="@Model.product.img4" alt="">
+
+                                            </div>
+                                        </div>
                                     }
 
-                                    &nbsp;
+                                    @if (Model.product.img5 != null)
+                                    {
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="well" style="text-align:center">
+                                                <img src="@Model.product.img5" alt="">
+
+                                            </div>
+                                        </div>
+                                    }
+                                    <a href="mailto:shmuniha@gmail.com" class="btn btn-warning btn-block mt-1">Order Now! <i class="fa fa-google"></i></a>
+                                    <a href="https://www.instagram.com/erzaehlungen_turabdin/" class="btn btn-instagram btn-block mt-1">Order Now! <i class="fa fa-instagram"></i> </a>
+
+
                                 </div>
-                                @if (Model.product.img1 != null)
-                                {
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="well">
-                                            <img src="@Model.product.img1" alt="">
-
-                                        </div>
-                                    </div>
-                                }
-                                @if (Model.product.img2 != null)
-                                {
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="well">
-                                            <img src="@Model.product.img2" alt="">
-
-                                        </div>
-                                    </div>
-                                }
-                                @if (Model.product.img3 != null)
-                                {
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="well" style="text-align:center">
-                                            <img src="@Model.product.img3" alt="">
-
-                                        </div>
-                                    </div>
-                                }
-
-                                @if (Model.product.img4 != null)
-                                {
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="well" style="text-align:center">
-                                            <img src="@Model.product.img4" alt="">
-
-                                        </div>
-                                    </div>
-                                }
-
-                                @if (Model.product.img5 != null)
-                                {
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="well" style="text-align:center">
-                                            <img src="@Model.product.img5" alt="">
-
-                                        </div>
-                                    </div>
-                                }
-                                <a href="mailto:shmuniha@gmail.com" class="btn btn-warning btn-block mt-1">Order Now! <i class="fa fa-google"></i></a>
-                                <a href="https://www.instagram.com/erzaehlungen_turabdin/" class="btn btn-instagram btn-block mt-1">Order Now! <i class="fa fa-instagram"></i> </a>
-
-
                             </div>
                         </div>
                     </div>
