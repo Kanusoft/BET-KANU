@@ -73,11 +73,11 @@
                     <div class="card-group">
                         <div class="row">
                             <div class="container">
-                                <div class="carousel slide post-thumbnail hidden-sm hidden-xs" data-ride="carousel">
-                                    <a asp-controller="Products" asp-action="details" asp-route-id="@song.Id">  <img src="@song.SmallImage" /></a>
+                                <div class="carousel slide post-thumbnail d-none d-md-block d-lg-block d-xl-block d-xxl-block" data-ride="carousel">
+                                    <a asp-controller="Products" asp-action="details" asp-route-id="@song.Id">  <img src="@song.CoverImage" /></a>
                                 </div>
                                 <div class="carousel slide post-thumbnail d-block d-sm-block d-md-none" data-ride="carousel">
-                                    <a asp-controller="Products" asp-action="details" asp-route-id="@song.Id">   <img src="@song.CoverImage" /></a>
+                                    <a asp-controller="Products" asp-action="details" asp-route-id="@song.Id">   <img src="@song.SmallImage" /></a>
                                 </div>
                             </div>
 
@@ -108,13 +108,22 @@
 
                                 <div class="carousel slide post-thumbnail d-none d-md-block d-lg-block d-xl-block d-xxl-block" data-ride="carousel">
 
-                                    <a asp-controller="Products" asp-action="details" asp-route-id="@book.Id">  <img src="@book.SmallImage" /></a>
+                                    <a asp-controller="Products" asp-action="details" asp-route-id="@book.Id">  <img src="@book.CoverImage" /></a>
                                 </div>
                                 <div class="carousel slide post-thumbnail d-block d-sm-block d-md-none" data-ride="carousel">
-                                    <a asp-controller="Products" asp-action="details" asp-route-id="@book.Id">   <img src="@book.CoverImage" /></a>
+                                    <a asp-controller="Products" asp-action="details" asp-route-id="@book.Id">   <img src="@book.SmallImage" /></a>
                                 </div>
                             </div>
+                                 <div class="col-lg-12 col-md-12 col-sm-12">
 
+                        <a href="https://betkanu.square.site/product/the-necklace-comic-book-eastern-surit/16?cp=true&sa=true&sbp=false&q=false" class="btn btn-primary btn-block"> The Necklace - Eastern Surit - Order Now!</a>
+
+
+                        <a href="https://betkanu.square.site/product/the-necklace-comic-book-western-surayt/17?cp=true&sa=true&sbp=false&q=false" class="btn btn-warning btn-block mt-2"> The Necklace - Western Surayt - Order Now!</a>
+
+                        <p>
+                        </p>
+                    </div>
                         </div>
                     </div>
 
@@ -125,7 +134,7 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
+                <div class="col-lg-12">
                     <div class="title outline" style="padding-bottom:10px; padding-top:10px">
                         <h4><i class="fa fa-shopping-cart"></i>Shop</h4>
                     </div>
@@ -153,7 +162,7 @@
                 @foreach (var soft in Model.Software)
                 {
                     <div class="row">
-                        <div class="col-lg-8 col-lg-offset-2">
+                        <div class="col-lg-12">
                             <div class="title outline" style="padding-bottom:10px; padding-top:10px">
                                 <h4><i class="fa fa-child"></i>@soft.Title</h4>
 
@@ -166,10 +175,10 @@
 
                                 <div class="carousel slide post-thumbnail d-none d-md-block d-lg-block d-xl-block d-xxl-block" data-ride="carousel" style="margin-bottom:10px">
 
-                                    <a asp-controller="Products" asp-action="details" asp-route-id="@soft.Id">  <img src="@soft.SmallImage" /></a>
+                                    <a asp-controller="Products" asp-action="details" asp-route-id="@soft.Id">  <img src="@soft.CoverImage" /></a>
                                 </div>
                                 <div class="carousel slide post-thumbnail d-block d-sm-block d-md-none" data-ride="carousel">
-                                    <a asp-controller="Products" asp-action="details" asp-route-id="@soft.Id">   <img src="@soft.CoverImage" /></a>
+                                    <a asp-controller="Products" asp-action="details" asp-route-id="@soft.Id">   <img src="@soft.SmallImage" /></a>
                                 </div>
                             </div>
 
@@ -273,27 +282,25 @@
     <section class=" ">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
+                <div class="col-lg-12">
                     <div class="title outline" style="padding-bottom:10px; padding-top:10px">
                         <h4><i class="fa fa-info-circle"></i>BET KANU Intro</h4>
                     </div>
                 </div>
             </div>
-            <div class="card-group">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="card-img">
                             <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="https://www.youtube.com/embed/mHdOlOnVaXE?rel=0" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" allowfullscreen scrolling="no" allow="encrypted-media; accelerometer; gyroscope; picture-in-picture"></iframe></div>
 
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="card-img">
                             <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="https://www.youtube.com/embed/sUyB6iEX16s?rel=0" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" allowfullscreen scrolling="no" allow="encrypted-media; accelerometer; gyroscope; picture-in-picture"></iframe></div>
 
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     </section>
