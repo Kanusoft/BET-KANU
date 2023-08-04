@@ -43,3 +43,42 @@
     });
   });
 
+$(document).ready(function () {
+    // Initialize Dropify for all inputs with the 'dropify' class
+    $('.dropify').dropify();
+
+    // Function to handle the Dropify message visibility based on image presence
+    function toggleDropifyMessage(inputId, previewId) {
+        var imageUrl = $(inputId).prev('.dropify-render').find(previewId).attr('src');
+        if (imageUrl && imageUrl !== '') {
+            $(inputId).parents('.dropify-wrapper').find('.dropify-message').css('display', 'block');
+        } else {
+            $(inputId).parents('.dropify-wrapper').find('.dropify-message').css('display', 'none');
+        }
+    }
+
+    // Check if there is an existing image URL on page load for each input
+    $('#ImageUrl, #ImageUrl2, #ImageUrl3, #CoverImage, #img3, #img4, #img5').each(function () {
+        toggleDropifyMessage(this, 'img');
+    });
+
+    // Handle image preview for each input
+    $('#ImageUrl, #ImageUrl2, #ImageUrl3, #CoverImage, #img3, #img4, #img5').change(function () {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $(this).prev('.dropify-render').find('img').attr('src', e.target.result);
+                toggleDropifyMessage(this, 'img');
+            }.bind(this);
+            reader.readAsDataURL(this.files[0]);
+        } else {
+            toggleDropifyMessage(this, 'img');
+        }
+    });
+
+    // Handle form submission to persist image changes
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+        // Your logic to handle the form submission and image updates on the server-side
+    });
+});

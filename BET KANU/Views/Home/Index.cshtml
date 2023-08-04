@@ -5,9 +5,12 @@
 }
 <head>
     <!-- PLUGINS -->
+ 
+    <link href="/plugins/animate/animate.css" rel="stylesheet">
     <link href="/plugins/animate/animate.min.css" rel="stylesheet">
     <link href="/plugins/owl-carousel/owl.carousel.css" rel="stylesheet">
 </head>
+
 <div id="wrapper">
     <!-- Bootstrap 5 -->
     <div id="full-carousel" class=" carousel slide full-carousel carousel-fade" data-bs-ride="carousel">
@@ -20,7 +23,7 @@
             <div class="carousel-item active" id="test">
                 <img class="ken-burns" src="/img/home/slide1.jpg" alt="">
                 <div class="container">
-                    <div class="carousel-caption" style="text-align:center ; position:sticky ; padding-bottom:175px">
+                    <div class="carousel-caption">
                         <h1 data-animation="animated animate1 bounceInDown">Syriac for the digital age</h1>
                         <p data-animation="animated animate7 fadeIn">Let's make our beautiful Syriac language ready for the digital age.</p>
                         <a href="~/about/betkanu" data-toggle="modal" class="btn btn-primary btn-lg btn-rounded" data-animation="animated animate10 fadeIn">About BET KANU</a>
@@ -31,7 +34,7 @@
             <div class="carousel-item" id="test2">
                 <img class="ken-burns" src="/img/home/slide2.jpg" alt="">
                 <div class="container">
-                    <div class="carousel-caption" style="text-align:center ; position:sticky ; padding-bottom:175px">
+                    <div class="carousel-caption" >
                         <h1 data-animation="animated animate1 fadeInDown">SOFTWARE</h1>
                         <p data-animation="animated animate7 fadeIn">
                             This track focuses on creating various digital tools to make Syriac linguistic resources easily accessible online for all ages.
@@ -44,7 +47,7 @@
             <div class="carousel-item" id="test3">
                 <img class="ken-burns" src="/img/home/slide3.jpg" alt="">
                 <div class="container">
-                    <div class="carousel-caption" style="text-align:center ; position:sticky ; padding-bottom:175px">
+                    <div class="carousel-caption" >
                         <h1 data-animation="animated animate1 fadeIn">Studio</h1>
                         <p data-animation="animated animate7 fadeIn">
                             This track focuses on creating songs, tales, and cartoons to preserve our language and revive our culture.
@@ -52,7 +55,13 @@
                         <a href="/studio" data-toggle="modal" class="btn btn-success btn-lg btn-rounded" data-animation="animated animate10 fadeIn">See More</a>
                     </div>
                 </div>
-            </div>
+            </div>  
+            <a class="left carousel-control" href="#full-carousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            </a>
+            <a class="right carousel-control" href="#full-carousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            </a>
         </div>
     </div>
 

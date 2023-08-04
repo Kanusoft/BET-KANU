@@ -5975,6 +5975,10 @@ section#video {
 
 .carousel .carousel-indicators li {
 	border: 0;
+	background-color: #FFF;
+	width: 10px;
+	height: 10px;
+	margin: 6px;
 	background-color: rgba(255,255,255, 0.5);
 }
 
@@ -5983,7 +5987,7 @@ section#video {
 		background-color: #FFF;
 		width: 10px;
 		height: 10px;
-		margin: 1px;
+		margin: 6px;
 	}
 .carousel-indicators li {
 	display: inline-block;
@@ -10108,5 +10112,51 @@ footer {
 	width: 20rem;
 }
 
+.ken-burns {
+	animation: kenBurnsAnimation 15s infinite; 
+}
 
+@keyframes kenBurnsAnimation {
+	0% {
+		transform: scale(1);
+	}
+
+	50% {
+		transform: scale(1.1);
+	}
+
+	100% {
+		transform: scale(1);
+	}
+}
+
+.carousel-caption {
+	opacity: 0;
+	transform: translateY(-50px);
+	animation: fallFromTop 1s forwards, fadeInFromBottom 1s forwards;
+}
+
+@keyframes fallFromTop {
+	0% {
+		opacity: 0;
+		transform: translateY(-50px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes fadeInFromBottom {
+	0% {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
 
