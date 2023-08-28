@@ -347,17 +347,39 @@
 
                                 </div>
                             </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="well">
-                                    <img src="@Model?.product.img2" alt="">
+                            @if (Model?.product.img2 != null)
+                            {
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="well">
+                                        <img src="@Model?.product.img2" alt="">
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="well">
-                                    <img src="@Model?.product.img3" alt="">
+                            }
+                            @if (Model?.product.img3 != null)
+                            {
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="well">
+                                        <img src="@Model?.product.img3" alt="">
+                                    </div>
                                 </div>
-                            </div>
+                            }
+                                     @if (Model?.product.img4 != null)
+                            {
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="well">
+                                        <img src="@Model?.product.img4" alt="">
+                                    </div>
+                                </div>
+                            }
+                                     @if (Model?.product.img5 != null)
+                            {
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="well">
+                                        <img src="@Model?.product.img5" alt="">
+                                    </div>
+                                </div>
+                            }
                         </div>
 
                     </div>
