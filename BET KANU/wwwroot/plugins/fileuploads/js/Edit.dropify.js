@@ -76,9 +76,7 @@ $(document).ready(function () {
         }
     });
 
-    // Handle form submission to persist image changes
-    $('form').on('submit', function (e) {
-        e.preventDefault();
-        // Your logic to handle the form submission and image updates on the server-side
-    });
+    //$('form').on('submit', function (e) {
+    //    e.preventDefault();
+    //});
 });
