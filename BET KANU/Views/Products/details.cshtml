@@ -5,7 +5,7 @@
 @if (Model?.product?.Category.ToString() == "Songs")
 {
 
-    <section class="hero height-350 hero-game" style="background-image: url(@Model.product.CoverImage);">
+    <section class="hero hero-game" style="background-image: url(@Model.product.CoverImage);">
     </section>
     <section>
         <div class="container">
@@ -31,22 +31,27 @@
                                 @Model?.product.LongDescription
                             </p>
                             <div class="container row">
-                                <div class="well col-md-5 col-sm-12" style="text-align:center ; direction:rtl" id="western">
-                                    <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Western Lyrics</h3>
-                                    <p class="Surayt font-size-22">
-                                        @Html.Raw(Model?.product.ScriptW)
-                                    </p>
-                                    <a class="btn btn-info" href="@Model?.product.Wpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
-                                </div>
+                                @if (Model?.product.ScriptW != null)
+                                {
+                                    <div class="well col-md-5 col-sm-12" style="text-align:center ; direction:rtl" id="western">
+                                        <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Western Lyrics</h3>
+                                        <p class="Surayt font-size-22">
+                                            @Html.Raw(Model?.product.ScriptW)
+                                        </p>
+                                        <a class="btn btn-info" href="@Model?.product.Wpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+                                    </div>
+                                }
                                 <div class="col-lg-1"></div>
-                                <div class="well col-md-5 col-sm-12" style="text-align:center ; direction:rtl" id="eastern">
-                                    <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Eastern Lyrics</h3>
-                                    <p class="Surit font-size-22">
-                                        @Html.Raw(Model?.product.ScriptE)
-                                    </p>
-
-                                    <a class="btn btn-info" href="@Model?.product.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
-                                </div>
+                                @if (Model?.product.ScriptE != null)
+                                {
+                                    <div class="well col-md-5 col-sm-12" style="text-align:center ; direction:rtl" id="eastern">
+                                        <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Eastern Lyrics</h3>
+                                        <p class="Surit font-size-22">
+                                            @Html.Raw(Model?.product.ScriptE)
+                                        </p>
+                                        <a class="btn btn-info" href="@Model?.product.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -174,26 +179,36 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="container">
-                        <div class="page-header">
-                            <div class="page-title" style="color:black">Credits</div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4 col-sm-12">
-                            <div class="well">
-
-
-                                @Html.Raw(@Model?.product.CreditsW)
-
+                    @if (Model?.product.VideoE != null)
+                    {
+                        <div class="container">
+                            <div class="page-header">
+                                <div class="page-title" style="color:black">Credits</div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-12">
+                    }
+                   
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            @if (Model?.product.CreditsW != null || Model?.product.CreditsE != null)
+                            {
+                                <div class="well">
+
+
+                                    @Html.Raw(@Model?.product.CreditsW)
+
+                                </div>
+                            }
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            @if (Model?.product.CreditsE != null)
+                                    {
                             <div class="well">
 
                                 @Html.Raw(@Model?.product.CreditsE)
 
                             </div>
+                                    }
                         </div>
                     </div>
                 </div>
@@ -347,17 +362,39 @@
 
                                 </div>
                             </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="well">
-                                    <img src="@Model?.product.img2" alt="">
+                            @if (Model?.product.img2 != null)
+                            {
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="well">
+                                        <img src="@Model?.product.img2" alt="">
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="well">
-                                    <img src="@Model?.product.img3" alt="">
+                            }
+                            @if (Model?.product.img3 != null)
+                            {
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="well">
+                                        <img src="@Model?.product.img3" alt="">
+                                    </div>
                                 </div>
-                            </div>
+                            }
+                                     @if (Model?.product.img4 != null)
+                            {
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="well">
+                                        <img src="@Model?.product.img4" alt="">
+                                    </div>
+                                </div>
+                            }
+                                     @if (Model?.product.img5 != null)
+                            {
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="well">
+                                        <img src="@Model?.product.img5" alt="">
+                                    </div>
+                                </div>
+                            }
                         </div>
 
                     </div>
