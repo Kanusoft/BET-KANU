@@ -30,7 +30,7 @@ namespace BetKanu.Data.Repositories
         /// <returns></returns>
         public List<Product> GetAll(Category category)
         {
-            return _db.Products.Where(p => p.Category == category).ToList();
+            return _db.Products.Where(p => p.Category == category).OrderByDescending(p => p.ReleaseDate).ToList();
         }
 
         /// <summary>
