@@ -2920,6 +2920,7 @@ nav {
 		}
 	nav ul li .dropdown-nav-menu > li {
 		width: 100%!important;
+		cursor:pointer;
 	}
 		
 
@@ -3105,11 +3106,10 @@ nav {
 	position: relative;
 	padding: 0 !important;
 }
-
-	.dropdown-submenu.open a {
-		border-radius: 0 !important;
-		background-color: rgba(245, 245, 245, 0.7);
-	}
+.dropdown-submenu.open a {
+	border-radius: 0 !important;
+	background-color: rgba(245, 245, 245, 0.7);
+}
 
 	.dropdown-submenu > a {
 		position: relative;
@@ -6884,7 +6884,7 @@ footer {
 }
 
 
-@media (max-width: 990px) {
+@media (max-width: 992px) {
 	.fixed-header {
 		padding-top: 50px;
 	}
@@ -6936,7 +6936,7 @@ footer {
 			}
 
 			header .logo img {
-				height: 35px !important;
+				height: 32px !important;
 				/*height: 50px !important; Samir changed to make smal logo responsive with screen*/
 			}
 
@@ -9777,7 +9777,7 @@ footer {
 	}
 }
 
-@media (max-width: 990px) {
+@media (max-width: 992px) {
 	.no-padding-sm {
 		padding: 0 !important;
 	}
@@ -10051,6 +10051,7 @@ footer {
 .dropdown:hover .dropdown-toggle{
 	display:block;
 }
+
 .modal-body .modal-line {
 	width: 100%;
 	display: block;
@@ -10104,12 +10105,24 @@ footer {
 			background-color: #000000 !important;
 		}
 
+/* CSS for screens larger than 992 pixels */
+@media (min-width: 993px) {
+	.navbar-nav li.dropdown:hover .dropdown-menu {
+		display: block;
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
 
-.navbar-nav li.dropdown:hover .dropdown-menu {
-	display: block;
-	opacity: 1;
-	transform: translateY(0);
-	width: 17rem;
+/* CSS for screens smaller than or equal to 992 pixels */
+@media (max-width: 992px) {
+
+
+	.navbar-nav li.dropdown.active .dropdown-menu {
+		display: contents; /* Show on click */
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 .ken-burns {

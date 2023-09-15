@@ -112,7 +112,6 @@ form input:not(#terms,#remember) {
 	width: 100%;
 	outline: 0;
 	margin: 0 0 20px;
-	padding: 10px 15px;
 	border-radius: 7px;
 }
 
