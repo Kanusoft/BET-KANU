@@ -17,7 +17,7 @@ namespace BET_KANU.Controllers
                 ipnData = reader.ReadToEnd();
             }
 
-            // Verify the IPN message authenticity (you need to implement this part)
+            // Verify the IPN message authenticity
             bool isIPNAuthentic = VerifyIPNRequest(ipnData);
 
             if (isIPNAuthentic)
