@@ -16,7 +16,7 @@ namespace BET_KANU.Controllers
 
         // GET api/BKReader
         [HttpGet]
-        public ActionResult Get(int? bookId, int? page, int? sec, int? chapterNo)
+        public ActionResult Get(int? bookId, int? page, int? sec = 1, int? chapterNo = 1, int? pageNavigation = 0)
         {
             if (Request.Headers.TryGetValue("FROM", out var headervalue))
             {
@@ -24,13 +24,9 @@ namespace BET_KANU.Controllers
                 {
                     if (bookId.HasValue)
                     {
-                        if (sec == null)
+                        if (page.HasValue && sec.HasValue || pageNavigation.HasValue)
                         {
-                            sec = 1;
-                        }
-                        if (page.HasValue && sec.HasValue)
-                        {
-                            var bundle = _unitOfWork.bKBundle.GetBundle(bookId.Value, page.Value, sec.Value) ?? null;
+                            var bundle = _unitOfWork.bKBundle.GetBundle(bookId.Value, page.Value, sec.Value, pageNavigation.Value) ?? null;
 
                             if(bundle is null)
                                 return BadRequest("No Content");                           

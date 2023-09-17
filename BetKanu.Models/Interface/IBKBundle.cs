@@ -11,7 +11,7 @@ namespace BetKanu.Models.Interface
         Book GetBook(int id);
         IEnumerable<Book> GetBooks();
         Bundle? GetBundle(int? id);
-        BKRBundle? GetBundle(int? BookId, int? pageNo, int? SecNo);
+        BKRBundle? GetBundle(int? BookId, int? pageNo, int? SecNo, int? pageNavigation);
         IEnumerable<BKRBundle> GetBundles(int bookId, int chapterNo);
         IEnumerable<BKRBundle> GetBundles(int bookId);
     }
