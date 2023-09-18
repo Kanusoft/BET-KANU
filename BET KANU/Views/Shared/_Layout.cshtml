@@ -338,31 +338,10 @@
             })
         })(jQuery);
     </script>
-    <script>
-        $("#myEmailForm2").click(function () {
+    <script src="~/js/show.js"></script>
 
-            const email = $('#Email').val();
-            $.ajax({
-                url: 'https://www.dargushti.com/api/v6/subscribe',
-                type: 'post',
-                data: {
-                    email,
-                },
-                headers: {
-                    'x-api-key': 'API_KEY_SECRET',
-                },
-                dataType: 'json',
-                success(data) {
-                    if (data.result) {
-                        $('#messageResult2').html('<a>Success</a>');
-                    } else {
-                        $('#messageResult2').html('<a> </a>');
-                    }
-                },
-            });
+  
 
-        })
-    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
