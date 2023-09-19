@@ -36,9 +36,11 @@ namespace BetKanu.Data.Repositories
             //Get Previous QR Bundle 
             if (pageNavigation is -1)
             {
-                isFirstPageAndSection = IstherePreviousPage(BookId, pageNo, SecNo);
-                isLastPageAndSection = IsThereNextPage(BookId, pageNo, SecNo);
-                (int newPageNo, int newSecNo, isFirstPageAndSection) = GetPreviousPage(BookId ?? 0, pageNo ?? 0, SecNo ?? 0, pageNavigation ?? 0);
+               
+                (int newPageNo, int newSecNo) = GetPreviousPage(BookId ?? 0, pageNo ?? 0, SecNo ?? 0, pageNavigation ?? 0);
+
+                isFirstPageAndSection = IsTherePreviousPage(BookId, newPageNo, newSecNo);
+                isLastPageAndSection = IsThereNextPage(BookId, newPageNo, newSecNo);
 
                 var b = from bundle in _db.Bundles
                         join book in _db.Books on bundle.BookId equals book.Id
@@ -63,6 +65,8 @@ namespace BetKanu.Data.Repositories
                             VideoURL = book.URL + bundle.VideoURL,
                             IsFirst = isFirstPageAndSection,
                             IsLast = isLastPageAndSection,
+                            NewPageNo = newPageNo,
+                           NewSecNo = newSecNo
                         };
                 return b.FirstOrDefault();
 
@@ -70,7 +74,7 @@ namespace BetKanu.Data.Repositories
             //Get the Current QR Page
             else if (pageNavigation is 0)
             {
-                isFirstPageAndSection = IstherePreviousPage(BookId, pageNo,SecNo);
+                isFirstPageAndSection = IsTherePreviousPage(BookId, pageNo,SecNo);
                 isLastPageAndSection = IsThereNextPage(BookId, pageNo, SecNo);
 
                 var b = from bundle in _db.Bundles
@@ -103,9 +107,13 @@ namespace BetKanu.Data.Repositories
             //Get The Next QR Page
             else if (pageNavigation is 1)
             {
-                isFirstPageAndSection = IstherePreviousPage(BookId, pageNo, SecNo);
-                isLastPageAndSection = IsThereNextPage(BookId, pageNo, SecNo);
-                (int newPageNo, int newSecNo, isLastPageAndSection) = GetNextPage(BookId ?? 0, pageNo ?? 0, SecNo ?? 0, pageNavigation ?? 0);
+               
+                (int newPageNo, int newSecNo) = GetNextPage(BookId ?? 0, pageNo ?? 0, SecNo ?? 0, pageNavigation ?? 0);
+
+                isFirstPageAndSection = IsTherePreviousPage(BookId, newPageNo, newSecNo);
+                isLastPageAndSection = IsThereNextPage(BookId, newPageNo, newSecNo);
+
+
                 var b = from bundle in _db.Bundles
                         join book in _db.Books on bundle.BookId equals book.Id
                         where book.Id == BookId
@@ -129,6 +137,8 @@ namespace BetKanu.Data.Repositories
                             VideoURL = book.URL + bundle.VideoURL,
                             IsFirst = isFirstPageAndSection,
                             IsLast = isLastPageAndSection,
+                            NewPageNo = newPageNo,
+                            NewSecNo = newSecNo
                         };
                 return b.FirstOrDefault();
             }
@@ -143,7 +153,7 @@ namespace BetKanu.Data.Repositories
         /// <param name="secNo"></param>
         /// <param name="pageNavigation"></param>
         /// <returns></returns>
-        private (int pageNo, int secNo, bool isFirst) GetPreviousPage(int BookId, int pageNo, int secNo, int pageNavigation)
+        private (int pageNo, int secNo) GetPreviousPage(int BookId, int pageNo, int secNo, int pageNavigation)
         {
             if (pageNavigation == -1)
             {
@@ -168,7 +178,7 @@ namespace BetKanu.Data.Repositories
 
                         var isfirstSection = maxPreviousSecNo == 1;
 
-                        return (previousPageNumber, maxPreviousSecNo, isFirstPage && isfirstSection);
+                        return (previousPageNumber, maxPreviousSecNo);
                     }
                     else
                     {
@@ -181,17 +191,17 @@ namespace BetKanu.Data.Repositories
                         .Select(b => b.SecNo)
                         .Max();
 
-                        return (firstpage, sectionMaxNumberInPreviousPage , true);
+                        return (firstpage, sectionMaxNumberInPreviousPage);
                     }
                 }
                 else if (secNo > 1)
                 {
                     var previousSecNo = secNo - 1;
-                    return (pageNo, previousSecNo, false);
+                    return (pageNo, previousSecNo);
                 }
             }
 
-            return (pageNo, secNo, false);
+            return (pageNo, secNo);
         }
 
         /// <summary>
@@ -202,7 +212,7 @@ namespace BetKanu.Data.Repositories
         /// <param name="secNo"></param>
         /// <param name="pageNavigation"></param>
         /// <returns></returns>
-        private (int pageNo, int SecNo, bool isLastPageandSection) GetNextPage(int BookId, int pageNo, int secNo, int pageNavigation)
+        private (int pageNo, int SecNo) GetNextPage(int BookId, int pageNo, int secNo, int pageNavigation)
         {
             if (pageNavigation == 1)
             {
@@ -221,7 +231,7 @@ namespace BetKanu.Data.Repositories
                                     .Select(b => b.SecNo)
                                     .Max();
 
-                    return (pageNo, secNo + 1, isLastPage && isLastSection);
+                    return (pageNo, secNo + 1);
                 }
                 else
                 {
@@ -240,11 +250,11 @@ namespace BetKanu.Data.Repositories
                                     .Select(b => b.SecNo)
 
                                     .Max();
-                    return (nextPage, 1, isLastPage && isLastSection);
+                    return (nextPage, 1);
                 }
 
             }
-            return (pageNo, secNo, false);
+            return (pageNo, secNo);
         }
 
         /// <summary>
@@ -254,7 +264,7 @@ namespace BetKanu.Data.Repositories
         /// <param name="PageNo"></param>
         /// <param name="SecNo"></param>
         /// <returns></returns>
-        private bool IstherePreviousPage(int? BookId, int? PageNo , int? SecNo)
+        private bool IsTherePreviousPage(int? BookId, int? PageNo , int? SecNo)
         {
             if(SecNo == 1)
             {
