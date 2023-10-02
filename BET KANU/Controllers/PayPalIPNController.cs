@@ -27,10 +27,8 @@ namespace BET_KANU.Controllers
 
                 if (paymentStatus == "Completed")
                 {
-                    // Payment is completed, redirect the user to the "Special Thanks" page
-                    return RedirectToAction("Index", "SpecialThanks");
+                    return RedirectToAction("SpecialThanks", "Home");
                 }
-                // Handle other payment statuses if needed
             }
 
             // IPN message not authentic or payment not completed, return an empty response to PayPal
@@ -51,7 +49,7 @@ namespace BET_KANU.Controllers
             };
 
             // Create a WebClient instance to send the verification request
-            using (WebClient client = new WebClient())
+            using(WebClient client = new())
             {
                 // Set the encoding
                 client.Encoding = Encoding.UTF8;

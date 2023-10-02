@@ -18,5 +18,13 @@ namespace BetKanu.Models
         public string? ExternalURL { get; set; }
         public string? ExternalURLName { get; set; }
         public string? ExternalVideoName { get; set; }
+
+        public int NewPageNo { get; set; }
+        public int NewSecNo { get; set; }
+
+        public Book? Book { get; set; }
+
+        public bool IsFirst { get; set; }
+        public bool IsLast { get; set; }
     }
 }

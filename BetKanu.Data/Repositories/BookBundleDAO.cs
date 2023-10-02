@@ -1,6 +1,6 @@
-﻿using BetKanu.Models;
+﻿using Azure;
+using BetKanu.Models;
 using BetKanu.Models.Interface;
-using Microsoft.EntityFrameworkCore;
 
 namespace BetKanu.Data.Repositories
 {
@@ -29,12 +29,18 @@ namespace BetKanu.Data.Repositories
             return _db.Bundles.FirstOrDefault(b => b.Id == id);
         }
 
-        public BKRBundle? GetBundle(int? BookId, int? pageNo, int? SecNo, int? pageNavigation)
+        public BKRBundle? GetBundle(int? BookId, int? pageNo, int? SecNo, int? pageNavigation )
         {
+            bool isFirstPageAndSection = false;
+            bool isLastPageAndSection = false;
             //Get Previous QR Bundle 
             if (pageNavigation is -1)
             {
-                (int newPageNo, int newSecNo , bool isFirstPageAndSection) = ResetPageToPrevious(BookId ?? 0, pageNo ?? 0, SecNo ?? 0, pageNavigation ?? 0);
+               
+                (int newPageNo, int newSecNo) = GetPreviousPage(BookId ?? 0, pageNo ?? 0, SecNo ?? 0, pageNavigation ?? 0);
+
+                isFirstPageAndSection = IsTherePreviousPage(BookId, newPageNo, newSecNo);
+                isLastPageAndSection = IsThereNextPage(BookId, newPageNo, newSecNo);
 
                 var b = from bundle in _db.Bundles
                         join book in _db.Books on bundle.BookId equals book.Id
@@ -43,6 +49,10 @@ namespace BetKanu.Data.Repositories
                         && bundle.SecNo == newSecNo
                         select new BKRBundle()
                         {
+                            Book = new()
+                            {
+                                Name = book.Name,
+                            },
                             AudioURL = book.URL + bundle.AudioURL,
                             ExternalURL = bundle.ExternalURL,
                             ExternalURLName = bundle.ExternalURLName,
@@ -52,7 +62,11 @@ namespace BetKanu.Data.Repositories
                             InternalVideo = bundle.InternalVideo,
                             TextLanguage = bundle.TextLanguage.Trim(),
                             TextURL = book.URL + bundle.TextURL,
-                            VideoURL = book.URL + bundle.VideoURL
+                            VideoURL = book.URL + bundle.VideoURL,
+                            IsFirst = isFirstPageAndSection,
+                            IsLast = isLastPageAndSection,
+                            NewPageNo = newPageNo,
+                           NewSecNo = newSecNo
                         };
                 return b.FirstOrDefault();
 
@@ -60,6 +74,9 @@ namespace BetKanu.Data.Repositories
             //Get the Current QR Page
             else if (pageNavigation is 0)
             {
+                isFirstPageAndSection = IsTherePreviousPage(BookId, pageNo,SecNo);
+                isLastPageAndSection = IsThereNextPage(BookId, pageNo, SecNo);
+
                 var b = from bundle in _db.Bundles
                         join book in _db.Books on bundle.BookId equals book.Id
                         where book.Id == BookId
@@ -67,6 +84,10 @@ namespace BetKanu.Data.Repositories
                         && bundle.SecNo == SecNo
                         select new BKRBundle()
                         {
+                            Book = new()
+                            {
+                                Name = book.Name,
+                            },
                             AudioURL = book.URL + bundle.AudioURL,
                             ExternalURL = bundle.ExternalURL,
                             ExternalURLName = bundle.ExternalURLName,
@@ -76,14 +97,23 @@ namespace BetKanu.Data.Repositories
                             InternalVideo = bundle.InternalVideo,
                             TextLanguage = bundle.TextLanguage.Trim(),
                             TextURL = book.URL + bundle.TextURL,
-                            VideoURL = book.URL + bundle.VideoURL
+                            VideoURL = book.URL + bundle.VideoURL,
+                            IsFirst = isFirstPageAndSection,
+                            IsLast = isLastPageAndSection,
                         };
+
                 return b.FirstOrDefault();
             }
             //Get The Next QR Page
             else if (pageNavigation is 1)
             {
-                (int newPageNo, int newSecNo, bool isLastPageandSection) = ResetToNextPage(BookId ?? 0, pageNo ?? 0, SecNo ?? 0, pageNavigation ?? 0);
+               
+                (int newPageNo, int newSecNo) = GetNextPage(BookId ?? 0, pageNo ?? 0, SecNo ?? 0, pageNavigation ?? 0);
+
+                isFirstPageAndSection = IsTherePreviousPage(BookId, newPageNo, newSecNo);
+                isLastPageAndSection = IsThereNextPage(BookId, newPageNo, newSecNo);
+
+
                 var b = from bundle in _db.Bundles
                         join book in _db.Books on bundle.BookId equals book.Id
                         where book.Id == BookId
@@ -91,6 +121,10 @@ namespace BetKanu.Data.Repositories
                         && bundle.SecNo == newSecNo
                         select new BKRBundle()
                         {
+                            Book = new()
+                            {
+                                Name = book.Name,
+                            },
                             AudioURL = book.URL + bundle.AudioURL,
                             ExternalURL = bundle.ExternalURL,
                             ExternalURLName = bundle.ExternalURLName,
@@ -100,11 +134,13 @@ namespace BetKanu.Data.Repositories
                             InternalVideo = bundle.InternalVideo,
                             TextLanguage = bundle.TextLanguage.Trim(),
                             TextURL = book.URL + bundle.TextURL,
-                            VideoURL = book.URL + bundle.VideoURL
+                            VideoURL = book.URL + bundle.VideoURL,
+                            IsFirst = isFirstPageAndSection,
+                            IsLast = isLastPageAndSection,
+                            NewPageNo = newPageNo,
+                            NewSecNo = newSecNo
                         };
                 return b.FirstOrDefault();
-
-
             }
             return null;
         }
@@ -117,7 +153,7 @@ namespace BetKanu.Data.Repositories
         /// <param name="secNo"></param>
         /// <param name="pageNavigation"></param>
         /// <returns></returns>
-        private (int pageNo, int secNo, bool isFirstPageAndSection) ResetPageToPrevious(int BookId, int pageNo, int secNo, int pageNavigation)
+        private (int pageNo, int secNo) GetPreviousPage(int BookId, int pageNo, int secNo, int pageNavigation)
         {
             if (pageNavigation == -1)
             {
@@ -129,24 +165,20 @@ namespace BetKanu.Data.Repositories
                         .Select(b => b.PageNo)
                         .FirstOrDefault();
 
-                    if (previousPageNumber != 0)
+                    if (previousPageNumber > 0)
                     {
-                        var sectionMaxNumberInPreviousPage = _db.Bundles
+                        var maxPreviousSecNo = _db.Bundles
                         .Where(b => b.BookId == BookId && b.PageNo == previousPageNumber)
                         .Select(b => b.SecNo)
                         .Max();
 
                         var isFirstPage = previousPageNumber == _db.Bundles.Where(b => b.BookId == BookId && b.PageNo < pageNo)
-                            .OrderByDescending(b => b.PageNo)
                             .Select(b => b.PageNo)
                             .Min();
 
-                        var isfirstSection = sectionMaxNumberInPreviousPage == _db.Bundles
-                            .Where(b => b.BookId == BookId && b.PageNo == previousPageNumber)
-                            .Select(b => b.SecNo)
-                            .Min();
+                        var isfirstSection = maxPreviousSecNo == 1;
 
-                        return (previousPageNumber, sectionMaxNumberInPreviousPage, isFirstPage && isfirstSection);
+                        return (previousPageNumber, maxPreviousSecNo);
                     }
                     else
                     {
@@ -154,17 +186,22 @@ namespace BetKanu.Data.Repositories
                             .Select(b => b.PageNo)
                             .FirstOrDefault();
 
-                        return (firstpage,1, true);
+                        var sectionMaxNumberInPreviousPage = _db.Bundles
+                        .Where(b => b.BookId == BookId && b.PageNo == firstpage)
+                        .Select(b => b.SecNo)
+                        .Max();
+
+                        return (firstpage, sectionMaxNumberInPreviousPage);
                     }
                 }
                 else if (secNo > 1)
                 {
                     var previousSecNo = secNo - 1;
-                    return (pageNo, previousSecNo , false);
+                    return (pageNo, previousSecNo);
                 }
             }
 
-            return (pageNo, secNo, false);
+            return (pageNo, secNo);
         }
 
         /// <summary>
@@ -175,7 +212,7 @@ namespace BetKanu.Data.Repositories
         /// <param name="secNo"></param>
         /// <param name="pageNavigation"></param>
         /// <returns></returns>
-        private (int pageNo, int SecNo, bool isLastPageandSection) ResetToNextPage(int BookId, int pageNo, int secNo, int pageNavigation)
+        private (int pageNo, int SecNo) GetNextPage(int BookId, int pageNo, int secNo, int pageNavigation)
         {
             if (pageNavigation == 1)
             {
@@ -186,7 +223,7 @@ namespace BetKanu.Data.Repositories
                 {
                     var isLastPage = pageNo == _db.Bundles
                                      .Where(b => b.BookId == BookId)
-                                     .Select (b => b.PageNo)
+                                     .Select(b => b.PageNo)
                                      .Max();
 
                     var isLastSection = secNo + 1 == _db.Bundles
@@ -194,7 +231,7 @@ namespace BetKanu.Data.Repositories
                                     .Select(b => b.SecNo)
                                     .Max();
 
-                    return (pageNo, secNo + 1 , isLastPage && isLastSection);
+                    return (pageNo, secNo + 1);
                 }
                 else
                 {
@@ -210,23 +247,97 @@ namespace BetKanu.Data.Repositories
 
                     var isLastSection = secNo == _db.Bundles
                                     .Where(b => b.BookId == BookId && b.PageNo == nextPage)
-                                    .Select (b => b.SecNo)
+                                    .Select(b => b.SecNo)
+
                                     .Max();
-
-                    //if (nextPage == 0)
-                    //{
-                    //    nextPage = _db.Bundles
-                    //     .Where(b => b.BookId == BookId)
-                    //     .OrderBy(b => b.PageNo)
-                    //     .Select(b => b.PageNo)
-                    //     .FirstOrDefault();
-                    //}
-
-                    return (nextPage, 1, isLastPage && isLastSection);
+                    return (nextPage, 1);
                 }
 
             }
-            return (pageNo, secNo, false);
+            return (pageNo, secNo);
+        }
+
+        /// <summary>
+        /// check if there is Page befoar Current Page
+        /// </summary>
+        /// <param name="BookId"></param>
+        /// <param name="PageNo"></param>
+        /// <param name="SecNo"></param>
+        /// <returns></returns>
+        private bool IsTherePreviousPage(int? BookId, int? PageNo , int? SecNo)
+        {
+            if(SecNo == 1)
+            {
+                var previousPageNumber = _db.Bundles
+                     .Where(b => b.BookId == BookId && b.PageNo < PageNo)
+                     .OrderByDescending(b => b.PageNo)
+                     .Select(b => b.PageNo)
+                     .FirstOrDefault();
+
+                if (previousPageNumber > 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            return false;         
+        }
+
+        /// <summary>
+        /// check if there is Page after Current Page
+        /// </summary>
+        /// <param name="BookId"></param>
+        /// <param name="PageNo"></param>
+        /// <param name="SecNo"></param>
+        /// <returns></returns>
+        private bool IsThereNextPage(int? BookId, int? PageNo, int? SecNo)
+        {
+            var hasAnotherSection = _db.Bundles
+                     .Any(b => b.BookId == BookId && b.PageNo == PageNo && b.SecNo > SecNo);
+
+            if (hasAnotherSection)
+            {
+                var isLastPage = PageNo == _db.Bundles
+                                 .Where(b => b.BookId == BookId)
+                                 .Select(b => b.PageNo)
+                                 .Max();
+
+                var isLastSection = SecNo + 1 == _db.Bundles
+                                .Where(b => b.BookId == BookId && b.PageNo == PageNo)
+                                .Select(b => b.SecNo)
+                                .Max();
+
+                return (isLastPage && isLastSection);
+            }
+            else
+            {
+                var nextPage = _db.Bundles
+                    .Where(b => b.BookId == BookId && b.PageNo > PageNo)
+                    .OrderBy(b => b.PageNo)
+                    .Select(b => b.PageNo)
+                    .FirstOrDefault();
+
+                if(nextPage == 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    var isLastPage = nextPage == _db.Bundles
+                               .Where(b => b.BookId == BookId)
+                               .Max(b => b.PageNo);
+
+                    var isLastSection = SecNo == _db.Bundles
+                                    .Where(b => b.BookId == BookId && b.PageNo == nextPage)
+                                    .Select(b => b.SecNo)
+                                    .Max();
+
+                    return isLastPage && isLastSection;
+                }         
+            }
         }
 
         public IEnumerable<BKRBundle> GetBundles(int bookId, int chapterNo)
@@ -237,6 +348,10 @@ namespace BetKanu.Data.Repositories
                     && bundle.ChapterNo == chapterNo
                     select new BKRBundle()
                     {
+                        Book = new()
+                        {
+                            Name = book.Name,
+                        },
                         AudioURL = book.URL + bundle.AudioURL,
                         ExternalURL = bundle.ExternalURL,
                         ExternalURLName = bundle.ExternalURLName,
@@ -258,6 +373,10 @@ namespace BetKanu.Data.Repositories
                     where book.Id == bookId
                     select new BKRBundle()
                     {
+                        Book = new()
+                        {
+                            Name = book.Name,
+                        },
                         AudioURL = book.URL + bundle.AudioURL,
                         ExternalURL = bundle.ExternalURL,
                         ExternalURLName = bundle.ExternalURLName,
