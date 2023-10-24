@@ -53,20 +53,20 @@ namespace BetKanu.Data.Repositories
                             {
                                 Name = book.Name,
                             },
-                            AudioURL = book.URL + bundle.AudioURL,
+                            AudioURL = (book.URL + bundle.AudioURL).Replace("\r", "").Replace("\n", ""),
                             ExternalURL = bundle.ExternalURL,
                             ExternalURLName = bundle.ExternalURLName,
                             ExternalVideo = bundle.ExternalVideo,
-                            ImageURL = book.URL + bundle.ImageURL,
+                            ImageURL = (book.URL + bundle.ImageURL).Replace("\r", "").Replace("\n", ""),
                             ExternalVideoName = bundle.ExternalVideoName,
                             InternalVideo = bundle.InternalVideo,
                             TextLanguage = bundle.TextLanguage.Trim(),
-                            TextURL = book.URL + bundle.TextURL,
+                            TextURL = (book.URL + bundle.TextURL).Replace("\r", "").Replace("\n", ""),
                             VideoURL = book.URL + bundle.VideoURL,
                             IsFirst = isFirstPageAndSection,
                             IsLast = isLastPageAndSection,
                             NewPageNo = newPageNo,
-                           NewSecNo = newSecNo
+                            NewSecNo = newSecNo,
                         };
                 return b.FirstOrDefault();
 
@@ -88,21 +88,23 @@ namespace BetKanu.Data.Repositories
                             {
                                 Name = book.Name,
                             },
-                            AudioURL = book.URL + bundle.AudioURL,
+                            AudioURL = (book.URL + bundle.AudioURL).Replace("\r","").Replace("\n",""),
                             ExternalURL = bundle.ExternalURL,
                             ExternalURLName = bundle.ExternalURLName,
                             ExternalVideo = bundle.ExternalVideo,
-                            ImageURL = book.URL + bundle.ImageURL,
+                            ImageURL = (book.URL + bundle.ImageURL).Replace("\r", "").Replace("\n", ""),
                             ExternalVideoName = bundle.ExternalVideoName,
                             InternalVideo = bundle.InternalVideo,
                             TextLanguage = bundle.TextLanguage.Trim(),
-                            TextURL = book.URL + bundle.TextURL,
+                            TextURL = (book.URL + bundle.TextURL).Replace("\r", "").Replace("\n", ""),
                             VideoURL = book.URL + bundle.VideoURL,
                             IsFirst = isFirstPageAndSection,
                             IsLast = isLastPageAndSection,
+
                         };
 
                 return b.FirstOrDefault();
+
             }
             //Get The Next QR Page
             else if (pageNavigation is 1)
@@ -125,20 +127,20 @@ namespace BetKanu.Data.Repositories
                             {
                                 Name = book.Name,
                             },
-                            AudioURL = book.URL + bundle.AudioURL,
+                            AudioURL = (book.URL + bundle.AudioURL).Replace("\r", "").Replace("\n", ""),
                             ExternalURL = bundle.ExternalURL,
                             ExternalURLName = bundle.ExternalURLName,
                             ExternalVideo = bundle.ExternalVideo,
-                            ImageURL = book.URL + bundle.ImageURL,
+                            ImageURL = (book.URL + bundle.ImageURL).Replace("\r", "").Replace("\n", ""),
                             ExternalVideoName = bundle.ExternalVideoName,
                             InternalVideo = bundle.InternalVideo,
                             TextLanguage = bundle.TextLanguage.Trim(),
-                            TextURL = book.URL + bundle.TextURL,
+                            TextURL = (book.URL + bundle.TextURL).Replace("\r", "").Replace("\n", ""),
                             VideoURL = book.URL + bundle.VideoURL,
                             IsFirst = isFirstPageAndSection,
                             IsLast = isLastPageAndSection,
                             NewPageNo = newPageNo,
-                            NewSecNo = newSecNo
+                            NewSecNo = newSecNo,
                         };
                 return b.FirstOrDefault();
             }
