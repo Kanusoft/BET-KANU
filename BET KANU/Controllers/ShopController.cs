@@ -16,7 +16,8 @@ namespace BET_KANU.Controllers
         {
             var svm = new ProductVM();
             svm.Shops = _unit.Shop.GetAll();
-            return View(svm);
+            return Redirect("https://betkanu.square.site/s/shop");
+          //  return View(svm);
         }
     }
 }
