@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace BetKanu.Models
 {
@@ -19,12 +15,12 @@ namespace BetKanu.Models
         public string? ExternalURLName { get; set; }
         public string? ExternalVideoName { get; set; }
 
-        public int NewPageNo { get; set; }
-        public int NewSecNo { get; set; }
+        //public int NewPageNo { get; set; }
+        //public int NewSecNo { get; set; }
 
-        public Book? Book { get; set; }
+      //  public Book? Book { get; set; }
 
-        public bool IsFirst { get; set; }
-        public bool IsLast { get; set; }
+        //public bool IsFirst { get; set; }
+        //public bool IsLast { get; set; }
     }
 }
