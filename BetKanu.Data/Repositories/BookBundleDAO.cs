@@ -28,146 +28,146 @@ namespace BetKanu.Data.Repositories
             return _db.Bundles.FirstOrDefault(b => b.Id == id);
         }
 
-        //public BKRBundle? GetBundle(int? BookId, int? pageNo, int? SecNo, int? pageNavigation)
-        //{
-        //    bool isFirstPageAndSection = false;
-        //    bool isLastPageAndSection = false;
-        //    //Get Previous QR Bundle 
-        //    if (pageNavigation is -1)
-        //    {
-
-        //        (int newPageNo, int newSecNo) = GetPreviousPage(BookId ?? 0, pageNo ?? 0, SecNo ?? 0, pageNavigation ?? 0);
-
-        //        isFirstPageAndSection = IsTherePreviousPage(BookId, newPageNo, newSecNo);
-        //        isLastPageAndSection = IsThereNextPage(BookId, newPageNo, newSecNo);
-
-        //        var b = from bundle in _db.Bundles
-        //                join book in _db.Books on bundle.BookId equals book.Id
-        //                where book.Id == BookId
-        //                && bundle.PageNo == newPageNo
-        //                && bundle.SecNo == newSecNo
-        //                select new BKRBundle()
-        //                {
-        //                    Book = new()
-        //                    {
-        //                        Name = book.Name,
-        //                    },
-        //                    AudioURL = (book.URL + bundle.AudioURL).Replace("\r", "").Replace("\n", ""),
-        //                    ExternalURL = bundle.ExternalURL,
-        //                    ExternalURLName = bundle.ExternalURLName,
-        //                    ExternalVideo = bundle.ExternalVideo,
-        //                    ImageURL = (book.URL + bundle.ImageURL).Replace("\r", "").Replace("\n", ""),
-        //                    ExternalVideoName = bundle.ExternalVideoName,
-        //                    InternalVideo = bundle.InternalVideo,
-        //                    TextLanguage = bundle.TextLanguage.Trim(),
-        //                    TextURL = (book.URL + bundle.TextURL).Replace("\r", "").Replace("\n", ""),
-        //                    VideoURL = book.URL + bundle.VideoURL,
-        //                    IsFirst = isFirstPageAndSection,
-        //                    IsLast = isLastPageAndSection,
-        //                    NewPageNo = newPageNo,
-        //                    NewSecNo = newSecNo,
-        //                };
-        //        return b.FirstOrDefault();
-
-        //    }
-        //    //Get the Current QR Page
-        //    else if (pageNavigation is 0)
-        //    {
-        //        isFirstPageAndSection = IsTherePreviousPage(BookId, pageNo, SecNo);
-        //        isLastPageAndSection = IsThereNextPage(BookId, pageNo, SecNo);
-
-        //        var b = from bundle in _db.Bundles
-        //                join book in _db.Books on bundle.BookId equals book.Id
-        //                where book.Id == BookId
-        //                && bundle.PageNo == pageNo
-        //                && bundle.SecNo == SecNo
-        //                select new BKRBundle()
-        //                {
-        //                    Book = new()
-        //                    {
-        //                        Name = book.Name,
-        //                    },
-        //                    AudioURL = (book.URL + bundle.AudioURL).Replace("\r", "").Replace("\n", ""),
-        //                    ExternalURL = bundle.ExternalURL,
-        //                    ExternalURLName = bundle.ExternalURLName,
-        //                    ExternalVideo = bundle.ExternalVideo,
-        //                    ImageURL = (book.URL + bundle.ImageURL).Replace("\r", "").Replace("\n", ""),
-        //                    ExternalVideoName = bundle.ExternalVideoName,
-        //                    InternalVideo = bundle.InternalVideo,
-        //                    TextLanguage = bundle.TextLanguage.Trim(),
-        //                    TextURL = (book.URL + bundle.TextURL).Replace("\r", "").Replace("\n", ""),
-        //                    VideoURL = book.URL + bundle.VideoURL,
-        //                    IsFirst = isFirstPageAndSection,
-        //                    IsLast = isLastPageAndSection,
-
-        //                };
-
-        //        return b.FirstOrDefault();
-
-        //    }
-        //    //Get The Next QR Page
-        //    else if (pageNavigation is 1)
-        //    {
-
-        //        (int newPageNo, int newSecNo) = GetNextPage(BookId ?? 0, pageNo ?? 0, SecNo ?? 0, pageNavigation ?? 0);
-
-        //        isFirstPageAndSection = IsTherePreviousPage(BookId, newPageNo, newSecNo);
-        //        isLastPageAndSection = IsThereNextPage(BookId, newPageNo, newSecNo);
-
-
-        //        var b = from bundle in _db.Bundles
-        //                join book in _db.Books on bundle.BookId equals book.Id
-        //                where book.Id == BookId
-        //                && bundle.PageNo == newPageNo
-        //                && bundle.SecNo == newSecNo
-        //                select new BKRBundle()
-        //                {
-        //                    Book = new()
-        //                    {
-        //                        Name = book.Name,
-        //                    },
-        //                    AudioURL = (book.URL + bundle.AudioURL).Replace("\r", "").Replace("\n", ""),
-        //                    ExternalURL = bundle.ExternalURL,
-        //                    ExternalURLName = bundle.ExternalURLName,
-        //                    ExternalVideo = bundle.ExternalVideo,
-        //                    ImageURL = (book.URL + bundle.ImageURL).Replace("\r", "").Replace("\n", ""),
-        //                    ExternalVideoName = bundle.ExternalVideoName,
-        //                    InternalVideo = bundle.InternalVideo,
-        //                    TextLanguage = bundle.TextLanguage.Trim(),
-        //                    TextURL = (book.URL + bundle.TextURL).Replace("\r", "").Replace("\n", ""),
-        //                    VideoURL = book.URL + bundle.VideoURL,
-        //                    IsFirst = isFirstPageAndSection,
-        //                    IsLast = isLastPageAndSection,
-        //                    NewPageNo = newPageNo,
-        //                    NewSecNo = newSecNo,
-        //                };
-        //        return b.FirstOrDefault();
-        //    }
-        //    return null;
-        //}
-
-        public BKRBundle GetBundle(int? bookId, int? pageNo, int? secNo=1 , int? pageNavigation = 0)
+        public BKRBundle? GetBundle(int? BookId, int? pageNo, int? SecNo, int? pageNavigation)
         {
-            var b = from bundle in _db.Bundles
-                    join book in _db.Books on bundle.BookId equals book.Id
-                    where book.Id == bookId
-                    && bundle.PageNo == pageNo
-                    && bundle.SecNo == secNo
-                    select new BKRBundle()
-                    {                     
-                        AudioURL = (book.URL + bundle.AudioURL).Replace("\r", "").Replace("\n", ""),
-                        ExternalURL = bundle.ExternalURL,
-                        ExternalURLName = bundle.ExternalURLName,
-                        ExternalVideo = bundle.ExternalVideo,
-                        ImageURL = (book.URL + bundle.ImageURL).Replace("\r", "").Replace("\n", ""),
-                        ExternalVideoName = bundle.ExternalVideoName,
-                        InternalVideo = bundle.InternalVideo,
-                        TextLanguage = bundle.TextLanguage.Trim(),
-                        TextURL = (book.URL + bundle.TextURL).Replace("\r", "").Replace("\n", ""),
-                        VideoURL = book.URL + bundle.VideoURL
-                    };
-            return b.FirstOrDefault();
+            bool isFirstPageAndSection = false;
+            bool isLastPageAndSection = false;
+            //Get Previous QR Bundle 
+            if (pageNavigation is -1)
+            {
+
+                (int newPageNo, int newSecNo) = GetPreviousPage(BookId ?? 0, pageNo ?? 0, SecNo ?? 0, pageNavigation ?? 0);
+
+                isFirstPageAndSection = IsTherePreviousPage(BookId, newPageNo, newSecNo);
+                isLastPageAndSection = IsThereNextPage(BookId, newPageNo, newSecNo);
+
+                var b = from bundle in _db.Bundles
+                        join book in _db.Books on bundle.BookId equals book.Id
+                        where book.Id == BookId
+                        && bundle.PageNo == newPageNo
+                        && bundle.SecNo == newSecNo
+                        select new BKRBundle()
+                        {
+                            Book = new()
+                            {
+                                Name = book.Name,
+                            },
+                            AudioURL = (book.URL + bundle.AudioURL).Replace("\r", "").Replace("\n", ""),
+                            ExternalURL = bundle.ExternalURL,
+                            ExternalURLName = bundle.ExternalURLName,
+                            ExternalVideo = bundle.ExternalVideo,
+                            ImageURL = (book.URL + bundle.ImageURL).Replace("\r", "").Replace("\n", ""),
+                            ExternalVideoName = bundle.ExternalVideoName,
+                            InternalVideo = bundle.InternalVideo,
+                            TextLanguage = bundle.TextLanguage.Trim(),
+                            TextURL = (book.URL + bundle.TextURL).Replace("\r", "").Replace("\n", ""),
+                            VideoURL = book.URL + bundle.VideoURL,
+                            IsFirst = isFirstPageAndSection,
+                            IsLast = isLastPageAndSection,
+                            NewPageNo = newPageNo,
+                            NewSecNo = newSecNo,
+                        };
+                return b.FirstOrDefault();
+
+            }
+            //Get the Current QR Page
+            else if (pageNavigation is 0)
+            {
+                isFirstPageAndSection = IsTherePreviousPage(BookId, pageNo, SecNo);
+                isLastPageAndSection = IsThereNextPage(BookId, pageNo, SecNo);
+
+                var b = from bundle in _db.Bundles
+                        join book in _db.Books on bundle.BookId equals book.Id
+                        where book.Id == BookId
+                        && bundle.PageNo == pageNo
+                        && bundle.SecNo == SecNo
+                        select new BKRBundle()
+                        {
+                            Book = new()
+                            {
+                                Name = book.Name,
+                            },
+                            AudioURL = (book.URL + bundle.AudioURL).Replace("\r", "").Replace("\n", ""),
+                            ExternalURL = bundle.ExternalURL,
+                            ExternalURLName = bundle.ExternalURLName,
+                            ExternalVideo = bundle.ExternalVideo,
+                            ImageURL = (book.URL + bundle.ImageURL).Replace("\r", "").Replace("\n", ""),
+                            ExternalVideoName = bundle.ExternalVideoName,
+                            InternalVideo = bundle.InternalVideo,
+                            TextLanguage = bundle.TextLanguage.Trim(),
+                            TextURL = (book.URL + bundle.TextURL).Replace("\r", "").Replace("\n", ""),
+                            VideoURL = book.URL + bundle.VideoURL,
+                            IsFirst = isFirstPageAndSection,
+                            IsLast = isLastPageAndSection,
+
+                        };
+
+                return b.FirstOrDefault();
+
+            }
+            //Get The Next QR Page
+            else if (pageNavigation is 1)
+            {
+
+                (int newPageNo, int newSecNo) = GetNextPage(BookId ?? 0, pageNo ?? 0, SecNo ?? 0, pageNavigation ?? 0);
+
+                isFirstPageAndSection = IsTherePreviousPage(BookId, newPageNo, newSecNo);
+                isLastPageAndSection = IsThereNextPage(BookId, newPageNo, newSecNo);
+
+
+                var b = from bundle in _db.Bundles
+                        join book in _db.Books on bundle.BookId equals book.Id
+                        where book.Id == BookId
+                        && bundle.PageNo == newPageNo
+                        && bundle.SecNo == newSecNo
+                        select new BKRBundle()
+                        {
+                            Book = new()
+                            {
+                                Name = book.Name,
+                            },
+                            AudioURL = (book.URL + bundle.AudioURL).Replace("\r", "").Replace("\n", ""),
+                            ExternalURL = bundle.ExternalURL,
+                            ExternalURLName = bundle.ExternalURLName,
+                            ExternalVideo = bundle.ExternalVideo,
+                            ImageURL = (book.URL + bundle.ImageURL).Replace("\r", "").Replace("\n", ""),
+                            ExternalVideoName = bundle.ExternalVideoName,
+                            InternalVideo = bundle.InternalVideo,
+                            TextLanguage = bundle.TextLanguage.Trim(),
+                            TextURL = (book.URL + bundle.TextURL).Replace("\r", "").Replace("\n", ""),
+                            VideoURL = book.URL + bundle.VideoURL,
+                            IsFirst = isFirstPageAndSection,
+                            IsLast = isLastPageAndSection,
+                            NewPageNo = newPageNo,
+                            NewSecNo = newSecNo,
+                        };
+                return b.FirstOrDefault();
+            }
+            return null;
         }
+
+        //public BKRBundle GetBundle(int? bookId, int? pageNo, int? secNo=1 , int? pageNavigation = 0)
+        //{
+        //    var b = from bundle in _db.Bundles
+        //            join book in _db.Books on bundle.BookId equals book.Id
+        //            where book.Id == bookId
+        //            && bundle.PageNo == pageNo
+        //            && bundle.SecNo == secNo
+        //            select new BKRBundle()
+        //            {                     
+        //                AudioURL = (book.URL + bundle.AudioURL).Replace("\r", "").Replace("\n", ""),
+        //                ExternalURL = bundle.ExternalURL,
+        //                ExternalURLName = bundle.ExternalURLName,
+        //                ExternalVideo = bundle.ExternalVideo,
+        //                ImageURL = (book.URL + bundle.ImageURL).Replace("\r", "").Replace("\n", ""),
+        //                ExternalVideoName = bundle.ExternalVideoName,
+        //                InternalVideo = bundle.InternalVideo,
+        //                TextLanguage = bundle.TextLanguage.Trim(),
+        //                TextURL = (book.URL + bundle.TextURL).Replace("\r", "").Replace("\n", ""),
+        //                VideoURL = book.URL + bundle.VideoURL
+        //            };
+        //    return b.FirstOrDefault();
+        //}
 
         /// <summary>
         /// Get the Current Previous QR Page and Section

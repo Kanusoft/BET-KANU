@@ -14,8 +14,8 @@ namespace BET_KANU.Controllers
 
         public ActionResult Index()
         {
-            var svm = new ProductVM();
-            svm.Shops = _unit.Shop.GetAll();
+            //var svm = new ProductVM();
+            //svm.Shops = _unit.Shop.GetAll();
             return Redirect("https://betkanu.square.site/s/shop");
           //  return View(svm);
         }
