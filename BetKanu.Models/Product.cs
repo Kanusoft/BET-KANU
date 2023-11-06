@@ -41,10 +41,10 @@ namespace BetKanu.Models
         [DisplayName("Long Description")]
         public string? LongDescription { get; set; }
 
-        [DisplayName("Eastren Script Html")]
+        [DisplayName("Eastren Script Html For Songs, Order Now! google For Book")]
         public string? ScriptE { get; set; }
 
-        [DisplayName("Westrean Script Html")]
+        [DisplayName("Westrean Script Html For Songs, Order Now! instagram For Book")]
         public string? ScriptW { get; set; }
 
         [DisplayName("Eastren Credits Html")]
