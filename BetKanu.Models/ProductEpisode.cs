@@ -30,6 +30,7 @@ namespace BetKanu.Models
         public Language? Status { get; set; }
 
         public DateTime ReleaseDate { get; set; } = DateTime.Now.Date;
+        [DisplayName("Cartoon Series Name:")]
         public int ProductId { get; set; }
         public Product? Product { get; set; }
 
