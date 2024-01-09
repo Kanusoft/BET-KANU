@@ -2068,9 +2068,9 @@ Hidden */
 	background-color: #424b65 !important;
 	border: 1px solid rgba(255,255,255,0.05) !important;
 }
-.form-control::placeholder {
+/*.form-control::placeholder {
 	color: #8f98c147 !important;
-}
+}*/
 
 @media screen and (prefers-reduced-motion: reduce) {
 	.form-control {
@@ -19181,9 +19181,9 @@ textarea[cols] {
 	border-radius: 12em;
 }
 
-	.form-control.header-search::placeholder {
+	/*.form-control.header-search::placeholder {
 		color: #fff;
-	}
+	}*/
 
 	.form-control.header-search:hover, .form-control.header-search:focus {
 		border-bottom: 1px solid rgba(255,255,255,0.2) !important;

@@ -1966,10 +1966,13 @@ label {
 
 .form-inverse .form-control {
 	background: rgba(0,0,0, 0.1) !important;
-	color: #7e7e7e ;
+	color: #fff ;
 	border: 0 ;
 }
-
+	.form-inverse .form-control::placeholder {
+		color: #fff;
+		border: 0;
+	}
 .form-actions {
 	margin-top: 30px;
 }
