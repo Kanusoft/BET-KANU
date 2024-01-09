@@ -6661,8 +6661,10 @@ footer {
 		footer .nav li a i {
 			margin-right: 5px;
 		}
-
-		footer .nav li a {
+	footer li {
+		list-style: none;
+	}
+		footer li a {
 			font-size: 12px;
 			padding: 5px 15px 20px 0;
 			border: 0;
@@ -6673,9 +6675,9 @@ footer {
 			display: block;
 		}
 
-			footer .nav li a:hover,
-			footer .nav li a:focus,
-			footer .nav li a:active {
+			footer  li a:hover,
+			footer  li a:focus,
+			footer  li a:active {
 				color: #FFF;
 				border: 0;
 				background: none;
@@ -10066,15 +10068,15 @@ footer {
 	color: #fefefe;
 }
 .SideBar_modal {
-	background-color: #1c1e21;
+	background-color: #212428;
 	width: 50%;
-	padding: 0!important;
+	padding: 0 !important;
 }
 
 .modal-open .SideBar_modal {
-	background-color: #1c1e21;
+	background-color: #212428;
 	width: 50%;
-	overflow-y: scroll!important;
+	overflow-y: scroll !important;
 }
 .SideBar_modal .modal-header {
 	border: none;
@@ -10082,12 +10084,12 @@ footer {
 }
 .SideBar_modal .modal-body {
 	padding: 0;
-	background-color: #1c1e21;
+	background-color: #212428;
 }
 .SideBar_modal .modal-content {
 	border: none;
 	box-shadow: none;
-	background-color: #1c1e21;
+	background-color: #212428;
 }
 .SideBar_modal .btn-close:focus {
 	box-shadow: none;

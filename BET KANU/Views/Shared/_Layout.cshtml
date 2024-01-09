@@ -242,8 +242,8 @@
                 <div class="col-lg-4 col-md-12 col-sm-12 col-xl-4 mt-md-3 mt-lg-0">
 
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 d-flex align-items-center justify-content-center">
-                            <ul class="nav col-lg-6 col-md-6 col-sm-4">
+                        <div class="col-lg-6 col-md-6 col-sm-6 ">
+                            <ul class=" col-lg-6 col-md-6 col-sm-4">
                                 <li><a alt="BETKANU Home" href="~/">BET KANU Home</a></li>
                                 <li><a alt="BETKANU About" href="~/about/betkanu">About BET KANU</a></li>
                                 <li><a alt="BETKANU Team" href="~/about/team">Team</a></li>
@@ -251,8 +251,8 @@
                                 <li><a alt="BETKANU Contributers" href="~/about/contributors">Contributers </a></li>
                             </ul>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 d-flex align-items-center justify-content-center">
-                            <ul class="nav col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-lg-6 col-md-6 col-sm-6 ">
+                            <ul class=" col-lg-6 col-md-6 col-sm-6">
                                 <li><a alt="BETKANU Songs" href="~/studio/songs">Songs</a></li>
                                 <li><a alt="BETKANU Cartoon" href="~/studio/cartoonseries">Cartoon Series</a></li>
                                 <li><a alt="BETKANU Software" href="~/software">Software</a></li>
@@ -265,7 +265,7 @@
                 </div>
 
 
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="col-lg-3 col-md-6 col-xs-12">
                     <blockquote class="twitter-tweet"><p lang="en" dir="ltr">BET KANU premiered the launch of its first comic book, “The Necklace”, which is the first of its kind. The book premiere event included a discussion about the project’s inception back in 2016 and the challenges that accompanied the work until it was issued in May 2023.<a href="https://twitter.com/hashtag/BETKANU?src=hash&amp;ref_src=twsrc%5Etfw">#BETKANU</a> <a href="https://t.co/pG07Nfk9Mj">pic.twitter.com/pG07Nfk9Mj</a></p>&mdash; BET KANU (BetKanu) <a href="https://twitter.com/BetKanu/status/1679395882683252737?ref_src=twsrc%5Etfw">July 13, 2023</a></blockquote>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 </div>
@@ -337,6 +337,20 @@
                 return false;
             })
         })(jQuery);
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var myModal = new bootstrap.Modal(document.getElementById('exampleModalhi'), {
+                backdrop: true,
+                alert("hi")
+            });
+
+            document.getElementById('exampleModalhi').addEventListener('click', function (event) {
+                if (event.target === this) {
+                    myModal.hide(); alert("h2")
+                }
+            });
+        });
     </script>
     <script src="~/js/show.js"></script>
 

@@ -11,18 +11,84 @@
                 <h4><i class="fa fa-users"></i> Contributors </h4>
 
                 <div class="dropdown" style="display:inline">
-                    <button type="button" class="btn btn-info btn-outline" id="2021" disabled onclick="EnableDisableYear(this.id)">2021<i class="fa fa-calendar"></i></button>
-                    <button type="button" class="btn btn-info btn-outline" id="2020" onclick="EnableDisableYear(this.id)">2020 <i class="fa fa-calendar"></i></button>
-                    <button type="button" class="btn btn-info btn-outline" id="2019" onclick="EnableDisableYear(this.id)">2019 <i class="fa fa-calendar"></i></button>
-                    <button type="button" class="btn btn-info btn-outline" id="2018" onclick="EnableDisableYear(this.id)">2018 <i class="fa fa-calendar"></i></button>
-                    <button type="button" class="btn btn-info btn-outline" id="2017" onclick="EnableDisableYear(this.id)">2017<i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-info btn-outline my-2" id="2023" disabled onclick="EnableDisableYear(this.id)">2023<i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-info btn-outline my-2" id="2022" onclick="EnableDisableYear(this.id)">2022<i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-info btn-outline my-2" id="2021" onclick="EnableDisableYear(this.id)">2021<i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-info btn-outline my-2" id="2020" onclick="EnableDisableYear(this.id)">2020 <i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-info btn-outline my-2" id="2019" onclick="EnableDisableYear(this.id)">2019 <i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-info btn-outline my-2" id="2018" onclick="EnableDisableYear(this.id)">2018 <i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn btn-info btn-outline my-2" id="2017" onclick="EnableDisableYear(this.id)">2017<i class="fa fa-calendar"></i></button>
 
 
                 </div>
             </div>
         </div>
     </section>
-    <section id="2021c">
+    <section id="2023c">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail"><img src="/img/partners/ajm.jpg" alt=""></div>
+                    <h4 style="text-align:center">AJM</h4>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail"><img src="/img/partners/capni.jpg" alt=""></div>
+                    <h4 style="text-align:center">CAPNI</h4>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail"><img src="/img/partners/ecews.jpg" alt=""></div>
+                    <h4 style="text-align:center">ECEWS</h4>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail"><img src="/img/partners/sos.jpg" alt=""></div>
+                    <h4 style="text-align:center">SOS 1915</h4>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail"><img src="/img/partners/naby.jpg" alt=""></div>
+                    <h4 style="text-align:center">NFAFC</h4>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail"><img alt=""></div>
+                    <h4 style="text-align:center">Attra TV</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="2022c" style="display:none">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail"><img src="/img/partners/ajm.jpg" alt=""></div>
+                    <h4 style="text-align:center">AJM</h4>
+                </div>
+               <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail"><img src="/img/partners/capni.jpg" alt=""></div>
+                    <h4 style="text-align:center">CAPNI</h4>
+                </div>
+                      <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail"><img src="/img/partners/ecews.jpg" alt=""></div>
+                    <h4 style="text-align:center">ECEWS</h4>
+                </div>
+                   <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail"><img src="/img/partners/sos.jpg" alt=""></div>
+                    <h4 style="text-align:center">SOS 1915</h4>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail"><img src="/img/partners/naby.jpg" alt=""></div>
+                    <h4 style="text-align:center">NFAFC</h4>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail"><img src="/img/partners/morafrem.jpg" alt=""></div>
+                    <h4 style="text-align:center">MOR AFREM</h4>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail"><img alt=""></div>
+                    <h4 style="text-align:center">Attra TV</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="2021c" style="display:none">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-sm-6">
@@ -177,93 +243,138 @@
 
 </div>
 
+@section scripts{
+    <script>
+        function EnableDisableYear(year) {
+            var v = document.getElementById("2023");
+            var m = document.getElementById("2022");
+            var c = document.getElementById("2021");
+            var t = document.getElementById("2020");
+            var n = document.getElementById("2019");
+            var e = document.getElementById("2018");
+            var s = document.getElementById("2017");
 
-    @section scripts{
-        <script>
-            function EnableDisableYear(year) {
-                var c = document.getElementById("2021");
-                var t = document.getElementById("2020");
-                var n = document.getElementById("2019");
-                var e = document.getElementById("2018");
-                var s = document.getElementById("2017");
+            var vc = document.getElementById("2023c");
+            var mc = document.getElementById("2022c");
+            var cc = document.getElementById("2021c");
+            var tc = document.getElementById("2020c");
+            var nc = document.getElementById("2019c");
+            var ec = document.getElementById("2018c");
+            var sc = document.getElementById("2017c");
 
+            if (year == "2023") {
+                v.disabled = true;
+                m.disabled = false;
+                c.disabled = false;
+                t.disabled = false;
+                n.disabled = false;
+                e.disabled = false;
+                s.disabled = false;
 
-                var cc = document.getElementById("2021c");
-                var tc = document.getElementById("2020c");
-                var nc = document.getElementById("2019c");
-                var ec = document.getElementById("2018c");
-                var sc = document.getElementById("2017c");
+                vc.style.display = "block";
+                mc.style.display = "none";
+                cc.style.display = "none";
+                tc.style.display = "none";
+                nc.style.display = "none";
+                ec.style.display = "none";
+                sc.style.display = "none";
+            } else if (year == "2022") {
+                v.disabled = false;
+                m.disabled = true;
+                c.disabled = false;
+                t.disabled = false;
+                n.disabled = false;
+                e.disabled = false;
+                s.disabled = false;
 
-                if (year == "2021") {
-                    c.disabled = true;
-                    t.disabled = false;
-                    n.disabled = false;
-                    e.disabled = false;
-                    s.disabled = false;
+                vc.style.display = "none";
+                mc.style.display = "block";
+                cc.style.display = "none";
+                tc.style.display = "none";
+                nc.style.display = "none";
+                ec.style.display = "none";
+                sc.style.display = "none";
+            } else if (year == "2021") {
+                v.disabled = false;
+                c.disabled = true;
+                t.disabled = false;
+                n.disabled = false;
+                e.disabled = false;
+                s.disabled = false;
+                m.disabled = false;
 
-                    cc.style.display = "block";
-                    tc.style.display = "none";
-                    nc.style.display = "none";
-                    ec.style.display = "none";
-                    sc.style.display = "none";
-                }
+                vc.style.display = "none";
+                mc.style.display = "none";
+                cc.style.display = "block";
+                tc.style.display = "none";
+                nc.style.display = "none";
+                ec.style.display = "none";
+                sc.style.display = "none";
+            } else if (year == "2020") {
+                v.disabled = false;
+                t.disabled = true;
+                c.disabled = false;
+                n.disabled = false;
+                e.disabled = false;
+                s.disabled = false;
+                m.disabled = false;
 
-                else if (year == "2020") {
-                    t.disabled = true;
-                    c.disabled = false;
-                    n.disabled = false;
-                    e.disabled = false;
-                    s.disabled = false;
+                vc.style.display = "none";
+                tc.style.display = "block";
+                cc.style.display = "none";
+                nc.style.display = "none";
+                ec.style.display = "none";
+                sc.style.display = "none";
+                mc.style.display = "none";
+            } else if (year == "2019") {
+                v.disabled = false;
+                n.disabled = true;
+                t.disabled = false;
+                c.disabled = false;
+                e.disabled = false;
+                s.disabled = false;
+                m.disabled = false;
 
-                    tc.style.display = "block";
-                    cc.style.display = "none";
-                    nc.style.display = "none";
-                    ec.style.display = "none";
-                    sc.style.display = "none";
-                }
+                vc.style.display = "none";
+                nc.style.display = "block";
+                tc.style.display = "none";
+                cc.style.display = "none";
+                ec.style.display = "none";
+                sc.style.display = "none";
+                mc.style.display = "none";
+            } else if (year == "2018") {
+                v.disabled = false;
+                e.disabled = true;
+                n.disabled = false;
+                t.disabled = false;
+                c.disabled = false;
+                s.disabled = false;
+                m.disabled = false;
 
-                else if (year == "2019") {
-                    n.disabled = true;
-                    t.disabled = false;
-                    c.disabled = false;
-                    e.disabled = false;
-                    s.disabled = false;
+                vc.style.display = "none";
+                ec.style.display = "block";
+                nc.style.display = "none";
+                tc.style.display = "none";
+                cc.style.display = "none";
+                sc.style.display = "none";
+                mc.style.display = "none";
+            } else {
+                v.disabled = false;
+                s.disabled = true;
+                e.disabled = false;
+                n.disabled = false;
+                t.disabled = false;
+                c.disabled = false;
+                m.disabled = false;
 
-                    nc.style.display = "block";
-                    tc.style.display = "none";
-                    cc.style.display = "none";
-                    ec.style.display = "none";
-                    sc.style.display = "none";
-                }
-
-                else if (year == "2018") {
-                    e.disabled = true;
-                    n.disabled = false;
-                    t.disabled = false;
-                    c.disabled = false;
-                    s.disabled = false;
-
-                    ec.style.display = "block";
-                    nc.style.display = "none";
-                    tc.style.display = "none";
-                    cc.style.display = "none";
-                    sc.style.display = "none";
-                }
-                else {
-                    s.disabled = true;
-                    e.disabled = false;
-                    n.disabled = false;
-                    t.disabled = false;
-                    c.disabled = false;
-
-                    sc.style.display = "block";
-                    ec.style.display = "none";
-                    nc.style.display = "none";
-                    tc.style.display = "none";
-                    cc.style.display = "none";
-                }
+                vc.style.display = "none";
+                sc.style.display = "block";
+                ec.style.display = "none";
+                nc.style.display = "none";
+                tc.style.display = "none";
+                cc.style.display = "none";
+                mc.style.display = "none";
             }
-
-        </script>
-
-    }
+        }
+    </script>
+}
