@@ -37,6 +37,11 @@
                                         </select>
                                         <span asp-validation-for="TargetAudince" class="text-danger"></span>
                                     </div>
+                                    <div class="form-group">
+                                        <label asp-for="IsRelease" class="control-label"></label>
+                                        <input type="checkbox" asp-for="IsRelease" name="IsRelease" />
+                                        <span asp-validation-for="IsRelease" class="text-danger"></span>
+                                    </div>
                                 </div>
                                 <div class="col-lg-3 col-sm-12">
                                     <div class="form-group">

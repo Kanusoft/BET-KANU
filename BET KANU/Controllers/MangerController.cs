@@ -41,7 +41,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateSong([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,CreditsE,CreditsW,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,WestreanPdfFile,EasternPdfFile")] Product song)
+        public async Task<ActionResult> CreateSong([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,CreditsE,CreditsW,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,WestreanPdfFile,EasternPdfFile,IsRelease")] Product song)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateBook([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,CreditsE,CreditsW,Author,DesignedBy,Features,ProductBy,Created,Link3,SongsList,Info1,EastrenImageFile,WestreanImageFile,imgUrl3,imgUrl4,imgUrl5,img1,img2,img3,img4,img5")] Product Book)
+        public async Task<ActionResult> CreateBook([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,CreditsE,CreditsW,Author,DesignedBy,Features,ProductBy,Created,Link3,SongsList,Info1,EastrenImageFile,WestreanImageFile,imgUrl3,imgUrl4,imgUrl5,img1,img2,img3,img4,img5,IsRelease")] Product Book)
         {
             if (ModelState.IsValid)
             {
@@ -156,7 +156,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateSoftware([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,CreditsE,CreditsW,Source,SponsoredBY,Link1,Link2,Features,ProductBy,Created,Link3,SongsList,Info1,Info2,Info3,EastrenImageFile,WestreanImageFile,imgUrl,imgUrl2,imgUrl3,imgUrl4,imgUrl5,img1,img2,img3,img4,img5")] Product soft)
+        public async Task<ActionResult> CreateSoftware([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,CreditsE,CreditsW,Source,SponsoredBY,Link1,Link2,Features,ProductBy,Created,Link3,SongsList,Info1,Info2,Info3,EastrenImageFile,WestreanImageFile,imgUrl,imgUrl2,imgUrl3,imgUrl4,imgUrl5,img1,img2,img3,img4,img5,IsRelease")] Product soft)
         {
             if (ModelState.IsValid)
             {
@@ -263,7 +263,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind("Id,Title,SmallImage,CoverImage,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,Source,SponsoredBY,,ScriptE,ScriptW,CreditsE,CreditsW,Link1,Link2,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,img1,img2,img3,img4,img5,Author,DesignedBy,source,Features,ProductBy,Created,Link3,SongsList,Info1,Info2,Info3,SmallUrl,CoverUrl,EastrenImageFile,WestreanImageFile,imgUrl,imgUrl2,imgUrl3,imgUrl4,imgUrl5,WestreanPdfFile,EasternPdfFile")]Product prod)
+        public async Task<ActionResult> Edit([Bind("Id,Title,SmallImage,CoverImage,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,Source,SponsoredBY,,ScriptE,ScriptW,CreditsE,CreditsW,Link1,Link2,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,img1,img2,img3,img4,img5,Author,DesignedBy,source,Features,ProductBy,Created,Link3,SongsList,Info1,Info2,Info3,SmallUrl,CoverUrl,EastrenImageFile,WestreanImageFile,imgUrl,imgUrl2,imgUrl3,imgUrl4,imgUrl5,WestreanPdfFile,EasternPdfFile,IsRelease")]Product prod)
         {
             if (ModelState.IsValid && prod != null)
             {
@@ -567,6 +567,31 @@ namespace BET_KANU.Controllers
             return RedirectToAction("Index");
         }
 
+        
+        public ActionResult PreviewProduct(int id)
+        {
+            var vm = new ProductVM();
+            vm.product = _unitOfWork.product.GetOne(id);
+        
+
+            vm.WestrenEpisodes = _unitOfWork.product.GetByParentIdandLang(id, Language.Westren);
+            vm.EastrenEpisodes = _unitOfWork.product.GetByParentIdandLang(id, Language.Eastren);
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateIsRelease(int id, bool isRelease)
+        {
+            var product = _unitOfWork.product.GetOne(id);
+            if (product != null)
+            {
+                product.IsRelease = isRelease;
+                _unitOfWork.manger.Edit(product);
+                return Json(new { success = true, message = "Update successful" });
+            }
+            return Json(new { success = false, message = "Product not found" });
+        }
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

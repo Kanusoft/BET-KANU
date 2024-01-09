@@ -19,7 +19,7 @@ namespace BetKanu.Data.Repositories
         /// <returns></returns>
         public List<Product> GetAll()
         {
-            return _db.Products.OrderByDescending(p => p.ReleaseDate).ToList();
+            return _db.Products.Where(p => p.IsRelease == true).OrderByDescending(p => p.ReleaseDate).ToList();
                      
         }
 
@@ -30,7 +30,7 @@ namespace BetKanu.Data.Repositories
         /// <returns></returns>
         public List<Product> GetAll(Category category)
         {
-            return _db.Products.Where(p => p.Category == category).OrderByDescending(p => p.ReleaseDate).ToList();
+            return _db.Products.Where(p => p.Category == category && p.IsRelease == true).OrderByDescending(p => p.ReleaseDate).ToList();
         }
 
         /// <summary>
@@ -50,17 +50,18 @@ namespace BetKanu.Data.Repositories
         /// <returns></returns>
         public List<Product> RecentProduct(int num, Category category)
         {
-            return _db.Products.Where(P => P.Category == category).OrderByDescending(p => p.ReleaseDate).Take(num).ToList();
+            return _db.Products.Where(P => P.Category == category && P.IsRelease == true).OrderByDescending(p => p.ReleaseDate).Take(num).ToList();
         }
         
         public Product? GetoneProductByName(string? name)
         {
-            return _db.Products.Where(p => p.Title == name).FirstOrDefault();
+            return _db.Products.Where(p => p.Title == name && p.IsRelease == true).FirstOrDefault();
         }
+
         public List<Product>? GetProductsByName(string? name)
         {
             return _db.Products
-            .Where(p => p.Title.StartsWith(name))
+            .Where(p => p.Title.StartsWith(name) && p.IsRelease == true)
             .ToList();
         }
 

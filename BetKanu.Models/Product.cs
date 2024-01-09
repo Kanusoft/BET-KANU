@@ -109,6 +109,9 @@ namespace BetKanu.Models
         [DisplayName("Info 3 Html")]
         public string? Info3 { get; set; }
 
+        [DisplayName("Is Release")]
+        public bool IsRelease { get; set; }
+
         [NotMapped]
         [DisplayName("Image")]
         public IFormFile? SmallUrl { get; set; }
