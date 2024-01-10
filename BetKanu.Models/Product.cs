@@ -109,7 +109,7 @@ namespace BetKanu.Models
         [DisplayName("Info 3 Html")]
         public string? Info3 { get; set; }
 
-        [DisplayName("Is Release")]
+        [DisplayName("Release")]
         public bool IsRelease { get; set; }
 
         [NotMapped]
