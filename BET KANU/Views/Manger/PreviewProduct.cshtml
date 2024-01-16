@@ -4,7 +4,6 @@
 }
 @if (Model?.product?.Category.ToString() == "Songs")
 {
-
     <section>
         <div class="hero hero-game d-none d-md-block d-lg-block d-xl-block d-xxl-block">
             <img src="@Model.product.CoverImage" />
@@ -13,14 +12,13 @@
             <img src="@Model.product.SmallImage" />
         </div>
     </section>
-   <section>
+    <section>
         <div class="container">
             <div class="col-lg-12">
-                <div class="row container sidebar">
+                <div class="row sidebar">
                     <div class="col-lg-8 leftside">
+                               <a class="btn btn-icon btn-info float-end" asp-controller="Manger" asp-action="Edit" asp-route-id="@Model.product.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
                         <div class="post post-single">
-                              <a class="btn btn-icon btn-info float-end" asp-controller="Manger" asp-action="Edit" asp-route-id="@Model.product.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
-   
                             <div class="post-header">
                                 <div class="post-title">
                                     <h2>@Model.product.Title</h2>
@@ -38,29 +36,32 @@
                             <p>
                                 @Model?.product.LongDescription
                             </p>
-                            <div class="row">
-                                @if (Model?.product.ScriptW != null)
-                                {
-                                    <div class="well col-md-5 col-sm-12" style="text-align:center ; direction:rtl" id="western">
-                                        <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Western Lyrics</h3>
-                                        <p class="Surayt font-size-22">
-                                            @Html.Raw(Model?.product.ScriptW)
-                                        </p>
-                                        <a class="btn btn-info" href="@Model?.product.Wpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
-                                    </div>
-                                }
-                                <div class="col-lg-1"></div>
-                                @if (Model?.product.ScriptE != null)
-                                {
-                                    <div class="well col-md-5 col-sm-12" style="text-align:center ; direction:rtl" id="eastern">
-                                        <h3 style="text-align:center ; direction:ltr" class="padding-bottom-10">Eastern Lyrics</h3>
-                                        <p class="Surit font-size-22">
-                                            @Html.Raw(Model?.product.ScriptE)
-                                        </p>
-                                        <a class="btn btn-info" href="@Model?.product.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
-                                    </div>
-                                }
+                            <div class="container">
+                                <div class="row">
+                                    @if (Model?.product.ScriptW != null)
+                                    {
+                                        <div class="well col-md-5 col-sm-12" style="text-align:center; direction:rtl" id="western">
+                                            <h3 style="text-align:center; direction:ltr" class="padding-bottom-10">Western Lyrics</h3>
+                                            <p class="Surayt font-size-22">
+                                                @Html.Raw(Model?.product.ScriptW)
+                                            </p>
+                                            <a class="btn btn-info" href="@Model?.product.Wpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+                                        </div>
+                                    }
+                                    <div class="col-1"></div>
+                                    @if (Model?.product.ScriptE != null)
+                                    {
+                                        <div class="well col-md-5 col-sm-12" style="text-align:center; direction:rtl" id="eastern">
+                                            <h3 style="text-align:center; direction:ltr" class="padding-bottom-10">Eastern Lyrics</h3>
+                                            <p class="Surit font-size-22">
+                                                @Html.Raw(Model?.product.ScriptE)
+                                            </p>
+                                            <a class="btn btn-info" href="@Model?.product.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+                                        </div>
+                                    }
+                                </div>
                             </div>
+
                         </div>
                     </div>
                     <div class="col-lg-4 rightside">
@@ -228,214 +229,191 @@
                             }
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section>
-        <div class="container">
-            <div class="row">
-                <div class="row margin-5">
-                    <div class="col-md-8">   </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 float-end">
                         <ul class="share">
                             <li><a href="https://www.facebook.com/sharer.php?u=https://betkanu.com/products/@ViewBag.Title" class="btn btn-sm btn-social-icon btn-facebook" data-toggle="tooltip" title="Share on facebook"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="https://twitter.com/share?url=https://www.betkanu.com/products/@ViewBag.Title&amp;hashtags=BETKANU" class="btn btn-sm btn-social-icon btn-twitter" data-toggle="tooltip" title="Share on twitter"><i class="fa fa-twitter"></i></a></li>
                         </ul>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
+
 }
 @* Start Software *@
 @if (Model?.product?.Category.ToString() == "Software")
 {
-    @*  <section class="border-bottom-1 border-grey-300 padding-30">
-        <div class="container text-center">
-            <div class="container">
-                <div class="headline no-margin">
-                    <h4><i class="fa fa-film"></i> Cartoon Series - Nino & Mia</h4>
-                    <div class="dropdown" style="display:inline">
-                        <button type="button" class="btn btn-outline btn-circle btn-icon-left" id="west" onclick="showhidelist(this.id)"><img src="/img/west.png" /></button>
-                        &nbsp;
-                        <button type="button" class="btn btn-outline btn-circle btn-icon-left" id="east" disabled onclick="hideshowlist(this.id)"><img src="/img/east.png" /></button>
-                    </div>
-                </div>
-            </div>
+    <section>
+        <div class="hero hero-game d-none d-md-block d-lg-block d-xl-block d-xxl-block">
+            <img src="@Model.product.CoverImage" />
         </div>
-    </section>*@
-    <section class="hero height-350 hero-game" style="background-image: url(@Model.product.CoverImage);">
+        <div class="hero hero-game d-block d-sm-block d-md-none">
+            <img src="@Model.product.SmallImage" />
+        </div>
+      
     </section>
-    <a class="btn btn-icon btn-info" asp-controller="Manger" asp-action="Edit" asp-route-id="@Model.product.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
     <section>
         <div class="container">
-            <div class="row sidebar">
-                <div class="col-md-8 leftside">
-                    <div class="post post-single">
-                        <div class="post-header">
-                            <div class="post-title">
-                                <h2>@Model.product.Title</h2>
-                                <ul class="post-meta">
-                                    <li><i class="fa fa-mobile-phone"></i> @Model.product.Category.ToString()</li>
-                                    <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate.ToString("MMM d, yyyy")</li>
-                                    <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
-                                </ul>
+            <div class="col-lg-12">
+                <div class="row sidebar">
+                    <div class="col-lg-8 leftside">     <a class="btn btn-icon btn-info float-end" asp-controller="Manger" asp-action="Edit" asp-route-id="@Model.product.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
+                        <div class="post post-single">
+                            <div class="post-header">
+                                <div class="post-title">
+                                    <h2>@Model.product.Title</h2>
+                                    <ul class="post-meta">
+                                        <li><i class="fa fa-mobile-phone"></i> @Model.product.Category.ToString()</li>
+                                        <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate.ToString("MMM d, yyyy")</li>
+                                        <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        @if (Model.product.Author != null || Model.product.DesignedBy != null || Model.product.SponsoredBY != null)
-                        {
-                            <div class="well" style="text-align:left; direction:ltr">
-                                @if (Model.product.Author != null)
-                                {
-                                    <span>@Model.product.Author</span>
-                                }
-                                @if (Model.product.DesignedBy != null)
-                                {
-                                    <span>@Model.product.DesignedBy</span>
-                                }
-                                @if (Model.product.SponsoredBY != null)
-                                {
-                                    <span>@Model.product.SponsoredBY</span>
-                                }
-                            </div>
-                        }
-                        @if (Model.product.Created != null || Model.product.ProductBy != null)
-                        {
-                            <div class="well" style="text-align:left; direction:ltr">
-                                @if (Model.product.Created != null)
-                                {
-                                    <span>@Model.product.Created</span>
-                                }
-                                @if (Model.product.ProductBy != null)
-                                {
-                                    <span>@Model.product.ProductBy</span>
-                                }
-                            </div>
-                        }
-                        <div class="well" style="text-align:left ; direction:ltr">
-                            <p style="text-align:left ; direction:ltr">
-                                @Html.Raw(@Model.product.LongDescription)
-                            </p>
-                        </div>
-                        @if (Model?.product.Info1 != null)
-                        {
+                            @if (Model.product.Author != null || Model.product.DesignedBy != null || Model.product.SponsoredBY != null)
+                            {
+                                <div class="well" style="text-align:left; direction:ltr">
+                                    @if (Model.product.Author != null)
+                                    {
+                                        <span>@Model.product.Author</span>
+                                    }
+                                    @if (Model.product.DesignedBy != null)
+                                    {
+                                        <span>@Model.product.DesignedBy</span>
+                                    }
+                                    @if (Model.product.SponsoredBY != null)
+                                    {
+                                        <span>@Model.product.SponsoredBY</span>
+                                    }
+                                </div>
+                            }
+                            @if (Model.product.Created != null || Model.product.ProductBy != null)
+                            {
+                                <div class="well" style="text-align:left; direction:ltr">
+                                    @if (Model.product.Created != null)
+                                    {
+                                        <span>@Model.product.Created</span>
+                                    }
+                                    @if (Model.product.ProductBy != null)
+                                    {
+                                        <span>@Model.product.ProductBy</span>
+                                    }
+                                </div>
+                            }
                             <div class="well" style="text-align:left ; direction:ltr">
                                 <p style="text-align:left ; direction:ltr">
-                                    @Html.Raw(@Model.product.Info1)
+                                    @Html.Raw(@Model.product.LongDescription)
                                 </p>
                             </div>
-                        }  @if (Model?.product.Info2 != null)
-                        {
-                            <div class="well" style="text-align:left ; direction:ltr">
+                            @if (Model?.product.Info1 != null)
+                            {
+                                <div class="well" style="text-align:left ; direction:ltr">
+                                    <p style="text-align:left ; direction:ltr">
+                                        @Html.Raw(@Model.product.Info1)
+                                    </p>
+                                </div>
+                            }  @if (Model?.product.Info2 != null)
+                            {
+                                <div class="well" style="text-align:left ; direction:ltr">
 
-                                @Html.Raw(@Model.product.Info2)
+                                    @Html.Raw(@Model.product.Info2)
+
+                                </div>
+                            }
+                            @if (Model?.product.Info3 != null)
+                            {
+                                <div class="well" style="text-align:left ; direction:ltr">
+
+                                    @Html.Raw(@Model.product.Info3)
+
+                                </div>
+                            }
+                            <div class="container widget widget-list">
+
+                                @Html.Raw(@Model.product.Features)
 
                             </div>
-                        }
-                        @if (Model?.product.Info3 != null)
-                        {
-                            <div class="well" style="text-align:left ; direction:ltr">
 
-                                @Html.Raw(@Model.product.Info3)
 
-                            </div>
-                        }
-                        <div class="widget widget-list">
-
-                            @Html.Raw(@Model.product.Features)
 
                         </div>
 
-
-
                     </div>
+                    <div class="col-lg-4 rightside">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <p>
+                                    &nbsp;
+                                </p>
+                                @if (Model?.product.Link1 != null)
+                                {
+                                    <a href="@Model.product.Link1" class="btn btn-warning btn-block">Get it on the App Store!</a>
+                                }
+                                @if (Model?.product.Link2 != null)
+                                {
+                                    <a href="@Model.product.Link2" class="btn btn-warning btn-block mt-1">Get it on the Google Play!</a>
+                                }
+                                @if (Model?.product.Link3 != null)
+                                {
+                                    <a href="@Model.product.Link3" class="btn btn-warning btn-block mt-1">Visit Website</a>
+                                }
+                                <p>
+                                    &nbsp;
+                                </p>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="well">
+                                        <img src="@Model?.product.img1" alt="">
 
-                </div>
-                <div class="col-md-4 rightside">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <p>
-                                &nbsp;
-                            </p>
-                            @if (Model?.product.Link1 != null)
-                            {
-                                <a href="@Model.product.Link1" class="btn btn-warning btn-block">Get it on the App Store!</a>
-                            }
-                            @if (Model?.product.Link2 != null)
-                            {
-                                <a href="@Model.product.Link2" class="btn btn-warning btn-block mt-1">Get it on the Google Play!</a>
-                            }
-                            @if (Model?.product.Link3 != null)
-                            {
-                                <a href="@Model.product.Link3" class="btn btn-warning btn-block mt-1">Visit Website</a>
-                            }
-                            <p>
-                                &nbsp;
-                            </p>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="well">
-                                    <img src="@Model?.product.img1" alt="">
-
+                                    </div>
                                 </div>
+                                @if (Model?.product.img2 != null)
+                                {
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="well">
+                                            <img src="@Model?.product.img2" alt="">
+
+                                        </div>
+                                    </div>
+                                }
+                                @if (Model?.product.img3 != null)
+                                {
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="well">
+                                            <img src="@Model?.product.img3" alt="">
+                                        </div>
+                                    </div>
+                                }
+                                @if (Model?.product.img4 != null)
+                                {
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="well">
+                                            <img src="@Model?.product.img4" alt="">
+                                        </div>
+                                    </div>
+                                }
+                                @if (Model?.product.img5 != null)
+                                {
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="well">
+                                            <img src="@Model?.product.img5" alt="">
+                                        </div>
+                                    </div>
+                                }
                             </div>
-                            @if (Model?.product.img2 != null)
-                            {
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="well">
-                                        <img src="@Model?.product.img2" alt="">
 
-                                    </div>
-                                </div>
-                            }
-                            @if (Model?.product.img3 != null)
-                            {
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="well">
-                                        <img src="@Model?.product.img3" alt="">
-                                    </div>
-                                </div>
-                            }
-                            @if (Model?.product.img4 != null)
-                            {
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="well">
-                                        <img src="@Model?.product.img4" alt="">
-                                    </div>
-                                </div>
-                            }
-                            @if (Model?.product.img5 != null)
-                            {
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="well">
-                                        <img src="@Model?.product.img5" alt="">
-                                    </div>
-                                </div>
-                            }
                         </div>
-
                     </div>
+
                 </div>
+            </div> 
+            <div class="col-md-4 float-end">
+                <ul class="share">
+                    <li><a href="https://www.facebook.com/sharer.php?u=https://betkanu.com/products/@ViewBag.Title" class="btn btn-sm btn-social-icon btn-facebook" data-toggle="tooltip" title="Share on facebook"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="https://twitter.com/share?url=https://www.betkanu.com/products/@ViewBag.Title&amp;hashtags=BETKANU" class="btn btn-sm btn-social-icon btn-twitter" data-toggle="tooltip" title="Share on twitter"><i class="fa fa-twitter"></i></a></li>
+                </ul>
             </div>
         </div>
     </section>
-    <section>
-        <div class="container">
-            <div class="row">
-                <div class="row margin-5">
-                    <div class="col-md-8">   </div>
-                    <div class="col-md-4">
-                        <ul class="share">
-                            <li><a href="https://www.facebook.com/sharer.php?u=https://betkanu.com/products/@ViewBag.Title" class="btn btn-sm btn-social-icon btn-facebook" data-toggle="tooltip" title="Share on facebook"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="https://twitter.com/share?url=https://www.betkanu.com/products/@ViewBag.Title&amp;hashtags=BETKANU" class="btn btn-sm btn-social-icon btn-twitter" data-toggle="tooltip" title="Share on twitter"><i class="fa fa-twitter"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
 
-            </div>
-        </div>
-    </section>
 }
 @* Enf Software *@
 
@@ -447,7 +425,6 @@
             <div class="container">
                 <div class="headline no-margin">
                     <h4><i class="fa fa-film"></i> Cartoon Series - @Model.product.Title</h4>
-
                     <div class="dropdown" style="display:inline">
                         <button type="button" class="btn btn-outline btn-circle btn-icon-left" id="west" onclick="showhidelist(this.id)"><img src="/img/west.png" /></button>
                         &nbsp;
@@ -604,14 +581,19 @@
 @if (Model?.product?.Category.ToString() == "Books")
 {
     <div id="wrapper">
-        <section class="hero height-350 hero-game" style="background-image: url(@Model.product.CoverImage);">
+        <section>
+            <div class="hero hero-game d-none d-md-block d-lg-block d-xl-block d-xxl-block">
+                <img src="@Model.product.CoverImage" />
+            </div>
+            <div class="hero hero-game d-block d-sm-block d-md-none">
+                <img src="@Model.product.SmallImage" />
+            </div>
         </section>
-        <a class="btn btn-icon btn-info" asp-controller="Manger" asp-action="Edit" asp-route-id="@Model.product.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
         <section>
             <div class="container">
                 <div class="col-lg-12">
-                    <div class="row container sidebar">
-                        <div class="col-lg-8 leftside">
+                    <div class="row sidebar">
+                        <div class="col-lg-8 leftside">     <a class="btn btn-icon btn-info float-end" asp-controller="Manger" asp-action="Edit" asp-route-id="@Model.product.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
                             <div class="post post-single">
                                 <div class="post-header">
                                     <div class="post-title">
@@ -780,27 +762,15 @@
                                     }
 
                                 </div>
+                                <div class="col-md-4 float-end">
+                                    <ul class="share">
+                                        <li><a href="https://www.facebook.com/sharer.php?u=https://betkanu.com/products/@ViewBag.Title" class="btn btn-sm btn-social-icon btn-facebook" data-toggle="tooltip" title="Share on facebook"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="https://twitter.com/share?url=https://www.betkanu.com/products/@ViewBag.Title&amp;hashtags=BETKANU" class="btn btn-sm btn-social-icon btn-twitter" data-toggle="tooltip" title="Share on twitter"><i class="fa fa-twitter"></i></a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <div class="container">
-                <div class="row">
-                    <div class="row margin-5">
-                        <div class="col-md-8">
-                        </div>
-                        <div class="col-md-4">
-                            <ul class="share">
-                                <li><a href="https://www.facebook.com/sharer.php?u=https://betkanu.com/products/ERZAHLUNGENAusDemTurAbdin" class="btn btn-sm btn-social-icon btn-facebook" data-toggle="tooltip" title="Share on facebook"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="https://twitter.com/share?url=https://www.betkanu.com/products/ERZAHLUNGENAusDemTurAbdin&amp;hashtags=BETKANU" class="btn btn-sm btn-social-icon btn-twitter" data-toggle="tooltip" title="Share on twitter"><i class="fa fa-twitter"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </section>

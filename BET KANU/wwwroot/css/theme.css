@@ -7501,6 +7501,9 @@ footer {
 	.modal-open .SideBar_modal {
 		width: 80%!important;
 	}
+	.well {
+		padding: 20px;
+	}
 }
 
 @media (max-width: 460px) {
