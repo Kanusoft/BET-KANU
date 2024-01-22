@@ -24,14 +24,22 @@ namespace BET_KANU.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
-            var vm = new ProductVM();
-            vm.product = _unit.product.GetOne(id);
-            // vm.episode = _unit.product.GetallByParentId(id);
+            if(id != 0)
+            {
+                var vm = new ProductVM();
+                vm.product = _unit.product.GetOne(id);
+                // vm.episode = _unit.product.GetallByParentId(id);
 
-            vm.WestrenEpisodes = _unit.product.GetByParentIdandLang(id, Language.Westren);
-            vm.EastrenEpisodes = _unit.product.GetByParentIdandLang(id, Language.Eastren);
+                vm.WestrenEpisodes = _unit.product.GetByParentIdandLang(id, Language.Westren);
+                vm.EastrenEpisodes = _unit.product.GetByParentIdandLang(id, Language.Eastren);
 
-            return View(vm);
+                return View(vm);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
+         
         }
 
 
