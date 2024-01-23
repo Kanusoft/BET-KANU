@@ -47,32 +47,41 @@
     </section>
 </div>
     @section Scripts{
+    <script type="text/javascript">
+        $("#myEmailForm").submit(function (event) {
+            // Prevent the default form submission
+            event.preventDefault();
 
-        <script type="text/javascript">
-            $("myEmailForm").submit(function () {
-                const fromEmail = $("#Email").val();
-                const fromName = $("#Name").val();
-                const subject = "Name: " + fromName + " " + $("#Subject").val();
+            const fromEmail = $("#Email").val();
+            const fromName = $("#name").val();
+            const subject = $("#subject").val();
+            const body = $("#message").val();      
 
-                $.ajax({
-                    url: "https://www.dargushti.com/api/v6/email_contactus",
-                    type: "post",
-                    data: {
-                        fromEmail,
-                        subject,
-                    },
-                    headers: {
-                        "x-api-key": "API_KEY_SECRET",
-                    },
-                    dataType: "json",
-                    success(data) {
-                        if (data.result) {
-                            $("#messageResult2").html("<a>Success</a>");
-                        } else {
-                            $("#messageResult2").html("<a>Error sending the message </a>");
-                        }
-                    },
-                });
+            const completeSubject = `Name: ${fromName}, Subject: ${subject}`;
+           // console.log(fromEmail, fromName, body, completeSubject);
+
+            $.ajax({
+                url: "https://www.dargushti.com/api/v6/email_contactus",
+                type: "post",
+                data: {
+                    fromEmail,
+                    subject: completeSubject,
+                    body,
+                },
+                headers: {
+                    "x-api-key": "API_KEY_SECRET",
+                },
+                dataType: "json",
+                success(data) {
+                    //console.log(data);
+                    //console.log("result:", data.result);
+                    if (data.result) {
+                        $("#messageResult2").html("<a>Success</a>");
+                    } else {
+                        $("#messageResult2").html("<a>Error sending the message</a>");
+                    }
+                },
             });
-        </script>
+        });
+    </script>
     }
