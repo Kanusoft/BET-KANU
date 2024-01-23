@@ -4,7 +4,7 @@
 }
 @if (Model?.product?.Category.ToString() == "Songs")
 {
-    <section>
+    <section class="p-0">
         <div class="hero hero-game d-none d-md-block d-lg-block d-xl-block d-xxl-block">
             <img src="@Model.product.CoverImage" />
         </div>
@@ -243,7 +243,7 @@
 @* Start Software *@
 @if (Model?.product?.Category.ToString() == "Software")
 {
-    <section>
+    <section class="p-0">
         <div class="hero hero-game d-none d-md-block d-lg-block d-xl-block d-xxl-block">
             <img src="@Model.product.CoverImage" />
         </div>
@@ -584,7 +584,7 @@
 @if (Model?.product?.Category.ToString() == "Books")
 {
     <div id="wrapper">
-        <section>
+        <section class="p-0">
             <div class="hero hero-game d-none d-md-block d-lg-block d-xl-block d-xxl-block">
                 <img src="@Model.product.CoverImage" />
             </div>
