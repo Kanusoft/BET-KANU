@@ -49,16 +49,14 @@
     @section Scripts{
     <script type="text/javascript">
         $("#myEmailForm").submit(function (event) {
-            // Prevent the default form submission
             event.preventDefault();
 
             const fromEmail = $("#Email").val();
             const fromName = $("#name").val();
             const subject = $("#subject").val();
-            const body = $("#message").val();      
+            const body = $("#message").val();
 
             const completeSubject = `Name: ${fromName}, Subject: ${subject}`;
-           // console.log(fromEmail, fromName, body, completeSubject);
 
             $.ajax({
                 url: "https://www.dargushti.com/api/v6/email_contactus",
@@ -73,9 +71,12 @@
                 },
                 dataType: "json",
                 success(data) {
-                    //console.log(data);
-                    //console.log("result:", data.result);
                     if (data.result) {
+                        $("#name").val("");
+                        $("#Email").val("");
+                        $("#subject").val("");
+                        $("#message").val("");
+
                         $("#messageResult2").html("<a>Success</a>");
                     } else {
                         $("#messageResult2").html("<a>Error sending the message</a>");
