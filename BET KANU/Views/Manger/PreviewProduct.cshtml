@@ -17,7 +17,6 @@
             <div class="col-lg-12">
                 <div class="row sidebar">
                     <div class="col-lg-8 leftside">
-                               <a class="btn btn-icon btn-info float-end" asp-controller="Manger" asp-action="Edit" asp-route-id="@Model.product.Id"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
                         <div class="post post-single">
                             <div class="post-header">
                                 <div class="post-title">
@@ -57,6 +56,16 @@
                                                 @Html.Raw(Model?.product.ScriptE)
                                             </p>
                                             <a class="btn btn-info" href="@Model?.product.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+                                        </div>
+                                    }
+                                    @if (Model?.product.MalouliScript != null)
+                                    {
+                                        <div class="well col-md-5 col-sm-12" style="text-align:center; direction:rtl">
+                                            <h3 style="text-align:center; direction:ltr" class="padding-bottom-10">Malouli Lyrics</h3>
+                                            <p class="Surit font-size-22">
+                                                @Html.Raw(Model?.product.MalouliScript)
+                                            </p>
+                                            <a class="btn btn-info" href="@Model?.product.MalouliPdfFile" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
                                         </div>
                                     }
                                 </div>
@@ -177,6 +186,62 @@
                                     </div>
                                 </div>
                             }
+                            @if (Model?.product.VideoM != null)
+                            {
+                                <div class="card">
+                                    <div class="card-img">
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                            @{
+                                                string MyoutubeUrl = Model?.product?.VideoM ?? string.Empty;
+                                                string MembedUrl = string.Empty;
+
+                                                if (!string.IsNullOrEmpty(MyoutubeUrl))
+                                                {
+                                                    if (MyoutubeUrl.Contains("youtu.be/"))
+                                                    {
+                                                        // Short URL
+                                                        string videoId = MyoutubeUrl.Substring(MyoutubeUrl.LastIndexOf("/") + 1);
+                                                        MembedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                    }
+                                                    else if (MyoutubeUrl.Contains("youtube.com/embed/"))
+                                                    {
+                                                        // Long URL
+                                                        MembedUrl = MyoutubeUrl;
+                                                    }
+                                                    else if (MyoutubeUrl.Contains("youtube.com/watch?v="))
+                                                    {
+                                                        // Long URL with query parameters
+                                                        int embedIndex = MyoutubeUrl.IndexOf("youtube.com/watch?v=");
+                                                        string videoId = MyoutubeUrl.Substring(embedIndex + 20);
+                                                        int queryIndex = videoId.IndexOf("?");
+                                                        if (queryIndex != -1)
+                                                        {
+                                                            videoId = videoId.Substring(0, queryIndex);
+                                                        }
+                                                        MembedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                    }
+                                                }
+                                            }
+                                            @if (!string.IsNullOrEmpty(MembedUrl))
+                                            {
+                                                <iframe class="embed-responsive-item" src="@MembedUrl" allowfullscreen></iframe>
+                                            }
+                                            @*  <iframe class="embed-responsive-item" src="@Model?.product.VideoE" allowfullscreen></iframe>*@
+                                        </div>
+                                        <div class="time">BET KANU</div>
+                                    </div>
+                                    <div class="caption">
+                                        <h3 class="card-title">
+
+                                            @Model?.product.Title - Eastern Syriac (Surit)
+                                        </h3>
+                                        <ul>
+                                            <li><i class="fa fa-calendar-o"></i>@Model?.product.ReleaseDate.ToString("MMM d, yyyy")</li>
+                                            <li><i class="fa fa-eye"></i> @Model?.product.ViewsE views</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            }
                             <a href="https://www.youtube.com/c/betkanu" class="btn btn-danger btn-block">BET KANU YouTube Channel</a>
                         </div>
                     </div>
@@ -199,7 +264,7 @@
                     }
 
                     <div class="row">
-                        <div class="col-md-6 col-sm-12">
+                        <div class="col-md-4 col-sm-12">
                             @if (Model?.product.CreditsW != null || Model?.product.CreditsE != null)
                             {
                                 <div class="well">
@@ -214,7 +279,7 @@
                                 </div>
                             }
                         </div>
-                        <div class="col-md-6 col-sm-12">
+                        <div class="col-md-4 col-sm-12">
                             @if (Model?.product.CreditsE != null)
                             {
                                 <div class="well">
@@ -224,6 +289,20 @@
                                         </strong>
                                     </p>
                                     @Html.Raw(@Model?.product.CreditsE)
+
+                                </div>
+                            }
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            @if (Model?.product.CreditsM != null)
+                            {
+                                <div class="well">
+                                    <p>
+                                        <strong>
+                                            Malouli
+                                        </strong>
+                                    </p>
+                                    @Html.Raw(@Model?.product.CreditsM)
 
                                 </div>
                             }
