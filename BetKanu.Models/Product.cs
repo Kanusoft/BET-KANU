@@ -126,7 +126,7 @@ namespace BetKanu.Models
         [DisplayName("Malouli Video Link")]
         public string? VideoM { get; set; }
         [DisplayName("Malouli Video Views")]
-        public int ViewsM { get; set; }
+        public int? ViewsM { get; set; }
         [DisplayName("Malouli Pdf Link")]
         public string? Mpdf { get; set; }
 
