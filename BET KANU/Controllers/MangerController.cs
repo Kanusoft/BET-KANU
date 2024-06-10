@@ -41,7 +41,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateSong([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,CreditsE,CreditsW,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,WestreanPdfFile,EasternPdfFile,IsRelease")] Product song)
+        public async Task<ActionResult> CreateSong([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,CreditsE,CreditsW,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,WestreanPdfFile,EasternPdfFile,IsRelease,MalouliScript,CreditsM,VideoM,ViewsM,MalouliPdfFile")] Product song)
         {
             if (ModelState.IsValid)
             {
@@ -66,6 +66,11 @@ namespace BET_KANU.Controllers
                     {
                         string filename = await SaveFile(song.EasternPdfFile);
                         song.Epdf = filename;
+                    }
+                    if (song.MalouliPdfFile != null)
+                    {
+                        string filename = await SaveFile(song.MalouliPdfFile);
+                        song.Mpdf = filename;
                     }
                     song.Category = Category.Songs;
                     var result = _unitOfWork.manger.Add(song);
@@ -423,6 +428,22 @@ namespace BET_KANU.Controllers
                     {
                         string currectFilepath = _unitOfWork.product?.GetOne(prod.Id)?.Epdf ?? string.Empty;
                         prod.Epdf = currectFilepath;
+                    }
+
+                    if (prod.MalouliPdfFile != null)
+                    {
+                        string oldfile = _unitOfWork.product?.GetOne(prod.Id)?.Mpdf ?? string.Empty;
+                        if (!string.IsNullOrEmpty(oldfile))
+                        {
+                            await _blobStorage.DeleteDocumentAsync(oldfile);
+                        }
+                        var Filepath = await SaveFile(prod.MalouliPdfFile);
+                        prod.Mpdf = Filepath;
+                    }
+                    else
+                    {
+                        string currectFilepath = _unitOfWork.product?.GetOne(prod.Id)?.Mpdf ?? string.Empty;
+                        prod.Mpdf = currectFilepath;
                     }
 
                     if (_unitOfWork.manger.Edit(prod))
