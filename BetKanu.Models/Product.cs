@@ -119,14 +119,14 @@ namespace BetKanu.Models
         [DisplayName("Image")]
         public IFormFile? CoverUrl { get; set; }
 
-        [DisplayName("Malouli Credits Html")]
+        [DisplayName("Malouli Script Html")]
         public string? MalouliScript { get; set; }
         [DisplayName("Malouli Credits HTML")]
         public string? CreditsM { get; set; }
         [DisplayName("Malouli Video Link")]
         public string? VideoM { get; set; }
         [DisplayName("Malouli Video Views")]
-        public int ViewsM { get; set; }
+        public int? ViewsM { get; set; }
         [DisplayName("Malouli Pdf Link")]
         public string? Mpdf { get; set; }
 
@@ -151,6 +151,7 @@ namespace BetKanu.Models
         [NotMapped]
         public IFormFile? EasternPdfFile { get; set; }
         [NotMapped]
+        [DisplayName("Malouli Pdf File")]
         public IFormFile? MalouliPdfFile { get; set; }
 
 

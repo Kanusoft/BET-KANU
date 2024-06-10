@@ -28,7 +28,7 @@
                                 <div class="col-lg-3 col-sm-12">
                                     <div class="form-group">
                                         <label asp-for="Title" class="control-label"></label>
-                                        <input asp-for="Title" class="form-control" required/>
+                                        <input asp-for="Title" class="form-control" required />
                                         <span asp-validation-for="Title" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
@@ -198,35 +198,64 @@
                                                         <span asp-validation-for="Wpdf" class="text-danger"></span>
                                                     </td>
                                                 </tr>
-                                               @*  <tr>
-                                                    <td>
-                                                        <input asp-for="MalouliScript" class="control-label" />
-                                                        <span asp-validation-for="MalouliScript" class="text-danger"></span>
-                                                    </td>
-                                                    <td>
-                                                        <input asp-for="CreditsM" class="control-label" />
-                                                        <span asp-validation-for="CreditsM" class="text-danger"></span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input asp-for="VideoM" class="control-label" />
-                                                        <span asp-validation-for="VideoM" class="text-danger"></span>
-                                                    </td>
-                                                    <td>
-                                                        <label asp-for="ViewsM" class="control-label"></label>
-                                                        <input asp-for="ViewsM" class="control-label" />
-                                                        <span asp-validation-for="ViewsM" class="text-danger"></span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <input asp-for="MalouliPdfFile" class="control-label" />
-                                                        <span asp-validation-for="MalouliPdfFile" class="text-danger"></span>
-                                                    </td>
-                                                </tr> *@
                                             </tbody>
                                         </table>
+
+                                        <button class="btn toggle-hidden-btn" type="button"
+                                                    data-initial-svg='<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9l6 6l6-6"/></svg>'
+                                                    data-flipped-svg='<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m18 15l-6-6l-6 6"/></svg>'>
+                                        Has Malouli Info!
+                                                <span class="rotate-svg" style="display: inline-block;"></span>
+                                            </button>
+                                    
+                                        <p class="comment-text">
+                                            <tr>
+                                                <td>
+                                                    <label asp-for="MalouliScript" class="control-label"></label>
+                                                </td>
+                                                <td>
+
+                                                    <input asp-for="MalouliScript" class="form-control" />
+                                                    <span asp-validation-for="MalouliScript" class="text-danger"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label asp-for="CreditsM" class="control-label"></label>
+                                                </td>
+                                                <td>
+                                                    <input asp-for="CreditsM" class="form-control" />
+                                                    <span asp-validation-for="CreditsM" class="text-danger"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label asp-for="VideoM" class="control-label"></label>
+                                                </td>
+                                                <td>
+                                                    <input asp-for="VideoM" class="form-control" />
+                                                    <span asp-validation-for="VideoM" class="text-danger"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label asp-for="ViewsM" class="control-label"></label>
+                                                </td>
+                                                <td>
+                                                    <input asp-for="ViewsM" class="form-control" />
+                                                    <span asp-validation-for="ViewsM" class="text-danger"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label asp-for="MalouliPdfFile" class="control-label"></label>
+                                                </td>
+                                                <td>
+                                                    <input asp-for="MalouliPdfFile" type="file" class="form-control pt-3" />
+                                                    <span asp-validation-for="MalouliPdfFile" class="text-danger"></span>
+                                                </td>
+                                            </tr>
+                                        </p>
                                     </div>
                                     <!--END table-responsive #3a4258-->
 
@@ -262,6 +291,31 @@
         <!-- file uploads js -->
         <script src="~/plugins/fileuploads/js/dropify.js"></script>
         <script>
+            $(document).ready(function () {
+                $(".toggle-hidden-btn").each(function () {
+                    var $btn = $(this);
+                    var initialSvg = $btn.data("initial-svg");
+                    var flippedSvg = $btn.data("flipped-svg");
+
+                    $btn.find(".rotate-svg").html(initialSvg);
+
+                    $btn.on("click", function () {
+                        var commentText = $btn.next(".comment-text");
+                        var rotateSvg = $btn.find(".rotate-svg");
+
+                        commentText.toggleClass("visible");
+                        rotateSvg.toggleClass("rotated");
+
+                        if (rotateSvg.hasClass("rotated")) {
+                            rotateSvg.html(flippedSvg);
+                        } else {
+                            rotateSvg.html(initialSvg);
+                        }
+                    });
+                });
+            });
+        </script>
+        <script>
             $('.dropify').dropify({
                 messages: {
                     'default': 'Drag and drop a file here or click',
@@ -277,4 +331,4 @@
 
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+}

@@ -10180,3 +10180,32 @@ footer {
 		transform: translateY(0);
 	}
 }
+.comment-container {
+	margin-bottom: 10px;
+	position: relative;
+}
+.toggle-hidden-btn {
+	padding: 10px 1rem;
+	font-size: 0.9375rem;
+	border: 1px solid #424b65 !important;
+	margin: 0.375rem 0.75rem;
+}
+.comment-text {
+	margin: 5px 0;
+	display: none;
+	font-size: small;
+	padding: 0.75rem;
+	font-weight: 300;
+	letter-spacing: 1px;
+	opacity: 0;
+	transition: opacity 0.3s ease-in-out;
+}
+
+.rotate-svg {
+	transition: transform 0.3s ease-in-out;
+}
+
+.comment-text.visible {
+	display: block;
+	opacity: 1;
+}
