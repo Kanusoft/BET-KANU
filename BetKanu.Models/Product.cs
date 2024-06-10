@@ -1,6 +1,5 @@
 ﻿using BetKanu.Models.Common;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -41,16 +40,16 @@ namespace BetKanu.Models
         [DisplayName("Long Description")]
         public string? LongDescription { get; set; }
 
-        [DisplayName("Eastren Script Html For Songs, Order Now! google For Book")]
+        [DisplayName("Eastern Script Html For Songs, Order Now! google For Book")]
         public string? ScriptE { get; set; }
 
-        [DisplayName("Westrean Script Html For Songs, Order Now! instagram For Book")]
+        [DisplayName("Western Script Html For Songs, Order Now! instagram For Book")]
         public string? ScriptW { get; set; }
 
-        [DisplayName("Eastren Credits Html")]
+        [DisplayName("Eastern Credits Html")]
         public string? CreditsE { get; set; }
 
-        [DisplayName("Westrean Credits Html")]
+        [DisplayName("Western Credits Html")]
         public string? CreditsW { get; set; }
         [DisplayName("Google Play Link For Software, Order Eastern Surit For Book")]
 
@@ -58,22 +57,22 @@ namespace BetKanu.Models
         [DisplayName("App Store Link For Software, Order Western Surayt For Book")]
         public string? Link2 { get; set; }
 
-        [DisplayName("Westrean Pdf Link")]
+        [DisplayName("Western Pdf Link")]
         public string? Wpdf { get; set; }
 
-        [DisplayName("Eastren Pdf Link")]
+        [DisplayName("Eastern Pdf Link")]
         public string? Epdf { get; set; }
 
-        [DisplayName("Eastren Video Link")]
+        [DisplayName("Eastern Video Link")]
         public string? VideoE { get; set; }
 
-        [DisplayName("Westrean Video Link")]
+        [DisplayName("Western Video Link")]
         public string? VideoW { get; set; }
 
-        [DisplayName("Eastren Video Views")]
+        [DisplayName("Eastern Video Views")]
         public int ViewsE { get; set; }
 
-        [DisplayName("Westrean Video Views")]
+        [DisplayName("Western Video Views")]
         public int ViewsW { get; set; }
         [DisplayName("Image 1")]
         public string? img1 { get; set; }
