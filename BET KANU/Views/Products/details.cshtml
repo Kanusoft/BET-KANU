@@ -264,49 +264,68 @@
                     }
 
                     <div class="row">
-                        <div class="col-md-4 col-sm-12">
-                            @if (Model?.product.CreditsW != null || Model?.product.CreditsE != null)
-                            {
-                                <div class="well">
-                                    <p>
-                                        <strong>
-                                            Western
-                                        </strong>
-                                    </p>
+                        @if (Model?.product.CreditsM != null)
+                        {
+                            <div class="col-md-4 col-sm-12">
+                                @if (Model?.product.CreditsW != null || Model?.product.CreditsE != null)
+                                {
+                                    <div class="well">
+                                        <p>
+                                            <strong>Western</strong>
+                                        </p>
+                                        @Html.Raw(@Model?.product.CreditsW)
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                @if (Model?.product.CreditsE != null)
+                                {
+                                    <div class="well">
+                                        <p>
+                                            <strong>Eastern</strong>
+                                        </p>
+                                        @Html.Raw(@Model?.product.CreditsE)
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                @if (Model?.product.CreditsM != null)
+                                {
+                                    <div class="well">
+                                        <p>
+                                            <strong>Malouli</strong>
+                                        </p>
+                                        @Html.Raw(@Model?.product.CreditsM)
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-6 col-sm-12">
+                                @if (Model?.product.CreditsW != null || Model?.product.CreditsE != null)
+                                {
+                                    <div class="well">
+                                        <p>
+                                            <strong>Western</strong>
+                                        </p>
+                                        @Html.Raw(@Model?.product.CreditsW)
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                @if (Model?.product.CreditsE != null)
+                                {
+                                    <div class="well">
+                                        <p>
+                                            <strong>Eastern</strong>
+                                        </p>
+                                        @Html.Raw(@Model?.product.CreditsE)
+                                    </div>
+                                }
+                            </div>
+                        }
 
-                                    @Html.Raw(@Model?.product.CreditsW)
-
-                                </div>
-                            }
-                        </div>
-                        <div class="col-md-4 col-sm-12">
-                            @if (Model?.product.CreditsE != null)
-                            {
-                                <div class="well">
-                                    <p>
-                                        <strong>
-                                            Eastern
-                                        </strong>
-                                    </p>
-                                    @Html.Raw(@Model?.product.CreditsE)
-
-                                </div>
-                            }
-                        </div>
-                        <div class="col-md-4 col-sm-12">
-                            @if (Model?.product.CreditsM != null)
-                            {
-                                <div class="well">
-                                    <p>
-                                        <strong>
-                                            Malouli
-                                        </strong>
-                                    </p>
-                                    @Html.Raw(@Model?.product.CreditsM)
-
-                                </div>
-                            }
-                        </div>
                     </div>
                     <div class="col-md-4 float-end">
                         <ul class="share">
@@ -330,7 +349,7 @@
         <div class="hero hero-game d-block d-sm-block d-md-none">
             <img src="@Model.product.SmallImage" />
         </div>
-      
+
     </section>
     <section>
         <div class="container">
@@ -444,8 +463,8 @@
 
                                     </div>
                                 </div>
-                                   @if (!string.IsNullOrEmpty(Model.product.img2))
-                           
+                                @if (!string.IsNullOrEmpty(Model.product.img2))
+
                                 {
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="well">
@@ -454,8 +473,8 @@
                                         </div>
                                     </div>
                                 }
-                                   @if (!string.IsNullOrEmpty(Model.product.img3))
-                              
+                                @if (!string.IsNullOrEmpty(Model.product.img3))
+
                                 {
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="well">
@@ -463,8 +482,8 @@
                                         </div>
                                     </div>
                                 }
-                                   @if (!string.IsNullOrEmpty(Model.product.img4))
-                                
+                                @if (!string.IsNullOrEmpty(Model.product.img4))
+
                                 {
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="well">
@@ -472,8 +491,8 @@
                                         </div>
                                     </div>
                                 }
-                                   @if (!string.IsNullOrEmpty(Model.product.img5))
-                              
+                                @if (!string.IsNullOrEmpty(Model.product.img5))
+
                                 {
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="well">
@@ -487,7 +506,7 @@
                     </div>
 
                 </div>
-            </div> 
+            </div>
             <div class="col-md-4 float-end">
                 <ul class="share">
                     <li><a href="https://www.facebook.com/sharer.php?u=https://betkanu.com/products/@ViewBag.Title" class="btn btn-sm btn-social-icon btn-facebook" data-toggle="tooltip" title="Share on facebook"><i class="fa fa-facebook"></i></a></li>
@@ -862,7 +881,7 @@
 @* End Books *@
 
 <!-- /#wrapper -->
-@section scripts{
+@section scripts {
     <script>
         function hideshowlist() {
             var w = document.getElementById("western");
