@@ -339,7 +339,18 @@
     </script>
     <script src="~/js/show.js"></script>
 
-  
+    <script>
+        document.addEventListener('click', function (event) {
+            var isClickInside = document.querySelector('.modal-content').contains(event.target);
+            var modalElement = document.getElementById('exampleModalhi');
+            var modalInstance = bootstrap.Modal.getInstance(modalElement);
+
+            if (!isClickInside && modalInstance && modalElement.classList.contains('show')) {
+                modalInstance.hide();
+            }
+        });
+    </script>
+
 
     @RenderSection("scripts", required: false)
 </body>
