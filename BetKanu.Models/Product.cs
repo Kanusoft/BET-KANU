@@ -51,10 +51,10 @@ namespace BetKanu.Models
 
         [DisplayName("Western Credits Html")]
         public string? CreditsW { get; set; }
-        [DisplayName("Google Play Link For Software, Order Eastern Surit For Book")]
+        [DisplayName("App Store  Link For Software, Order Eastern Surit For Book")]
 
         public string? Link1 { get; set; }
-        [DisplayName("App Store Link For Software, Order Western Surayt For Book")]
+        [DisplayName("Google Play Link For Software, Order Western Surayt For Book")]
         public string? Link2 { get; set; }
 
         [DisplayName("Western Pdf Link")]
