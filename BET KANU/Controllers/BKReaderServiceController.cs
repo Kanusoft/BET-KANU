@@ -71,12 +71,14 @@ namespace BET_KANU.Controllers
                 }
                 else
                 {
-                    return Ok(@"https://betkanu.com/home/reader");
+                    return Redirect("https://betkanu.com/home/reader");
                 }
             }
             else 
             {
-                return Ok(@"https://betkanu.com/home/reader");
+                var response = new RedirectResult("https://betkanu.com/home/reader");
+                return response;
+               // return Redirect("https://betkanu.com/home/reader");
             }
           
         }

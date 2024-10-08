@@ -99,4 +99,16 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}"
    );
 
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path == "/thenecklace/ep1" && context.Request.Query["dialect"] == "eastern")
+    {
+        context.Response.Redirect("https://www.lulu.com/shop/akkad-saadi-and-omar-issac-and-omar-issac-and-gabriella-gawrieh/the-necklace-eastern-surit-ep-1/paperback/product-rm8vz2n.html", true);
+        return;
+    }
+
+
+    await next();
+});
+
 app.Run();
