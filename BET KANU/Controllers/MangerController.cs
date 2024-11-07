@@ -41,7 +41,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateSong([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,CreditsE,CreditsW,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,WestreanPdfFile,EasternPdfFile,IsRelease,MalouliScript,CreditsM,VideoM,ViewsM,MalouliPdfFile")] Product song)
+        public async Task<ActionResult> CreateSong([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,CreditsE,CreditsW,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,WestreanPdfFile,EasternPdfFile,IsRelease,MalouliScript,EnglishScript,CreditsM,VideoM,ViewsM,MalouliPdfFile")] Product song)
         {
             if (ModelState.IsValid)
             {
@@ -268,7 +268,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind("Id,Title,SmallImage,CoverImage,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,Source,SponsoredBY,,ScriptE,ScriptW,CreditsE,CreditsW,Link1,Link2,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,img1,img2,img3,img4,img5,Author,DesignedBy,source,Features,ProductBy,Created,Link3,SongsList,Info1,Info2,Info3,SmallUrl,CoverUrl,EastrenImageFile,WestreanImageFile,imgUrl,imgUrl2,imgUrl3,imgUrl4,imgUrl5,WestreanPdfFile,EasternPdfFile,IsRelease,MalouliScript,CreditsM,VideoM,ViewsM,MalouliPdfFile")]Product prod)
+        public async Task<ActionResult> Edit([Bind("Id,Title,SmallImage,CoverImage,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,Source,SponsoredBY,,ScriptE,ScriptW,CreditsE,CreditsW,Link1,Link2,Wpdf,Epdf,VideoE,VideoW,ViewsE,ViewsW,img1,img2,img3,img4,img5,Author,DesignedBy,source,Features,ProductBy,Created,Link3,SongsList,Info1,Info2,Info3,SmallUrl,CoverUrl,EastrenImageFile,WestreanImageFile,imgUrl,imgUrl2,imgUrl3,imgUrl4,imgUrl5,WestreanPdfFile,EasternPdfFile,IsRelease,MalouliScript,EnglishScript,CreditsM,VideoM,ViewsM,MalouliPdfFile")]Product prod)
         {
             if (ModelState.IsValid && prod != null)
             {

@@ -42,6 +42,13 @@ namespace BET_KANU.Controllers
          
         }
 
+        [HttpGet]
+        [Route("Products/details/TheNecklace")]
+        public ActionResult RedirectTheNecklace()
+        {
+            return RedirectToAction(nameof(Details), new { id = 56 });
+        }
+
 
     }
 }

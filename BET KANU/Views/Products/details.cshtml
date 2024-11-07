@@ -68,6 +68,16 @@
                                                 <a class="btn btn-info" href="@Model?.product.Mpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
                                         </div>
                                     }
+                                    @if (!string.IsNullOrEmpty(Model?.product.EnglishScript))
+                                    {
+                                        <div class="well col-md-5 col-sm-12" style="text-align:center; direction:rtl">
+                                            <h3 style="text-align:center; direction:ltr" class="padding-bottom-10">English Lyrics</h3>
+                                            <p class="Surit font-size-22">
+                                                @Html.Raw(Model?.product.EnglishScript)
+                                            </p>
+                                            @* <a class="btn btn-info" href="@Model?.product.Mpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a> *@
+                                        </div>
+                                    }
                                 </div>
                             </div>
 

@@ -288,6 +288,15 @@
                                                             <span asp-validation-for="@Model.ScriptE"></span>
                                                         </td>
                                                     </tr>
+                                                    <tr data-categories="Songs Books" style="display: none;">
+                                                        <td>
+                                                            <label asp-for="EnglishScript" class="control-label"></label>
+                                                        </td>
+                                                        <td>
+                                                            <input asp-for="EnglishScript" class="form-control" />
+                                                            <span asp-validation-for="EnglishScript" class="text-danger"></span>
+                                                        </td>
+                                                    </tr>
                                                     <tr data-categories="Books Songs" style="display: none;">
                                                         <td>
                                                             <label asp-for="@Model.CreditsW" class="control-label"></label>

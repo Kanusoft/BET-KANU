@@ -121,6 +121,10 @@ namespace BetKanu.Models
 
         [DisplayName("Malouli Script Html")]
         public string? MalouliScript { get; set; }
+
+        [DisplayName("English Script")]
+        public string? EnglishScript { get; set; }
+
         [DisplayName("Malouli Credits HTML")]
         public string? CreditsM { get; set; }
         [DisplayName("Malouli Video Link")]

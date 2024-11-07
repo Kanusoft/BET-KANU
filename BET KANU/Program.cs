@@ -83,6 +83,40 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.Use(async (context, next) =>
+{
+    context.Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+    context.Response.Headers["Pragma"] = "no-cache";
+    context.Response.Headers["Expires"] = "0";
+    
+    if (context.Request.Path == "/thenecklace/ep1")
+    {
+        // Get the dialect and ensure case-insensitive comparison
+        var dialect = context.Request.Query["dialect"].ToString().ToLower();
+
+        // Log or debug the received dialect
+        Console.WriteLine($"Received dialect: {dialect}");
+
+        switch (dialect)
+        {
+            case "eastern":
+                context.Response.Redirect("https://www.lulu.com/shop/akkad-saadi-and-omar-issac-and-omar-issac-and-gabriella-gawrieh/the-necklace-eastern-surit-ep-1/paperback/product-rm8vz2n.html?q=+The+Necklace+-+Eastern", true);
+                return;
+
+            case "western":
+                context.Response.Redirect("https://www.lulu.com/shop/akkad-saadi-and-omar-issac-and-gabriella-gawrieh-and-george-afram/the-necklace-western-surayt-ep-1/paperback/product-jezm5dr.html?q=the+necklace+-+western", true);
+                return;
+
+            default:
+                // Log when no valid dialect is found
+                Console.WriteLine($"No valid dialect found. Received: {dialect}");
+                break;
+        }
+    }
+
+    await next();
+});
+
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -98,17 +132,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"
    );
-
-app.Use(async (context, next) =>
-{
-    if (context.Request.Path == "/thenecklace/ep1" && context.Request.Query["dialect"] == "eastern")
-    {
-        context.Response.Redirect("https://www.lulu.com/shop/akkad-saadi-and-omar-issac-and-omar-issac-and-gabriella-gawrieh/the-necklace-eastern-surit-ep-1/paperback/product-rm8vz2n.html", true);
-        return;
-    }
-
-
-    await next();
-});
 
 app.Run();
