@@ -15,249 +15,271 @@
     <section>
         <div class="container">
             <div class="col-lg-12">
-                <div class="row sidebar">
-                    <div class="col-lg-8 leftside">
-                        <div class="post post-single">
-                            <div class="post-header">
-                                <div class="post-title">
-                                    <h2>@Model.product.Title</h2>
-                                    <ul class="post-meta">
-                                        <li><i class="fa fa-music"></i> @Model.product.Category.ToString()</li>
-                                        <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate.ToString("MMM d, yyyy")</li>
-                                        <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
-                                        @if (Model?.product.TargetAudince != null)
-                                        {
-                                            <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.TargetAudince</span></li>
-                                        }
-                                    </ul>
-                                </div>
-                            </div>
-                            <p>
-                                @Model?.product.LongDescription
-                            </p>
-                            <div class="container">
-                                <div class="row">
-                                    @if (Model?.product.ScriptW != null)
+
+                <div class="col-lg-12">
+                    <div class="post post-single">
+                        <div class="post-header">
+                            <div class="post-title">
+                                <h2>@Model.product.Title</h2>
+                                <ul class="post-meta">
+                                    <li><i class="fa fa-music"></i> @Model.product.Category.ToString()</li>
+                                    <li><i class="fa fa-calendar-o"></i>@Model.product.ReleaseDate.ToString("MMM d, yyyy")</li>
+                                    <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.SubCategory</span></li>
+                                    @if (Model?.product.TargetAudince != null)
                                     {
-                                        <div class="well col-md-5 col-sm-12" style="text-align:center; direction:rtl" id="western">
+                                        <li><i class="fa fa-info"></i><span class="hidden-xs">@Model.product.TargetAudince</span></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <p>
+                            @Model?.product.LongDescription
+                        </p>
+
+                        <div class="row">
+
+                            @if (Model?.product.VideoW != null)
+                            {
+                                <div class=" col-md-6 col-sm-12 col-lg-4">
+                                    <div class="card">
+                                        <div class="card-img">
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                @{
+                                                    string youtubeUrl = Model?.product.VideoW ?? string.Empty;
+                                                    string embedWestUrl = string.Empty;
+
+                                                    if (!string.IsNullOrEmpty(youtubeUrl))
+                                                    {
+                                                        if (youtubeUrl.Contains("youtu.be/"))
+                                                        {
+                                                            // Short URL
+                                                            string videoId = youtubeUrl.Substring(youtubeUrl.LastIndexOf("/") + 1);
+                                                            embedWestUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                        }
+                                                        else if (youtubeUrl.Contains("youtube.com/embed/"))
+                                                        {
+                                                            // Long URL
+                                                            embedWestUrl = youtubeUrl;
+                                                        }
+                                                        else if (youtubeUrl.Contains("youtube.com/watch?v="))
+                                                        {
+                                                            // Long URL with query parameters
+                                                            int embedIndex = youtubeUrl.IndexOf("youtube.com/watch?v=");
+                                                            string videoId = youtubeUrl.Substring(embedIndex + 20);
+                                                            int queryIndex = videoId.IndexOf("?");
+                                                            if (queryIndex != -1)
+                                                            {
+                                                                videoId = videoId.Substring(0, queryIndex);
+                                                            }
+                                                            embedWestUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                        }
+                                                    }
+                                                }
+                                                @if (!string.IsNullOrEmpty(embedWestUrl))
+                                                {
+                                                    <iframe class="embed-responsive-item" src="@embedWestUrl" allowfullscreen></iframe>
+                                                }
+                                                @* <iframe class="embed-responsive-item" src="@Model?.product.VideoW" allowfullscreen></iframe>*@
+                                            </div>
+                                            <div class="time">BET KANU</div>
+                                        </div>
+                                        <div class="caption">
+                                            <h3 class="card-title">
+                                                @Model?.product.Title - Western Syriac (Surayt)
+                                            </h3>
+                                            <ul>
+                                                <li><i class="fa fa-calendar-o"></i> @Model?.product.ReleaseDate.ToString("MMM d, yyyy")</li>
+                                                <li><i class="fa fa-eye"></i> @Model?.product.ViewsW views</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (Model?.product.VideoE != null)
+                            {
+                                <div class=" col-md-6 col-sm-12 col-lg-4">
+                                    <div class="card">
+                                        <div class="card-img">
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                @{
+                                                    string EastyoutubeUrl = Model?.product?.VideoE ?? string.Empty;
+                                                    string EastembedUrl = string.Empty;
+
+                                                    if (!string.IsNullOrEmpty(EastyoutubeUrl))
+                                                    {
+                                                        if (EastyoutubeUrl.Contains("youtu.be/"))
+                                                        {
+                                                            // Short URL
+                                                            string videoId = EastyoutubeUrl.Substring(EastyoutubeUrl.LastIndexOf("/") + 1);
+                                                            EastembedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                        }
+                                                        else if (EastyoutubeUrl.Contains("youtube.com/embed/"))
+                                                        {
+                                                            // Long URL
+                                                            EastembedUrl = EastyoutubeUrl;
+                                                        }
+                                                        else if (EastyoutubeUrl.Contains("youtube.com/watch?v="))
+                                                        {
+                                                            // Long URL with query parameters
+                                                            int embedIndex = EastyoutubeUrl.IndexOf("youtube.com/watch?v=");
+                                                            string videoId = EastyoutubeUrl.Substring(embedIndex + 20);
+                                                            int queryIndex = videoId.IndexOf("?");
+                                                            if (queryIndex != -1)
+                                                            {
+                                                                videoId = videoId.Substring(0, queryIndex);
+                                                            }
+                                                            EastembedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                        }
+                                                    }
+                                                }
+                                                @if (!string.IsNullOrEmpty(EastembedUrl))
+                                                {
+                                                    <iframe class="embed-responsive-item" src="@EastembedUrl" allowfullscreen></iframe>
+                                                }
+                                                @*  <iframe class="embed-responsive-item" src="@Model?.product.VideoE" allowfullscreen></iframe>*@
+                                            </div>
+                                            <div class="time">BET KANU</div>
+                                        </div>
+                                        <div class="caption">
+                                            <h3 class="card-title">
+
+                                                @Model?.product.Title - Eastern Syriac (Surit)
+                                            </h3>
+                                            <ul>
+                                                <li><i class="fa fa-calendar-o"></i>@Model?.product.ReleaseDate.ToString("MMM d, yyyy")</li>
+                                                <li><i class="fa fa-eye"></i> @Model?.product.ViewsE views</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (Model?.product.VideoM != null)
+                            {
+                                <div class=" col-md-6 col-sm-12 col-lg-4">
+                                    <div class="card">
+                                        <div class="card-img">
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                @{
+                                                    string MyoutubeUrl = Model?.product?.VideoM ?? string.Empty;
+                                                    string MembedUrl = string.Empty;
+
+                                                    if (!string.IsNullOrEmpty(MyoutubeUrl))
+                                                    {
+                                                        if (MyoutubeUrl.Contains("youtu.be/"))
+                                                        {
+                                                            // Short URL
+                                                            string videoId = MyoutubeUrl.Substring(MyoutubeUrl.LastIndexOf("/") + 1);
+                                                            MembedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                        }
+                                                        else if (MyoutubeUrl.Contains("youtube.com/embed/"))
+                                                        {
+                                                            // Long URL
+                                                            MembedUrl = MyoutubeUrl;
+                                                        }
+                                                        else if (MyoutubeUrl.Contains("youtube.com/watch?v="))
+                                                        {
+                                                            // Long URL with query parameters
+                                                            int embedIndex = MyoutubeUrl.IndexOf("youtube.com/watch?v=");
+                                                            string videoId = MyoutubeUrl.Substring(embedIndex + 20);
+                                                            int queryIndex = videoId.IndexOf("?");
+                                                            if (queryIndex != -1)
+                                                            {
+                                                                videoId = videoId.Substring(0, queryIndex);
+                                                            }
+                                                            MembedUrl = $"https://www.youtube.com/embed/{videoId}";
+                                                        }
+                                                    }
+                                                }
+                                                @if (!string.IsNullOrEmpty(MembedUrl))
+                                                {
+                                                    <iframe class="embed-responsive-item" src="@MembedUrl" allowfullscreen></iframe>
+                                                }
+                                                @*  <iframe class="embed-responsive-item" src="@Model?.product.VideoE" allowfullscreen></iframe>*@
+                                            </div>
+                                            <div class="time">BET KANU</div>
+                                        </div>
+                                        <div class="caption">
+                                            <h3 class="card-title">
+
+                                                @Model?.product.Title - Malouli Syriac
+                                            </h3>
+                                            <ul>
+                                                <li><i class="fa fa-calendar-o"></i>@Model?.product.ReleaseDate.ToString("MMM d, yyyy")</li>
+                                                <li><i class="fa fa-eye"></i> @Model?.product.ViewsE views</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="d-flex justify-content-center mb-3">
+                                <a href="https://www.youtube.com/c/betkanu" class="btn btn-danger btn-block w-auto">BET KANU YouTube Channel</a>
+                            </div>
+
+
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                @if (Model?.product.ScriptW != null)
+                                {
+                                    <div class=" col-md-6 col-sm-12 col-lg-4" style="text-align:center; direction:rtl" id="western">
+                                        <div class="well">
+
                                             <h3 style="text-align:center; direction:ltr" class="padding-bottom-10">Western Lyrics</h3>
                                             <p class="Surayt font-size-22">
                                                 @Html.Raw(Model?.product.ScriptW)
                                             </p>
                                             <a class="btn btn-info" href="@Model?.product.Wpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
                                         </div>
-                                    }
-                                    <div class="col-1"></div>
-                                    @if (Model?.product.ScriptE != null)
-                                    {
-                                        <div class="well col-md-5 col-sm-12" style="text-align:center; direction:rtl" id="eastern">
+                                    </div>
+                                }
+
+                                @if (Model?.product.ScriptE != null)
+                                {
+                                    <div class=" col-md-6 col-sm-12 col-lg-4" style="text-align:center; direction:rtl" id="eastern">
+                                        <div class="well">
                                             <h3 style="text-align:center; direction:ltr" class="padding-bottom-10">Eastern Lyrics</h3>
                                             <p class="Surit font-size-22">
                                                 @Html.Raw(Model?.product.ScriptE)
                                             </p>
                                             <a class="btn btn-info" href="@Model?.product.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
                                         </div>
-                                    }
-                                    @if (Model?.product.MalouliScript != null)
-                                    {
-                                        <div class="well col-md-5 col-sm-12" style="text-align:center; direction:rtl">
+                                    </div>
+                                }
+                                @if (Model?.product.MalouliScript != null)
+                                {
+                                    <div class=" col-md-6 col-sm-12 col-lg-4" style="text-align:center; direction:rtl">
+                                        <div class="well">
                                             <h3 style="text-align:center; direction:ltr" class="padding-bottom-10">Malouli Lyrics</h3>
                                             <p class="Surit font-size-22">
                                                 @Html.Raw(Model?.product.MalouliScript)
                                             </p>
-                                                <a class="btn btn-info" href="@Model?.product.Mpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+                                            <a class="btn btn-info" href="@Model?.product.Mpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
                                         </div>
-                                    }
-                                    @if (!string.IsNullOrEmpty(Model?.product.EnglishScript))
-                                    {
-                                        <div class="well col-md-5 col-sm-12" style="text-align:center; direction:rtl">
+                                    </div>
+                                }
+                                @if (!string.IsNullOrEmpty(Model?.product.EnglishScript))
+                                {
+                                    <div class=" col-md-6 col-sm-12 col-lg-4" style="text-align:center; direction:rtl">
+                                        <div class="well">
                                             <h3 style="text-align:center; direction:ltr" class="padding-bottom-10">English Lyrics</h3>
                                             <p class="Surit font-size-22">
                                                 @Html.Raw(Model?.product.EnglishScript)
                                             </p>
-                                          @*   <a class="btn btn-info" href="@Model?.product.Mpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a> *@
+                                            @* <a class="btn btn-info" href="@Model?.product.Mpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a> *@
                                         </div>
-                                    }
-                                </div>
+                                    </div>
+                                }
+
                             </div>
-
                         </div>
                     </div>
-                    <div class="col-lg-4 rightside">
-                        <div class="widget widget-card">
-                            @if (Model?.product.VideoW != null)
-                            {
-                                <div class="card">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            @{
-                                                string youtubeUrl = Model?.product.VideoW ?? string.Empty;
-                                                string embedWestUrl = string.Empty;
 
-                                                if (!string.IsNullOrEmpty(youtubeUrl))
-                                                {
-                                                    if (youtubeUrl.Contains("youtu.be/"))
-                                                    {
-                                                        // Short URL
-                                                        string videoId = youtubeUrl.Substring(youtubeUrl.LastIndexOf("/") + 1);
-                                                        embedWestUrl = $"https://www.youtube.com/embed/{videoId}";
-                                                    }
-                                                    else if (youtubeUrl.Contains("youtube.com/embed/"))
-                                                    {
-                                                        // Long URL
-                                                        embedWestUrl = youtubeUrl;
-                                                    }
-                                                    else if (youtubeUrl.Contains("youtube.com/watch?v="))
-                                                    {
-                                                        // Long URL with query parameters
-                                                        int embedIndex = youtubeUrl.IndexOf("youtube.com/watch?v=");
-                                                        string videoId = youtubeUrl.Substring(embedIndex + 20);
-                                                        int queryIndex = videoId.IndexOf("?");
-                                                        if (queryIndex != -1)
-                                                        {
-                                                            videoId = videoId.Substring(0, queryIndex);
-                                                        }
-                                                        embedWestUrl = $"https://www.youtube.com/embed/{videoId}";
-                                                    }
-                                                }
-                                            }
-                                            @if (!string.IsNullOrEmpty(embedWestUrl))
-                                            {
-                                                <iframe class="embed-responsive-item" src="@embedWestUrl" allowfullscreen></iframe>
-                                            }
-                                            @* <iframe class="embed-responsive-item" src="@Model?.product.VideoW" allowfullscreen></iframe>*@
-                                        </div>
-                                        <div class="time">BET KANU</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title">
-                                            @Model?.product.Title - Western Syriac (Surayt)
-                                        </h3>
-                                        <ul>
-                                            <li><i class="fa fa-calendar-o"></i> @Model?.product.ReleaseDate.ToString("MMM d, yyyy")</li>
-                                            <li><i class="fa fa-eye"></i> @Model?.product.ViewsW views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            }
-                            @if (Model?.product.VideoE != null)
-                            {
-                                <div class="card">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            @{
-                                                string EastyoutubeUrl = Model?.product?.VideoE ?? string.Empty;
-                                                string EastembedUrl = string.Empty;
-
-                                                if (!string.IsNullOrEmpty(EastyoutubeUrl))
-                                                {
-                                                    if (EastyoutubeUrl.Contains("youtu.be/"))
-                                                    {
-                                                        // Short URL
-                                                        string videoId = EastyoutubeUrl.Substring(EastyoutubeUrl.LastIndexOf("/") + 1);
-                                                        EastembedUrl = $"https://www.youtube.com/embed/{videoId}";
-                                                    }
-                                                    else if (EastyoutubeUrl.Contains("youtube.com/embed/"))
-                                                    {
-                                                        // Long URL
-                                                        EastembedUrl = EastyoutubeUrl;
-                                                    }
-                                                    else if (EastyoutubeUrl.Contains("youtube.com/watch?v="))
-                                                    {
-                                                        // Long URL with query parameters
-                                                        int embedIndex = EastyoutubeUrl.IndexOf("youtube.com/watch?v=");
-                                                        string videoId = EastyoutubeUrl.Substring(embedIndex + 20);
-                                                        int queryIndex = videoId.IndexOf("?");
-                                                        if (queryIndex != -1)
-                                                        {
-                                                            videoId = videoId.Substring(0, queryIndex);
-                                                        }
-                                                        EastembedUrl = $"https://www.youtube.com/embed/{videoId}";
-                                                    }
-                                                }
-                                            }
-                                            @if (!string.IsNullOrEmpty(EastembedUrl))
-                                            {
-                                                <iframe class="embed-responsive-item" src="@EastembedUrl" allowfullscreen></iframe>
-                                            }
-                                            @*  <iframe class="embed-responsive-item" src="@Model?.product.VideoE" allowfullscreen></iframe>*@
-                                        </div>
-                                        <div class="time">BET KANU</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title">
-
-                                            @Model?.product.Title - Eastern Syriac (Surit)
-                                        </h3>
-                                        <ul>
-                                            <li><i class="fa fa-calendar-o"></i>@Model?.product.ReleaseDate.ToString("MMM d, yyyy")</li>
-                                            <li><i class="fa fa-eye"></i> @Model?.product.ViewsE views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            }
-                            @if (Model?.product.VideoM != null)
-                            {
-                                <div class="card">
-                                    <div class="card-img">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            @{
-                                                string MyoutubeUrl = Model?.product?.VideoM ?? string.Empty;
-                                                string MembedUrl = string.Empty;
-
-                                                if (!string.IsNullOrEmpty(MyoutubeUrl))
-                                                {
-                                                    if (MyoutubeUrl.Contains("youtu.be/"))
-                                                    {
-                                                        // Short URL
-                                                        string videoId = MyoutubeUrl.Substring(MyoutubeUrl.LastIndexOf("/") + 1);
-                                                        MembedUrl = $"https://www.youtube.com/embed/{videoId}";
-                                                    }
-                                                    else if (MyoutubeUrl.Contains("youtube.com/embed/"))
-                                                    {
-                                                        // Long URL
-                                                        MembedUrl = MyoutubeUrl;
-                                                    }
-                                                    else if (MyoutubeUrl.Contains("youtube.com/watch?v="))
-                                                    {
-                                                        // Long URL with query parameters
-                                                        int embedIndex = MyoutubeUrl.IndexOf("youtube.com/watch?v=");
-                                                        string videoId = MyoutubeUrl.Substring(embedIndex + 20);
-                                                        int queryIndex = videoId.IndexOf("?");
-                                                        if (queryIndex != -1)
-                                                        {
-                                                            videoId = videoId.Substring(0, queryIndex);
-                                                        }
-                                                        MembedUrl = $"https://www.youtube.com/embed/{videoId}";
-                                                    }
-                                                }
-                                            }
-                                            @if (!string.IsNullOrEmpty(MembedUrl))
-                                            {
-                                                <iframe class="embed-responsive-item" src="@MembedUrl" allowfullscreen></iframe>
-                                            }
-                                            @*  <iframe class="embed-responsive-item" src="@Model?.product.VideoE" allowfullscreen></iframe>*@
-                                        </div>
-                                        <div class="time">BET KANU</div>
-                                    </div>
-                                    <div class="caption">
-                                        <h3 class="card-title">
-
-                                            @Model?.product.Title - Eastern Syriac (Surit)
-                                        </h3>
-                                        <ul>
-                                            <li><i class="fa fa-calendar-o"></i>@Model?.product.ReleaseDate.ToString("MMM d, yyyy")</li>
-                                            <li><i class="fa fa-eye"></i> @Model?.product.ViewsE views</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            }
-                            <a href="https://www.youtube.com/c/betkanu" class="btn btn-danger btn-block">BET KANU YouTube Channel</a>
-                        </div>
-                    </div>
                 </div>
+
             </div>
         </div>
+
+
     </section>
 
     <section>
