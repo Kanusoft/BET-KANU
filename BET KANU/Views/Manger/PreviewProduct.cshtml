@@ -40,7 +40,7 @@
 
                             @if (Model?.product.VideoW != null)
                             {
-                                <div class=" col-md-6 col-sm-12 col-lg-4">
+                                <div class="@(Model?.product.VideoM  != null ? "col-lg-4 col-md-6 col-sm-12" : "col-lg-6 col-md-6 col-sm-12")">
                                     <div class="card">
                                         <div class="card-img">
                                             <div class="embed-responsive embed-responsive-16by9">
@@ -97,7 +97,7 @@
                             }
                             @if (Model?.product.VideoE != null)
                             {
-                                <div class=" col-md-6 col-sm-12 col-lg-4">
+                                <div class="@(Model?.product.VideoM  != null ? "col-lg-4 col-md-6 col-sm-12" : "col-lg-6 col-md-6 col-sm-12")">
                                     <div class="card">
                                         <div class="card-img">
                                             <div class="embed-responsive embed-responsive-16by9">
@@ -155,7 +155,7 @@
                             }
                             @if (Model?.product.VideoM != null)
                             {
-                                <div class=" col-md-6 col-sm-12 col-lg-4">
+                                <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card">
                                         <div class="card-img">
                                             <div class="embed-responsive embed-responsive-16by9">
@@ -221,7 +221,7 @@
                             <div class="row">
                                 @if (Model?.product.ScriptW != null)
                                 {
-                                    <div class=" col-md-6 col-sm-12 col-lg-4" style="text-align:center; direction:rtl" id="western">
+                                    <div class="@(Model?.product.ScriptW != null ? "col-md-6 col-sm-12 col-lg-4" : "col-md-6 col-sm-12 col-lg-4")" style="text-align:center; direction:rtl" id="western">
                                         <div class="well">
 
                                             <h3 style="text-align:center; direction:ltr" class="padding-bottom-10">Western Lyrics</h3>
@@ -235,7 +235,7 @@
 
                                 @if (Model?.product.ScriptE != null)
                                 {
-                                    <div class=" col-md-6 col-sm-12 col-lg-4" style="text-align:center; direction:rtl" id="eastern">
+                                    <div class="@(Model?.product.ScriptW != null ? "col-md-6 col-sm-12 col-lg-4" : "col-md-6 col-sm-12 col-lg-4")" style="text-align:center; direction:rtl" id="eastern">
                                         <div class="well">
                                             <h3 style="text-align:center; direction:ltr" class="padding-bottom-10">Eastern Lyrics</h3>
                                             <p class="Surit font-size-22">
@@ -247,7 +247,7 @@
                                 }
                                 @if (Model?.product.MalouliScript != null)
                                 {
-                                    <div class=" col-md-6 col-sm-12 col-lg-4" style="text-align:center; direction:rtl">
+                                    <div class="@(Model?.product.ScriptW != null ? "col-md-6 col-sm-12 col-lg-4" : "col-md-6 col-sm-12 col-lg-4")" style="text-align:center; direction:rtl">
                                         <div class="well">
                                             <h3 style="text-align:center; direction:ltr" class="padding-bottom-10">Malouli Lyrics</h3>
                                             <p class="Surit font-size-22">
@@ -259,7 +259,7 @@
                                 }
                                 @if (!string.IsNullOrEmpty(Model?.product.EnglishScript))
                                 {
-                                    <div class=" col-md-6 col-sm-12 col-lg-4" style="text-align:center; direction:rtl">
+                                    <div class="@(Model?.product.ScriptW != null ? "col-md-6 col-sm-12 col-lg-4" : "col-md-6 col-sm-12 col-lg-4")" style="text-align:center; direction:rtl">
                                         <div class="well">
                                             <h3 style="text-align:center; direction:ltr" class="padding-bottom-10">English Lyrics</h3>
                                             <p class="Surit font-size-22">
