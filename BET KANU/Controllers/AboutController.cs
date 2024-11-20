@@ -67,6 +67,12 @@ namespace BET_KANU.Controllers
 
             return View();
         }
+        public ActionResult GabiChabo()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
         public ActionResult MariaKale()
         {
             ViewBag.Message = "Your contact page.";
