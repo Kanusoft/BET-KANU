@@ -6,6 +6,7 @@ namespace BetKanu.Models.Common
         Books,
         Songs,
         CartoonSeries,
-        Software
+        Software,
+        Collection
     }
 }

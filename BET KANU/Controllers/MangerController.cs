@@ -219,6 +219,59 @@ namespace BET_KANU.Controllers
             return View(soft);
         }
 
+        [HttpGet]
+        public ActionResult CreateCollection()
+        {
+            return View(new Product());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateCollection([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,Wpdf,Epdf,VideoE,VideoW,WestreanPdfFile,EasternPdfFile,IsRelease")] Product Collection)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (Collection.SmallUrl != null)
+                    {
+                        string ImagePath = await SaveImage(Collection.SmallUrl);
+                        Collection.SmallImage = ImagePath;
+                    }
+                    if (Collection.CoverUrl != null)
+                    {
+                        string ImagePath = await SaveImage(Collection.CoverUrl);
+                        Collection.CoverImage = ImagePath;
+                    }
+                    if (Collection.WestreanPdfFile != null)
+                    {
+                        string filename = await SaveFile(Collection.WestreanPdfFile);
+                        Collection.Wpdf = filename;
+                    }
+                    if (Collection.EasternPdfFile != null)
+                    {
+                        string filename = await SaveFile(Collection.EasternPdfFile);
+                        Collection.Epdf = filename;
+                    }
+                    if (Collection.MalouliPdfFile != null)
+                    {
+                        string filename = await SaveFile(Collection.MalouliPdfFile);
+                        Collection.Mpdf = filename;
+                    }
+                    Collection.Category = Category.Collection;
+                    var result = _unitOfWork.manger.Add(Collection);
+                    if (result > 0)
+                    {
+                        TempData["Messagee"] = Collection.Title + " " + "has been created successfully!";
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            }
+            return View(Collection);
+        }
 
         /// <summary>
         /// Save the Images to the Blob storage at products Container
