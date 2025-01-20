@@ -947,6 +947,10 @@
                         </p>
 
                         <div class="row">
+                            @if (!string.IsNullOrEmpty(Model?.product.img2))
+                            {
+                                <img src="@Model.product.img2" alt="Western Banner" />
+                            }
 
                             @if (Model?.product.VideoW != null)
                             {
@@ -1003,6 +1007,10 @@
                                         </div>
                                     </div>
                                 </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model?.product.img1))
+                            {
+                                <img src="@Model.product.img1" alt="Eastern Banner"/>
                             }
                             @if (Model?.product.VideoE != null)
                             {

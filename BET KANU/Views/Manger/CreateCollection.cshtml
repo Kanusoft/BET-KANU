@@ -51,6 +51,20 @@
                                         <span asp-validation-for="CoverUrl" class="text-danger"></span>
                                     </div>
                                 </div>
+                                <div class="col-lg-3 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Banner Eastern</label>
+                                        <input asp-for="imgUrl" class="dropify form-control" />
+                                        <span asp-validation-for="Link1" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Banner Western</label>
+                                        <input asp-for="imgUrl2" class="dropify form-control" />
+                                        <span asp-validation-for="Link2" class="text-danger"></span>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label asp-for="IsRelease" class="control-label"></label>
                                     <input type="checkbox" asp-for="IsRelease" name="IsRelease" />
@@ -121,7 +135,25 @@
                                                         <input asp-for="VideoE" class="form-control" />
                                                         <span asp-validation-for="VideoE" class="text-danger"></span>
                                                     </td>
-                                                </tr>   
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label asp-for="ScriptE" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+                                                        <input asp-for="ScriptE" class="form-control" />
+                                                        <span asp-validation-for="ScriptE" class="text-danger"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label asp-for="ScriptW" class="control-label"></label>
+                                                    </td>
+                                                    <td>
+                                                        <input asp-for="ScriptW" class="form-control" />
+                                                        <span asp-validation-for="ScriptW" class="text-danger"></span>
+                                                    </td>
+                                                </tr>
                                                 <tr>
                                                     <td>
                                                         <label asp-for="Epdf" class="control-label"></label>

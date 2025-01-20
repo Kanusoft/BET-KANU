@@ -227,7 +227,7 @@ namespace BET_KANU.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateCollection([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,Wpdf,Epdf,VideoE,VideoW,WestreanPdfFile,EasternPdfFile,IsRelease")] Product Collection)
+        public async Task<ActionResult> CreateCollection([Bind("Title,SmallImage,CoverImage,SmallUrl,CoverUrl,Category,SubCategory,TargetAudince,ReleaseDate,ShortDescription,LongDescription,ScriptE,ScriptW,imgUrl,imgUrl2,Wpdf,Epdf,VideoE,VideoW,WestreanPdfFile,EasternPdfFile,IsRelease")] Product Collection)
         {
             if (ModelState.IsValid)
             {
@@ -243,6 +243,16 @@ namespace BET_KANU.Controllers
                         string ImagePath = await SaveImage(Collection.CoverUrl);
                         Collection.CoverImage = ImagePath;
                     }
+                    if (Collection.imgUrl != null)
+                    {
+                        string ImagePath = await SaveImage(Collection.imgUrl);
+                        Collection.img1 = ImagePath;
+                    }
+                    if (Collection.imgUrl2 != null)
+                    {
+                        string ImagePath = await SaveImage(Collection.imgUrl2);
+                        Collection.img2 = ImagePath;
+                    }
                     if (Collection.WestreanPdfFile != null)
                     {
                         string filename = await SaveFile(Collection.WestreanPdfFile);
@@ -253,11 +263,7 @@ namespace BET_KANU.Controllers
                         string filename = await SaveFile(Collection.EasternPdfFile);
                         Collection.Epdf = filename;
                     }
-                    if (Collection.MalouliPdfFile != null)
-                    {
-                        string filename = await SaveFile(Collection.MalouliPdfFile);
-                        Collection.Mpdf = filename;
-                    }
+                   
                     Collection.Category = Category.Collection;
                     var result = _unitOfWork.manger.Add(Collection);
                     if (result > 0)
