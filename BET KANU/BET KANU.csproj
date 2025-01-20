@@ -32,8 +32,4 @@
     <ProjectReference Include="..\BetKanu.Models\BetKanu.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Studio\" />
-  </ItemGroup>
-
 </Project>

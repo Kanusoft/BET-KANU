@@ -3,6 +3,7 @@ using BetKanu.Models.Interface;
 using Microsoft.AspNetCore.Mvc;
 using BetKanu.Models.Common;
 using BetKanu.Models.ViewModels;
+using BetKanu.Models;
 
 namespace BET_KANU.Controllers
 {
@@ -57,6 +58,19 @@ namespace BET_KANU.Controllers
             }
             
             return View(VM);
+        }
+
+        public ActionResult Collections()
+        {
+            var vm = new ProductVM();  
+
+            var products = _unit.product.GetAll(Category.Collection) ?? new List<Product>(); 
+            if(products.Count > 0)
+            {
+                vm.products = _unit.product.GetAll(Category.Collection);
+            }
+
+            return View(vm);
         }
       
     }
