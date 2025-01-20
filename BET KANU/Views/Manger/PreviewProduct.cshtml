@@ -942,14 +942,15 @@
                             </div>
                         </div>
                         <p>
-                            @Model?.product.LongDescription
+                            @Html.Raw(@Model?.product.LongDescription)
+                            
                         </p>
 
                         <div class="row">
 
                             @if (Model?.product.VideoW != null)
                             {
-                                <div class="@(Model?.product.VideoM  != null ? "col-lg-4 col-md-6 col-sm-12" : "col-lg-6 col-md-6 col-sm-12")">
+                                <div class="@(Model?.product.VideoM  != null ? "col-lg-6 col-md-6 col-sm-12" : "col-lg-6 col-md-6 col-sm-12")">
                                     <div class="card">
                                         <div class="card-img">
                                             <div class="embed-responsive embed-responsive-16by9">
@@ -1005,7 +1006,7 @@
                             }
                             @if (Model?.product.VideoE != null)
                             {
-                                <div class="@(Model?.product.VideoM  != null ? "col-lg-4 col-md-6 col-sm-12" : "col-lg-6 col-md-6 col-sm-12")">
+                                <div class="@(Model?.product.VideoM  != null ? "col-lg-6 col-md-6 col-sm-12" : "col-lg-6 col-md-6 col-sm-12")">
                                     <div class="card">
                                         <div class="card-img">
                                             <div class="embed-responsive embed-responsive-16by9">
@@ -1059,7 +1060,35 @@
                                         </div>
                                     </div>
                                 </div>
-                            } 
+                            }
+                  
+                                    @if (Model?.product.ScriptW != null)
+                                    {
+                                        <div class="@(Model?.product.ScriptW != null ? "col-md-6 col-sm-12 col-lg-6" : "col-md-6 col-sm-12 col-lg-6")" style="text-align:center; direction:rtl" id="western">
+                                            <div class="well">
+
+                                                <h3 style="text-align:center; direction:ltr" class="padding-bottom-10">Western Lyrics</h3>
+                                                <p class="Surayt font-size-22">
+                                                    @Html.Raw(Model?.product.ScriptW)
+                                                </p>
+                                                <a class="btn btn-info" href="@Model?.product.Wpdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    @if (Model?.product.ScriptE != null)
+                                    {
+                                        <div class="@(Model?.product.ScriptW != null ? "col-md-6 col-sm-12 col-lg-6" : "col-md-6 col-sm-12 col-lg-6")" style="text-align:center; direction:rtl" id="eastern">
+                                            <div class="well">
+                                                <h3 style="text-align:center; direction:ltr" class="padding-bottom-10">Eastern Lyrics</h3>
+                                                <p class="Surit font-size-22">
+                                                    @Html.Raw(Model?.product.ScriptE)
+                                                </p>
+                                                <a class="btn btn-info" href="@Model?.product.Epdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Export as PDF</a>
+                                            </div>
+                                        </div>
+                                    }
+               
                             <div class="d-flex justify-content-center mb-3">
                                 <a href="https://www.youtube.com/c/betkanu" class="btn btn-danger btn-block w-auto">BET KANU YouTube Channel</a>
                             </div>
