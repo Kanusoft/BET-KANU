@@ -40,10 +40,10 @@ namespace BetKanu.Models
         [DisplayName("Long Description")]
         public string? LongDescription { get; set; }
 
-        [DisplayName("Eastern Script Html For Songs, Order Now! google For Book")]
+        [DisplayName("Eastern Lyrics")]
         public string? ScriptE { get; set; }
 
-        [DisplayName("Western Script Html For Songs, Order Now! instagram For Book")]
+        [DisplayName("Western Lyrics")]
         public string? ScriptW { get; set; }
 
         [DisplayName("Eastern Credits Html")]
