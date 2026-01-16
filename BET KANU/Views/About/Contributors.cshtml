@@ -11,6 +11,7 @@
                 <h4><i class="fa fa-users"></i> Contributors </h4>
 
                 <div class="dropdown" style="display:inline">
+                    <button type="button" class="btn btn-info btn-outline my-2"    id="2025"   onclick="EnableDisableYear(this.id)"   disabled>   2025 <i class="fa fa-calendar"></i>   </button>
                     <button type="button" class="btn btn-info btn-outline my-2" id="2024" onclick="EnableDisableYear(this.id)">2024 <i class="fa fa-calendar"></i></button>
                     <button type="button" class="btn btn-info btn-outline my-2" id="2023" onclick="EnableDisableYear(this.id)">2023 <i class="fa fa-calendar"></i></button>
                     <button type="button" class="btn btn-info btn-outline my-2" id="2022" onclick="EnableDisableYear(this.id)">2022 <i class="fa fa-calendar"></i></button>
@@ -25,7 +26,68 @@
             </div>
         </div>
     </section>
-    <section id="2024c">
+    <section id="2025c">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail">
+                        <img src="/img/partners/christian-aid-program.png" alt="">
+                    </div>
+                    <h4 style="text-align:center">Christian Aid Program</h4>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail">
+                        <img src="/img/partners/ajv.png" alt="">
+                    </div>
+                    <h4 style="text-align:center">
+                        Assyrischer Jugendverband<br>Mitteleuropa e.V.
+                    </h4>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail">
+                        <img src="/img/partners/sos.jpg" alt="">
+                    </div>
+                    <h4 style="text-align:center">Save Our Souls SOS 1915</h4>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail d-flex justify-content-center">
+                        <img style="width:48%;" src="/img/partners/AttraTV.png" alt="">
+                    </div>
+                    <h4 style="text-align:center">ATTRA TV</h4>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail">
+                        <img src="/img/partners/syriac-culture.png" alt="">
+                    </div>
+                    <h4 style="text-align:center">
+                        General Directorate of<br>Syriac Culture and Arts
+                    </h4>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail">
+                        <img src="/img/partners/afa.png" alt="">
+                    </div>
+                    <h4 style="text-align:center">Assyrian Foundation of America</h4>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="post-thumbnail">
+                        <img src="/img/partners/tony-kalogerakos.png" alt="">
+                    </div>
+                    <h4 style="text-align:center">Tony S. Kalogerakos</h4>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="2024c" style="display:none">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-sm-6">
@@ -277,7 +339,7 @@
 @section scripts{
     <script>
         function EnableDisableYear(year) {
-            var years = ["2024", "2023", "2022", "2021", "2020", "2019", "2018", "2017"];
+        var years = ["2025", "2024", "2023", "2022", "2021", "2020", "2019", "2018", "2017"];
 
             years.forEach(y => {
                 var element = document.getElementById(y);
