@@ -1,0 +1,57 @@
+﻿@model ProductVM
+<head>
+    @{
+        ViewBag.Title = "Magazin";
+    }
+
+
+</head>
+<div id="wrapper">
+ 
+    <section class="p-0">
+        <div class="hero hero-game d-none d-md-block d-lg-block d-xl-block d-xxl-block">
+            <img src="/img/Magazine/BET KKANU Magazine Marketing-main posters-1920-700.jpg" />
+        </div>
+        <div class="hero hero-game d-block d-sm-block d-md-none">
+            <img src="/img/Magazine/BET KKANU Magazine Marketing-main posters-1920-350.jpg" />
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <div class="row">
+              
+            
+                <div class="post post-md no-border col-md-6">
+                    <div class="col-12">
+                        <div class="post-thumbnail">
+                            <a asp-controller="Publishing" asp-action="Article" asp-route-id=""><img src="/img/Magazine/BK M The Mesopotamian Influence 2026-main posters- 1920-700.jpg" loading="lazy" alt=""></a>
+                            <div class="post-caption" style="background-color:darkblue">Magazine</div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="post-header">
+                            <div class="post-title">
+                                <h4><a asp-controller="Publishing" asp-action="Article">BET KANU Magazine 2026</a></h4>
+                                <ul class="post-meta">
+                                    <li><i class="fa fa-newspaper"></i> Magazine</li>
+                                    <li><i class="fa fa-calendar-o"></i>2026</li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <p>
+                            This project was originally envisioned by our late friend and BET KANU member, Gabi Shabo, who proposed publishing articles on a wide range of topics in the Syriac language, in both its Eastern and Western traditions
+                        </p>
+                        <a style="background-color:#32a6de" asp-controller="Publishing" asp-action="Article" class="btn btn-info btn-shadow">Info</a>
+                        <a style="background-color: #f6a500" class="btn btn-warning btn-shadow"><i class="fa fa-youtube-play"></i> Western Syriac</a>
+                        <a style="background-color: #0d5487" class="btn btn-primary btn-shadow"><i class="fa fa-youtube-play"></i> Eastern Syriac</a>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+</div>
+

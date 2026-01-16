@@ -1,0 +1,63 @@
+﻿@model ProductVM
+<head>
+    @{
+        ViewBag.Title = "Article";
+    }
+
+
+</head>
+<div id="wrapper">
+    <section class="p-0">
+        <div class="hero hero-game d-none d-md-block d-lg-block d-xl-block d-xxl-block">
+            <img src="/img/Magazine/BK M The Mesopotamian Influence 2026-main posters- 1920-700.jpg" />
+        </div>
+        <div class="hero hero-game d-block d-sm-block d-md-none">
+            <img src="/img/Magazine/BK M The Mesopotamian Influence 2026- main posters-1920-350.jpg" />
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <div class="row">
+                <p>
+                    This project was originally envisioned by our late friend and BET KANU member, Gabi Shabo, who proposed publishing articles on a wide range of topics in the Syriac language, in both its Eastern and Western traditions. At the time, our team was committed to several other initiatives, which unfortunately prevented us from bringing his vision to fruition.<br />Today, in gratitude and loving memory of our dear friend, we are honored to launch BET KANU Magazine. The magazine will present a curated series of articles, beginning with a focus on Mesopotamian civilization. Each season will consist of six articles, with one article released on the 18th of every month—commemorating the birth date of Gabi Shabo (18/8/1991).
+                </p>
+
+                @* 
+                @foreach (var p in Model.products)
+                {
+                    @if (p.Category.ToString() == "Songs")
+                    { *@
+                <div class="post post-md no-border col-md-6">
+                    <div class="col-12">
+                        <div class="post-thumbnail">
+                            <a asp-controller="Publishing" asp-action="ArticleDetail" asp-route-id=""><img src="/img/Magazine/Article-01-Hammurabi’s Code main posters- 1920-700.jpg" loading="lazy" alt=""></a>
+                            <div class="post-caption" style="background-color:green">Article</div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="post-header">
+                            <div class="post-title">
+                                <h4><a asp-controller="Publishing" asp-action="ArticleDetail" asp-route-id="">The Code of Hammurabi</a></h4>
+                                <ul class="post-meta">
+                                    <li>  <i class="fa fa-book-open"></i>Article  </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p>
+                            The first article in BET KANU Magazine, under The Mesopotamian Influence edition, explores the Code of Hammurabi—examining its discovery, structure, and foundational principles, as well as its lasting impact on the global legal tradition.
+                        </p>
+                        <a style="background-color:#32a6de" asp-controller="Publishing" asp-action="ArticleDetail" asp-route-id="" class="btn btn-info btn-shadow">Info</a>
+
+
+                    </div>
+                </div>
+
+                @*        }
+             }
+ *@
+            </div>
+        </div>
+    </section>
+</div>
+
+

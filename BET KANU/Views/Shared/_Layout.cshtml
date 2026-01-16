@@ -75,9 +75,36 @@
                                     <li class="nav-item">
                                         <a alt="BETKANU Software" href="~/Software">Software</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a alt="BETKANU Publishing" href="~/Publishing">Publishing</a>
+                                    <li class="nav-item dropdown">
+                                        <a alt="BETKANU Publishing"
+                                           class="dropdown-toggle"
+                                           href="#"
+                                           id="navbarDropdownPublishingModal"
+                                           role="button"
+                                           data-bs-toggle="dropdown"
+                                           aria-expanded="false">
+                                            Publishing
+                                        </a>
+
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownPublishingModal">
+                                            <li>
+                                                <a class="dropdown-item"
+                                                   asp-controller="Publishing"
+                                                   asp-action="Book">
+                                                    Books
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a class="dropdown-item"
+                                                   asp-controller="Publishing"
+                                                   asp-action="Magazin">
+                                                    Magazine
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </li>
+
                                     <li class="nav-item dropdown">
                                         <a alt="BETKANU About" class="dropdown-toggle" href="#" id="navbarDropdownAbout" role="button"
                                            data-bs-toggle="dropdown" aria-expanded="false">
@@ -155,9 +182,35 @@
                         <li class="nav-item">
                             <a alt="BETKANU Software" href="~/Software">Software</a>
                         </li>
-                        <li class="nav-item">
-                            <a alt="BETKANU Publishing" href="~/Publishing">Publishing</a>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle"
+                               href="#"
+                               id="navbarDropdownPublishing"
+                               role="button"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                Publishing
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-nav-menu" aria-labelledby="navbarDropdownPublishing">
+                                <li>
+                                    <a class="dropdown-item"
+                                       asp-controller="Publishing"
+                                       asp-action="Book">
+                                        Books
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"
+                                       asp-controller="Publishing"
+                                       asp-action="Magazin">
+                                        Magazine
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
+
+
                         <li class="nav-item dropdown">
                             <a alt="BETKANU About" class="dropdown-toggle" href="#" id="navbarDropdownAbout" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">

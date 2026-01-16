@@ -12,11 +12,26 @@ namespace BET_KANU.Controllers
         {
             _unit= unit;
         }
-        public IActionResult Index()
+        public IActionResult Book()
         {
             var pvm = new ProductVM();
             pvm.products = _unit.product.GetAll(Category.Books);
             return View(pvm);
+        }
+        public ActionResult Article()
+        {
+
+            return View();
+        }
+        public ActionResult ArticleDetail()
+        {
+
+            return View();
+        }
+        public ActionResult Magazin()
+        {
+         
+            return View(); 
         }
     }
 }
