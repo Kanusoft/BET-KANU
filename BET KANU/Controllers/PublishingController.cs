@@ -28,7 +28,7 @@ namespace BET_KANU.Controllers
 
             return View();
         }
-        public ActionResult Magazin()
+        public ActionResult Magazine()
         {
          
             return View(); 
