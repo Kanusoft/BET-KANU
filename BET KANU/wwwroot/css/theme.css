@@ -8130,7 +8130,9 @@ footer {
 .text-right {
 	text-align: right !important;
 }
-
+.text-justify {
+	text-align: justify !important;
+}
 .text-initial {
 	text-transform: initial !important;
 }
