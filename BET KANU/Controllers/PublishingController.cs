@@ -8,30 +8,39 @@ namespace BET_KANU.Controllers
     public class PublishingController : Controller
     {
         private readonly IUnitOfWork _unit;
-        public PublishingController(IUnitOfWork unit)
+        private readonly IWebHostEnvironment _env;
+
+        public PublishingController(IUnitOfWork unit, IWebHostEnvironment env)
         {
-            _unit= unit;
+            _unit = unit;
+            _env = env;
         }
+
         public IActionResult Book()
         {
             var pvm = new ProductVM();
             pvm.products = _unit.product.GetAll(Category.Books);
             return View(pvm);
         }
-        public ActionResult Article()
-        {
 
-            return View();
-        }
-        public ActionResult ArticleDetail()
-        {
+        public ActionResult Article() => View();
+        public ActionResult ArticleDetail() => View();
+        public ActionResult Magazine() => View();
 
-            return View();
-        }
-        public ActionResult Magazine()
+        [HttpGet]
+        public IActionResult DownloadArticlePdf(string file)
         {
-         
-            return View(); 
+            if (string.IsNullOrWhiteSpace(file))
+                return BadRequest();
+
+            file = Path.GetFileName(file); 
+
+            var fullPath = Path.Combine(_env.WebRootPath, "Articles-pdf", file);
+
+            if (!System.IO.File.Exists(fullPath))
+                return NotFound();
+
+            return PhysicalFile(fullPath, "application/pdf", file);
         }
     }
 }
