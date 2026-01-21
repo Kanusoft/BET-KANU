@@ -9707,8 +9707,10 @@ footer {
 		font-size: xx-large;
 		direction: rtl;
 	}
+.Articles .Surit span, .Articles .Surayt span {
+	font-size: x-large;
+}
 /* media helpers */
-
 @media (max-width: 1200px) {
 	.no-padding-md-lg {
 		padding: 0 !important;
