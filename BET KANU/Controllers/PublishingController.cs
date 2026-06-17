@@ -29,6 +29,7 @@ namespace BET_KANU.Controllers
         public ActionResult ArticleDetail3() => View();
         public ActionResult ArticleDetail4() => View();
         public ActionResult ArticleDetail5() => View();
+        public ActionResult ArticleDetail6() => View();
         public ActionResult Magazine() => View();
 
         [HttpGet]
