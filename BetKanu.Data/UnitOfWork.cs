@@ -11,6 +11,17 @@ namespace BetKanu.Data
         public IProduct product { get; }
         public IManger manger { get; }
         public IShop Shop { get; }
+        public IMagazineRepository Magazines { get; }
+
+        public IMagazineArticleRepository MagazineArticles
+        {
+            get;
+        }
+
+        public int Save()
+        {
+            return _dbContext.SaveChanges();
+        }
 
         public UnitOfWork(BKdbContext dbContext)
         {
@@ -19,6 +30,11 @@ namespace BetKanu.Data
             product = new ProductDAO(dbContext);
             manger = new MangerRepo(dbContext);
             Shop= new ShopRepo(dbContext);
+
+            Magazines = new MagazineRepository(dbContext);
+
+            MagazineArticles =
+                new MagazineArticleRepository(dbContext);
         }
     }
 }
