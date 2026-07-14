@@ -1,4 +1,4 @@
-@model MagazineArticleFormViewModel
+@model BetKanu.Models.ViewModels.MagazineArticles.MagazineArticleFormViewModel
 
 <input asp-for="Id" type="hidden" />
 <input asp-for="MagazineId" type="hidden" />
@@ -79,7 +79,7 @@
             <div class="col-12">
                 <div class="form-group mb-3">
                     <label asp-for="ShortDescription" class="form-label"></label>
-                    <textarea asp-for="ShortDescription" class="form-control" rows="3"></textarea>
+                    <textarea asp-for="ShortDescription" class="form-control" rows="6"></textarea>
                     <span asp-validation-for="ShortDescription" class="text-danger"></span>
                 </div>
             </div>
@@ -98,40 +98,16 @@
                 </div>
             </div>
             <div class="col-12">
-                @if (Model.IsEdit && !string.IsNullOrWhiteSpace(Model.ExistingBannerImage))
-                {
-                    <div class="mb-3" id="existingBannerSection">
-                        <p class="form-label mb-2">Current Banner</p>
-                        <img src="@Model.ExistingBannerImage"
-                             alt="Current banner for @Model.Title"
-                             class="article-form-banner-preview mb-2"
-                             id="existingBannerImage" />
-                        <p class="form-text mb-0">
-                            Uploading a new image will replace the current banner.
-                        </p>
-                    </div>
-                }
-
-                <div class="form-group mb-2">
-                    <label asp-for="BannerImageFile" class="form-label"></label>
+                <div class="form-group">
+                    <label asp-for="BannerImageFile" class="control-label"></label>
                     <input asp-for="BannerImageFile"
-                           class="form-control"
+                           class="dropify"
                            type="file"
                            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                           id="BannerImageFile" />
-                    <div class="form-text">
-                        Allowed formats: JPG, JPEG, PNG, WEBP. Maximum size: 5 MB.
-                    </div>
+                           id="BannerImageFile"
+                           data-height="200"
+                           data-default-file="@(Model.IsEdit ? Model.ExistingBannerImage : "")" />
                     <span asp-validation-for="BannerImageFile" class="text-danger"></span>
-                    <div id="bannerPreviewError" class="text-danger small mt-1" role="alert" aria-live="polite"></div>
-                </div>
-
-                <div id="newBannerPreviewWrapper" class="d-none mb-3">
-                    <p class="form-label mb-2">New Banner Preview</p>
-                    <img src=""
-                         alt="Preview of selected banner image"
-                         class="article-form-banner-preview"
-                         id="newBannerPreview" />
                 </div>
             </div>
         </div>
@@ -152,21 +128,21 @@
             <div class="col-12">
                 <div class="form-group mb-3">
                     <label asp-for="WesternIntroduction" class="form-label"></label>
-                    <textarea asp-for="WesternIntroduction" class="form-control" rows="4"></textarea>
+                    <textarea asp-for="WesternIntroduction" class="form-control" rows="6"></textarea>
                     <span asp-validation-for="WesternIntroduction" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-12">
                 <div class="form-group mb-3">
                     <label asp-for="WesternBodyHtml" class="form-label"></label>
-                    <textarea asp-for="WesternBodyHtml" class="form-control font-monospace" rows="10"></textarea>
+                    <textarea asp-for="WesternBodyHtml" class="form-control font-monospace" rows="15"></textarea>
                     <span asp-validation-for="WesternBodyHtml" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-12">
                 <div class="form-group mb-3">
                     <label asp-for="WesternCreditsHtml" class="form-label"></label>
-                    <textarea asp-for="WesternCreditsHtml" class="form-control font-monospace" rows="5"></textarea>
+                    <textarea asp-for="WesternCreditsHtml" class="form-control font-monospace" rows="8"></textarea>
                     <span asp-validation-for="WesternCreditsHtml" class="text-danger"></span>
                 </div>
             </div>
@@ -218,21 +194,21 @@
             <div class="col-12">
                 <div class="form-group mb-3">
                     <label asp-for="EasternIntroduction" class="form-label"></label>
-                    <textarea asp-for="EasternIntroduction" class="form-control" rows="4"></textarea>
+                    <textarea asp-for="EasternIntroduction" class="form-control" rows="6"></textarea>
                     <span asp-validation-for="EasternIntroduction" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-12">
                 <div class="form-group mb-3">
                     <label asp-for="EasternBodyHtml" class="form-label"></label>
-                    <textarea asp-for="EasternBodyHtml" class="form-control font-monospace" rows="10"></textarea>
+                    <textarea asp-for="EasternBodyHtml" class="form-control font-monospace" rows="15"></textarea>
                     <span asp-validation-for="EasternBodyHtml" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-12">
                 <div class="form-group mb-3">
                     <label asp-for="EasternCreditsHtml" class="form-label"></label>
-                    <textarea asp-for="EasternCreditsHtml" class="form-control font-monospace" rows="5"></textarea>
+                    <textarea asp-for="EasternCreditsHtml" class="form-control font-monospace" rows="8"></textarea>
                     <span asp-validation-for="EasternCreditsHtml" class="text-danger"></span>
                 </div>
             </div>
@@ -302,13 +278,83 @@
 </div>
 
 <style>
+    .card {
+        background-color: #3e4966 !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+    .card-header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        background-color: transparent !important;
+    }
+    .card-title {
+        color: #fff !important;
+    }
+    .card label, .card .control-label, .card .form-label {
+        color: #fff !important;
+    }
+    .card .form-control, .card .form-select {
+        color: #8f98c1 !important;
+        background-color: #424b65 !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+    .card .form-control:focus, .card .form-select:focus {
+        color: #fff !important;
+        background-color: #424b65 !important;
+        border-color: #4eceb2 !important;
+        box-shadow: none !important;
+    }
+    .card .form-text {
+        color: #7984a0 !important;
+    }
+    .card .text-danger {
+        color: #ff5b5b !important;
+    }
+    
+    /* Tabs content styling */
+    #articleFormTabContent, .tab-content, .tab-pane {
+        background-color: transparent !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+    
+    /* Tabs headers styling */
+    #articleFormTabs {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        margin-bottom: 1.5rem !important;
+    }
+    #articleFormTabs .nav-item {
+        margin-bottom: -1px !important;
+    }
+    #articleFormTabs .nav-link {
+        color: #8f98c1 !important;
+        background-color: #424b65 !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        border-bottom: none !important;
+        margin-right: 5px !important;
+        border-radius: 4px 4px 0 0 !important;
+        padding: 10px 20px !important;
+        font-weight: 500 !important;
+        transition: all 0.2s ease-in-out !important;
+    }
+    #articleFormTabs .nav-link:hover {
+        color: #fff !important;
+        background-color: #4e5978 !important;
+    }
+    #articleFormTabs .nav-link.active {
+        color: #fff !important;
+        background-color: #0d5487 !important;
+        border-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    
     .article-form-banner-preview {
         width: 100%;
         max-width: 320px;
         height: 180px;
         object-fit: cover;
         border-radius: 4px;
-        border: 1px solid #dee2e6;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
         display: block;
     }
 
@@ -318,7 +364,8 @@
 
     #publishAtGroup.is-disabled input {
         pointer-events: none;
-        background-color: #e9ecef;
+        background-color: #2d3448 !important;
+        color: #5d667c !important;
     }
 </style>
 

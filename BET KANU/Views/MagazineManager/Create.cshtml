@@ -1,4 +1,5 @@
-@model MagazineFormViewModel
+@model BetKanu.Models.ViewModels.MagazineFormViewModel
+<link href="~/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="~/css/dashboard.css">
 
 @{
@@ -14,37 +15,30 @@
 
     <section>
         <div class="container py-4">
-            <div class="col-12">
-                <form id="magazineForm"
-                      class="card"
-                      asp-action="Create"
-                      method="post"
-                      enctype="multipart/form-data"
-                      novalidate>
-                    @Html.AntiForgeryToken()
+            <form id="magazineForm"
+                  asp-action="Create"
+                  method="post"
+                  enctype="multipart/form-data"
+                  novalidate>
+                @Html.AntiForgeryToken()
 
-                    <div class="card-body">
-                        <partial name="_MagazineForm" model="Model" />
-                    </div>
+                <partial name="_MagazineForm" model="Model" />
 
-                    <div class="card-footer">
-                        <div class="row g-3 justify-content-end">
-                            <div class="col-sm-6 col-md-3">
-                                <a asp-action="Index" class="btn btn-secondary w-100">
-                                    Cancel
-                                </a>
-                            </div>
-                            <div class="col-sm-6 col-md-3">
-                                <button type="submit"
-                                        id="magazineSubmitBtn"
-                                        class="btn btn-Create w-100">
-                                    <span class="btn-text">Create Magazine</span>
-                                </button>
-                            </div>
-                        </div>
+                <div class="row g-3 justify-content-end mt-3">
+                    <div class="col-sm-6 col-md-3">
+                        <a asp-action="Index" class="btn btn-secondary w-100">
+                            Cancel
+                        </a>
                     </div>
-                </form>
-            </div>
+                    <div class="col-sm-6 col-md-3">
+                        <button type="submit"
+                                id="magazineSubmitBtn"
+                                class="btn btn-Create w-100">
+                            <span class="btn-text">Create Magazine</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </section>
 </div>
@@ -53,6 +47,24 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <!-- file uploads js -->
+    <script src="~/plugins/fileuploads/js/dropify.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Drag and drop a file here or click',
+                    'replace': 'Drag and drop or click to replace',
+                    'remove': 'Remove',
+                    'error': 'Ooops, something wrong happened.'
+                },
+                error: {
+                    'fileSize': 'The file size is too big (5M max).'
+                }
+            });
+        });
+    </script>
 
     <script>
         (function () {

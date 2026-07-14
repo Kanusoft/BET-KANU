@@ -1,4 +1,7 @@
-@model MagazineArticleFormViewModel
+@model BetKanu.Models.ViewModels.MagazineArticles.MagazineArticleFormViewModel
+<!-- file Uploads -->
+<link href="~/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
+
 <link rel="stylesheet" href="~/css/dashboard.css">
 
 @{
@@ -55,6 +58,24 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <!-- file uploads js -->
+    <script src="~/plugins/fileuploads/js/dropify.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Drag and drop a file here or click',
+                    'replace': 'Drag and drop or click to replace',
+                    'remove': 'Remove',
+                    'error': 'Ooops, something wrong happened.'
+                },
+                error: {
+                    'fileSize': 'The file size is too big (5M max).'
+                }
+            });
+        });
+    </script>
 
     <script>
         (function () {
