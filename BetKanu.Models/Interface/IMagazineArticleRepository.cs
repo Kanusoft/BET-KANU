@@ -17,6 +17,10 @@ namespace BetKanu.Models.Interface
             string magazineSlug,
             string articleSlug);
 
+        MagazineArticle? GetPublishedBySlug(
+            string magazineSlug,
+            string articleSlug);
+
         bool SlugExists(
             int magazineId,
             string slug,
@@ -32,9 +36,5 @@ namespace BetKanu.Models.Interface
         void Update(MagazineArticle article);
 
         void Remove(MagazineArticle article);
-
-        MagazineArticle? GetPublishedArticle(
-    string magazineSlug,
-    string articleSlug);
     }
 }

@@ -1,0 +1,491 @@
+@model MagazineArticleFormViewModel
+
+<input asp-for="Id" type="hidden" />
+<input asp-for="MagazineId" type="hidden" />
+
+<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+<ul class="nav nav-tabs mb-3" id="articleFormTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active"
+                id="general-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#general-panel"
+                type="button"
+                role="tab"
+                aria-controls="general-panel"
+                aria-selected="true">
+            General
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link"
+                id="western-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#western-panel"
+                type="button"
+                role="tab"
+                aria-controls="western-panel"
+                aria-selected="false">
+            Western
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link"
+                id="eastern-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#eastern-panel"
+                type="button"
+                role="tab"
+                aria-controls="eastern-panel"
+                aria-selected="false">
+            Eastern
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link"
+                id="publication-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#publication-panel"
+                type="button"
+                role="tab"
+                aria-controls="publication-panel"
+                aria-selected="false">
+            Publication
+        </button>
+    </li>
+</ul>
+
+<div class="tab-content" id="articleFormTabContent">
+    <div class="tab-pane fade show active"
+         id="general-panel"
+         role="tabpanel"
+         aria-labelledby="general-tab">
+        <div class="row g-3">
+            <div class="col-md-8">
+                <div class="form-group mb-3">
+                    <label asp-for="Title" class="form-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group mb-3">
+                    <label asp-for="ArticleNumber" class="form-label"></label>
+                    <input asp-for="ArticleNumber" class="form-control" type="number" min="1" />
+                    <span asp-validation-for="ArticleNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                    <label asp-for="ShortDescription" class="form-label"></label>
+                    <textarea asp-for="ShortDescription" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group mb-3">
+                    <label asp-for="DisplayOrder" class="form-label"></label>
+                    <input asp-for="DisplayOrder" class="form-control" type="number" min="0" />
+                    <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group mb-3">
+                    <label asp-for="ReleaseDate" class="form-label"></label>
+                    <input asp-for="ReleaseDate" class="form-control" type="date" />
+                    <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12">
+                @if (Model.IsEdit && !string.IsNullOrWhiteSpace(Model.ExistingBannerImage))
+                {
+                    <div class="mb-3" id="existingBannerSection">
+                        <p class="form-label mb-2">Current Banner</p>
+                        <img src="@Model.ExistingBannerImage"
+                             alt="Current banner for @Model.Title"
+                             class="article-form-banner-preview mb-2"
+                             id="existingBannerImage" />
+                        <p class="form-text mb-0">
+                            Uploading a new image will replace the current banner.
+                        </p>
+                    </div>
+                }
+
+                <div class="form-group mb-2">
+                    <label asp-for="BannerImageFile" class="form-label"></label>
+                    <input asp-for="BannerImageFile"
+                           class="form-control"
+                           type="file"
+                           accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                           id="BannerImageFile" />
+                    <div class="form-text">
+                        Allowed formats: JPG, JPEG, PNG, WEBP. Maximum size: 5 MB.
+                    </div>
+                    <span asp-validation-for="BannerImageFile" class="text-danger"></span>
+                    <div id="bannerPreviewError" class="text-danger small mt-1" role="alert" aria-live="polite"></div>
+                </div>
+
+                <div id="newBannerPreviewWrapper" class="d-none mb-3">
+                    <p class="form-label mb-2">New Banner Preview</p>
+                    <img src=""
+                         alt="Preview of selected banner image"
+                         class="article-form-banner-preview"
+                         id="newBannerPreview" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade"
+         id="western-panel"
+         role="tabpanel"
+         aria-labelledby="western-tab">
+        <div class="row g-3">
+            <div class="col-12">
+                <div class="form-group mb-3">
+                    <label asp-for="WesternTitle" class="form-label"></label>
+                    <input asp-for="WesternTitle" class="form-control" />
+                    <span asp-validation-for="WesternTitle" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                    <label asp-for="WesternIntroduction" class="form-label"></label>
+                    <textarea asp-for="WesternIntroduction" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="WesternIntroduction" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                    <label asp-for="WesternBodyHtml" class="form-label"></label>
+                    <textarea asp-for="WesternBodyHtml" class="form-control font-monospace" rows="10"></textarea>
+                    <span asp-validation-for="WesternBodyHtml" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                    <label asp-for="WesternCreditsHtml" class="form-label"></label>
+                    <textarea asp-for="WesternCreditsHtml" class="form-control font-monospace" rows="5"></textarea>
+                    <span asp-validation-for="WesternCreditsHtml" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12">
+                @if (Model.IsEdit && !string.IsNullOrWhiteSpace(Model.ExistingWesternPdfPath))
+                {
+                    <div class="mb-3">
+                        <p class="form-label mb-2">Current Western PDF</p>
+                        <a href="@Model.ExistingWesternPdfPath"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="btn btn-sm btn-outline-primary">
+                            <i class="fa-solid fa-file-pdf me-1" aria-hidden="true"></i>
+                            View current PDF
+                        </a>
+                        <p class="form-text mb-0 mt-2">
+                            Uploading a new PDF will replace the current file.
+                        </p>
+                    </div>
+                }
+
+                <div class="form-group mb-0">
+                    <label asp-for="WesternPdfFile" class="form-label"></label>
+                    <input asp-for="WesternPdfFile"
+                           class="form-control"
+                           type="file"
+                           accept=".pdf,application/pdf"
+                           id="WesternPdfFile" />
+                    <div class="form-text">PDF only. Maximum size: 25 MB.</div>
+                    <span asp-validation-for="WesternPdfFile" class="text-danger"></span>
+                    <div id="westernPdfPreviewError" class="text-danger small mt-1" role="alert" aria-live="polite"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade"
+         id="eastern-panel"
+         role="tabpanel"
+         aria-labelledby="eastern-tab">
+        <div class="row g-3">
+            <div class="col-12">
+                <div class="form-group mb-3">
+                    <label asp-for="EasternTitle" class="form-label"></label>
+                    <input asp-for="EasternTitle" class="form-control" />
+                    <span asp-validation-for="EasternTitle" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                    <label asp-for="EasternIntroduction" class="form-label"></label>
+                    <textarea asp-for="EasternIntroduction" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="EasternIntroduction" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                    <label asp-for="EasternBodyHtml" class="form-label"></label>
+                    <textarea asp-for="EasternBodyHtml" class="form-control font-monospace" rows="10"></textarea>
+                    <span asp-validation-for="EasternBodyHtml" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group mb-3">
+                    <label asp-for="EasternCreditsHtml" class="form-label"></label>
+                    <textarea asp-for="EasternCreditsHtml" class="form-control font-monospace" rows="5"></textarea>
+                    <span asp-validation-for="EasternCreditsHtml" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12">
+                @if (Model.IsEdit && !string.IsNullOrWhiteSpace(Model.ExistingEasternPdfPath))
+                {
+                    <div class="mb-3">
+                        <p class="form-label mb-2">Current Eastern PDF</p>
+                        <a href="@Model.ExistingEasternPdfPath"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="btn btn-sm btn-outline-primary">
+                            <i class="fa-solid fa-file-pdf me-1" aria-hidden="true"></i>
+                            View current PDF
+                        </a>
+                        <p class="form-text mb-0 mt-2">
+                            Uploading a new PDF will replace the current file.
+                        </p>
+                    </div>
+                }
+
+                <div class="form-group mb-0">
+                    <label asp-for="EasternPdfFile" class="form-label"></label>
+                    <input asp-for="EasternPdfFile"
+                           class="form-control"
+                           type="file"
+                           accept=".pdf,application/pdf"
+                           id="EasternPdfFile" />
+                    <div class="form-text">PDF only. Maximum size: 25 MB.</div>
+                    <span asp-validation-for="EasternPdfFile" class="text-danger"></span>
+                    <div id="easternPdfPreviewError" class="text-danger small mt-1" role="alert" aria-live="polite"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade"
+         id="publication-panel"
+         role="tabpanel"
+         aria-labelledby="publication-tab">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label asp-for="Status" class="form-label"></label>
+                    <select asp-for="Status"
+                            asp-items="Html.GetEnumSelectList<MagazineArticleStatus>()"
+                            class="form-select"
+                            id="ArticleStatus"></select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6" id="publishAtGroup">
+                <div class="form-group mb-0">
+                    <label asp-for="PublishAtUtc" class="form-label"></label>
+                    <input asp-for="PublishAtUtc"
+                           class="form-control"
+                           type="datetime-local"
+                           id="PublishAtUtc" />
+                    <div class="form-text" id="publishAtHelp">
+                        Leave empty when publishing to use the current UTC date.
+                    </div>
+                    <span asp-validation-for="PublishAtUtc" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .article-form-banner-preview {
+        width: 100%;
+        max-width: 320px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid #dee2e6;
+        display: block;
+    }
+
+    #publishAtGroup.is-disabled {
+        opacity: 0.55;
+    }
+
+    #publishAtGroup.is-disabled input {
+        pointer-events: none;
+        background-color: #e9ecef;
+    }
+</style>
+
+<script>
+    (function () {
+        var statusSelect = document.getElementById('ArticleStatus');
+        var publishAtGroup = document.getElementById('publishAtGroup');
+        var publishAtHelp = document.getElementById('publishAtHelp');
+        var bannerInput = document.getElementById('BannerImageFile');
+        var newBannerPreviewWrapper = document.getElementById('newBannerPreviewWrapper');
+        var newBannerPreview = document.getElementById('newBannerPreview');
+        var bannerPreviewError = document.getElementById('bannerPreviewError');
+
+        var allowedImageExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
+        var allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp'];
+        var maxImageSize = 5 * 1024 * 1024;
+        var maxPdfSize = 25 * 1024 * 1024;
+
+        var draftStatus = '@((int)MagazineArticleStatus.Draft)';
+        var scheduledStatus = '@((int)MagazineArticleStatus.Scheduled)';
+        var publishedStatus = '@((int)MagazineArticleStatus.Published)';
+        var archivedStatus = '@((int)MagazineArticleStatus.Archived)';
+
+        function togglePublishAtField() {
+            if (!statusSelect || !publishAtGroup) {
+                return;
+            }
+
+            var status = statusSelect.value;
+
+            publishAtGroup.classList.remove('is-disabled');
+            publishAtGroup.setAttribute('aria-hidden', 'false');
+
+            if (status === draftStatus || status === archivedStatus) {
+                publishAtGroup.classList.add('is-disabled');
+                publishAtGroup.setAttribute('aria-hidden', 'true');
+                if (publishAtHelp) {
+                    publishAtHelp.textContent = 'Publish date is not used for draft or archived articles.';
+                }
+            } else if (status === scheduledStatus) {
+                if (publishAtHelp) {
+                    publishAtHelp.textContent = 'Required. Must be a future UTC date and time.';
+                }
+            } else if (status === publishedStatus) {
+                if (publishAtHelp) {
+                    publishAtHelp.textContent = 'Optional. Leave empty to use the current UTC date when publishing.';
+                }
+            }
+        }
+
+        function validateImageFile(file) {
+            if (!file) {
+                return '';
+            }
+
+            var extension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+            if (allowedImageExtensions.indexOf(extension) === -1 &&
+                allowedMimeTypes.indexOf(file.type) === -1) {
+                return 'Only JPG, JPEG, PNG, and WEBP images are allowed.';
+            }
+
+            if (file.size > maxImageSize) {
+                return 'The banner image cannot exceed 5 MB.';
+            }
+
+            return '';
+        }
+
+        function validatePdfFile(file) {
+            if (!file) {
+                return '';
+            }
+
+            var extension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+            if (extension !== '.pdf') {
+                return 'Only PDF files are allowed.';
+            }
+
+            if (file.size > maxPdfSize) {
+                return 'The PDF cannot exceed 25 MB.';
+            }
+
+            return '';
+        }
+
+        function bindPdfValidation(inputId, errorId) {
+            var input = document.getElementById(inputId);
+            var error = document.getElementById(errorId);
+
+            if (!input) {
+                return;
+            }
+
+            input.addEventListener('change', function () {
+                if (error) {
+                    error.textContent = '';
+                }
+
+                var file = input.files && input.files.length > 0
+                    ? input.files[0]
+                    : null;
+
+                if (!file) {
+                    return;
+                }
+
+                var message = validatePdfFile(file);
+                if (message) {
+                    if (error) {
+                        error.textContent = message;
+                    }
+                    input.value = '';
+                }
+            });
+        }
+
+        if (statusSelect) {
+            statusSelect.addEventListener('change', togglePublishAtField);
+            togglePublishAtField();
+        }
+
+        if (bannerInput) {
+            bannerInput.addEventListener('change', function () {
+                if (bannerPreviewError) {
+                    bannerPreviewError.textContent = '';
+                }
+
+                if (newBannerPreview) {
+                    newBannerPreview.removeAttribute('src');
+                }
+
+                if (newBannerPreviewWrapper) {
+                    newBannerPreviewWrapper.classList.add('d-none');
+                }
+
+                var file = bannerInput.files && bannerInput.files.length > 0
+                    ? bannerInput.files[0]
+                    : null;
+
+                if (!file) {
+                    return;
+                }
+
+                var message = validateImageFile(file);
+                if (message) {
+                    if (bannerPreviewError) {
+                        bannerPreviewError.textContent = message;
+                    }
+                    bannerInput.value = '';
+                    return;
+                }
+
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    if (newBannerPreview && event.target && event.target.result) {
+                        newBannerPreview.src = event.target.result;
+                    }
+
+                    if (newBannerPreviewWrapper) {
+                        newBannerPreviewWrapper.classList.remove('d-none');
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        bindPdfValidation('WesternPdfFile', 'westernPdfPreviewError');
+        bindPdfValidation('EasternPdfFile', 'easternPdfPreviewError');
+    })();
+</script>

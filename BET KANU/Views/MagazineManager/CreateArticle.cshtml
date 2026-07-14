@@ -1,0 +1,97 @@
+@model MagazineArticleFormViewModel
+<link rel="stylesheet" href="~/css/dashboard.css">
+
+@{
+    ViewBag.Title = "Create Article";
+}
+
+<div id="wrapper">
+    <section class="bg-grey-500 promo">
+        <div class="container">
+            <h1 style="color:white">&nbsp;Create Article — @Model.MagazineTitle</h1>
+        </div>
+    </section>
+
+    <section>
+        <div class="container py-4">
+            <div class="col-12">
+                <form id="articleForm"
+                      class="card"
+                      asp-action="CreateArticle"
+                      method="post"
+                      enctype="multipart/form-data"
+                      novalidate>
+                    @Html.AntiForgeryToken()
+
+                    <div class="card-body">
+                        <partial name="_ArticleForm" model="Model" />
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="row g-3 justify-content-end">
+                            <div class="col-sm-6 col-md-3">
+                                <a asp-action="Articles"
+                                   asp-route-magazineId="@Model.MagazineId"
+                                   class="btn btn-secondary w-100">
+                                    Cancel
+                                </a>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <button type="submit"
+                                        id="articleSubmitBtn"
+                                        class="btn btn-Create w-100">
+                                    <span class="btn-text">Create Article</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        (function () {
+            var form = document.getElementById('articleForm');
+            var submitBtn = document.getElementById('articleSubmitBtn');
+            var btnText = submitBtn ? submitBtn.querySelector('.btn-text') : null;
+            var defaultLabel = 'Create Article';
+
+            if (!form || !submitBtn || !btnText) {
+                return;
+            }
+
+            form.addEventListener('submit', function () {
+                if (!form.checkValidity()) {
+                    return;
+                }
+
+                if (window.jQuery && typeof window.jQuery(form).valid === 'function' &&
+                    !window.jQuery(form).valid()) {
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                btnText.textContent = 'Saving...';
+            });
+
+            form.addEventListener('invalid', function () {
+                submitBtn.disabled = false;
+                btnText.textContent = defaultLabel;
+            }, true);
+
+            if (window.jQuery) {
+                window.jQuery(form).on('invalid-form.validate', function () {
+                    submitBtn.disabled = false;
+                    btnText.textContent = defaultLabel;
+                });
+            }
+        })();
+    </script>
+}
