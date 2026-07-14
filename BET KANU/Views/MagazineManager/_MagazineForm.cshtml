@@ -1,0 +1,252 @@
+@model MagazineFormViewModel
+
+<input asp-for="Id" type="hidden" />
+<input asp-for="ExistingCoverImage" type="hidden" />
+
+<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="card-title mb-0">Basic Information</h3>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-8">
+                        <div class="form-group mb-3">
+                            <label asp-for="Title" class="form-label"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group mb-3">
+                            <label asp-for="Year" class="form-label"></label>
+                            <input asp-for="Year" class="form-control" type="number" min="1900" max="3000" />
+                            <span asp-validation-for="Year" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group mb-3">
+                            <label asp-for="ShortDescription" class="form-label"></label>
+                            <textarea asp-for="ShortDescription" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group mb-0">
+                            <label asp-for="LongDescription" class="form-label"></label>
+                            <textarea asp-for="LongDescription" class="form-control" rows="8"></textarea>
+                            <span asp-validation-for="LongDescription" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0">Publication</h3>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="form-group mb-3">
+                            <label asp-for="DisplayOrder" class="form-label"></label>
+                            <input asp-for="DisplayOrder" class="form-control" type="number" min="0" />
+                            <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-check form-switch mt-md-4 pt-md-2">
+                            <input asp-for="IsPublished" class="form-check-input" type="checkbox" role="switch" id="IsPublished" />
+                            <label asp-for="IsPublished" class="form-check-label"></label>
+                            <span asp-validation-for="IsPublished" class="text-danger d-block"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6" id="publicationDateGroup">
+                        <div class="form-group mb-0">
+                            <label asp-for="PublishedAtUtc" class="form-label"></label>
+                            <input asp-for="PublishedAtUtc"
+                                   class="form-control"
+                                   type="datetime-local"
+                                   id="PublishedAtUtc" />
+                            <div class="form-text">
+                                Leave empty to use the current UTC date when publishing.
+                            </div>
+                            <span asp-validation-for="PublishedAtUtc" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0">Cover Image</h3>
+            </div>
+            <div class="card-body">
+                @if (Model.IsEdit && !string.IsNullOrWhiteSpace(Model.ExistingCoverImage))
+                {
+                    <div class="mb-3" id="existingCoverSection">
+                        <p class="form-label mb-2">Current Cover</p>
+                        <img src="@Model.ExistingCoverImage"
+                             alt="Current cover for @Model.Title"
+                             class="magazine-form-cover-preview mb-2"
+                             id="existingCoverImage" />
+                        <p class="form-text mb-0">
+                            Uploading a new image will replace the current cover.
+                        </p>
+                    </div>
+                }
+
+                <div class="form-group mb-2">
+                    <label asp-for="CoverImageFile" class="form-label"></label>
+                    <input asp-for="CoverImageFile"
+                           class="form-control"
+                           type="file"
+                           accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                           id="CoverImageFile" />
+                    <div class="form-text">
+                        Allowed formats: JPG, JPEG, PNG, WEBP. Maximum size: 5 MB.
+                    </div>
+                    <span asp-validation-for="CoverImageFile" class="text-danger"></span>
+                    <div id="coverPreviewError" class="text-danger small mt-1" role="alert" aria-live="polite"></div>
+                </div>
+
+                <div id="newCoverPreviewWrapper" class="d-none">
+                    <p class="form-label mb-2">New Cover Preview</p>
+                    <img src=""
+                         alt="Preview of selected cover image"
+                         class="magazine-form-cover-preview"
+                         id="newCoverPreview" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .magazine-form-cover-preview {
+        width: 100%;
+        max-width: 280px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid #dee2e6;
+        display: block;
+    }
+
+    #publicationDateGroup.is-disabled {
+        opacity: 0.55;
+    }
+
+    #publicationDateGroup.is-disabled input {
+        pointer-events: none;
+        background-color: #e9ecef;
+    }
+</style>
+
+<script>
+    (function () {
+        var isPublished = document.getElementById('IsPublished');
+        var publicationDateGroup = document.getElementById('publicationDateGroup');
+        var coverInput = document.getElementById('CoverImageFile');
+        var newCoverPreviewWrapper = document.getElementById('newCoverPreviewWrapper');
+        var newCoverPreview = document.getElementById('newCoverPreview');
+        var coverPreviewError = document.getElementById('coverPreviewError');
+
+        var allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
+        var allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp'];
+        var maxFileSize = 5 * 1024 * 1024;
+
+        function togglePublicationDate() {
+            if (!isPublished || !publicationDateGroup) {
+                return;
+            }
+
+            if (isPublished.checked) {
+                publicationDateGroup.classList.remove('is-disabled');
+                publicationDateGroup.setAttribute('aria-hidden', 'false');
+            } else {
+                publicationDateGroup.classList.add('is-disabled');
+                publicationDateGroup.setAttribute('aria-hidden', 'true');
+            }
+        }
+
+        function resetNewCoverPreview() {
+            if (newCoverPreview) {
+                newCoverPreview.removeAttribute('src');
+            }
+
+            if (newCoverPreviewWrapper) {
+                newCoverPreviewWrapper.classList.add('d-none');
+            }
+
+            if (coverPreviewError) {
+                coverPreviewError.textContent = '';
+            }
+        }
+
+        function validateCoverFile(file) {
+            if (!file) {
+                return '';
+            }
+
+            var extension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+            if (allowedExtensions.indexOf(extension) === -1 &&
+                allowedMimeTypes.indexOf(file.type) === -1) {
+                return 'Only JPG, JPEG, PNG, and WEBP images are allowed.';
+            }
+
+            if (file.size > maxFileSize) {
+                return 'The cover image cannot exceed 5 MB.';
+            }
+
+            return '';
+        }
+
+        if (isPublished) {
+            isPublished.addEventListener('change', togglePublicationDate);
+            togglePublicationDate();
+        }
+
+        if (coverInput) {
+            coverInput.addEventListener('change', function () {
+                resetNewCoverPreview();
+
+                var file = coverInput.files && coverInput.files.length > 0
+                    ? coverInput.files[0]
+                    : null;
+
+                if (!file) {
+                    return;
+                }
+
+                var validationMessage = validateCoverFile(file);
+                if (validationMessage) {
+                    if (coverPreviewError) {
+                        coverPreviewError.textContent = validationMessage;
+                    }
+                    coverInput.value = '';
+                    return;
+                }
+
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    if (newCoverPreview && event.target && event.target.result) {
+                        newCoverPreview.src = event.target.result;
+                    }
+
+                    if (newCoverPreviewWrapper) {
+                        newCoverPreviewWrapper.classList.remove('d-none');
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    })();
+</script>

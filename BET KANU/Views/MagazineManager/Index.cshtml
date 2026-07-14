@@ -1,0 +1,228 @@
+@model MagazineIndexViewModel
+<link rel="stylesheet" href="~/css/dashboard.css">
+
+@{
+    ViewBag.Title = "Magazine Management";
+}
+
+<div id="wrapper">
+    <section class="bg-success promo">
+        <div class="container">
+            <h1 style="color:white">&nbsp;Magazine Management</h1>
+        </div>
+    </section>
+
+    <section>
+        <div class="container py-4">
+            <partial name="_DashboardMessages" />
+
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+                <div>
+                    <p class="mb-0 text-muted">
+                        Create magazines and manage their articles from this dashboard.
+                    </p>
+                </div>
+                <a asp-action="Create" class="btn btn-Create">
+                    <i class="fa-solid fa-plus me-1" aria-hidden="true"></i>
+                    Create Magazine
+                </a>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    @if (Model.Magazines == null || !Model.Magazines.Any())
+                    {
+                        <div class="text-center py-5">
+                            <i class="fa-solid fa-book-open fa-3x text-muted mb-3" aria-hidden="true"></i>
+                            <h2 class="h5 mb-2">No magazines yet</h2>
+                            <p class="text-muted mb-4">
+                                Create your first magazine to start adding articles.
+                            </p>
+                            <a asp-action="Create" class="btn btn-Create">
+                                <i class="fa-solid fa-plus me-1" aria-hidden="true"></i>
+                                Create Magazine
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="color:white">Cover</th>
+                                        <th scope="col" style="color:white">Title</th>
+                                        <th scope="col" style="color:white">Year</th>
+                                        <th scope="col" style="color:white">Articles</th>
+                                        <th scope="col" style="color:white">Display Order</th>
+                                        <th scope="col" style="color:white">Status</th>
+                                        <th scope="col" style="color:white">Publication Date</th>
+                                        <th scope="col" style="color:white">Created Date</th>
+                                        <th scope="col" style="color:white">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var magazine in Model.Magazines)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @if (!string.IsNullOrWhiteSpace(magazine.CoverImage))
+                                                {
+                                                    <img src="@magazine.CoverImage"
+                                                         alt="Cover for @magazine.Title"
+                                                         class="magazine-cover-thumb" />
+                                                }
+                                                else
+                                                {
+                                                    <div class="magazine-cover-placeholder" aria-hidden="true">
+                                                        <i class="fa-solid fa-image"></i>
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td>
+                                                <div class="fw-semibold">@magazine.Title</div>
+                                                <small class="text-muted">@magazine.Slug</small>
+                                            </td>
+                                            <td>@magazine.Year</td>
+                                            <td>@magazine.ArticleCount</td>
+                                            <td>@magazine.DisplayOrder</td>
+                                            <td>
+                                                @if (magazine.IsPublished)
+                                                {
+                                                    <span class="badge bg-success">Published</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary">Draft</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (magazine.PublishedAtUtc.HasValue)
+                                                {
+                                                    @magazine.PublishedAtUtc.Value.ToString("MMM d, yyyy")
+                                                }
+                                                else
+                                                {
+                                                    <span aria-label="No publication date">&mdash;</span>
+                                                }
+                                            </td>
+                                            <td>@magazine.CreatedAtUtc.ToString("MMM d, yyyy")</td>
+                                            <td>
+                                                <div class="d-flex flex-wrap gap-1">
+                                                    <a asp-action="Articles"
+                                                       asp-route-magazineId="@magazine.Id"
+                                                       class="btn btn-sm btn-info">
+                                                        <i class="fa-solid fa-newspaper me-1" aria-hidden="true"></i>
+                                                        Articles
+                                                    </a>
+                                                    <a asp-action="Edit"
+                                                       asp-route-id="@magazine.Id"
+                                                       class="btn btn-sm btn-primary">
+                                                        <i class="fa-solid fa-pen-to-square me-1" aria-hidden="true"></i>
+                                                        Edit
+                                                    </a>
+                                                    <button type="button"
+                                                            class="btn btn-sm btn-danger"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#deleteMagazineModal"
+                                                            data-magazine-id="@magazine.Id"
+                                                            data-magazine-title="@magazine.Title"
+                                                            aria-label="Delete @magazine.Title">
+                                                        <i class="fa-solid fa-trash-can me-1" aria-hidden="true"></i>
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="modal fade"
+     id="deleteMagazineModal"
+     tabindex="-1"
+     aria-labelledby="deleteMagazineModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="deleteMagazineModalLabel">Delete Magazine</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Are you sure you want to delete
+                    <strong id="deleteMagazineTitle"></strong>?
+                </p>
+                <p class="text-warning mb-0">
+                    <i class="fa-solid fa-triangle-exclamation me-1" aria-hidden="true"></i>
+                    Magazines that contain articles cannot be deleted. Remove all articles first.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form asp-action="Delete" method="post" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" id="deleteMagazineId" value="" />
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa-solid fa-trash-can me-1" aria-hidden="true"></i>
+                        Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .magazine-cover-thumb {
+        width: 56px;
+        height: 72px;
+        object-fit: cover;
+        border-radius: 4px;
+        display: block;
+    }
+
+    .magazine-cover-placeholder {
+        width: 56px;
+        height: 72px;
+        border-radius: 4px;
+        background-color: #e9ecef;
+        color: #6c757d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        (function () {
+            var modal = document.getElementById('deleteMagazineModal');
+            if (!modal) {
+                return;
+            }
+
+            modal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget;
+                if (!button) {
+                    return;
+                }
+
+                var magazineId = button.getAttribute('data-magazine-id') || '';
+                var magazineTitle = button.getAttribute('data-magazine-title') || '';
+
+                document.getElementById('deleteMagazineId').value = magazineId;
+                document.getElementById('deleteMagazineTitle').textContent = magazineTitle;
+            });
+        })();
+    </script>
+}
