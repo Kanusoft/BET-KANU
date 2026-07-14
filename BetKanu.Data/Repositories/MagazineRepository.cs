@@ -4,6 +4,9 @@ using BetKanu.Models;
 using BetKanu.Models.Common;
 using BetKanu.Models.Interface;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace BetKanu.Data.Repositories
 {
@@ -76,12 +79,24 @@ namespace BetKanu.Data.Repositories
         {
             ArgumentNullException.ThrowIfNull(magazine);
 
+
+            magazine.Title = magazine.Title.Trim();
+
+            magazine.Slug = GenerateUniqueSlug(
+                magazine.Title);
+
             _context.Magazines.Add(magazine);
         }
 
         public void Update(Magazine magazine)
         {
             ArgumentNullException.ThrowIfNull(magazine);
+
+            magazine.Title = magazine.Title.Trim();
+
+            magazine.Slug = GenerateUniqueSlug(
+                magazine.Title,
+                magazine.Id);
 
             _context.Magazines.Update(magazine);
         }
@@ -115,6 +130,81 @@ namespace BetKanu.Data.Repositories
                 .Include(m => m.Articles.Where(a =>
                     a.Status == MagazineArticleStatus.Published))
                 .FirstOrDefault();
+        }
+
+        private string GenerateUniqueSlug(
+            string title,
+            int? excludedMagazineId = null)
+        {
+            var baseSlug = GenerateSlug(title);
+
+            if (string.IsNullOrWhiteSpace(baseSlug))
+            {
+                baseSlug = "magazine";
+            }
+
+            var slug = baseSlug;
+            var suffix = 2;
+
+            while (_context.Magazines.Any(m =>
+                m.Slug == slug &&
+                (
+                    !excludedMagazineId.HasValue ||
+                    m.Id != excludedMagazineId.Value
+                )))
+            {
+                slug = $"{baseSlug}-{suffix}";
+                suffix++;
+            }
+
+            return slug;
+        }
+
+        private static string GenerateSlug(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return string.Empty;
+            }
+
+            var normalizedValue = value
+                .Trim()
+                .ToLowerInvariant()
+                .Normalize(NormalizationForm.FormD);
+
+            var builder = new StringBuilder();
+
+            foreach (var character in normalizedValue)
+            {
+                var category =
+                    CharUnicodeInfo.GetUnicodeCategory(character);
+
+                if (category != UnicodeCategory.NonSpacingMark)
+                {
+                    builder.Append(character);
+                }
+            }
+
+            var slug = builder
+                .ToString()
+                .Normalize(NormalizationForm.FormC);
+
+            slug = Regex.Replace(
+                slug,
+                @"[^a-z0-9\s-]",
+                string.Empty);
+
+            slug = Regex.Replace(
+                slug,
+                @"\s+",
+                "-");
+
+            slug = Regex.Replace(
+                slug,
+                @"-+",
+                "-");
+
+            return slug.Trim('-');
         }
     }
 }

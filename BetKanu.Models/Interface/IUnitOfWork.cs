@@ -9,5 +9,7 @@ namespace BetKanu.Models.Interface
         public IShop Shop { get;}
         IMagazineRepository Magazines { get; }
         IMagazineArticleRepository MagazineArticles { get; }
+
+        int Save();
     }
 }
