@@ -1,0 +1,241 @@
+@model MagazineArticlePreviewViewModel
+<link rel="stylesheet" href="~/css/dashboard.css">
+<link rel="stylesheet" href="~/css/theme.css">
+
+@{
+    ViewBag.Title = $"Preview — {Model.Title}";
+}
+
+<div id="wrapper">
+    <section class="bg-grey-500 promo">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div>
+                <h1 style="color:white" class="mb-1">
+                    Article Preview
+                </h1>
+                <div style="color:white">
+                    @Model.Title
+                </div>
+                <div class="mt-1">
+                    @switch (Model.Status)
+                    {
+                        case MagazineArticleStatus.Published:
+                            <span class="badge bg-success">Published</span>
+                            break;
+                        case MagazineArticleStatus.Scheduled:
+                            <span class="badge bg-warning text-dark">Scheduled</span>
+                            break;
+                        case MagazineArticleStatus.Archived:
+                            <span class="badge bg-dark">Archived</span>
+                            break;
+                        default:
+                            <span class="badge bg-secondary">Draft</span>
+                            break;
+                    }
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2">
+                <a asp-action="Articles"
+                   asp-route-magazineId="@Model.MagazineId"
+                   class="btn btn-light">
+                    <i class="fa-solid fa-arrow-left me-1" aria-hidden="true"></i>
+                    Back to Articles
+                </a>
+
+                <a asp-action="EditArticle"
+                   asp-route-id="@Model.Id"
+                   class="btn btn-primary">
+                    <i class="fa-solid fa-pen-to-square me-1" aria-hidden="true"></i>
+                    Edit Article
+                </a>
+            </div>
+        </div>
+    </section>
+
+    @if (!string.IsNullOrWhiteSpace(Model.BannerImage))
+    {
+        <section class="p-0">
+            <div class="hero hero-game d-none d-md-block">
+                <img src="@Model.BannerImage"
+                     alt="Banner for @Model.Title" />
+            </div>
+
+            <div class="hero hero-game d-block d-md-none">
+                <img src="@(string.IsNullOrWhiteSpace(Model.MobileBannerImage)
+                                                 ? Model.BannerImage
+                                                 : Model.MobileBannerImage)"
+                 alt="Banner for @Model.Title" />
+        </div>
+    </section>
+        }
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="post post-single">
+                        <div class="post-header">
+                            <div class="post-title">
+                                <h2>@Model.Title</h2>
+
+                                <ul class="post-meta">
+                                    <li>
+                                        <i class="fa fa-newspaper" aria-hidden="true"></i>
+                                        @Model.MagazineTitle
+                                    </li>
+
+                                    @if (!string.IsNullOrWhiteSpace(Model.EditionTitle))
+                                    {
+                                        <li>
+                                            <i class="fa fa-file-text" aria-hidden="true"></i>
+                                            @Model.EditionTitle
+                                        </li>
+                                    }
+
+                                    @if (!string.IsNullOrWhiteSpace(Model.ArticleType))
+                                    {
+                                        <li>
+                                            <i class="fa fa-book-open" aria-hidden="true"></i>
+                                            @Model.ArticleType
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.Summary))
+                        {
+                            <p>@Model.Summary</p>
+                        }
+                    </div>
+
+                    <div class="row g-4 justify-content-between Articles">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="well h-100 text-center"
+                                 style="direction: rtl"
+                                 id="western">
+
+                                <h3 class="padding-bottom-10"
+                                    style="direction:ltr">
+                                    Western Syriac
+                                </h3>
+                                <span class="Surayt  bold text-center">
+                                    @Model.WesternTitle
+                                </span>
+                                @if (!string.IsNullOrWhiteSpace(Model.WesternBodyHtml))
+                                {
+                                    @Html.Raw(Model.WesternBodyHtml)
+                                }
+                                else
+                                {
+                                    <p class="text-muted">
+                                        No Western Syriac body has been added.
+                                    </p>
+                                }
+
+                                @if (!string.IsNullOrWhiteSpace(Model.WesternPdfUrl))
+                                {
+                                    <a class="btn btn-info"
+                                       href="@Model.WesternPdfUrl"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                        View PDF
+                                    </a>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12">
+                            <div class="well h-100 text-center"
+                                 style="direction: rtl"
+                                 id="eastern">
+
+                                <h3 class="padding-bottom-10"
+                                    style="direction:ltr">
+                                    Eastern Syriac
+                                </h3>
+                                <span class="Surit bold text-center">@Model.EasternTitle</span><br>
+                                @if (!string.IsNullOrWhiteSpace(Model.EasternBodyHtml))
+                                {
+                                    @Html.Raw(Model.EasternBodyHtml)
+                                }
+                                else
+                                {
+                                    <p class="text-muted">
+                                        No Eastern Syriac body has been added.
+                                    </p>
+                                }
+
+                                @if (!string.IsNullOrWhiteSpace(Model.EasternPdfUrl))
+                                {
+                                    <a class="btn btn-info"
+                                       href="@Model.EasternPdfUrl"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                        View PDF
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="page-header">
+                        <div class="page-title" style="color:black">Credits</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="well">
+                                <p>
+                                    <strong>Western</strong>
+                                </p>
+
+                                @if (!string.IsNullOrWhiteSpace(Model.WesternCreditsHtml))
+                                {
+                                    @Html.Raw(Model.WesternCreditsHtml)
+                                }
+                                else
+                                {
+                                    <p class="text-muted">
+                                        No Western credits have been added.
+                                    </p>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12">
+                            <div class="well">
+                                <p>
+                                    <strong>Eastern</strong>
+                                </p>
+
+                                @if (!string.IsNullOrWhiteSpace(Model.EasternCreditsHtml))
+                                {
+                                    @Html.Raw(Model.EasternCreditsHtml)
+                                }
+                                else
+                                {
+                                    <p class="text-muted">
+                                        No Eastern credits have been added.
+                                    </p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

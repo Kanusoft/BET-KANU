@@ -136,13 +136,12 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex flex-wrap gap-1">
-                                                    <button type="button"
-                                                            class="btn btn-sm btn-outline-secondary"
-                                                            disabled
-                                                            title="Public preview coming soon">
+                                                    <a asp-action="PreviewArticle"
+                                                       asp-route-id="@article.Id"
+                                                       class="btn btn-sm btn-outline-secondary">
                                                         <i class="fa-solid fa-eye me-1" aria-hidden="true"></i>
                                                         Preview
-                                                    </button>
+                                                    </a>
                                                     <a asp-action="EditArticle"
                                                        asp-route-id="@article.Id"
                                                        class="btn btn-sm btn-primary">

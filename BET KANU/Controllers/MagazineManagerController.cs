@@ -726,6 +726,39 @@ namespace BET_KANU.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult PreviewArticle(int id)
+        {
+            if (id <= 0)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                var article = _unitOfWork.MagazineArticles
+                    .GetByIdWithMagazine(id);
+
+                if (article?.Magazine == null)
+                {
+                    return NotFound();
+                }
+
+                var viewModel = MapArticleToPreviewViewModel(article);
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(
+                    ex,
+                    "An error occurred while loading article preview {ArticleId}.",
+                    id);
+
+                return NotFound();
+            }
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditArticle(
@@ -960,6 +993,34 @@ namespace BET_KANU.Controllers
                 ExistingEasternPdfPath = article.EasternPdfPath,
                 Status = article.Status,
                 PublishAtUtc = article.PublishAtUtc
+            };
+        }
+
+        private static MagazineArticlePreviewViewModel MapArticleToPreviewViewModel(
+            MagazineArticle article)
+        {
+            return new MagazineArticlePreviewViewModel
+            {
+                Id = article.Id,
+                MagazineId = article.MagazineId,
+                MagazineTitle = "BET KANU Magazine",
+                Title = article.Title,
+                Slug = article.Slug,
+                ArticleNumber = article.ArticleNumber.ToString(),
+                EditionTitle = article.Magazine.Title,
+                WesternTitle = article.WesternTitle,
+                EasternTitle = article.EasternTitle,
+                ArticleType = $"Article {article.ArticleNumber}",
+                Summary = article.ShortDescription,
+                BannerImage = article.BannerImage,
+                MobileBannerImage = null,
+                WesternBodyHtml = article.WesternBodyHtml,
+                EasternBodyHtml = article.EasternBodyHtml,
+                WesternCreditsHtml = article.WesternCreditsHtml,
+                EasternCreditsHtml = article.EasternCreditsHtml,
+                WesternPdfUrl = article.WesternPdfPath,
+                EasternPdfUrl = article.EasternPdfPath,
+                Status = article.Status
             };
         }
 
