@@ -62,16 +62,17 @@
     <!-- file uploads js -->
     <script src="~/plugins/fileuploads/js/dropify.js"></script>
     <script>
-        $(document).ready(function () {
+        $(function () {
             $('.dropify').dropify({
                 messages: {
-                    'default': 'Drag and drop a file here or click',
-                    'replace': 'Drag and drop or click to replace',
-                    'remove': 'Remove',
-                    'error': 'Ooops, something wrong happened.'
+                    default: 'Drag and drop a file here or click',
+                    replace: 'Drag and drop or click to replace',
+                    remove: 'Remove',
+                    error: 'The selected file is not valid.'
                 },
                 error: {
-                    'fileSize': 'The file size is too big (5M max).'
+                    fileSize: 'The file is too large.',
+                    fileExtension: 'This file type is not allowed.'
                 }
             });
         });
@@ -79,40 +80,154 @@
 
     <script>
         (function () {
-            var form = document.getElementById('articleForm');
-            var submitBtn = document.getElementById('articleSubmitBtn');
-            var btnText = submitBtn ? submitBtn.querySelector('.btn-text') : null;
-            var defaultLabel = 'Create Article';
+            'use strict';
 
-            if (!form || !submitBtn || !btnText) {
+            const form = document.getElementById('articleForm');
+            const submitButton = document.getElementById('articleSubmitBtn');
+            const buttonText = submitButton?.querySelector('.btn-text');
+
+            const defaultLabel = 'Create Article';
+            const maxCombinedFileSizeBytes = 25 * 1024 * 1024;
+
+            let isSubmitting = false;
+
+            if (!form || !submitButton || !buttonText) {
                 return;
             }
 
-            form.addEventListener('submit', function () {
-                if (!form.checkValidity()) {
+            function formatFileSize(bytes) {
+                return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+            }
+
+            function getCombinedFileSize() {
+                let totalBytes = 0;
+
+                form.querySelectorAll('input[type="file"]')
+                    .forEach(function (input) {
+                        Array.from(input.files || [])
+                            .forEach(function (file) {
+                                totalBytes += file.size;
+                            });
+                    });
+
+                return totalBytes;
+            }
+
+            function resetSubmitButton() {
+                isSubmitting = false;
+                submitButton.disabled = false;
+                buttonText.textContent = defaultLabel;
+            }
+
+            function showTabContainingElement(element) {
+                if (!element || !window.bootstrap) {
                     return;
                 }
 
-                if (window.jQuery && typeof window.jQuery(form).valid === 'function' &&
-                    !window.jQuery(form).valid()) {
+                const tabPane = element.closest('.tab-pane');
+
+                if (!tabPane?.id) {
                     return;
                 }
 
-                submitBtn.disabled = true;
-                btnText.textContent = 'Saving...';
+                const tabButton = document.querySelector(
+                    `[data-bs-target="#${tabPane.id}"]`
+                );
+
+                if (tabButton) {
+                    bootstrap.Tab
+                        .getOrCreateInstance(tabButton)
+                        .show();
+                }
+            }
+
+            function focusFirstInvalidField() {
+                const firstInvalidField = form.querySelector(
+                    ':invalid, .input-validation-error, .is-invalid'
+                );
+
+                if (!firstInvalidField) {
+                    return;
+                }
+
+                showTabContainingElement(firstInvalidField);
+
+                window.setTimeout(function () {
+                    firstInvalidField.focus({
+                        preventScroll: true
+                    });
+
+                    firstInvalidField.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }, 150);
+            }
+
+            form.addEventListener('submit', function (event) {
+                if (isSubmitting) {
+                    event.preventDefault();
+                    return;
+                }
+
+                const filesAreValid =
+                    !window.articleFileValidation ||
+                    window.articleFileValidation.validateAll();
+
+                const totalFileSize = getCombinedFileSize();
+
+                if (totalFileSize > maxCombinedFileSizeBytes) {
+                    event.preventDefault();
+
+                    alert(
+                        `The selected files total ${formatFileSize(totalFileSize)}. ` +
+                        'The combined upload must not exceed 25 MB.'
+                    );
+
+                    resetSubmitButton();
+                    return;
+                }
+
+                const nativeValidationIsValid = form.checkValidity();
+
+                const jqueryValidationIsValid =
+                    !window.jQuery ||
+                    typeof window.jQuery(form).valid !== 'function' ||
+                    window.jQuery(form).valid();
+
+                if (!filesAreValid ||
+                    !nativeValidationIsValid ||
+                    !jqueryValidationIsValid) {
+
+                    event.preventDefault();
+                    resetSubmitButton();
+                    focusFirstInvalidField();
+                    return;
+                }
+
+                isSubmitting = true;
+                submitButton.disabled = true;
+                buttonText.textContent = 'Saving...';
             });
 
-            form.addEventListener('invalid', function () {
-                submitBtn.disabled = false;
-                btnText.textContent = defaultLabel;
+            form.addEventListener('invalid', function (event) {
+                resetSubmitButton();
+                showTabContainingElement(event.target);
             }, true);
 
             if (window.jQuery) {
-                window.jQuery(form).on('invalid-form.validate', function () {
-                    submitBtn.disabled = false;
-                    btnText.textContent = defaultLabel;
-                });
+                window.jQuery(form).on(
+                    'invalid-form.validate',
+                    function () {
+                        resetSubmitButton();
+                        focusFirstInvalidField();
+                    }
+                );
             }
+
+            window.addEventListener('pageshow', function () {
+                resetSubmitButton();
+            });
         })();
     </script>
 }

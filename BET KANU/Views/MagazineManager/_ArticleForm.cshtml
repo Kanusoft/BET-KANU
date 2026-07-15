@@ -100,14 +100,29 @@
             <div class="col-12">
                 <div class="form-group">
                     <label asp-for="BannerImageFile" class="control-label"></label>
+
                     <input asp-for="BannerImageFile"
                            class="dropify"
                            type="file"
                            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
                            id="BannerImageFile"
                            data-height="200"
-                           data-default-file="@(Model.IsEdit ? Model.ExistingBannerImage : "")" />
-                    <span asp-validation-for="BannerImageFile" class="text-danger"></span>
+                           data-max-file-size="5M"
+                           data-allowed-file-extensions="jpg jpeg png webp"
+                           data-default-file="@(Model.IsEdit? Model.ExistingBannerImage: "")"
+                           aria-describedby="bannerFileHelp bannerPreviewError" />
+
+                    <div id="bannerFileHelp" class="form-text">
+                        JPG, JPEG, PNG, or WEBP. Maximum size: 5 MB.
+                    </div>
+
+                    <span asp-validation-for="BannerImageFile"
+                          class="text-danger"></span>
+
+                    <div id="bannerPreviewError"
+                         class="text-danger small mt-1"
+                         role="alert"
+                         aria-live="polite"></div>
                 </div>
             </div>
         </div>
@@ -166,14 +181,26 @@
 
                 <div class="form-group mb-0">
                     <label asp-for="WesternPdfFile" class="form-label"></label>
+
                     <input asp-for="WesternPdfFile"
-                           class="form-control"
+                           class="form-control article-pdf-input"
                            type="file"
                            accept=".pdf,application/pdf"
-                           id="WesternPdfFile" />
-                    <div class="form-text">PDF only. Maximum size: 25 MB.</div>
-                    <span asp-validation-for="WesternPdfFile" class="text-danger"></span>
-                    <div id="westernPdfPreviewError" class="text-danger small mt-1" role="alert" aria-live="polite"></div>
+                           id="WesternPdfFile"
+                           data-max-file-size-bytes="10485760"
+                           aria-describedby="westernPdfHelp westernPdfPreviewError" />
+
+                    <div id="westernPdfHelp" class="form-text">
+                        PDF files only. Maximum size: 10 MB.
+                    </div>
+
+                    <span asp-validation-for="WesternPdfFile"
+                          class="text-danger"></span>
+
+                    <div id="westernPdfPreviewError"
+                         class="text-danger small mt-1"
+                         role="alert"
+                         aria-live="polite"></div>
                 </div>
             </div>
         </div>
@@ -232,14 +259,26 @@
 
                 <div class="form-group mb-0">
                     <label asp-for="EasternPdfFile" class="form-label"></label>
+
                     <input asp-for="EasternPdfFile"
-                           class="form-control"
+                           class="form-control article-pdf-input"
                            type="file"
                            accept=".pdf,application/pdf"
-                           id="EasternPdfFile" />
-                    <div class="form-text">PDF only. Maximum size: 25 MB.</div>
-                    <span asp-validation-for="EasternPdfFile" class="text-danger"></span>
-                    <div id="easternPdfPreviewError" class="text-danger small mt-1" role="alert" aria-live="polite"></div>
+                           id="EasternPdfFile"
+                           data-max-file-size-bytes="10485760"
+                           aria-describedby="easternPdfHelp easternPdfPreviewError" />
+
+                    <div id="easternPdfHelp" class="form-text">
+                        PDF files only. Maximum size: 10 MB.
+                    </div>
+
+                    <span asp-validation-for="EasternPdfFile"
+                          class="text-danger"></span>
+
+                    <div id="easternPdfPreviewError"
+                         class="text-danger small mt-1"
+                         role="alert"
+                         aria-live="polite"></div>
                 </div>
             </div>
         </div>
@@ -371,168 +410,172 @@
 
 <script>
     (function () {
-        var statusSelect = document.getElementById('ArticleStatus');
-        var publishAtGroup = document.getElementById('publishAtGroup');
-        var publishAtHelp = document.getElementById('publishAtHelp');
-        var bannerInput = document.getElementById('BannerImageFile');
-        var newBannerPreviewWrapper = document.getElementById('newBannerPreviewWrapper');
-        var newBannerPreview = document.getElementById('newBannerPreview');
-        var bannerPreviewError = document.getElementById('bannerPreviewError');
+        'use strict';
 
-        var allowedImageExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
-        var allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp'];
-        var maxImageSize = 5 * 1024 * 1024;
-        var maxPdfSize = 25 * 1024 * 1024;
+        const bannerInput = document.getElementById('BannerImageFile');
+        const westernPdfInput = document.getElementById('WesternPdfFile');
+        const easternPdfInput = document.getElementById('EasternPdfFile');
 
-        var draftStatus = '@((int)MagazineArticleStatus.Draft)';
-        var scheduledStatus = '@((int)MagazineArticleStatus.Scheduled)';
-        var publishedStatus = '@((int)MagazineArticleStatus.Published)';
-        var archivedStatus = '@((int)MagazineArticleStatus.Archived)';
+        const bannerError = document.getElementById('bannerPreviewError');
+        const westernPdfError = document.getElementById('westernPdfPreviewError');
+        const easternPdfError = document.getElementById('easternPdfPreviewError');
 
-        function togglePublishAtField() {
-            if (!statusSelect || !publishAtGroup) {
-                return;
-            }
+        const maxImageSizeBytes = 5 * 1024 * 1024;
+        const maxPdfSizeBytes = 10 * 1024 * 1024;
 
-            var status = statusSelect.value;
+        const allowedImageExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+        const allowedImageMimeTypes = [
+            'image/jpeg',
+            'image/png',
+            'image/webp'
+        ];
 
-            publishAtGroup.classList.remove('is-disabled');
-            publishAtGroup.setAttribute('aria-hidden', 'false');
+        function getExtension(fileName) {
+            const lastDotIndex = fileName.lastIndexOf('.');
 
-            if (status === draftStatus || status === archivedStatus) {
-                publishAtGroup.classList.add('is-disabled');
-                publishAtGroup.setAttribute('aria-hidden', 'true');
-                if (publishAtHelp) {
-                    publishAtHelp.textContent = 'Publish date is not used for draft or archived articles.';
-                }
-            } else if (status === scheduledStatus) {
-                if (publishAtHelp) {
-                    publishAtHelp.textContent = 'Required. Must be a future UTC date and time.';
-                }
-            } else if (status === publishedStatus) {
-                if (publishAtHelp) {
-                    publishAtHelp.textContent = 'Optional. Leave empty to use the current UTC date when publishing.';
-                }
-            }
-        }
-
-        function validateImageFile(file) {
-            if (!file) {
+            if (lastDotIndex < 0) {
                 return '';
             }
 
-            var extension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
-            if (allowedImageExtensions.indexOf(extension) === -1 &&
-                allowedMimeTypes.indexOf(file.type) === -1) {
-                return 'Only JPG, JPEG, PNG, and WEBP images are allowed.';
-            }
-
-            if (file.size > maxImageSize) {
-                return 'The banner image cannot exceed 5 MB.';
-            }
-
-            return '';
+            return fileName
+                .substring(lastDotIndex + 1)
+                .toLowerCase();
         }
 
-        function validatePdfFile(file) {
-            if (!file) {
-                return '';
-            }
-
-            var extension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
-            if (extension !== '.pdf') {
-                return 'Only PDF files are allowed.';
-            }
-
-            if (file.size > maxPdfSize) {
-                return 'The PDF cannot exceed 25 MB.';
-            }
-
-            return '';
+        function formatFileSize(bytes) {
+            return (bytes / 1024 / 1024).toFixed(1) + ' MB';
         }
 
-        function bindPdfValidation(inputId, errorId) {
-            var input = document.getElementById(inputId);
-            var error = document.getElementById(errorId);
+        function setFileError(input, errorElement, message) {
+            if (errorElement) {
+                errorElement.textContent = message || '';
+            }
 
+            if (input) {
+                input.classList.toggle('is-invalid', Boolean(message));
+                input.setCustomValidity(message || '');
+            }
+        }
+
+        function clearSelectedFile(input) {
             if (!input) {
                 return;
             }
 
-            input.addEventListener('change', function () {
-                if (error) {
-                    error.textContent = '';
-                }
+            input.value = '';
 
-                var file = input.files && input.files.length > 0
-                    ? input.files[0]
-                    : null;
-
-                if (!file) {
-                    return;
-                }
-
-                var message = validatePdfFile(file);
-                if (message) {
-                    if (error) {
-                        error.textContent = message;
-                    }
-                    input.value = '';
-                }
-            });
+            // Refresh Dropify when the banner file is rejected.
+            if (window.jQuery && window.jQuery(input).data('dropify')) {
+                const dropify = window.jQuery(input).data('dropify');
+                dropify.resetPreview();
+                dropify.clearElement();
+            }
         }
 
-        if (statusSelect) {
-            statusSelect.addEventListener('change', togglePublishAtField);
-            togglePublishAtField();
+        function validateImageInput(input, errorElement) {
+            setFileError(input, errorElement, '');
+
+            const file = input?.files?.[0];
+
+            if (!file) {
+                return true;
+            }
+
+            const extension = getExtension(file.name);
+            const validExtension =
+                allowedImageExtensions.includes(extension);
+
+            const validMimeType =
+                !file.type ||
+                allowedImageMimeTypes.includes(file.type);
+
+            if (!validExtension || !validMimeType) {
+                const message =
+                    'Only JPG, JPEG, PNG, and WEBP images are allowed.';
+
+                setFileError(input, errorElement, message);
+                clearSelectedFile(input);
+                return false;
+            }
+
+            if (file.size > maxImageSizeBytes) {
+                const message =
+                    `The banner image is ${formatFileSize(file.size)}. ` +
+                    'The maximum allowed size is 5 MB.';
+
+                setFileError(input, errorElement, message);
+                clearSelectedFile(input);
+                return false;
+            }
+
+            return true;
         }
 
-        if (bannerInput) {
-            bannerInput.addEventListener('change', function () {
-                if (bannerPreviewError) {
-                    bannerPreviewError.textContent = '';
-                }
+        function validatePdfInput(input, errorElement) {
+            setFileError(input, errorElement, '');
 
-                if (newBannerPreview) {
-                    newBannerPreview.removeAttribute('src');
-                }
+            const file = input?.files?.[0];
 
-                if (newBannerPreviewWrapper) {
-                    newBannerPreviewWrapper.classList.add('d-none');
-                }
+            if (!file) {
+                return true;
+            }
 
-                var file = bannerInput.files && bannerInput.files.length > 0
-                    ? bannerInput.files[0]
-                    : null;
+            const extension = getExtension(file.name);
 
-                if (!file) {
-                    return;
-                }
+            // Some browsers may provide an empty MIME type,
+            // so extension validation remains necessary.
+            const validMimeType =
+                !file.type ||
+                file.type === 'application/pdf';
 
-                var message = validateImageFile(file);
-                if (message) {
-                    if (bannerPreviewError) {
-                        bannerPreviewError.textContent = message;
-                    }
-                    bannerInput.value = '';
-                    return;
-                }
+            if (extension !== 'pdf' || !validMimeType) {
+                const message = 'Only PDF files are allowed.';
 
-                var reader = new FileReader();
-                reader.onload = function (event) {
-                    if (newBannerPreview && event.target && event.target.result) {
-                        newBannerPreview.src = event.target.result;
-                    }
+                setFileError(input, errorElement, message);
+                clearSelectedFile(input);
+                return false;
+            }
 
-                    if (newBannerPreviewWrapper) {
-                        newBannerPreviewWrapper.classList.remove('d-none');
-                    }
-                };
-                reader.readAsDataURL(file);
-            });
+            if (file.size > maxPdfSizeBytes) {
+                const message =
+                    `The selected PDF is ${formatFileSize(file.size)}. ` +
+                    'The maximum allowed size is 10 MB.';
+
+                setFileError(input, errorElement, message);
+                clearSelectedFile(input);
+                return false;
+            }
+
+            return true;
         }
 
-        bindPdfValidation('WesternPdfFile', 'westernPdfPreviewError');
-        bindPdfValidation('EasternPdfFile', 'easternPdfPreviewError');
+        bannerInput?.addEventListener('change', function () {
+            validateImageInput(bannerInput, bannerError);
+        });
+
+        westernPdfInput?.addEventListener('change', function () {
+            validatePdfInput(westernPdfInput, westernPdfError);
+        });
+
+        easternPdfInput?.addEventListener('change', function () {
+            validatePdfInput(easternPdfInput, easternPdfError);
+        });
+
+        window.articleFileValidation = {
+            validateAll: function () {
+                const bannerIsValid =
+                    validateImageInput(bannerInput, bannerError);
+
+                const westernPdfIsValid =
+                    validatePdfInput(westernPdfInput, westernPdfError);
+
+                const easternPdfIsValid =
+                    validatePdfInput(easternPdfInput, easternPdfError);
+
+                return bannerIsValid &&
+                    westernPdfIsValid &&
+                    easternPdfIsValid;
+            }
+        };
     })();
 </script>
