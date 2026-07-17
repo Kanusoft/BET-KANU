@@ -73,6 +73,7 @@ namespace BET_KANU.Controllers
                         Year = m.Year,
                         DisplayOrder = m.DisplayOrder,
                         CoverImage = m.CoverImage,
+                        CoverImage350 = m.CoverImage350,
                         IsPublished = m.IsPublished,
                         PublishedAtUtc = m.PublishedAtUtc,
                         CreatedAtUtc = m.CreatedAtUtc,
@@ -122,7 +123,15 @@ namespace BET_KANU.Controllers
         {
             NormalizeForm(model);
 
-            ValidateCoverImage(model.CoverImageFile);
+            ValidateImage(
+                model.CoverImageFile,
+                nameof(MagazineFormViewModel.CoverImageFile),
+                "desktop cover image");
+
+            ValidateImage(
+                model.CoverImage350File,
+                nameof(MagazineFormViewModel.CoverImage350File),
+                "mobile cover image");
 
             ValidatePublication(model);
 
@@ -134,11 +143,18 @@ namespace BET_KANU.Controllers
             try
             {
                 string? coverImagePath = null;
+                string? coverImage350Path = null;
 
                 if (model.CoverImageFile != null)
                 {
                     coverImagePath = await SaveImage(
                         model.CoverImageFile);
+                }
+
+                if (model.CoverImage350File != null)
+                {
+                    coverImage350Path = await SaveImage(
+                        model.CoverImage350File);
                 }
 
                 var magazine = new Magazine
@@ -150,6 +166,7 @@ namespace BET_KANU.Controllers
                     Year = model.Year,
                     DisplayOrder = model.DisplayOrder,
                     CoverImage = coverImagePath,
+                    CoverImage350 = coverImage350Path,
                     IsPublished = model.IsPublished,
                     PublishedAtUtc = model.IsPublished
                         ? model.PublishedAtUtc ?? DateTime.UtcNow
@@ -227,7 +244,8 @@ namespace BET_KANU.Controllers
                     DisplayOrder = magazine.DisplayOrder,
                     IsPublished = magazine.IsPublished,
                     PublishedAtUtc = magazine.PublishedAtUtc,
-                    ExistingCoverImage = magazine.CoverImage
+                    ExistingCoverImage = magazine.CoverImage,
+                    ExistingCoverImage350 = magazine.CoverImage350
                 };
 
                 return View(model);
@@ -262,7 +280,15 @@ namespace BET_KANU.Controllers
 
             NormalizeForm(model);
 
-            ValidateCoverImage(model.CoverImageFile);
+            ValidateImage(
+                model.CoverImageFile,
+                nameof(MagazineFormViewModel.CoverImageFile),
+                "desktop cover image");
+
+            ValidateImage(
+                model.CoverImage350File,
+                nameof(MagazineFormViewModel.CoverImage350File),
+                "mobile cover image");
 
             ValidatePublication(model);
 
@@ -277,6 +303,7 @@ namespace BET_KANU.Controllers
             }
 
             model.ExistingCoverImage = magazine.CoverImage;
+            model.ExistingCoverImage350 = magazine.CoverImage350;
 
             if (!ModelState.IsValid)
             {
@@ -312,6 +339,12 @@ namespace BET_KANU.Controllers
                         model.CoverImageFile);
                 }
 
+                if (model.CoverImage350File != null)
+                {
+                    magazine.CoverImage350 = await SaveImage(
+                        model.CoverImage350File);
+                }
+
                 _unitOfWork.Magazines.Update(magazine);
 
                 var result = _unitOfWork.Save();
@@ -324,6 +357,8 @@ namespace BET_KANU.Controllers
 
                     model.ExistingCoverImage =
                         magazine.CoverImage;
+                    model.ExistingCoverImage350 =
+                        magazine.CoverImage350;
 
                     return View(model);
                 }
@@ -346,6 +381,8 @@ namespace BET_KANU.Controllers
 
                 model.ExistingCoverImage =
                     magazine.CoverImage;
+                model.ExistingCoverImage350 =
+                    magazine.CoverImage350;
 
                 return View(model);
             }
@@ -455,6 +492,7 @@ namespace BET_KANU.Controllers
                         Title = a.Title,
                         Slug = a.Slug,
                         BannerImage = a.BannerImage,
+                        BannerImage350 = a.BannerImage350,
                         ArticleNumber = a.ArticleNumber,
                         DisplayOrder = a.DisplayOrder,
                         ReleaseDate = a.ReleaseDate,
@@ -566,7 +604,14 @@ namespace BET_KANU.Controllers
 
             NormalizeArticleForm(model);
             ValidateArticleNumber(model);
-            ValidateArticleBanner(model.BannerImageFile);
+            ValidateImage(
+                model.BannerImageFile,
+                nameof(MagazineArticleFormViewModel.BannerImageFile),
+                "desktop banner image");
+            ValidateImage(
+                model.BannerImage350File,
+                nameof(MagazineArticleFormViewModel.BannerImage350File),
+                "mobile banner image");
             ValidateArticlePdf(
                 model.WesternPdfFile,
                 nameof(MagazineArticleFormViewModel.WesternPdfFile),
@@ -586,6 +631,7 @@ namespace BET_KANU.Controllers
             try
             {
                 string? bannerImagePath = null;
+                string? bannerImage350Path = null;
                 string? westernPdfPath = null;
                 string? easternPdfPath = null;
 
@@ -593,6 +639,12 @@ namespace BET_KANU.Controllers
                 {
                     bannerImagePath = await SaveArticleImage(
                         model.BannerImageFile);
+                }
+
+                if (model.BannerImage350File != null)
+                {
+                    bannerImage350Path = await SaveArticleImage(
+                        model.BannerImage350File);
                 }
 
                 if (model.WesternPdfFile != null)
@@ -618,6 +670,7 @@ namespace BET_KANU.Controllers
                     DisplayOrder = model.DisplayOrder,
                     ReleaseDate = model.ReleaseDate,
                     BannerImage = bannerImagePath,
+                    BannerImage350 = bannerImage350Path,
                     WesternTitle = model.WesternTitle,
                     WesternIntroduction = model.WesternIntroduction,
                     WesternBodyHtml = model.WesternBodyHtml,
@@ -789,7 +842,14 @@ namespace BET_KANU.Controllers
 
             NormalizeArticleForm(model);
             ValidateArticleNumber(model);
-            ValidateArticleBanner(model.BannerImageFile);
+            ValidateImage(
+                model.BannerImageFile,
+                nameof(MagazineArticleFormViewModel.BannerImageFile),
+                "desktop banner image");
+            ValidateImage(
+                model.BannerImage350File,
+                nameof(MagazineArticleFormViewModel.BannerImage350File),
+                "mobile banner image");
             ValidateArticlePdf(
                 model.WesternPdfFile,
                 nameof(MagazineArticleFormViewModel.WesternPdfFile),
@@ -830,6 +890,12 @@ namespace BET_KANU.Controllers
                 {
                     article.BannerImage = await SaveArticleImage(
                         model.BannerImageFile);
+                }
+
+                if (model.BannerImage350File != null)
+                {
+                    article.BannerImage350 = await SaveArticleImage(
+                        model.BannerImage350File);
                 }
 
                 if (model.WesternPdfFile != null)
@@ -981,6 +1047,7 @@ namespace BET_KANU.Controllers
                 DisplayOrder = article.DisplayOrder,
                 ReleaseDate = article.ReleaseDate,
                 ExistingBannerImage = article.BannerImage,
+                ExistingBannerImage350 = article.BannerImage350,
                 WesternTitle = article.WesternTitle,
                 WesternIntroduction = article.WesternIntroduction,
                 WesternBodyHtml = article.WesternBodyHtml,
@@ -1013,7 +1080,7 @@ namespace BET_KANU.Controllers
                 ArticleType = $"Article {article.ArticleNumber}",
                 Summary = article.ShortDescription,
                 BannerImage = article.BannerImage,
-                MobileBannerImage = null,
+                MobileBannerImage = article.BannerImage350,
                 WesternBodyHtml = article.WesternBodyHtml,
                 EasternBodyHtml = article.EasternBodyHtml,
                 WesternCreditsHtml = article.WesternCreditsHtml,
@@ -1029,6 +1096,7 @@ namespace BET_KANU.Controllers
             MagazineArticle article)
         {
             model.ExistingBannerImage = article.BannerImage;
+            model.ExistingBannerImage350 = article.BannerImage350;
             model.ExistingWesternPdfPath = article.WesternPdfPath;
             model.ExistingEasternPdfPath = article.EasternPdfPath;
         }
@@ -1193,7 +1261,10 @@ namespace BET_KANU.Controllers
             }
         }
 
-        private void ValidateArticleBanner(IFormFile? image)
+        private void ValidateImage(
+            IFormFile? image,
+            string propertyName,
+            string displayName)
         {
             if (image == null)
             {
@@ -1203,8 +1274,8 @@ namespace BET_KANU.Controllers
             if (image.Length <= 0)
             {
                 ModelState.AddModelError(
-                    nameof(MagazineArticleFormViewModel.BannerImageFile),
-                    "The selected banner image is empty.");
+                    propertyName,
+                    $"The selected {displayName} is empty.");
 
                 return;
             }
@@ -1212,8 +1283,8 @@ namespace BET_KANU.Controllers
             if (image.Length > MaximumImageSize)
             {
                 ModelState.AddModelError(
-                    nameof(MagazineArticleFormViewModel.BannerImageFile),
-                    "The banner image cannot exceed 5 MB.");
+                    propertyName,
+                    $"The {displayName} cannot exceed 5 MB.");
             }
 
             var extension = Path
@@ -1223,7 +1294,7 @@ namespace BET_KANU.Controllers
             if (!AllowedImageExtensions.Contains(extension))
             {
                 ModelState.AddModelError(
-                    nameof(MagazineArticleFormViewModel.BannerImageFile),
+                    propertyName,
                     "Only JPG, JPEG, PNG, and WEBP images are allowed.");
             }
         }
@@ -1343,41 +1414,6 @@ namespace BET_KANU.Controllers
                 ModelState.AddModelError(
                     nameof(model.PublishedAtUtc),
                     "Please enter a valid publication date.");
-            }
-        }
-
-        private void ValidateCoverImage(IFormFile? image)
-        {
-            if (image == null)
-            {
-                return;
-            }
-
-            if (image.Length <= 0)
-            {
-                ModelState.AddModelError(
-                    nameof(MagazineFormViewModel.CoverImageFile),
-                    "The selected image is empty.");
-
-                return;
-            }
-
-            if (image.Length > MaximumImageSize)
-            {
-                ModelState.AddModelError(
-                    nameof(MagazineFormViewModel.CoverImageFile),
-                    "The cover image cannot exceed 5 MB.");
-            }
-
-            var extension = Path
-                .GetExtension(image.FileName)
-                .ToLowerInvariant();
-
-            if (!AllowedImageExtensions.Contains(extension))
-            {
-                ModelState.AddModelError(
-                    nameof(MagazineFormViewModel.CoverImageFile),
-                    "Only JPG, JPEG, PNG, and WEBP images are allowed.");
             }
         }
 

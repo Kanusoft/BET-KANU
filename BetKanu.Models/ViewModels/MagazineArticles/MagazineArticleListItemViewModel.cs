@@ -14,6 +14,8 @@ namespace BetKanu.Models.ViewModels.MagazineArticles
 
         public string? BannerImage { get; set; }
 
+        public string? BannerImage350 { get; set; }
+
         public int ArticleNumber { get; set; }
 
         public int DisplayOrder { get; set; }

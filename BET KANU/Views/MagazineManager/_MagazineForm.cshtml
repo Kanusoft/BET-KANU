@@ -2,6 +2,7 @@
 
 <input asp-for="Id" type="hidden" />
 <input asp-for="ExistingCoverImage" type="hidden" />
+<input asp-for="ExistingCoverImage350" type="hidden" />
 
 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
@@ -89,16 +90,52 @@
                 <h3 class="card-title mb-0">Cover Image</h3>
             </div>
             <div class="card-body">
-                <div class="form-group">
-                    <label asp-for="CoverImageFile" class="control-label"></label>
+                <div class="form-group mb-4">
+                    <label for="CoverImageFile" class="control-label">
+                        Desktop Cover Image — 1920 × 700
+                    </label>
                     <input asp-for="CoverImageFile"
                            class="dropify"
                            type="file"
                            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
                            id="CoverImageFile"
                            data-height="220"
-                           data-default-file="@(Model.IsEdit ? Model.ExistingCoverImage : "")" />
+                           data-max-file-size="5M"
+                           data-allowed-file-extensions="jpg jpeg png webp"
+                           data-default-file="@(Model.IsEdit ? Model.ExistingCoverImage : "")"
+                           aria-describedby="coverFileHelp coverPreviewError" />
+                    <div id="coverFileHelp" class="form-text">
+                        JPG, JPEG, PNG, or WEBP. Maximum size: 5 MB. Used on desktop screens.
+                    </div>
                     <span asp-validation-for="CoverImageFile" class="text-danger"></span>
+                    <div id="coverPreviewError"
+                         class="text-danger small mt-1"
+                         role="alert"
+                         aria-live="polite"></div>
+                </div>
+
+                <div class="form-group mb-0">
+                    <label for="CoverImage350File" class="control-label">
+                        Mobile Cover Image — 1920 × 350
+                    </label>
+                    <input asp-for="CoverImage350File"
+                           class="dropify"
+                           type="file"
+                           accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                           id="CoverImage350File"
+                           data-height="160"
+                           data-max-file-size="5M"
+                           data-allowed-file-extensions="jpg jpeg png webp"
+                           data-default-file="@(Model.IsEdit ? Model.ExistingCoverImage350 : "")"
+                           aria-describedby="cover350FileHelp cover350PreviewError" />
+                    <div id="cover350FileHelp" class="form-text">
+                        JPG, JPEG, PNG, or WEBP. Maximum size: 5 MB. Used on small screens.
+                    </div>
+                    <span asp-validation-for="CoverImage350File" class="text-danger"></span>
+                    <div id="cover350PreviewError"
+                         class="text-danger small mt-1"
+                         role="alert"
+                         aria-live="polite"></div>
                 </div>
             </div>
         </div>
@@ -154,9 +191,9 @@
         var isPublished = document.getElementById('IsPublished');
         var publicationDateGroup = document.getElementById('publicationDateGroup');
         var coverInput = document.getElementById('CoverImageFile');
-        var newCoverPreviewWrapper = document.getElementById('newCoverPreviewWrapper');
-        var newCoverPreview = document.getElementById('newCoverPreview');
+        var cover350Input = document.getElementById('CoverImage350File');
         var coverPreviewError = document.getElementById('coverPreviewError');
+        var cover350PreviewError = document.getElementById('cover350PreviewError');
 
         var allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
         var allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp'];
@@ -176,36 +213,54 @@
             }
         }
 
-        function resetNewCoverPreview() {
-            if (newCoverPreview) {
-                newCoverPreview.removeAttribute('src');
+        function clearSelectedFile(input) {
+            if (!input) {
+                return;
             }
 
-            if (newCoverPreviewWrapper) {
-                newCoverPreviewWrapper.classList.add('d-none');
-            }
+            input.value = '';
 
-            if (coverPreviewError) {
-                coverPreviewError.textContent = '';
+            if (window.jQuery && window.jQuery(input).data('dropify')) {
+                var dropify = window.jQuery(input).data('dropify');
+                dropify.resetPreview();
+                dropify.clearElement();
             }
         }
 
-        function validateCoverFile(file) {
+        function validateCoverFile(input, errorElement, displayName) {
+            if (errorElement) {
+                errorElement.textContent = '';
+            }
+
+            var file = input && input.files && input.files.length > 0
+                ? input.files[0]
+                : null;
+
             if (!file) {
-                return '';
+                return true;
             }
 
             var extension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
             if (allowedExtensions.indexOf(extension) === -1 &&
                 allowedMimeTypes.indexOf(file.type) === -1) {
-                return 'Only JPG, JPEG, PNG, and WEBP images are allowed.';
+                if (errorElement) {
+                    errorElement.textContent =
+                        'Only JPG, JPEG, PNG, and WEBP images are allowed.';
+                }
+                clearSelectedFile(input);
+                return false;
             }
 
             if (file.size > maxFileSize) {
-                return 'The cover image cannot exceed 5 MB.';
+                if (errorElement) {
+                    errorElement.textContent =
+                        'The ' + displayName + ' cannot exceed 5 MB.';
+                }
+                clearSelectedFile(input);
+                return false;
             }
 
-            return '';
+            return true;
         }
 
         if (isPublished) {
@@ -215,36 +270,13 @@
 
         if (coverInput) {
             coverInput.addEventListener('change', function () {
-                resetNewCoverPreview();
+                validateCoverFile(coverInput, coverPreviewError, 'desktop cover image');
+            });
+        }
 
-                var file = coverInput.files && coverInput.files.length > 0
-                    ? coverInput.files[0]
-                    : null;
-
-                if (!file) {
-                    return;
-                }
-
-                var validationMessage = validateCoverFile(file);
-                if (validationMessage) {
-                    if (coverPreviewError) {
-                        coverPreviewError.textContent = validationMessage;
-                    }
-                    coverInput.value = '';
-                    return;
-                }
-
-                var reader = new FileReader();
-                reader.onload = function (event) {
-                    if (newCoverPreview && event.target && event.target.result) {
-                        newCoverPreview.src = event.target.result;
-                    }
-
-                    if (newCoverPreviewWrapper) {
-                        newCoverPreviewWrapper.classList.remove('d-none');
-                    }
-                };
-                reader.readAsDataURL(file);
+        if (cover350Input) {
+            cover350Input.addEventListener('change', function () {
+                validateCoverFile(cover350Input, cover350PreviewError, 'mobile cover image');
             });
         }
     })();

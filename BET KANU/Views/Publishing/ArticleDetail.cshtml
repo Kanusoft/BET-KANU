@@ -7,15 +7,26 @@
 <div id="wrapper">
 
     <section class="p-0">
-
-        @if (!string.IsNullOrWhiteSpace(Model.BannerImage))
+        @{
+            var desktopBanner = !string.IsNullOrWhiteSpace(Model.BannerImage)
+                ? Model.BannerImage
+                : Model.BannerImage350;
+        }
+        @if (!string.IsNullOrWhiteSpace(desktopBanner))
         {
-            <div class="hero hero-game d-none d-md-block">
-                <img src="@Model.BannerImage"
-                     alt="@Model.Title" />
+            <div class="hero hero-game">
+                <picture>
+                    @if (!string.IsNullOrWhiteSpace(Model.BannerImage350))
+                    {
+                        <source media="(max-width: 767.98px)"
+                                srcset="@Model.BannerImage350" />
+                    }
+
+                    <img src="@desktopBanner"
+                         alt="@Model.Title" />
+                </picture>
             </div>
         }
-
     </section>
 
     <section>

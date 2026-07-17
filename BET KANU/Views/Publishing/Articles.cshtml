@@ -190,17 +190,24 @@
 <div id="wrapper">
 
     <section class="p-0">
-        @if (magazine != null &&
-             !string.IsNullOrWhiteSpace(magazine.CoverImage))
+        @{
+            var heroCover = magazine != null && !string.IsNullOrWhiteSpace(magazine.CoverImage)
+                ? magazine.CoverImage
+                : magazine?.CoverImage350;
+        }
+        @if (magazine != null && !string.IsNullOrWhiteSpace(heroCover))
         {
-            <div class="hero hero-game d-none d-md-block">
-                <img src="@magazine.CoverImage"
-                     alt="@magazine.Title" />
-            </div>
+            <div class="hero hero-game">
+                <picture>
+                    @if (!string.IsNullOrWhiteSpace(magazine.CoverImage350))
+                    {
+                        <source media="(max-width: 767.98px)"
+                                srcset="@magazine.CoverImage350" />
+                    }
 
-            <div class="hero hero-game d-block d-md-none">
-                <img src="@magazine.CoverImage"
-                     alt="@magazine.Title" />
+                    <img src="@heroCover"
+                         alt="@magazine.Title" />
+                </picture>
             </div>
         }
     </section>
@@ -246,13 +253,24 @@
                                        asp-action="ArticleDetail"
                                        asp-route-magazineSlug="@article.Magazine.Slug"
                                        asp-route-articleSlug="@article.Slug">
-
-                                        @if (!string.IsNullOrWhiteSpace(
-                                            article.BannerImage))
+                                        @{
+                                            var defaultBanner = !string.IsNullOrWhiteSpace(article.BannerImage)
+                                                ? article.BannerImage
+                                                : article.BannerImage350;
+                                        }
+                                        @if (!string.IsNullOrWhiteSpace(defaultBanner))
                                         {
-                                            <img src="@article.BannerImage"
-                                                 loading="lazy"
-                                                 alt="@article.Title" />
+                                            <picture>
+                                                @if (!string.IsNullOrWhiteSpace(article.BannerImage350))
+                                                {
+                                                    <source media="(max-width: 767.98px)"
+                                                            srcset="@article.BannerImage350" />
+                                                }
+
+                                                <img src="@defaultBanner"
+                                                     loading="lazy"
+                                                     alt="@article.Title" />
+                                            </picture>
                                         }
                                         else
                                         {

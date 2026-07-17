@@ -41,6 +41,11 @@ namespace BetKanu.Models.ViewModels.MagazineArticles
         [DisplayName("Banner Image")]
         public IFormFile? BannerImageFile { get; set; }
 
+        public string? ExistingBannerImage350 { get; set; }
+
+        [DisplayName("Banner Image 350")]
+        public IFormFile? BannerImage350File { get; set; }
+
         [StringLength(250)]
         [DisplayName("Western Syriac Title")]
         public string? WesternTitle { get; set; }

@@ -38,10 +38,25 @@
                                     <a asp-controller="Publishing"
                                        asp-action="Articles"
                                        asp-route-slug="@magazine.Slug">
+                                        @{
+                                            var defaultCover = !string.IsNullOrWhiteSpace(magazine.CoverImage)
+                                                ? magazine.CoverImage
+                                                : magazine.CoverImage350;
+                                        }
+                                        @if (!string.IsNullOrWhiteSpace(defaultCover))
+                                        {
+                                            <picture>
+                                                @if (!string.IsNullOrWhiteSpace(magazine.CoverImage350))
+                                                {
+                                                    <source media="(max-width: 767.98px)"
+                                                            srcset="@magazine.CoverImage350" />
+                                                }
 
-                                        <img src="@magazine.CoverImage"
-                                             loading="lazy"
-                                             alt="@magazine.Title" />
+                                                <img src="@defaultCover"
+                                                     loading="lazy"
+                                                     alt="@magazine.Title" />
+                                            </picture>
+                                        }
                                     </a>
 
                                     <div class="post-caption" style="background-color:darkblue">

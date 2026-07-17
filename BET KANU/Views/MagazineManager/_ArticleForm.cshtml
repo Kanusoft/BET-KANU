@@ -2,6 +2,8 @@
 
 <input asp-for="Id" type="hidden" />
 <input asp-for="MagazineId" type="hidden" />
+<input asp-for="ExistingBannerImage" type="hidden" />
+<input asp-for="ExistingBannerImage350" type="hidden" />
 
 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
@@ -98,8 +100,10 @@
                 </div>
             </div>
             <div class="col-12">
-                <div class="form-group">
-                    <label asp-for="BannerImageFile" class="control-label"></label>
+                <div class="form-group mb-4">
+                    <label for="BannerImageFile" class="control-label">
+                        Desktop Banner Image — 1920 × 700
+                    </label>
 
                     <input asp-for="BannerImageFile"
                            class="dropify"
@@ -113,13 +117,42 @@
                            aria-describedby="bannerFileHelp bannerPreviewError" />
 
                     <div id="bannerFileHelp" class="form-text">
-                        JPG, JPEG, PNG, or WEBP. Maximum size: 5 MB.
+                        JPG, JPEG, PNG, or WEBP. Maximum size: 5 MB. Used on desktop screens.
                     </div>
 
                     <span asp-validation-for="BannerImageFile"
                           class="text-danger"></span>
 
                     <div id="bannerPreviewError"
+                         class="text-danger small mt-1"
+                         role="alert"
+                         aria-live="polite"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="BannerImage350File" class="control-label">
+                        Mobile Banner Image — 1920 × 350
+                    </label>
+
+                    <input asp-for="BannerImage350File"
+                           class="dropify"
+                           type="file"
+                           accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                           id="BannerImage350File"
+                           data-height="160"
+                           data-max-file-size="5M"
+                           data-allowed-file-extensions="jpg jpeg png webp"
+                           data-default-file="@(Model.IsEdit? Model.ExistingBannerImage350: "")"
+                           aria-describedby="banner350FileHelp banner350PreviewError" />
+
+                    <div id="banner350FileHelp" class="form-text">
+                        JPG, JPEG, PNG, or WEBP. Maximum size: 5 MB. Used on small screens.
+                    </div>
+
+                    <span asp-validation-for="BannerImage350File"
+                          class="text-danger"></span>
+
+                    <div id="banner350PreviewError"
                          class="text-danger small mt-1"
                          role="alert"
                          aria-live="polite"></div>
@@ -413,10 +446,12 @@
         'use strict';
 
         const bannerInput = document.getElementById('BannerImageFile');
+        const banner350Input = document.getElementById('BannerImage350File');
         const westernPdfInput = document.getElementById('WesternPdfFile');
         const easternPdfInput = document.getElementById('EasternPdfFile');
 
         const bannerError = document.getElementById('bannerPreviewError');
+        const banner350Error = document.getElementById('banner350PreviewError');
         const westernPdfError = document.getElementById('westernPdfPreviewError');
         const easternPdfError = document.getElementById('easternPdfPreviewError');
 
@@ -553,6 +588,10 @@
             validateImageInput(bannerInput, bannerError);
         });
 
+        banner350Input?.addEventListener('change', function () {
+            validateImageInput(banner350Input, banner350Error);
+        });
+
         westernPdfInput?.addEventListener('change', function () {
             validatePdfInput(westernPdfInput, westernPdfError);
         });
@@ -566,6 +605,9 @@
                 const bannerIsValid =
                     validateImageInput(bannerInput, bannerError);
 
+                const banner350IsValid =
+                    validateImageInput(banner350Input, banner350Error);
+
                 const westernPdfIsValid =
                     validatePdfInput(westernPdfInput, westernPdfError);
 
@@ -573,6 +615,7 @@
                     validatePdfInput(easternPdfInput, easternPdfError);
 
                 return bannerIsValid &&
+                    banner350IsValid &&
                     westernPdfIsValid &&
                     easternPdfIsValid;
             }

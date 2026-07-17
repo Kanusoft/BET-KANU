@@ -53,22 +53,28 @@
         </div>
     </section>
 
-    @if (!string.IsNullOrWhiteSpace(Model.BannerImage))
+    @{
+        var desktopBanner = !string.IsNullOrWhiteSpace(Model.BannerImage)
+            ? Model.BannerImage
+            : Model.MobileBannerImage;
+    }
+    @if (!string.IsNullOrWhiteSpace(desktopBanner))
     {
         <section class="p-0">
-            <div class="hero hero-game d-none d-md-block">
-                <img src="@Model.BannerImage"
-                     alt="Banner for @Model.Title" />
-            </div>
+            <div class="hero hero-game">
+                <picture>
+                    @if (!string.IsNullOrWhiteSpace(Model.MobileBannerImage))
+                    {
+                        <source media="(max-width: 767.98px)"
+                                srcset="@Model.MobileBannerImage" />
+                    }
 
-            <div class="hero hero-game d-block d-md-none">
-                <img src="@(string.IsNullOrWhiteSpace(Model.MobileBannerImage)
-                                                 ? Model.BannerImage
-                                                 : Model.MobileBannerImage)"
-                 alt="Banner for @Model.Title" />
-        </div>
-    </section>
-        }
+                    <img src="@desktopBanner"
+                         alt="Banner for @Model.Title" />
+                </picture>
+            </div>
+        </section>
+    }
 
     <section>
         <div class="container">

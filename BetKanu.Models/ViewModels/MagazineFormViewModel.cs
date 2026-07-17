@@ -53,6 +53,11 @@ namespace BetKanu.Models.ViewModels
         [DisplayName("Cover Image")]
         public IFormFile? CoverImageFile { get; set; }
 
+        public string? ExistingCoverImage350 { get; set; }
+
+        [DisplayName("Cover Image 350")]
+        public IFormFile? CoverImage350File { get; set; }
+
         public bool IsEdit => Id > 0;
     }
 }

@@ -16,6 +16,8 @@ namespace BetKanu.Models.ViewModels
 
         public string? CoverImage { get; set; }
 
+        public string? CoverImage350 { get; set; }
+
         public bool IsPublished { get; set; }
 
         public DateTime? PublishedAtUtc { get; set; }
