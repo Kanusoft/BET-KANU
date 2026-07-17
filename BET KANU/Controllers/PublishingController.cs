@@ -51,12 +51,6 @@ namespace BET_KANU.Controllers
             return View(article);
         }
 
-        public ActionResult ArticleDetail2() => View();
-        public ActionResult ArticleDetail3() => View();
-        public ActionResult ArticleDetail4() => View();
-        public ActionResult ArticleDetail5() => View();
-        public ActionResult ArticleDetail6() => View();
-
         public ActionResult Magazine() 
         {
             var magazines = _unit.Magazines.GetAll();

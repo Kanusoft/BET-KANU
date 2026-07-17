@@ -43,8 +43,11 @@ namespace BetKanu.Models
             = DateTime.UtcNow.Date;
 
         [MaxLength(500)]
-        [DisplayName("Banner Image")]
+        [DisplayName("Banner Image 700")]
         public string? BannerImage { get; set; }
+
+        [DisplayName("Banner Image 350")]
+        public string? BannerImage350 { get; set; }
 
         // Western Syriac
         [MaxLength(250)]
@@ -97,8 +100,13 @@ namespace BetKanu.Models
 
         // Dashboard uploads
         [NotMapped]
-        [DisplayName("Banner Image")]
+        [DisplayName("Banner Image 700")]
         public IFormFile? BannerImageFile { get; set; }
+
+        [NotMapped]
+        [DisplayName("Banner Image 350")]
+        public IFormFile? BannerImage350File { get; set; }
+
 
         [NotMapped]
         [DisplayName("Western Syriac PDF")]

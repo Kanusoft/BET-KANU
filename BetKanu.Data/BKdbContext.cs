@@ -19,7 +19,8 @@ namespace BetKanu.Data
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(
+        ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
@@ -36,8 +37,17 @@ namespace BetKanu.Data
                     .IsRequired()
                     .HasMaxLength(250);
 
+                entity.Property(x => x.ShortDescription)
+                    .HasMaxLength(500);
+
                 entity.Property(x => x.LongDescription)
                     .HasColumnType("nvarchar(max)");
+
+                entity.Property(x => x.CoverImage)
+                    .HasMaxLength(500);
+
+                entity.Property(x => x.CoverImage350)
+                    .HasMaxLength(500);
 
                 entity.HasMany(x => x.Articles)
                     .WithOne(x => x.Magazine)
@@ -52,14 +62,14 @@ namespace BetKanu.Data
                     x.MagazineId,
                     x.Slug
                 })
-                .IsUnique();
+                    .IsUnique();
 
                 entity.HasIndex(x => new
                 {
                     x.MagazineId,
                     x.ArticleNumber
                 })
-                .IsUnique();
+                    .IsUnique();
 
                 entity.Property(x => x.Title)
                     .IsRequired()
@@ -68,6 +78,18 @@ namespace BetKanu.Data
                 entity.Property(x => x.Slug)
                     .IsRequired()
                     .HasMaxLength(300);
+
+                entity.Property(x => x.ShortDescription)
+                    .HasMaxLength(1000);
+
+                entity.Property(x => x.BannerImage)
+                    .HasMaxLength(500);
+
+                entity.Property(x => x.BannerImage350)
+                    .HasMaxLength(500);
+
+                entity.Property(x => x.WesternTitle)
+                    .HasMaxLength(250);
 
                 entity.Property(x => x.WesternIntroduction)
                     .HasColumnType("nvarchar(max)");
@@ -78,6 +100,12 @@ namespace BetKanu.Data
                 entity.Property(x => x.WesternCreditsHtml)
                     .HasColumnType("nvarchar(max)");
 
+                entity.Property(x => x.WesternPdfPath)
+                    .HasMaxLength(500);
+
+                entity.Property(x => x.EasternTitle)
+                    .HasMaxLength(250);
+
                 entity.Property(x => x.EasternIntroduction)
                     .HasColumnType("nvarchar(max)");
 
@@ -86,6 +114,9 @@ namespace BetKanu.Data
 
                 entity.Property(x => x.EasternCreditsHtml)
                     .HasColumnType("nvarchar(max)");
+
+                entity.Property(x => x.EasternPdfPath)
+                    .HasMaxLength(500);
             });
         }
     }

@@ -35,8 +35,11 @@ namespace BetKanu.Models
         public int DisplayOrder { get; set; }
 
         [MaxLength(500)]
-        [DisplayName("Cover Image")]
+        [DisplayName("Cover Image 700")]
         public string? CoverImage { get; set; }
+
+        [DisplayName("Cover Image 350")]
+        public string? CoverImage350 { get; set; }
 
         [DisplayName("Published")]
         public bool IsPublished { get; set; }
@@ -61,7 +64,11 @@ namespace BetKanu.Models
          */
 
         [NotMapped]
-        [DisplayName("Cover Image")]
+        [DisplayName("Cover Image 700")]
         public IFormFile? CoverImageFile { get; set; }
+
+        [NotMapped]
+        [DisplayName("Cover Image 350")]
+        public IFormFile? CoverImage350File { get; set; }
     }
 }
