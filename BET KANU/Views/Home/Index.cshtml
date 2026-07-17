@@ -69,15 +69,16 @@
     {
         var recentArticle = Model.RecentArticle;
 
-        var defaultBanner =
-        !string.IsNullOrWhiteSpace(recentArticle.BannerImage)
-        ? recentArticle.BannerImage
-        : recentArticle.BannerImage350;
+        var desktopBanner = recentArticle.BannerImage ?? string.Empty;
+
+
+        var mobileBanner = recentArticle.BannerImage350 ?? string.Empty;
 
         <div class="container">
             <div class="row">
                 <div class="title outline"
                      style="padding-bottom:10px; padding-top:1px">
+
                     <h4>
                         <i class="fa fa-check-circle"></i>
                         Recent Article
@@ -85,35 +86,41 @@
                 </div>
             </div>
 
-            @if (!string.IsNullOrWhiteSpace(defaultBanner))
+            @if (!string.IsNullOrWhiteSpace(desktopBanner) ||
+                    !string.IsNullOrWhiteSpace(mobileBanner))
             {
                 <div class="card-group">
                     <div class="row">
                         <div class="container">
-                            <div class="carousel slide post-thumbnail"
-                                 data-ride="carousel">
 
-                                <a asp-controller="Publishing"
-                                   asp-action="ArticleDetail"
-                                   asp-route-magazineSlug="@recentArticle.Magazine.Slug"
-                                   asp-route-articleSlug="@recentArticle.Slug"
-                                   aria-label="Read @recentArticle.Title">
 
-                                    <picture>
-                                        @if (!string.IsNullOrWhiteSpace(
-                                                                        recentArticle.BannerImage350))
-                                        {
-                                            <source media="(max-width: 767.98px)"
-                                                    srcset="@recentArticle.BannerImage350" />
-                                        }
+                            <div class="carousel slide post-thumbnail d-none d-md-block d-lg-block d-xl-block d-xxl-block"
+                                     data-ride="carousel">
 
-                                        <img src="@defaultBanner"
-                                             alt="@recentArticle.Title"
-                                             loading="lazy"
-                                             class="img-fluid w-100" />
-                                    </picture>
-                                </a>
-                            </div>
+                                    <a asp-controller="Publishing"
+                                       asp-action="ArticleDetail"
+                                       asp-route-magazineSlug="@recentArticle.Magazine.Slug"
+                                       asp-route-articleSlug="@recentArticle.Slug">
+
+                                        <img src="@desktopBanner"
+                                             alt="@recentArticle.Title" />
+                                    </a>
+                                </div>
+
+                            <div class="carousel slide post-thumbnail d-block d-sm-block d-md-none"
+                                     data-ride="carousel">
+
+                                    <a asp-controller="Publishing"
+                                       asp-action="ArticleDetail"
+                                       asp-route-magazineSlug="@recentArticle.Magazine.Slug"
+                                       asp-route-articleSlug="@recentArticle.Slug">
+
+                                        <img src="@mobileBanner"
+                                             alt="@recentArticle.Title" />
+                                    </a>
+                                </div>
+                            
+
                         </div>
                     </div>
                 </div>
