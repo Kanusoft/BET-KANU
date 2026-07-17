@@ -267,5 +267,27 @@ namespace BetKanu.Data.Repositories
                 .ThenBy(a => a.ReleaseDate)
                 .ToList();
         }
+
+        public MagazineArticle? GetMostRecentPublished()
+        {
+            var nowUtc = DateTime.UtcNow;
+
+            return _context.MagazineArticles
+                .AsNoTracking()
+                .Include(a => a.Magazine)
+                .Where(a =>
+                    a.Magazine.IsPublished &&
+                    (
+                        a.Status == MagazineArticleStatus.Published ||
+                        (
+                            a.Status == MagazineArticleStatus.Scheduled &&
+                            a.PublishAtUtc.HasValue &&
+                            a.PublishAtUtc.Value <= nowUtc
+                        )
+                    ))
+                .OrderByDescending(a => a.PublishAtUtc ?? a.ReleaseDate)
+                .ThenByDescending(a => a.CreatedAtUtc)
+                .FirstOrDefault();
+        }
     }
 }

@@ -24,7 +24,8 @@ namespace BET_KANU.Controllers
             vm.Song = _unit.product.RecentProduct(1, Category.Songs);
             vm.Book = _unit.product.RecentProduct(1, Category.Books);
             vm.Software = _unit.product.RecentProduct(2, Category.Software);
-            
+            vm.RecentArticle = _unit.MagazineArticles.GetMostRecentPublished();
+
             return View(vm);
         }
 
