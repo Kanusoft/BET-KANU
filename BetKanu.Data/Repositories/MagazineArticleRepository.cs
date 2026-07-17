@@ -237,5 +237,35 @@ namespace BetKanu.Data.Repositories
 
             return slug.Trim('-');
         }
+
+        public IEnumerable<MagazineArticle> GetPublishedByMagazineSlug(
+    string magazineSlug)
+        {
+            if (string.IsNullOrWhiteSpace(magazineSlug))
+            {
+                return Enumerable.Empty<MagazineArticle>();
+            }
+
+            var nowUtc = DateTime.UtcNow;
+
+            return _context.MagazineArticles
+                .AsNoTracking()
+                .Include(a => a.Magazine)
+                .Where(a =>
+                    a.Magazine.IsPublished &&
+                    a.Magazine.Slug == magazineSlug &&
+                    (
+                        a.Status == MagazineArticleStatus.Published ||
+                        (
+                            a.Status == MagazineArticleStatus.Scheduled &&
+                            a.PublishAtUtc.HasValue &&
+                            a.PublishAtUtc.Value <= nowUtc
+                        )
+                    ))
+                .OrderBy(a => a.DisplayOrder)
+                .ThenBy(a => a.ArticleNumber)
+                .ThenBy(a => a.ReleaseDate)
+                .ToList();
+        }
     }
 }

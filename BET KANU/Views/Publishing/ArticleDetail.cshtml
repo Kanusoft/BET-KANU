@@ -1,139 +1,176 @@
-﻿@model ProductVM
-<head>
-    @{
-        ViewBag.Title = "ArticleDetail1";
-    }
+﻿@model MagazineArticle
 
-</head>
-<section class="p-0">
-    <div class="hero hero-game d-none d-md-block d-lg-block d-xl-block d-xxl-block">
-        <img src="/img/Magazine/Article-01-Hammurabi’s Code main posters- 1920-700.jpg" />
-    </div>
-    <div class="hero hero-game d-block d-sm-block d-md-none">
-        <img src="/img/Magazine/Article-01-Hammurabi’s Code main posters-1920-350.jpg" />
-    </div>
-</section>
-<section>
-    <div class="container">
+@{
+    ViewBag.Title = Model.Title;
+}
 
-        <div class="row ">
-            <div class="col-lg-12">
+<div id="wrapper">
 
-                <div class="post post-single">
-                    <div class="post-header">
-                        <div class="post-title">
-                            <h2>The Code of Hammurabi</h2>
-                            <ul class="post-meta">
-                                <li><i class="fa fa-newspaper"></i>BET KANU Magazine</li>
-                                <li><i class="fa fa-file-text"></i>The Mesopotamian Influence</li>
-                                <li><i class="fa fa-book-open"></i>Article  </li>
+    <section class="p-0">
 
-                            </ul>
+        @if (!string.IsNullOrWhiteSpace(Model.BannerImage))
+        {
+            <div class="hero hero-game d-none d-md-block">
+                <img src="@Model.BannerImage"
+                     alt="@Model.Title" />
+            </div>
+        }
+
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-12">
+
+                    <div class="post post-single">
+                        <div class="post-header">
+                            <div class="post-title">
+
+                                <h2>@Model.Title</h2>
+
+                                <ul class="post-meta">
+
+                                    <li>
+                                        <i class="fa fa-newspaper"></i>
+                                        BET KANU Magazine
+                                    </li>
+
+                                    @if (Model.Magazine != null)
+                                    {
+                                        <li>
+                                            <i class="fa fa-file-text"></i>
+                                            @Model.Magazine.Title
+                                        </li>
+                                    }
+
+                                    <li>
+                                        <i class="fa fa-book-open"></i>
+                                        Article @Model.ArticleNumber
+                                    </li>
+
+                                    @if (Model.ReleaseDate != default)
+                                    {
+                                        <li>
+                                            <i class="fa fa-calendar-o"></i>
+                                            @Model.ReleaseDate.ToString("MMMM dd, yyyy")
+                                        </li>
+                                    }
+
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <p>
-                        The first article in BET KANU Magazine, under The Mesopotamian Influence edition, explores the Code of Hammurabi—examining its discovery, structure, and foundational principles, as well as its lasting impact on the global legal tradition.
-                    </p>
-                </div>
 
-                <div class="">
+                        @if (!string.IsNullOrWhiteSpace(
+                                                Model.ShortDescription))
+                        {
+                            <p>
+                                @Model.ShortDescription
+                            </p>
+                        }
+
+                    </div>
+
                     <div class="row g-4 justify-content-between Articles">
 
-                        <!-- Western -->
-                        <div class="col-md-6 col-sm-12 ">
-                            <div class="well h-100  text-center" style="direction: rtl" id="western">
-                                <h3 class="padding-bottom-10" style="direction:ltr">Western Syriac</h3>
-                                <p class="Surayt text-right">
-                                    <span class="bold">ܩܳܢܽܘܢܳܐ ܕܚܰܡܽܘܪܰܒܺܝ</span><br>
-                                    <span>ܗ̄ܽܘ ܢܳܡܽܘܣܳܐ ܕ݄ܡܫܰܚܠܰܦ ܠܶܗ ܗ̄ܽܘ ܥܳܠܡܳܐ ܥܰܬܝܩܳܐ</span><br>
-                                    <br>
+                        <!-- Western Syriac -->
+                        <div class="col-md-6 col-sm-12">
 
-                                    <span class="bold">ܥܽܘܬܳܕܳܐ</span><br>
-                                    <span>ܗ̄ܽܘ ܩܳܢܽܘܢܳܐ ܕܚܰܡܽܘܪܰܒܺܝ ܚܫܺܝܒ̥ܐ ܝܳܐ ܥܰܬ݄ܩ ܩܳܢܽܘܢܳܐ ܒܽܗ̄ܘ ܡܰܟܬ̥ܰܒܙܰܒܢܳܐ ܕܺܗ̄ܝ ܢܳܫܽܘܬ̥ܳܐ. ܣܺܝܡ ܗ̄ܽܘ ܩܳܢܽܘܢܰܢܳܐ ܒܽܗ̄ܘ ܙܰܒܢܳܐ ܕܡܰܠܟܳܐ ܚܰܡܽܘܪܰܒܺܝ ܗ̄ܽܘ ܡܰܠܟܳܐ ܫܬܺܝܬ̥ܳܝܳܐ ܕܺܗ̄ܝ ܫܶܫܰܠܬܳܐ ܕܒܳܒܶܠ ܗ̄ܺܝ ܩܰܕ̱ܡܰܝܬܳܐ، ܕܕ݄ܢ ܠܶܗ ܗ̄ܺܝ ܡܕ̥ܝܢ̱ܬܳܐ ܕܒܳܒܶܠ ܒܰܝܢ ܕܺܗ̄ܝ ܫܰܢ̱ܬܳܐ ܕ 1792 ܘܠ 1750 ܩ.ܡ.</span><br>
-                                    <br>
-                                    <span class="bold">ܚܰܡܽܘܪܰܒܺܝ ܟܬ̥ܽܒ̥ ܠܶܗ ܗ̄ܰܩܳܢܽܘܢ̈ܶܐ ܩܰܕ̱ܡܳܝ̈ܶܐ ܒܽܗ̄ܘ ܡܰܟܬ̥ܰܒܙܰܒܢܳܐ؟</span><br>
-                                    <span>ܓ̥ܰܠܰܒܶܐ ܢܶܝ ܕܟܳܚ݄ܫܒ̥ܝ ܗܰܘܟ̥ܰܐ، ܐܶܠܳܐ ܗ̄ܽܘ ܩܳܢܽܘܢܳܐ ܕܚܰܡܽܘܪܰܒܺܝ ܠܰܝ̱ܬ ܗ̄ܘܰܐ ܗ̄ܽܘ ܩܳܢܽܘܢܳܐ ܩܰܕ̱ܡܳܝܳܐ ܟܬ̥ܺܝܒ̥ܳܐ ܒܽܗ̄ܘ ܡܰܟܬ̥ܰܒܙܰܒܢܳܐ.</span><br>
-                                    <span>ܟ݄ܬ ܗ̄ܘܰܐ ܡܶܩ݄ܕ̱ܡ ܗ̄ܽܘ ܩܳܢܽܘܢܳܐ ܕܐܘܪܢܰܡܘ ܘܕܠܶܒܝܬ ܥܫܬܰܪ ܘܐܶܫܢܽܘܢܰܐ. ܐܶܠܳܐ ܗ̄ܽܘ ܩܳܢܽܘܢܳܐ ܕܚܰܡܽܘܪܰܒܺܝ ܕܺܝܠܳܢܳܝܳܐ ܝܳܐ ܒܺܗ̄ܝ ܟܰܡܺܝܠܽܘܬ̥ܰܝܕܶܗ ܘܒܽܗ̄ܘ ܒܶܢܝܳܢܰܝܕܶܗ ܐܰܘܟܺܝܬ ܠܳܘܓܺܝܩܳܝܳܐ ܝܳܐ ܘܠܺܗ̄ܝ ܪܘܺܝܚܽܘܬ̥ܳܐ ܕܰܡܠܽܘ̈ܐܶܐ ܡܫܰܚܠܦ̈ܶܐ.</span><br>
-                                    <br>
+                            <div class="well h-100 text-center"
+                                 style="direction:rtl"
+                                 id="western">
 
-                                    <span class="bold">ܫܟܰܚܬܳܐ  ܕܺܗ̄ܝ ܩܳܝܶܡܬܳܐ</span><br>
-                                    <span>ܗ̄ܽܘ ܩܳܢܽܘܢܰܢܳܐ ܢܩܺܝܫܳܐ ܗ̄ܘܰܐ ܥܰܠ ܩܳܝܶܡܬܳܐ ܡܶܢ̱ ܕܝܘܿܪܝܼܬ ܟܳܡܳܐ، ܘܗ̄ܽܘ ܝܽܘܪܟ̥ܰܝܕܰܗ ܠܩܽܘܪܒܳܐ ܕ2.25 ܡܶܬܪ̈ܶܐ.</span><br>
-                                    <span>ܡܬܰܚܘܝܳܐ ܡܶܢ̱ ܬܰܫܕܰܪܬܐ ܐܰܟܰܕܝܡܳܝܬܐ ܦܪܰܢܫܳܝܬܐ ܒܺܗ̄ܝ ܫܰܢ̱ܬܳܐ ܕ1901 ܘܳܐܥܕܳܐ ܡܰܚܬܬܳܐ ܝܐ  ܒܰܒܶܝܬ ܥܰܬܺܝܩ̈ܶܐ ܕܠܽܘܦܶܪ ܒܦܰܪܺܝܣ. ܗ̄ܺܝ ܩܳܝܶܡܬܰܬ̥ܶܐ ܟܬ̥ܺܝܒ̥ ܐܰܥܠܰܗ 282 ܩܳܢܽܘܢ̈ܶܐ. ܡܰܗ̄ܘܟ̥ܰܐ ܟܳܡ݄ܚܫܳܒ̥ܳܐ ܨܚܳܚܳܐ ܩܳܢܽܘܢܳܝܳܐ ܟܰܡܺܝܠܳܐ ܕܡܰܛܺܝ ܠܰܢ ܡܽܗ̄ܘ ܙܰܒܢܳܐ ܥܰܬܺܝܩܳܐ</span><br>
-                                    <br>
-                                    <span class="bold">ܗ̄ܽܘ ܫܽܘܠܛܳܢܳܐ ܐܰܠܳܗܳܝܳܐ ܘܗ̄ܽܘ ܒܶܢܝܳܢܳܐ ܕܽܗ̄ܘ ܩܳܢܽܘܢܳܐ</span><br>
-                                    <span>ܥܰܠ ܪܺܝܫܶܗ ܕܺܗ̄ܝ ܩܳܝܶܡܬܳܐ ܟܺܝܬ ܨܽܘܪܬܳܐ ܕܽܗ̄ܘ ܡܰܠܟܳܐ ܚܰܡܽܘܪܰܒܺܝ ܕܟܳܡܳܝ݄ܕ ܗ̄ܰܩّܳܢܽܘܢ̈ܶܐ ܡܶܢ̱ ܐܰܠܳܗܳܐ ܫܰܡܫ ܗ̄ܽܘ ܐܰܠܳܗܳܐ ܕܺܗ̄ܝ ܟܺܐܢܽܘܬ̥ܳܐ، ܘܗܰܬ̥ܶܐ ܪܶܡܙܳܐ ܝܳܐ ܥܰܠ ܗ̄ܺܝ ܐܰܠܳܗܽܘܬ̥ܳܐ ܕܽܗ̄ܘ ܫܶܪܫܳܐ ܕܰܡܠܽܘ̈ܐܶܐ ܩܳܢܽܘܢ̈ܳܝܶܐ ܘܥܰܠ ܗ̄ܺܝ ܩܰܕܺܝܫܽܘܬ̥ܰܝܕܶܗ. ܘܟܳܡ݄ܦܠ݄ܓ̥ ܗ̄ܽܘ ܩܳܢܘܢܐ ܠ݄ܬܠܳܬ̥ܳܐ ܦܰܠܩ̈ܶܐ ܇ ܥܽܘܬܳܕܳܐ ܘܓܽܘܫܡܳܐ ܘܚܽܘܬܳܡܳܐ</span><br>
-                                    <br>
-                                    <span class="bold">ܚܰܡܫܳܐ ܐܶܣ̈ܶܐ ܕܰܩܳܢܽܘܢ̈ܶܐ ܕܚܰܡܽܘܪܰܒܺܝ</span><br>
-                                    <span>-ܕܺܝܢܳܐ ܘܥܽܘܩܳܒܳܐ: ܒܳܬܰܝ̈ ܕܺܝܢܳܐ، ܟܺܐܢܽܘܬ̥ܳܐ، ܦܽܘܪܥܳܢܳܐ</span><br>
-                                    <span>-ܩܳܢܽܘܢܳܐ ܕܺܐܝܩܰܪܬܳܐ:  ܙܽܘܘܳܓ̥ܳܐ، ܝܽܘܬ̥ܪܳܢܳܐ، ܛܽܘܠܳܩܳܐ</span><br>
-                                    <span>-ܬܰܓܳܪܽܘܬ̥ܳܐ ܘܐܶܩܢܽܘܡܝܳܐ: ܡܰܗܒ̥ܳܐ ܘܫܩܳܠܳܐ، ܛܺܝܡ̈ܶܐ، ܩܨܳܨ̈ܶܐ.</span><br>
-                                    <span>-ܡܽܘܠܟܳܢܳܐ ܘܙܶܕܩ̈ܶܐ ܕܡܽܘܠܟܳܢܳܐ: ܓܢܳܒ݂ܳܐ، ܢܶܟ݂ܝܳܢܳܐ ܒܡܽܘܠܟܳܢܳܐ.</span><br>
-                                    <span>-ܬܶܫܡܶܫܬܳܐ ܓܰܝܣܳܝܬܳܐ: ܓܪܰܥܝܽܘܬ̥ܳܐ، ܣܳܗܕ̈ܘܳܬ̥ܳܐ، ܘܳܠܝ̈ܳܬ̥ܳܐ، ܬܶܫܡܶܫܬܳܐ، ܣܳܗܕ̈ܶܐ ܩܳܢܽܘܢܳܝ̈ܶܐ.</span><br>
+                                <h3 class="padding-bottom-10"
+                                    style="direction:ltr">
+                                    Western Syriac
+                                </h3>
 
-                                    <br>
-                                    <span class="bold">ܩܰܝ ܡܶܕܶܐ ܬܝܳܪܳܝܳܐ ܗ̄ܘܰܐ؟</span><br>
-                                    <span>-ܗ̄ܺܝ ܪܺܝܫܽܘܬ݂ܳܐ ܕܥܰܝܢܳܐ ܚܠܳܦ ܥܰܝܢܳܐ. ܘܡܶܕܶܐ ܩܰܪܝܒ̥ܳܐ ܕܢܳܫܳܐ ܦܳܝܫ ܙܰܟܳܝܳܐ ܗܳܠ ܕܡܺܝܕܢ.</span><br>
-                                    <span>-ܟܺܐܢܽܘܬ݂ܳܐ ܬܪܺܝܨܬܳܐ ܠܽܗ̄ܘ ܢܛܳܪܳܐ ܕܰܡܚܺܝ̈ܠܶܐ</span><br>
-                                    <span>-ܩܳܢܘܢ̈ܶܐ ܦܫܝ̈ܛܶܐ ܘܦܫܝܩ̈ܶܐ</span><br>
-                                    <span>-ܡܰܥܒܕܳܢܽܘܬ݂ܳܐ ܥܰܠ ܣܽܘܓܳܐ ܕܰܛܶܟܣ̈ܶܐ ܩܳܢܽܘܢܳܝ̈ܶܐ ܕܗܰܘ݄ܢ ܒ݄ܬ̥ܪܶܗ.</span><br>
-                                    <br>
-                                    <span class="bold">ܝܽܘܪܬ̥ܳܢܳܐ ܬܺܒܶܝܠܳܝܳܐ</span><br>
-                                    <span>ܗ̄ܽܘ ܩܳܢܽܘܢܳܐ ܕܚܰܡܽܘܪܰܒܺܝ ܡܫܰܬܰܐܣ ܠܶܗ ܗ̄ܽܘ ܐܶܣܳܐ ܩܰܕ̱ܡܳܝܳܐ ܠܽܗ̄ܘ ܩܳܢܽܘܢܳܐ ܬܺܒܶܝܠܳܝܳܐ.</span><br>
-                                    <span>ܘܗܰܘܺܝ ܠܶܗ ܕܰܘܪܳܐ ܪܺܝܫܳܝܳܐ ܠܽܗ̄ܘ ܩܽܘܝܳܡܳܐ  ܕܺܗ̄ܝ ܟܺܐܢܽܘܬ݂ܳܐ، ܘܠܽܗ̄ܘ ܣܝܳܡܳܐ ܕܣܽܘܕܳܪܳܐ ܟܶܢܫܳܝܳܐ. ܘܗܰܘܺܝ ܫܶܬܶܐܣܬܳܐ ܠܰܛܶܟܣ̈ܶܐ ܩܳܢܽܘܢܳܝ̈ܶܐ ܒܽܗ̄ܘ ܥܳܠܡܳܐ ܡܕ̥ܺܝܢܳܝܳܐ ܒܰܙܰܒܢ̈ܶܐ ܕܰܐܬ̥ܢ ܒܶܬ̥ܪܶܗ.</span><br>
-                                    <br>
-                                    <span class="bold">ܗ̄ܽܘ ܡܰܡܠܠܳܐ ܐ̱ܚܰܪܳܝܳܐ ܕܽܗ̄ܘ ܡܰܠܟܳܐ ܚܰܡܽܘܪܰܒܺܝ</span><br>
-                                    <span>«ܡܰܥܠܶܐ ܠܺܝ ܠܰܩܳܢܽܘ̈ܢܰܢܺܝ، ܐܳܢܳܐ ܡܰܠܟܳܐ ܚܰܟܺܝܡܐ ܚܰܡܽܘܪܰܒܺܝ، ܕܠܳܐ ܗ̄ܽܘ ܥܰܫܺܝܢܳܐ ܛܳܠ݄ܡ ܠܽܗ̄ܘ ܡܚܺܝܠܳܐ، ܘܕܡܺܝܬܰܗܘܝܳܐ ܟܺܐܢܽܘܬ݂ܳܐ ܠܽܗ̄ܘ ܝܰܬܽܘܡܳܐ ܘܠܺܗ̄ܝ ܐܰܪܡܰܠܬܳܐ. ܘ݄ܛܪܳܐ ܗ̄ܽܘ ܡܰܠܟܳܐ ܕܳܐܬ݂ܶܐ ܒ݄ܬ̥ܪ ܡܶܢܺܝ ܗܳܘܶܐ ܡܳܪܳܐ  ܠܰܩّܳܢܘܢ̈ܶܐ ܕܺܗ̄ܝ ܟܺܐܢܽܘܬ݂ܳܐ ܕ݄ܢܩܺܝܫܺܝ ܠܺܝ ܥܰܠ ܗ̄ܺܝ ܩܳܝܶܡܬܰܬ̥ܶܐ</span><br>
-                                </p>
-                                <a class="btn btn-info"
-                                   href="@Url.Action("DownloadArticlePdf", "Publishing", new { file = "Ar-01-Hammurabi-Code-Western.pdf" })">
-                                    <i class="fa fa-file-pdf-o"></i> Download PDF
-                                </a>
+                                @if (!string.IsNullOrWhiteSpace(
+                                                                Model.WesternTitle))
+                                {
+                                    <h4 class="Surayt">
+                                        @Model.WesternTitle
+                                    </h4>
+                                }
+
+                                @if (!string.IsNullOrWhiteSpace(
+                                                                Model.WesternBodyHtml))
+                                {
+                                    <div class="Surayt text-right">
+                                        @Html.Raw(Model.WesternBodyHtml)
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p>
+                                        Western Syriac content is not
+                                        currently available.
+                                    </p>
+                                }
+
+                                @if (!string.IsNullOrWhiteSpace(
+                                                                Model.WesternPdfPath))
+                                {
+                                    <a class="btn btn-info mt-3"
+                                       href="@Model.WesternPdfPath"
+                                       target="_blank"
+                                       rel="noopener">
+                                        <i class="fa fa-file-pdf-o"></i>
+                                        Download PDF
+                                    </a>
+                                }
 
                             </div>
                         </div>
 
-                        <!-- Eastern -->
-                        <div class=" col-md-6 col-sm-12">
-                            <div class="well h-100 text-center" style="direction: rtl" id="eastern">
-                                <h3 class="padding-bottom-10" style="direction:ltr">Eastern Syriac</h3>
-                                <p class="Surit text-right">
-                                    <span class="bold">ܩܵܢܘܿܢܵܐ ܕܚܲܡܘܼܪܵܒܝܼ</span><br>
-                                    <span>ܢܵܡܘܿܣܵܐ ܕܲܡܫܘܼܚܠܸܦܠܹܗ ܠܥܵܠܡܵܐ ܥܲܬܝܼܩܵܐ</span><br>
-                                    <br>
-                                    <span class="bold">ܥܘܼܬܵܕܵܐ</span><br>
-                                    <span>ܩܵܢܘܿܢܵܐ ܕܚܲܡܘܼܪܵܒܝܼ ܚܫܝܼܒܼܵܐ ܝܠܹܗ ܚܲܕ݇ ܡ̣ܢ ܕܐܵܢܝ݇ ܩܵܢܘܿܢܹ̈ܐ ܟܬܝܼܒܼܹ̈ܐ ܒܘܼܫ ܥܲܬܝܼܩܹ̈ܐ ܓܵܘ ܬܲܫܥܝܼܬܵܐ ܕܒܲܪܢܵܫܘܼܬܵܐ، ܘܦܝܼܫܠܹܗ ܡܘܼܬܒܼܵܐ ܐܵܗܵܐ ܩܵܢܘܿܢܵܐ ܒܙܲܒܼܢܵܐ ܕܡܲܠܟܵܐ ܚܲܡܘܼܪܵܒܝܼ، ܗܵܘ ܡܲܠܟܵܐ ܫܬܝܼܬܵܝܵܐ ܕܓܵܘ ܫܸܫܠܬܵܐ ܕܒܵܒܼܹܠ ܩܲܕ݇ܡܵܝܬܵܐ، ܕܲܚܟܝܼܡܵܐ ܝܠܹܗ ܠܲܡܕܝܼܢ݇ܬܵܐ ܕܒܵܒܼܹܠ ܒܲܝܢ ܫܸܢܹ̈ܐ ܕ 1792 ܘ 1750 ܩ.ܡ.</span><br>
-                                    <br>
-                                    <span class="bold">ܚܲܡܘܼܪܵܒܝܼ ܝܠܹܗ ܟܬܝܼܒܼܵܐ ܠܩܵܢܘܿܢܹ̈ܐ ܩܲܕ݇ܡܵܝܹ̈ܐ ܒܬܲܫܥܝܼܬܵܐ؟</span><br>
-                                    <span>ܪܵܒܵܐ ܟܹܐ ܚܵܫܒܼܝܼ ܗܵܕܟܼܵܐ، ܐܝܼܢܵܐ ܩܵܢܘܿܢܵܐ ܕܚܲܡܘܼܪܵܒܝܼ ܠܵܐ ܝܗ݇ܘܵܐ ܗܵܘ ܩܵܢܘܿܢܵܐ ܩܲܕ݇ܡܵܝܵܐ ܟܬܝܼܒܼܵܐ ܓܵܘ ܬܲܫܥܝܼܬܵܐ، ܟܲܕ ܐܝܼܬ ܗ݇ܘܵܐ ܩܵܕ݇ܡ ܡܸܢܹܗ ܩܵܢܘܿܢܹ̈ܐ ܕ(ܐܘܿܪܢܲܡܘܿ) ܘܲ(ܕܠܝܼܒܝܼܬ ܥܲܫܬܵܪ) ܘ(ܐܸܫܢܘܼܢܵܐ)، ܐܝܼܢܵܐ ܩܵܢܘܿܢܵܐ ܕܚܲܡܘܼܪܵܒܝܼ ܦܪܝܼܫܵܐ ܝܠܹܗ ܒܲܓܡܝܼܪܘܼܬܹܗ ܘܲܒܒܸܢܝܵܢܹܗ ܡܠܝܼܠܵܝܵܐ ܐܵܘܟܹܝܬ ܠܘܿܓܼܝܼܩܵܝܵܐ ܘܲܡܟܲܣܲܝܬܹܗ ܪܘܝܼܚܬܵܐ ܠܓܝܼܓܼܠܹ̈ܐ ܕܚܲܝܘܼܬܵܐ ܡܫܲܚܠܦܹ̈ܐ.</span><br>
+                        <!-- Eastern Syriac -->
+                        <div class="col-md-6 col-sm-12">
 
-                                    <br>
-                                    <span class="bold">ܡܲܫ݇ܟ̰ܲܚܬܵܐ ܕܩܵܝܹܡܬܵܐ</span><br>
-                                    <span>ܦܝܼܫܠܹܗ ܢܩܝܼܫܵܐ ܐܵܗܵܐ ܩܵܢܘܿܢܵܐ ܥܲܠ ܚܕܵܐ ܩܵܝܹܡܬܵܐ ܡ̣ܢ ܕܝܘܿܪܝܼܬ ܐ݇ܟܘܿܡܵܐ، ܘܡܵܛܝܵܐ ܪܵܡܘܼܬܵܗ̇ ܠܩܘܼܪܒܵܐ ܕ 2.25 ܡܝܼܬܖܹ̈ܐ، ܘܦܝܼܫܠܵܗ̇ ܡܘܼܫ݇ܟ̰ܸܚܬܵܐ ܒܝܲܕ ܚܕܵܐ ܡܫܲܕܪܘܼܬܵܐ ܥܸܬܩܵܝܬܵܐ ܦ̮ܲܪܲܢܣܵܝܬܵܐ ܒܫܲܢ݇ܬܵܐ ܕ 1901، ܘܗܵܕܝܼܵܐ ܡܚܘܼܡܲܝܬܵܐ ܝܠܵܗ̇ ܓܵܘ ܒܹܝܬ ܥܸܬܩܹ̈ܐ ܕܠܘܼܒܼܸܪ ܓܵܘ ܦܵܪܝܼܣ. ܐܵܗܵܐ ܩܵܝܹܡܬܵܐ ܟܹܐ ܚܵܒܼܫܵܐ ܠ 282 ܡܠܘܿܐܹ̈ܐ ܩܵܢܘܿܢܵܝܹ̈ܐ، ܘܐܵܗܵܐ ܡܸܢܕܝܼ ܩܲܡ ܡܲܥܒܼܸܕܠܵܗ̇ ܕܗܵܘܝܵܐ ܗܵܘ ܨܚܵܚܵܐ ܩܵܢܘܿܢܵܝܵܐ ܒܘܼܫ ܓܡܝܼܪܵܐ ܒܙܲܒܼܢܵܐ ܥܲܬܝܼܩܵܐ.</span><br>
-                                    <br>
-                                    <span class ="bold">ܫܘܼܠܛܵܢܵܐ ܐܲܠܵܗܵܝܵܐ ܘܒܸܢܝܵܢܵܐ ܕܩܵܢܘܿܢܵܐ</span><br>
-                                    <span>ܥܲܠ ܪܹܫ ܩܵܝܹܡܬܵܐ ܐܝܼܬ ܨܘܼܪܬܵܐ ܕܡܲܠܟܵܐ ܚܲܡܘܼܪܵܒܝܼ ܘܗܵܘ ܫܩܵܠܵܐ ܩܵܢܘܿܢܹ̈ܐ ܡ̣ܢ ܐܲܠܵܗܵܐ ܫܲܡܸܫ، ܐܲܠܵܗܵܐ ܕܟܹܐܢܘܼܬܵܐ، ܘܐܵܗܵܐ ܠܲܪܡܵܙܵܐ ܥܲܠ ܐܲܠܵܗܵܝܘܼܬܵܐ ܕܫܸܪܫܵܐ ܕܐܲܢܹܐ ܡܠܘܿܐܹ̈ܐ ܩܵܢܘܿܢܵܝܹ̈ܐ ܘܥܲܠ ܩܲܕܝܼܫܘܼܬܲܝܗܝ، ܘܲܡܦܘܼܠܓܼܵܐ ܝܠܹܗ ܩܵܢܘܿܢܵܐ ܠܲܬܠܵܬܵܐ ܣܲܗܡܹ̈ܐ: ܥܘܼܬܵܕܵܐ ܘܓܘܼܫܡܵܐ ܘܚܘܼܬܵܡܵܐ.</span><br>
-                                    <br>
-                                    <span class="bold">ܚܲܡܫܵܐ ܐܸܣܹ̈ܐ ܕܩܵܢܘܿܢܵܐ ܕܚܲܡܘܼܪܵܒܝܼ:</span><br>
-                                    <span>ܓܙܵܪ ܕܝܼܢܵܐ، ܬܲܢܒܹ̈ܐ، ܒܵܬܲܝ̈ ܕܝܼܢܵܐ، ܟܹܐܢܘܼܬܵܐ، ܪܹܫܘܼܬܵܐ ܕܚܘܼܝܵܒܼܵܐ.</span><br>
-                                    <span>ܩܵܢܘܿܢܵܐ ܕܒܲܝܬܘܼܬܵܐ، ܙܘܼܘܵܓܼܵܐ، ܝܘܼܪܬܵܢܵܐ، ܛܘܼܠܵܩܵܐ.</span><br>
-                                    <span>ܬܲܓܵܪܘܼܬܵܐ ܘܐܸܩܢܘܿܡܝܵܐ، ܫܩܵܠ ܝܗܵܒܼܵܐ، ܛܝܼܡܹ̈ܐ، ܩܸܛܖܹ̈ܐ،.</span><br>
-                                    <span>ܡܘܼܠܟܵܢܵܐ ܘܙܸܕܩܹ̈ܐ ܕܡܘܼܠܟܵܢܵܐ، ܓܢܵܒܼܵܐ، ܢܸܟܼܝܵܢܵܐ ܕܥܲܠ ܡܘܼܠܟܵܢܹ̈ܐ.</span><br>
-                                    <span>ܬܸܫܡܸܫܬܵܐ ܓܲܝܣܵܝܬܵܐ، ܥܲܒܼܕܘܼܬܵܐ، ܣܵܗܕܘܼܬܵܐ، ܡܲܕܒܼܲܩ̈ܝܵܬܵܐ، ܬܸܫܡܸܫܬܵܐ، ܣܵܗܕܹ̈ܐ ܩܵܢܘܿܢܵܝܹ̈ܐ.</span><br>
-                                    <br>
+                            <div class="well h-100 text-center"
+                                 style="direction:rtl"
+                                 id="eastern">
 
-                                    <span class="bold">ܩܵܐ ܡܘܿܕܝܼ ܝܗ݇ܘܵܐ ܬܵܝܘܿܪܵܐ؟</span><br>
-                                    <span>ܒܲܣܢܵܕܵܐ ܥܲܠ ܪܹܫܘܼܬܵܐ ܕ(ܥܲܝܢܵܐ ܒܥܲܝܢܵܐ)، ܘܲܚܫܵܒܼܵܐ ܡܪܘܼܡܝܵܐ ܙܲܟܵܝܵܐ ܝܠܹܗ ܗܲܠ ܕܦܵܝܫܵܐ ܡܘܼܙܒܸܛܬܵܐ ܕܝܵܢܬܵܐ ܕܥܲܠܹܗ، ܘܟܹܐܢܘܼܬܵܐ ܬܩܘܿܠܬܵܐ ܠܲܡܚܲܡܘܿܝܹܐ ܡܚܝܼܠܹ̈ܐ، ܘܓܸܠܝܘܼܬܵܐ ܩܵܢܘܿܢܵܝܬܵܐ ܘܣܲܚܝܼܚܘܼܬܵܐ، ܘܡܲܥܒܕܵܢܘܼܬܹܗ ܥܲܠ ܣܲܗܡܵܐ ܙܵܘܕܵܐ ܕܛܲܟܼܣܹ̈ܐ ܩܵܢܘܿܢܵܝܹ̈ܐ ܕܒܵܬܲܪ ܡܸܢܹܗ.</span><br>
-                                    <br>
-                                    <span class="bold">ܝܘܼܪܬܵܢܵܐ ܬܹܒܼܹܝܠܵܝܵܐ</span><br>
-                                    <span>ܩܵܢܘܿܢܵܐ ܕܚܲܡܘܼܪܵܒܝܼ ܗܘܹܐ ܠܹܗ ܚܲܕ݇ ܣܲܗܡܵܐ ܡ̣ܢ ܒܸܢܝܵܢܵܐ ܫܲܬܐܸܣܵܝܵܐ ܩܲܕ݇ܡܵܝܵܐ ܕܲܡܬܲܚܡܲܢܬܵܐ ܕܩܵܢܘܿܢܵܐ ܬܹܒܼܹܝܠܵܝܵܐ، ܘܐܵܦ ܫܩܸܠܠܹܗ ܚܲܕ݇ ܣܲܗܡܵܐ ܓܵܘ ܡܥܲܙܙܲܬܵܐ ܕܟܹܐܢܘܼܬܵܐ ܘܲܡܛܵܝܬܵܐ ܠܛܲܟܼܣܵܐ ܟܢܘܼܫܝܵܝܵܐ، ܘܦܝܼܫܠܹܗ ܚܲܕ݇ ܐܸܣܵܐ ܥܝܵܕܵܝܵܐ ܠܚܲܕ݇ ܡܸܢܝܵܢܵܐ ܓܒܼܘܿܪܵܐ ܡ̣ܢ ܛܲܟܼܣܹ̈ܐ ܩܵܢܘܿܢܵܝܹ̈ܐ ܓܵܘ ܡܕܝܼܢܵܝ̈ܘܵܬܵܐ ܡܫܲܚܠܦܹ̈ܐ.</span><br>
-                                    <br>
-                                    <span class ="bold">ܡܲܡܠܠܵܐ ܚܘܼܬܵܡܵܝܵܐ ܕܡܲܠܟܵܐ ܚܲܡܘܼܪܵܒܝܼ</span><br>
-                                    <span>ܡܘܼܪܸܡܠܝܼ ܠܐܲܢܹܐ ܩܵܢܘܿܢܹ̈ܐ، ܐܵܢܵܐ ܡܲܠܟܵܐ ܚܲܡܘܼܪܵܒܝܼ، ܕܠܵܐ ܛܵܠܹܡ ܚܲܝܠܵܢܵܐ ܠܲܡܚܝܼܠܵܐ، ܘܲܕܦܵܝܫܵܐ ܝܗܝܼܒܼܬܵܐ ܟܹܐܢܘܼܬܵܐ ܠܝܲܬܘܼܡܵܐ ܘܐܲܪܡܸܠܬܵܐ، ܘܛܘܼܒܼܵܐ ܕܡܲܠܟܵܐ ܕܐܵܬܹܐ ܒܵܬܲܪ ܡܸܢܝܼ ܡܲܣܝܸܡ ܒܵܠܵܐ ܥܲܠ ܬܲܢܲܝܵܬ̈ܵܐ ܕܟܹܐܢܘܼܬܵܐ ܕܦܝܼܫܠܲܝܗܝ ܢܩܝܼܫܹ̈ܐ ܥܲܠ ܐܵܗܵܐ ܩܵܝܹܡܬܵܐ.</span><br>
-                                </p>
-                                <a class="btn btn-info"
-                                   href="@Url.Action("DownloadArticlePdf", "Publishing", new { file = "Ar-01-Hammurabi-Code-Eastern.pdf" })">
-                                    <i class="fa fa-file-pdf-o"></i> Download PDF
-                                </a>
+                                <h3 class="padding-bottom-10"
+                                    style="direction:ltr">
+                                    Eastern Syriac
+                                </h3>
+
+                                @if (!string.IsNullOrWhiteSpace(
+                                                                Model.EasternTitle))
+                                {
+                                    <h4 class="Surit">
+                                        @Model.EasternTitle
+                                    </h4>
+                                }
+
+                                @if (!string.IsNullOrWhiteSpace(
+                                                                Model.EasternBodyHtml))
+                                {
+                                    <div class="Surit text-right">
+                                        @Html.Raw(Model.EasternBodyHtml)
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p>
+                                        Eastern Syriac content is not
+                                        currently available.
+                                    </p>
+                                }
+
+                                @if (!string.IsNullOrWhiteSpace(
+                                                                Model.EasternPdfPath))
+                                {
+                                    <a class="btn btn-info mt-3"
+                                       href="@Model.EasternPdfPath"
+                                       target="_blank"
+                                       rel="noopener">
+                                        <i class="fa fa-file-pdf-o"></i>
+                                        Download PDF
+                                    </a>
+                                }
+
                             </div>
                         </div>
 
@@ -141,73 +178,99 @@
 
                 </div>
 
-
             </div>
-
         </div>
-    </div>
-</section>
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
+    </section>
 
-
-                <div class="page-header">
-                    <div class="page-title" style="color:black">Credits</div>
-                </div>
+    @if (!string.IsNullOrWhiteSpace(Model.WesternCreditsHtml) ||
+        !string.IsNullOrWhiteSpace(Model.EasternCreditsHtml))
+    {
+        <section>
+            <div class="container">
 
                 <div class="row">
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-md-12">
 
-                        <div class="well">
-                            <p>
-                                <strong>Western</strong>
-                            </p>
-                            <ul>
-                                <li>Author : <strong>MARIAM BARSOUM</strong></li>
-                                <li>Design &amp; Layout : <strong>GABI MALKI</strong></li>
-                                <li>Content Editor : <strong>RAMIA AHI</strong></li>
-                                <li>Syriac Translation &amp; Transcription : <strong>ANTONI KORIEH</strong></li>
-                                <li>Syriac Orthography Editor : <strong>DR. ABDUL MASSIH SAADI</strong></li>
-                                <li>Voice Over : <strong>MARIAM BARSOUM</strong></li>
-                                <li>Technical Lead : <strong>AMMAR YOSEF</strong></li>
-                                <li>Project Manager : <strong>DILAMA MALKI</strong></li>
-                                <li>Marketing Designers : <strong>YAKOUB TOUMA – GABI MALKI</strong></li>
-                                <li>Marketing Coordinator : <strong>SAMIR SHAMOUN</strong></li>
-                                <li>General Supervision : <strong>AKKAD SAADI</strong></li>
+                        <div class="page-header">
+                            <div class="page-title"
+                                 style="color:black">
+                                Credits
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            @if (!string.IsNullOrWhiteSpace(
+                                                    Model.WesternCreditsHtml))
+                            {
+                                <div class="col-md-6 col-sm-12">
+                                    <div class="well">
+
+                                        <p>
+                                            <strong>Western</strong>
+                                        </p>
+
+                                        <div>
+                                            @Html.Raw(
+                                            Model.WesternCreditsHtml)
+                                </div>
+
+                            </div>
+                        </div>
+                                                }
+
+                            @if (!string.IsNullOrWhiteSpace(
+                                                    Model.EasternCreditsHtml))
+                            {
+                                <div class="col-md-6 col-sm-12">
+                                    <div class="well">
+
+                                        <p>
+                                            <strong>Eastern</strong>
+                                        </p>
+
+                                        <div>
+                                            @Html.Raw(
+                                            Model.EasternCreditsHtml)
+                                </div>
+
+                            </div>
+                        </div>
+                                                }
+
+                        </div>
+
+                        <div class="col-md-4 float-end">
+                            <ul class="share">
+
+                                <li>
+                                    <a href="https://www.facebook.com/sharer.php?u=@Uri.EscapeDataString(Context.Request.Scheme + "://" + Context.Request.Host + Context.Request.Path + Context.Request.QueryString)"
+                                       class="btn btn-sm btn-social-icon btn-facebook"
+                                       target="_blank"
+                                       rel="noopener"
+                                       title="Share on Facebook">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="https://twitter.com/share?url=@Uri.EscapeDataString(Context.Request.Scheme + "://" + Context.Request.Host + Context.Request.Path + Context.Request.QueryString)&hashtags=BETKANU"
+                                       class="btn btn-sm btn-social-icon btn-twitter"
+                                       target="_blank"
+                                       rel="noopener"
+                                       title="Share on Twitter">
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                </li>
+
                             </ul>
                         </div>
-                    </div>
-                    <div class="col-md-6 col-sm-12">
 
-                        <div class="well">
-                            <p>
-                                <strong>Eastern</strong>
-                            </p>
-                            <ul>
-                                <li>Author : <strong>MARIAM BARSOUM</strong></li>
-                                <li>Design &amp; Layout : <strong>GABI MALKI</strong></li>
-                                <li>Content Editor : <strong>RAMIA AHI</strong></li>
-                                <li>Syriac Translation &amp; Transcription : <strong>YOUSIP AUDESHO</strong></li>
-                                <li>Eastern Supervision : <strong>RAMINA SAMUEL</strong></li>
-                                <li>Voice Over : <strong>YOUSIP AUDESHO</strong></li>
-                                <li>Technical Lead : <strong>AMMAR YOSEF</strong></li>
-                                <li>Project Manager : <strong>DILAMA MALKI</strong></li>
-                                <li>Marketing Designers : <strong>YAKOUB TOUMA – GABI MALKI</strong></li>
-                                <li>Marketing Coordinator : <strong>SAMIR SHAMOUN</strong></li>
-                                <li>General Supervision : <strong>AKKAD SAADI</strong></li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
-                <div class="col-md-4 float-end">
-                    <ul class="share">
-                        <li><a href="https://www.facebook.com/sharer.php?u=https://betkanu.com/products/@ViewBag.Title" class="btn btn-sm btn-social-icon btn-facebook" data-toggle="tooltip" title="Share on facebook"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="https://twitter.com/share?url=https://www.betkanu.com/products/@ViewBag.Title&amp;hashtags=BETKANU" class="btn btn-sm btn-social-icon btn-twitter" data-toggle="tooltip" title="Share on twitter"><i class="fa fa-twitter"></i></a></li>
-                    </ul>
-                </div>
+
             </div>
-        </div>
-    </div>
-</section>
+        </section>
+    }
+
+</div>

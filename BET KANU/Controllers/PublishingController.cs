@@ -23,14 +23,46 @@ namespace BET_KANU.Controllers
             return View(pvm);
         }
 
-        public ActionResult Article() => View();
-        public ActionResult ArticleDetail() => View();
+        [HttpGet]
+        public ActionResult Articles(string slug)
+        {
+            var MagazineArticles = _unit.MagazineArticles.GetPublishedByMagazineSlug(slug);
+           return View(MagazineArticles); 
+        }
+
+        [HttpGet("magazine/{magazineSlug}/{articleSlug}")]
+        public ActionResult ArticleDetail(string magazineSlug, string articleSlug)
+        {
+            if (string.IsNullOrWhiteSpace(magazineSlug) ||
+                string.IsNullOrWhiteSpace(articleSlug))
+            {
+                return RedirectToAction("Articles");
+            }
+
+            var article = _unit.MagazineArticles.GetPublishedBySlug(
+                magazineSlug,
+                articleSlug);
+
+            if (article == null)
+            {
+                return RedirectToAction("Articles");
+            }
+
+            return View(article);
+        }
+
         public ActionResult ArticleDetail2() => View();
         public ActionResult ArticleDetail3() => View();
         public ActionResult ArticleDetail4() => View();
         public ActionResult ArticleDetail5() => View();
         public ActionResult ArticleDetail6() => View();
-        public ActionResult Magazine() => View();
+
+        public ActionResult Magazine() 
+        {
+            var magazines = _unit.Magazines.GetAll();
+
+            return View(magazines);
+        }
 
         [HttpGet]
         public IActionResult DownloadArticlePdf(string file)

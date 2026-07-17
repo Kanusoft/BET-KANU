@@ -1,4 +1,4 @@
-﻿@model ProductVM
+﻿@model List<Magazine>
 <head>
     @{
         ViewBag.Title = "Magazine";
@@ -6,7 +6,7 @@
 
 </head>
 <div id="wrapper">
- 
+
     <section class="p-0">
         <div class="hero hero-game d-none d-md-block d-lg-block d-xl-block d-xxl-block">
             <img src="/img/Magazine/BET KKANU Magazine Marketing-main posters-1920-700.jpg" />
@@ -26,31 +26,83 @@
                         This project was originally envisioned by our late friend and BET KANU member, Gabi Shabo, who proposed publishing articles on a wide range of topics in the Syriac language, in both its Eastern and Western dialects. At the time, our team was committed to several other initiatives, which unfortunately prevented us from bringing his vision to fruition.<br />Today, in gratitude and loving memory of our dear friend, we are honored to launch BET KANU Magazine. The magazine will present a curated series of articles, beginning with a focus on Mesopotamian civilization. Each season will consist of six articles, with one article released on the 18th of every month—commemorating the birth date of Gabi Shabo (18/8/1991).
                     </p>
                 </div>
-                <div class="post post-md no-border col-md-6">
-                    <div class="col-12">
-                        <div class="post-thumbnail">
-                            <a asp-controller="Publishing" asp-action="Article" asp-route-id=""><img src="/img/Magazine/BK M The Mesopotamian Influence 2026-main posters- 1920-700.jpg" loading="lazy" alt=""></a>
-                            <div class="post-caption" style="background-color:darkblue">Magazine</div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="post-header">
-                            <div class="post-title">
-                                <h4><a asp-controller="Publishing" asp-action="Article">BET KANU Magazine - The Mesopotamian Influence </a></h4>
-                                <ul class="post-meta">
-                                    <li><i class="fa fa-newspaper"></i> Magazine</li>
-                                    <li><i class="fa fa-calendar-o"></i>2026</li>
-                                </ul>
+
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var magazine in Model)
+                    {
+                        <div class="post post-md no-border col-md-6 mb-5">
+
+                            <div class="col-12">
+                                <div class="post-thumbnail">
+                                    <a asp-controller="Publishing"
+                                       asp-action="Articles"
+                                       asp-route-slug="@magazine.Slug">
+
+                                        <img src="@magazine.CoverImage"
+                                             loading="lazy"
+                                             alt="@magazine.Title" />
+                                    </a>
+
+                                    <div class="post-caption" style="background-color:darkblue">
+                                        Magazine
+                                    </div>
+                                </div>
                             </div>
+
+                            <div class="col-12">
+                                <div class="post-header">
+                                    <div class="post-title">
+                                        <h4>
+                                            <a asp-controller="Publishing"
+                                               asp-action="Articles"
+                                               asp-route-slug="@magazine.Slug">
+                                                @magazine.Title
+                                            </a>
+                                        </h4>
+
+                                        <ul class="post-meta">
+                                            <li>
+                                                <i class="fa fa-newspaper"></i>
+                                                Magazine
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-calendar-o"></i>
+                                                @magazine.Year
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-file-text-o"></i>
+                                                @magazine.Articles.Count() Article(s)
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p>
+                                    @magazine.ShortDescription
+                                </p>
+
+                                <a asp-controller="Publishing"
+                                   asp-action="Articles"
+                                   asp-route-slug="@magazine.Slug"
+                                   class="btn btn-info btn-shadow"
+                                   style="background-color:#32a6de">
+                                    Info
+                                </a>
+
+                            </div>
+
                         </div>
-                        <p>
-                            The first season, Mesopotamian Influence, reveals how ancient Mesopotamia shaped the foundations of the modern world.
-                        </p>
-                        <a style="background-color:#32a6de" asp-controller="Publishing" asp-action="Article" class="btn btn-info btn-shadow">Info</a>
+                    }
+                }
+                else
+                {
+                    <div class="col-12">
+                        <div class="alert alert-info text-center">
+                            No magazines available.
+                        </div>
                     </div>
-                </div>
-
-
+                }
             </div>
         </div>
     </section>

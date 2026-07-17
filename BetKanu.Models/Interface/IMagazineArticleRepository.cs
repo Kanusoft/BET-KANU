@@ -36,5 +36,7 @@ namespace BetKanu.Models.Interface
         void Update(MagazineArticle article);
 
         void Remove(MagazineArticle article);
+
+        IEnumerable<MagazineArticle> GetPublishedByMagazineSlug(string magazineSlug);
     }
 }
