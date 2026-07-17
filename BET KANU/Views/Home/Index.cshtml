@@ -1,4 +1,4 @@
-﻿@model HomeViewModel
+@model HomeViewModel
 
 @{
     ViewBag.Title = "Home";
@@ -90,28 +90,28 @@
                 <div class="card-group">
                     <div class="row">
                         <div class="container">
-                            <div class="carousel slide post-thumbnail"
-                                 data-ride="carousel">
-
+                            <div class="carousel slide post-thumbnail d-none d-md-block d-lg-block d-xl-block d-xxl-block" data-ride="carousel">
                                 <a asp-controller="Publishing"
                                    asp-action="ArticleDetail"
                                    asp-route-magazineSlug="@recentArticle.Magazine.Slug"
                                    asp-route-articleSlug="@recentArticle.Slug"
                                    aria-label="Read @recentArticle.Title">
-
-                                    <picture>
-                                        @if (!string.IsNullOrWhiteSpace(
-                                                                        recentArticle.BannerImage350))
-                                        {
-                                            <source media="(max-width: 767.98px)"
-                                                    srcset="@recentArticle.BannerImage350" />
-                                        }
-
-                                        <img src="@defaultBanner"
-                                             alt="@recentArticle.Title"
-                                             loading="lazy"
-                                             class="img-fluid w-100" />
-                                    </picture>
+                                    <img src="@recentArticle.BannerImage350"
+                                         alt="@recentArticle.Title"
+                                         loading="lazy"
+                                         class="img-fluid w-100" />
+                                </a>
+                            </div>
+                            <div class="carousel slide post-thumbnail d-block d-sm-block d-md-none" data-ride="carousel">
+                                <a asp-controller="Publishing"
+                                   asp-action="ArticleDetail"
+                                   asp-route-magazineSlug="@recentArticle.Magazine.Slug"
+                                   asp-route-articleSlug="@recentArticle.Slug"
+                                   aria-label="Read @recentArticle.Title">
+                                    <img src="@recentArticle.BannerImage"
+                                         alt="@recentArticle.Title"
+                                         loading="lazy"
+                                         class="img-fluid w-100" />
                                 </a>
                             </div>
                         </div>
