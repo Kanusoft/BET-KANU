@@ -65,73 +65,74 @@
         </div>
     </div>
     &nbsp;
-    @if (Model.RecentArticle?.Magazine != null)
-    {
-        var recentArticle = Model.RecentArticle;
+ 
+    <section class=" ">
+        @if (Model.RecentArticle?.Magazine != null)
+        {
+            var recentArticle = Model.RecentArticle;
 
-        var desktopBanner = !string.IsNullOrWhiteSpace(recentArticle.BannerImage)
+            var desktopBanner = !string.IsNullOrWhiteSpace(recentArticle.BannerImage)
             ? recentArticle.BannerImage
             : recentArticle.BannerImage350;
 
-        var mobileBanner = !string.IsNullOrWhiteSpace(recentArticle.BannerImage350)
+            var mobileBanner = !string.IsNullOrWhiteSpace(recentArticle.BannerImage350)
             ? recentArticle.BannerImage350
             : recentArticle.BannerImage;
 
-        <div class="container">
-            <div class="row">
-                <div class="title outline"
-                     style="padding-bottom:10px; padding-top:1px">
+            <div class="container">
+                <div class="row">
+                    <div class="title outline"
+                         style="padding-bottom:10px; padding-top:1px">
 
-                    <h4>
-                        <i class="fa fa-check-circle"></i>
-                        Recent Article
-                    </h4>
+                        <h4>
+                            <i class="fa fa-check-circle"></i>
+                            Recent Article
+                        </h4>
+                    </div>
                 </div>
-            </div>
 
-            @if (!string.IsNullOrWhiteSpace(desktopBanner) ||
-                 !string.IsNullOrWhiteSpace(mobileBanner))
-            {
-                <div class="card-group">
-                    <div class="row">
-                        <div class="container">
-                            <div class="carousel slide post-thumbnail d-none d-md-block d-lg-block d-xl-block d-xxl-block"
-                                 data-ride="carousel">
-                                <a asp-controller="Publishing"
-                                   asp-action="ArticleDetail"
-                                   asp-route-magazineSlug="@recentArticle.Magazine.Slug"
-                                   asp-route-articleSlug="@recentArticle.Slug"
-                                   aria-label="Read @recentArticle.Title">
-                                    <img src="@mobileBanner"
-                                         alt="@recentArticle.Title"
-                                         loading="lazy"
-                                         class="img-fluid w-100" />
-                                </a>
-                            </div>
+                @if (!string.IsNullOrWhiteSpace(desktopBanner) ||
+                            !string.IsNullOrWhiteSpace(mobileBanner))
+                {
+                    <div class="card-group">
+                        <div class="row">
+                            <div class="container">
+                                <div class="carousel slide post-thumbnail d-none d-md-block d-lg-block d-xl-block d-xxl-block"
+                                     data-ride="carousel">
+                                    <a asp-controller="Publishing"
+                                       asp-action="ArticleDetail"
+                                       asp-route-magazineSlug="@recentArticle.Magazine.Slug"
+                                       asp-route-articleSlug="@recentArticle.Slug"
+                                       aria-label="Read @recentArticle.Title">
+                                        <img src="@mobileBanner"
+                                             alt="@recentArticle.Title"
+                                             loading="lazy"
+                                             class="img-fluid w-100" />
+                                    </a>
+                                </div>
 
-                            <div class="carousel slide post-thumbnail d-block d-sm-block d-md-none"
-                                 data-ride="carousel">
-                                <a asp-controller="Publishing"
-                                   asp-action="ArticleDetail"
-                                   asp-route-magazineSlug="@recentArticle.Magazine.Slug"
-                                   asp-route-articleSlug="@recentArticle.Slug"
-                                   aria-label="Read @recentArticle.Title">
-                                    <img src="@desktopBanner"
-                                         alt="@recentArticle.Title"
-                                         loading="lazy"
-                                         class="img-fluid w-100" />
-                                </a>
+                                <div class="carousel slide post-thumbnail d-block d-sm-block d-md-none"
+                                     data-ride="carousel">
+                                    <a asp-controller="Publishing"
+                                       asp-action="ArticleDetail"
+                                       asp-route-magazineSlug="@recentArticle.Magazine.Slug"
+                                       asp-route-articleSlug="@recentArticle.Slug"
+                                       aria-label="Read @recentArticle.Title">
+                                        <img src="@desktopBanner"
+                                             alt="@recentArticle.Title"
+                                             loading="lazy"
+                                             class="img-fluid w-100" />
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
-        </div>
+                }
+            </div>
 
-        <text>&nbsp;</text>
-    }
-    &nbsp;
-    <section class=" ">
+          
+        }
+      
         @if (Model.Song != null)
         {
             @foreach (var song in Model.Song)
