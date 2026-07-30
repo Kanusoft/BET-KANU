@@ -96,14 +96,16 @@
                                     style="direction:ltr">
                                     Western Syriac
                                 </h3>
-
-                                @if (!string.IsNullOrWhiteSpace(
+                                <br>
+                               @if (!string.IsNullOrWhiteSpace(
                                                                 Model.WesternTitle))
                                 {
-                                    <h4 class="Surayt">
+                                    <span class="Surayt  bold text-center">
                                         @Model.WesternTitle
-                                    </h4>
+    </span>
+                                
                                 }
+                                <br>
 
                                 @if (!string.IsNullOrWhiteSpace(
                                                                 Model.WesternBodyHtml))
@@ -146,14 +148,15 @@
                                     style="direction:ltr">
                                     Eastern Syriac
                                 </h3>
-
+                                <br>
                                 @if (!string.IsNullOrWhiteSpace(
                                                                 Model.EasternTitle))
                                 {
-                                    <h4 class="Surit">
+                                    <h4 class="Surit  bold text-center">
                                         @Model.EasternTitle
                                     </h4>
                                 }
+                                <br>
 
                                 @if (!string.IsNullOrWhiteSpace(
                                                                 Model.EasternBodyHtml))
