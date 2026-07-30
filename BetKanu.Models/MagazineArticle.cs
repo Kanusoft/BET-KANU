@@ -67,6 +67,24 @@ namespace BetKanu.Models
         [DisplayName("Western Syriac PDF")]
         public string? WesternPdfPath { get; set; }
 
+        // English
+        [MaxLength(250)]
+        [DisplayName("English Syriac Title")]
+        public string? EnglishTitle { get; set; }
+
+        [DisplayName("English Syriac Introduction")]
+        public string? EnglishIntroduction { get; set; }
+
+        [DisplayName("English Syriac Article HTML")]
+        public string? EnglishBodyHtml { get; set; }
+
+        [DisplayName("English Syriac Credits HTML")]
+        public string? EnglishCreditsHtml { get; set; }
+
+        [MaxLength(500)]
+        [DisplayName("English Syriac PDF")]
+        public string? EnglishPdfPath { get; set; }
+
         // Eastern Syriac
         [MaxLength(250)]
         [DisplayName("Eastern Syriac Title")]
@@ -115,5 +133,9 @@ namespace BetKanu.Models
         [NotMapped]
         [DisplayName("Eastern Syriac PDF")]
         public IFormFile? EasternPdfFile { get; set; }
+
+        [NotMapped]
+        [DisplayName("English Syriac PDF")]
+        public IFormFile? EnglishPdfFile { get; set; }
     }
 }

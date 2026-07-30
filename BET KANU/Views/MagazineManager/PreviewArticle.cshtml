@@ -4,6 +4,49 @@
 
 @{
     ViewBag.Title = $"Preview — {Model.Title}";
+
+    bool HasContent(
+        string? title,
+        string? introduction,
+        string? bodyHtml,
+        string? creditsHtml,
+        string? pdfUrl)
+    {
+        return !string.IsNullOrWhiteSpace(title)
+            || !string.IsNullOrWhiteSpace(introduction)
+            || !string.IsNullOrWhiteSpace(bodyHtml)
+            || !string.IsNullOrWhiteSpace(creditsHtml)
+            || !string.IsNullOrWhiteSpace(pdfUrl);
+    }
+
+    var hasEnglish = HasContent(
+        Model.EnglishTitle,
+        Model.EnglishIntroduction,
+        Model.EnglishBodyHtml,
+        Model.EnglishCreditsHtml,
+        Model.EnglishPdfUrl);
+
+    var hasWestern = HasContent(
+        Model.WesternTitle,
+        Model.WesternIntroduction,
+        Model.WesternBodyHtml,
+        Model.WesternCreditsHtml,
+        Model.WesternPdfUrl);
+
+    var hasEastern = HasContent(
+        Model.EasternTitle,
+        Model.EasternIntroduction,
+        Model.EasternBodyHtml,
+        Model.EasternCreditsHtml,
+        Model.EasternPdfUrl);
+
+    var activeLanguage = hasEnglish
+        ? "english"
+        : hasWestern
+            ? "western"
+            : hasEastern
+                ? "eastern"
+                : (string?)null;
 }
 
 <div id="wrapper">
@@ -116,130 +159,216 @@
                         }
                     </div>
 
-                    <div class="row g-4 justify-content-between Articles">
-                        <div class="col-md-6 col-sm-12">
-                            <div class="well h-100 text-center"
-                                 style="direction: rtl"
-                                 id="western">
-
-                                <h3 class="padding-bottom-10"
-                                    style="direction:ltr">
-                                    Western Syriac
-                                </h3>
-                                <span class="Surayt  bold text-center">
-                                    @Model.WesternTitle
-                                </span>
-                                @if (!string.IsNullOrWhiteSpace(Model.WesternBodyHtml))
-                                {
-                                    @Html.Raw(Model.WesternBodyHtml)
-                                }
-                                else
-                                {
-                                    <p class="text-muted">
-                                        No Western Syriac body has been added.
-                                    </p>
-                                }
-
-                                @if (!string.IsNullOrWhiteSpace(Model.WesternPdfUrl))
-                                {
-                                    <a class="btn btn-info"
-                                       href="@Model.WesternPdfUrl"
-                                       target="_blank"
-                                       rel="noopener noreferrer">
-                                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-                                        View PDF
-                                    </a>
-                                }
-                            </div>
+                    @if (activeLanguage == null)
+                    {
+                        <div class="alert alert-info">
+                            No language content has been added yet.
                         </div>
+                    }
+                    else
+                    {
+                        <ul class="nav nav-tabs mb-3" id="previewLanguageTabs" role="tablist">
+                            @if (hasEnglish)
+                            {
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link @(activeLanguage == "english" ? "active" : null)"
+                                            id="preview-english-tab"
+                                            data-bs-toggle="tab"
+                                            data-bs-target="#preview-english-panel"
+                                            type="button"
+                                            role="tab"
+                                            aria-controls="preview-english-panel"
+                                            aria-selected="@(activeLanguage == "english" ? "true" : "false")">
+                                        English
+                                    </button>
+                                </li>
+                            }
 
-                        <div class="col-md-6 col-sm-12">
-                            <div class="well h-100 text-center"
-                                 style="direction: rtl"
-                                 id="eastern">
+                            @if (hasWestern)
+                            {
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link @(activeLanguage == "western" ? "active" : null)"
+                                            id="preview-western-tab"
+                                            data-bs-toggle="tab"
+                                            data-bs-target="#preview-western-panel"
+                                            type="button"
+                                            role="tab"
+                                            aria-controls="preview-western-panel"
+                                            aria-selected="@(activeLanguage == "western" ? "true" : "false")">
+                                        Western Syriac
+                                    </button>
+                                </li>
+                            }
 
-                                <h3 class="padding-bottom-10"
-                                    style="direction:ltr">
-                                    Eastern Syriac
-                                </h3>
-                                <span class="Surit bold text-center">@Model.EasternTitle</span>
-                                @if (!string.IsNullOrWhiteSpace(Model.EasternBodyHtml))
-                                {
-                                    @Html.Raw(Model.EasternBodyHtml)
-                                }
-                                else
-                                {
-                                    <p class="text-muted">
-                                        No Eastern Syriac body has been added.
-                                    </p>
-                                }
+                            @if (hasEastern)
+                            {
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link @(activeLanguage == "eastern" ? "active" : null)"
+                                            id="preview-eastern-tab"
+                                            data-bs-toggle="tab"
+                                            data-bs-target="#preview-eastern-panel"
+                                            type="button"
+                                            role="tab"
+                                            aria-controls="preview-eastern-panel"
+                                            aria-selected="@(activeLanguage == "eastern" ? "true" : "false")">
+                                        Eastern Syriac
+                                    </button>
+                                </li>
+                            }
+                        </ul>
 
-                                @if (!string.IsNullOrWhiteSpace(Model.EasternPdfUrl))
-                                {
-                                    <a class="btn btn-info"
-                                       href="@Model.EasternPdfUrl"
-                                       target="_blank"
-                                       rel="noopener noreferrer">
-                                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-                                        View PDF
-                                    </a>
-                                }
-                            </div>
+                        <div class="tab-content" id="previewLanguageTabContent">
+                            @if (hasEnglish)
+                            {
+                                <div class="tab-pane fade @(activeLanguage == "english" ? "show active" : null)"
+                                     id="preview-english-panel"
+                                     role="tabpanel"
+                                     aria-labelledby="preview-english-tab">
+                                    <div class="well">
+                                        @if (!string.IsNullOrWhiteSpace(Model.EnglishTitle))
+                                        {
+                                            <h3 class="padding-bottom-10">@Model.EnglishTitle</h3>
+                                        }
+
+                                        @if (!string.IsNullOrWhiteSpace(Model.EnglishIntroduction))
+                                        {
+                                            <p>@Model.EnglishIntroduction</p>
+                                        }
+
+                                        @if (!string.IsNullOrWhiteSpace(Model.EnglishBodyHtml))
+                                        {
+                                            @Html.Raw(Model.EnglishBodyHtml)
+                                        }
+
+                                        @if (!string.IsNullOrWhiteSpace(Model.EnglishPdfUrl))
+                                        {
+                                            <a class="btn btn-info mt-3"
+                                               href="@Model.EnglishPdfUrl"
+                                               target="_blank"
+                                               rel="noopener noreferrer">
+                                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                                View English PDF
+                                            </a>
+                                        }
+                                    </div>
+
+                                    @if (!string.IsNullOrWhiteSpace(Model.EnglishCreditsHtml))
+                                    {
+                                        <div class="well mt-3">
+                                            <p><strong>Credits</strong></p>
+                                            @Html.Raw(Model.EnglishCreditsHtml)
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+                            @if (hasWestern)
+                            {
+                                <div class="tab-pane fade @(activeLanguage == "western" ? "show active" : null)"
+                                     id="preview-western-panel"
+                                     role="tabpanel"
+                                     aria-labelledby="preview-western-tab">
+                                    <div class="well text-center"
+                                         style="direction: rtl"
+                                         id="western">
+                                        <h3 class="padding-bottom-10"
+                                            style="direction:ltr">
+                                            Western Syriac
+                                        </h3>
+
+                                        @if (!string.IsNullOrWhiteSpace(Model.WesternTitle))
+                                        {
+                                            <span class="Surayt bold text-center">
+                                                @Model.WesternTitle
+                                            </span>
+                                        }
+
+                                        @if (!string.IsNullOrWhiteSpace(Model.WesternIntroduction))
+                                        {
+                                            <p style="direction:ltr">@Model.WesternIntroduction</p>
+                                        }
+
+                                        @if (!string.IsNullOrWhiteSpace(Model.WesternBodyHtml))
+                                        {
+                                            @Html.Raw(Model.WesternBodyHtml)
+                                        }
+
+                                        @if (!string.IsNullOrWhiteSpace(Model.WesternPdfUrl))
+                                        {
+                                            <a class="btn btn-info mt-3"
+                                               href="@Model.WesternPdfUrl"
+                                               target="_blank"
+                                               rel="noopener noreferrer">
+                                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                                View PDF
+                                            </a>
+                                        }
+                                    </div>
+
+                                    @if (!string.IsNullOrWhiteSpace(Model.WesternCreditsHtml))
+                                    {
+                                        <div class="well mt-3">
+                                            <p><strong>Western Credits</strong></p>
+                                            @Html.Raw(Model.WesternCreditsHtml)
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+                            @if (hasEastern)
+                            {
+                                <div class="tab-pane fade @(activeLanguage == "eastern" ? "show active" : null)"
+                                     id="preview-eastern-panel"
+                                     role="tabpanel"
+                                     aria-labelledby="preview-eastern-tab">
+                                    <div class="well text-center"
+                                         style="direction: rtl"
+                                         id="eastern">
+                                        <h3 class="padding-bottom-10"
+                                            style="direction:ltr">
+                                            Eastern Syriac
+                                        </h3>
+
+                                        @if (!string.IsNullOrWhiteSpace(Model.EasternTitle))
+                                        {
+                                            <span class="Surit bold text-center">
+                                                @Model.EasternTitle
+                                            </span>
+                                        }
+
+                                        @if (!string.IsNullOrWhiteSpace(Model.EasternIntroduction))
+                                        {
+                                            <p style="direction:ltr">@Model.EasternIntroduction</p>
+                                        }
+
+                                        @if (!string.IsNullOrWhiteSpace(Model.EasternBodyHtml))
+                                        {
+                                            @Html.Raw(Model.EasternBodyHtml)
+                                        }
+
+                                        @if (!string.IsNullOrWhiteSpace(Model.EasternPdfUrl))
+                                        {
+                                            <a class="btn btn-info mt-3"
+                                               href="@Model.EasternPdfUrl"
+                                               target="_blank"
+                                               rel="noopener noreferrer">
+                                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                                View PDF
+                                            </a>
+                                        }
+                                    </div>
+
+                                    @if (!string.IsNullOrWhiteSpace(Model.EasternCreditsHtml))
+                                    {
+                                        <div class="well mt-3">
+                                            <p><strong>Eastern Credits</strong></p>
+                                            @Html.Raw(Model.EasternCreditsHtml)
+                                        </div>
+                                    }
+                                </div>
+                            }
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-
-                    <div class="page-header">
-                        <div class="page-title" style="color:black">Credits</div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12">
-                            <div class="well">
-                                <p>
-                                    <strong>Western</strong>
-                                </p>
-
-                                @if (!string.IsNullOrWhiteSpace(Model.WesternCreditsHtml))
-                                {
-                                    @Html.Raw(Model.WesternCreditsHtml)
-                                }
-                                else
-                                {
-                                    <p class="text-muted">
-                                        No Western credits have been added.
-                                    </p>
-                                }
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-12">
-                            <div class="well">
-                                <p>
-                                    <strong>Eastern</strong>
-                                </p>
-
-                                @if (!string.IsNullOrWhiteSpace(Model.EasternCreditsHtml))
-                                {
-                                    @Html.Raw(Model.EasternCreditsHtml)
-                                }
-                                else
-                                {
-                                    <p class="text-muted">
-                                        No Eastern credits have been added.
-                                    </p>
-                                }
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>

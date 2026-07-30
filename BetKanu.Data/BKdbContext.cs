@@ -117,6 +117,21 @@ namespace BetKanu.Data
 
                 entity.Property(x => x.EasternPdfPath)
                     .HasMaxLength(500);
+
+                entity.Property(x => x.EnglishTitle)
+    .HasMaxLength(250);
+
+                entity.Property(x => x.EnglishIntroduction)
+                    .HasColumnType("nvarchar(max)");
+
+                entity.Property(x => x.EnglishBodyHtml)
+                    .HasColumnType("nvarchar(max)");
+
+                entity.Property(x => x.EnglishCreditsHtml)
+                    .HasColumnType("nvarchar(max)");
+
+                entity.Property(x => x.EnglishPdfPath)
+                    .HasMaxLength(500);
             });
         }
     }

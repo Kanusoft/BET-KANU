@@ -147,6 +147,14 @@
                 );
 
                 if (!firstInvalidField) {
+                    const firstValidationMessage = form.querySelector(
+                        '.field-validation-error:not(:empty), span.text-danger:not(:empty)'
+                    );
+
+                    if (firstValidationMessage) {
+                        showTabContainingElement(firstValidationMessage);
+                    }
+
                     return;
                 }
 
@@ -228,6 +236,9 @@
             window.addEventListener('pageshow', function () {
                 resetSubmitButton();
             });
+
+            // Activate the tab that contains the first server-side validation error.
+            focusFirstInvalidField();
         })();
     </script>
 }

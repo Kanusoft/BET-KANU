@@ -613,6 +613,10 @@ namespace BET_KANU.Controllers
                 nameof(MagazineArticleFormViewModel.BannerImage350File),
                 "mobile banner image");
             ValidateArticlePdf(
+                model.EnglishPdfFile,
+                nameof(MagazineArticleFormViewModel.EnglishPdfFile),
+                "English PDF");
+            ValidateArticlePdf(
                 model.WesternPdfFile,
                 nameof(MagazineArticleFormViewModel.WesternPdfFile),
                 "Western PDF");
@@ -632,6 +636,7 @@ namespace BET_KANU.Controllers
             {
                 string? bannerImagePath = null;
                 string? bannerImage350Path = null;
+                string? englishPdfPath = null;
                 string? westernPdfPath = null;
                 string? easternPdfPath = null;
 
@@ -645,6 +650,13 @@ namespace BET_KANU.Controllers
                 {
                     bannerImage350Path = await SaveArticleImage(
                         model.BannerImage350File);
+                }
+
+                if (model.EnglishPdfFile != null)
+                {
+                    englishPdfPath = await SaveArticlePdf(
+                        model.EnglishPdfFile,
+                        "magazine/articles/pdfs/english");
                 }
 
                 if (model.WesternPdfFile != null)
@@ -671,6 +683,11 @@ namespace BET_KANU.Controllers
                     ReleaseDate = model.ReleaseDate,
                     BannerImage = bannerImagePath,
                     BannerImage350 = bannerImage350Path,
+                    EnglishTitle = model.EnglishTitle,
+                    EnglishIntroduction = model.EnglishIntroduction,
+                    EnglishBodyHtml = model.EnglishBodyHtml,
+                    EnglishCreditsHtml = model.EnglishCreditsHtml,
+                    EnglishPdfPath = englishPdfPath,
                     WesternTitle = model.WesternTitle,
                     WesternIntroduction = model.WesternIntroduction,
                     WesternBodyHtml = model.WesternBodyHtml,
@@ -851,6 +868,10 @@ namespace BET_KANU.Controllers
                 nameof(MagazineArticleFormViewModel.BannerImage350File),
                 "mobile banner image");
             ValidateArticlePdf(
+                model.EnglishPdfFile,
+                nameof(MagazineArticleFormViewModel.EnglishPdfFile),
+                "English PDF");
+            ValidateArticlePdf(
                 model.WesternPdfFile,
                 nameof(MagazineArticleFormViewModel.WesternPdfFile),
                 "Western PDF");
@@ -873,6 +894,10 @@ namespace BET_KANU.Controllers
                 article.ArticleNumber = model.ArticleNumber;
                 article.DisplayOrder = model.DisplayOrder;
                 article.ReleaseDate = model.ReleaseDate;
+                article.EnglishTitle = model.EnglishTitle;
+                article.EnglishIntroduction = model.EnglishIntroduction;
+                article.EnglishBodyHtml = model.EnglishBodyHtml;
+                article.EnglishCreditsHtml = model.EnglishCreditsHtml;
                 article.WesternTitle = model.WesternTitle;
                 article.WesternIntroduction = model.WesternIntroduction;
                 article.WesternBodyHtml = model.WesternBodyHtml;
@@ -896,6 +921,13 @@ namespace BET_KANU.Controllers
                 {
                     article.BannerImage350 = await SaveArticleImage(
                         model.BannerImage350File);
+                }
+
+                if (model.EnglishPdfFile != null)
+                {
+                    article.EnglishPdfPath = await SaveArticlePdf(
+                        model.EnglishPdfFile,
+                        "magazine/articles/pdfs/english");
                 }
 
                 if (model.WesternPdfFile != null)
@@ -1048,6 +1080,11 @@ namespace BET_KANU.Controllers
                 ReleaseDate = article.ReleaseDate,
                 ExistingBannerImage = article.BannerImage,
                 ExistingBannerImage350 = article.BannerImage350,
+                EnglishTitle = article.EnglishTitle,
+                EnglishIntroduction = article.EnglishIntroduction,
+                EnglishBodyHtml = article.EnglishBodyHtml,
+                EnglishCreditsHtml = article.EnglishCreditsHtml,
+                ExistingEnglishPdfPath = article.EnglishPdfPath,
                 WesternTitle = article.WesternTitle,
                 WesternIntroduction = article.WesternIntroduction,
                 WesternBodyHtml = article.WesternBodyHtml,
@@ -1075,16 +1112,23 @@ namespace BET_KANU.Controllers
                 Slug = article.Slug,
                 ArticleNumber = article.ArticleNumber.ToString(),
                 EditionTitle = article.Magazine.Title,
+                EnglishTitle = article.EnglishTitle,
+                EnglishIntroduction = article.EnglishIntroduction,
                 WesternTitle = article.WesternTitle,
+                WesternIntroduction = article.WesternIntroduction,
                 EasternTitle = article.EasternTitle,
+                EasternIntroduction = article.EasternIntroduction,
                 ArticleType = $"Article {article.ArticleNumber}",
                 Summary = article.ShortDescription,
                 BannerImage = article.BannerImage,
                 MobileBannerImage = article.BannerImage350,
+                EnglishBodyHtml = article.EnglishBodyHtml,
                 WesternBodyHtml = article.WesternBodyHtml,
                 EasternBodyHtml = article.EasternBodyHtml,
+                EnglishCreditsHtml = article.EnglishCreditsHtml,
                 WesternCreditsHtml = article.WesternCreditsHtml,
                 EasternCreditsHtml = article.EasternCreditsHtml,
+                EnglishPdfUrl = article.EnglishPdfPath,
                 WesternPdfUrl = article.WesternPdfPath,
                 EasternPdfUrl = article.EasternPdfPath,
                 Status = article.Status
@@ -1097,6 +1141,7 @@ namespace BET_KANU.Controllers
         {
             model.ExistingBannerImage = article.BannerImage;
             model.ExistingBannerImage350 = article.BannerImage350;
+            model.ExistingEnglishPdfPath = article.EnglishPdfPath;
             model.ExistingWesternPdfPath = article.WesternPdfPath;
             model.ExistingEasternPdfPath = article.EasternPdfPath;
         }
@@ -1109,14 +1154,26 @@ namespace BET_KANU.Controllers
             model.ShortDescription = NormalizeOptionalString(
                 model.ShortDescription);
 
+            model.EnglishTitle = NormalizeOptionalString(
+                model.EnglishTitle);
+
+            model.EnglishIntroduction = NormalizeOptionalString(
+                model.EnglishIntroduction);
+
+            // TODO: Sanitize HTML fields before persistence when a server-side
+            // HTML sanitizer is added to the project.
+            model.EnglishBodyHtml = NormalizeOptionalString(
+                model.EnglishBodyHtml);
+
+            model.EnglishCreditsHtml = NormalizeOptionalString(
+                model.EnglishCreditsHtml);
+
             model.WesternTitle = NormalizeOptionalString(
                 model.WesternTitle);
 
             model.WesternIntroduction = NormalizeOptionalString(
                 model.WesternIntroduction);
 
-            // TODO: Sanitize HTML fields before persistence when a server-side
-            // HTML sanitizer is added to the project.
             model.WesternBodyHtml = NormalizeOptionalString(
                 model.WesternBodyHtml);
 
@@ -1212,25 +1269,33 @@ namespace BET_KANU.Controllers
                 return;
             }
 
-            var westernComplete = IsWesternDialectComplete(model);
-            var easternComplete = IsEasternDialectComplete(model);
+            var englishComplete = IsEnglishVersionComplete(model);
+            var westernComplete = IsWesternVersionComplete(model);
+            var easternComplete = IsEasternVersionComplete(model);
 
-            if (!westernComplete && !easternComplete)
+            if (!englishComplete && !westernComplete && !easternComplete)
             {
                 ModelState.AddModelError(
                     string.Empty,
-                    "At least one complete dialect version is required. Each complete version needs a title and article HTML.");
+                    "At least one complete language version is required. English, Western Syriac, or Eastern Syriac must include both a title and article HTML.");
             }
         }
 
-        private static bool IsWesternDialectComplete(
+        private static bool IsEnglishVersionComplete(
+            MagazineArticleFormViewModel model)
+        {
+            return !string.IsNullOrWhiteSpace(model.EnglishTitle) &&
+                !string.IsNullOrWhiteSpace(model.EnglishBodyHtml);
+        }
+
+        private static bool IsWesternVersionComplete(
             MagazineArticleFormViewModel model)
         {
             return !string.IsNullOrWhiteSpace(model.WesternTitle) &&
                 !string.IsNullOrWhiteSpace(model.WesternBodyHtml);
         }
 
-        private static bool IsEasternDialectComplete(
+        private static bool IsEasternVersionComplete(
             MagazineArticleFormViewModel model)
         {
             return !string.IsNullOrWhiteSpace(model.EasternTitle) &&

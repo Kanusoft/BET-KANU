@@ -47,6 +47,24 @@ namespace BetKanu.Models.ViewModels.MagazineArticles
         public IFormFile? BannerImage350File { get; set; }
 
         [StringLength(250)]
+        [DisplayName("English Title")]
+        public string? EnglishTitle { get; set; }
+
+        [DisplayName("English Introduction")]
+        public string? EnglishIntroduction { get; set; }
+
+        [DisplayName("English Article HTML")]
+        public string? EnglishBodyHtml { get; set; }
+
+        [DisplayName("English Credits HTML")]
+        public string? EnglishCreditsHtml { get; set; }
+
+        public string? ExistingEnglishPdfPath { get; set; }
+
+        [DisplayName("English PDF")]
+        public IFormFile? EnglishPdfFile { get; set; }
+
+        [StringLength(250)]
         [DisplayName("Western Syriac Title")]
         public string? WesternTitle { get; set; }
 

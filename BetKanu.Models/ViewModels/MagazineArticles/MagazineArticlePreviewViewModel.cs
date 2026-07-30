@@ -26,11 +26,25 @@ namespace BetKanu.Models.ViewModels.MagazineArticles
 
         public string? MobileBannerImage { get; set; }
 
+        public string? EnglishTitle { get; set; }
+
+        public string? EnglishIntroduction { get; set; }
+
+        public string? EnglishBodyHtml { get; set; }
+
+        public string? EnglishCreditsHtml { get; set; }
+
+        public string? EnglishPdfUrl { get; set; }
+
         public string? WesternBodyHtml { get; set; }
         public string? WesternTitle { get; set; }
 
+        public string? WesternIntroduction { get; set; }
+
         public string? EasternBodyHtml { get; set; }
         public string? EasternTitle { get; set; }
+
+        public string? EasternIntroduction { get; set; }
 
         public string? WesternCreditsHtml { get; set; }
 
