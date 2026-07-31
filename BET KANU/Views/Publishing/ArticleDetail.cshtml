@@ -128,55 +128,7 @@
 
                     <div class="row g-4 justify-content-between Articles">
 
-                        <!-- English -->
-                        @if (hasEnglish)
-                        {
-                            <div class="@colClass">
-                                <div class="well h-100 text-center" id="english">
-                                    <h3 class="padding-bottom-10" style="direction:ltr">
-                                        English
-                                    </h3>
-                                    <br>
-                                    @if (!string.IsNullOrWhiteSpace(Model.EnglishTitle))
-                                    {
-                                        <h4 class="bold text-center">
-                                            @Model.EnglishTitle
-                                        </h4>
-                                    }
-                                    <br>
-
-                                    @if (!string.IsNullOrWhiteSpace(Model.EnglishIntroduction))
-                                    {
-                                        <p>@Model.EnglishIntroduction</p>
-                                    }
-
-                                    @if (!string.IsNullOrWhiteSpace(Model.EnglishBodyHtml))
-                                    {
-                                        <div class="text-left" style="direction:ltr; text-align:left;">
-                                            @Html.Raw(Model.EnglishBodyHtml)
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <p>
-                                            English content is not currently available.
-                                        </p>
-                                    }
-
-                                    @if (!string.IsNullOrWhiteSpace(Model.EnglishPdfPath))
-                                    {
-                                        <a class="btn btn-info mt-3"
-                                           href="@Model.EnglishPdfPath"
-                                           target="_blank"
-                                           rel="noopener">
-                                            <i class="fa fa-file-pdf-o"></i>
-                                            Download PDF
-                                        </a>
-                                    }
-                                </div>
-                            </div>
-                        }
-
+                      
                         <!-- Western Syriac -->
                         @if (hasWestern)
                         {
@@ -281,6 +233,55 @@
                             </div>
                         }
 
+                        <!-- English -->
+                        @if (hasEnglish)
+                        {
+                            <div class="@colClass">
+                                <div class="well h-100 text-center" id="english">
+                                    <h3 class="padding-bottom-10" style="direction:ltr">
+                                        English
+                                    </h3>
+                                    <br>
+                                    @if (!string.IsNullOrWhiteSpace(Model.EnglishTitle))
+                                    {
+                                        <h4 class="bold text-center">
+                                            @Model.EnglishTitle
+                                        </h4>
+                                    }
+                                    <br>
+
+                                    @if (!string.IsNullOrWhiteSpace(Model.EnglishIntroduction))
+                                    {
+                                        <p>@Model.EnglishIntroduction</p>
+                                    }
+
+                                    @if (!string.IsNullOrWhiteSpace(Model.EnglishBodyHtml))
+                                    {
+                                        <div class="text-left" style="direction:ltr; text-align:left;">
+                                            @Html.Raw(Model.EnglishBodyHtml)
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <p>
+                                            English content is not currently available.
+                                        </p>
+                                    }
+
+                                    @if (!string.IsNullOrWhiteSpace(Model.EnglishPdfPath))
+                                    {
+                                        <a class="btn btn-info mt-3"
+                                           href="@Model.EnglishPdfPath"
+                                           target="_blank"
+                                           rel="noopener">
+                                            <i class="fa fa-file-pdf-o"></i>
+                                            Download PDF
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        }
+
                     </div>
 
                 </div>
@@ -319,19 +320,7 @@
 
                         <div class="row">
 
-                            @if (!string.IsNullOrWhiteSpace(Model.EnglishCreditsHtml))
-                            {
-                                <div class="@creditsColClass">
-                                    <div class="well">
-                                        <p>
-                                            <strong>English</strong>
-                                        </p>
-                                        <div>
-                                            @Html.Raw(Model.EnglishCreditsHtml)
-                                        </div>
-                                    </div>
-                                </div>
-                            }
+                     
 
                             @if (!string.IsNullOrWhiteSpace(Model.WesternCreditsHtml))
                             {
@@ -360,7 +349,19 @@
                                     </div>
                                 </div>
                             }
-
+                            @if (!string.IsNullOrWhiteSpace(Model.EnglishCreditsHtml))
+                            {
+                                <div class="@creditsColClass">
+                                    <div class="well">
+                                        <p>
+                                            <strong>English</strong>
+                                        </p>
+                                        <div>
+                                            @Html.Raw(Model.EnglishCreditsHtml)
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         </div>
 
                         <div class="col-md-4 float-end">
