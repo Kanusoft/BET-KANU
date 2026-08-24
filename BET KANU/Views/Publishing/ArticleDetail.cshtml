@@ -133,19 +133,19 @@
                         @if (hasWestern)
                         {
                             <div class="@colClass">
-                                <div class="well h-100 text-center"
+                                <div class="well h-100"
                                      style="direction:rtl"
                                      id="western">
-                                    <h3 class="padding-bottom-10"
+                                    <h3 class="padding-bottom-10 text-center"
                                         style="direction:ltr">
                                         Western Syriac
                                     </h3>
                                     <br>
                                     @if (!string.IsNullOrWhiteSpace(Model.WesternTitle))
                                     {
-                                        <span class="Surayt  bold text-center">
-                                            @Model.WesternTitle
-                                        </span>
+                                        <div class="Surayt">
+                                            @Html.Raw(Model.WesternTitle)
+                                        </div>
                                     }
                                     <br>
 
@@ -156,7 +156,7 @@
 
                                     @if (!string.IsNullOrWhiteSpace(Model.WesternBodyHtml))
                                     {
-                                        <div class="Surayt text-right">
+                                        <div class="Surayt">
                                             @Html.Raw(Model.WesternBodyHtml)
                                         </div>
                                     }
@@ -169,13 +169,15 @@
 
                                     @if (!string.IsNullOrWhiteSpace(Model.WesternPdfPath))
                                     {
-                                        <a class="btn btn-info mt-3"
-                                           href="@Model.WesternPdfPath"
-                                           target="_blank"
-                                           rel="noopener">
-                                            <i class="fa fa-file-pdf-o"></i>
-                                            Download PDF
-                                        </a>
+                                        <div class="text-center">
+                                            <a class="btn btn-info mt-3"
+                                               href="@Model.WesternPdfPath"
+                                               target="_blank"
+                                               rel="noopener">
+                                                <i class="fa fa-file-pdf-o"></i>
+                                                Download PDF
+                                            </a>
+                                        </div>
                                     }
                                 </div>
                             </div>
@@ -185,19 +187,19 @@
                         @if (hasEastern)
                         {
                             <div class="@colClass">
-                                <div class="well h-100 text-center"
+                                <div class="well h-100"
                                      style="direction:rtl"
                                      id="eastern">
-                                    <h3 class="padding-bottom-10"
+                                    <h3 class="padding-bottom-10 text-center"
                                         style="direction:ltr">
                                         Eastern Syriac
                                     </h3>
                                     <br>
                                     @if (!string.IsNullOrWhiteSpace(Model.EasternTitle))
                                     {
-                                        <h4 class="Surit  bold text-center">
-                                            @Model.EasternTitle
-                                        </h4>
+                                        <div class="Surit">
+                                            @Html.Raw(Model.EasternTitle)
+                                        </div>
                                     }
                                     <br>
 
@@ -208,7 +210,7 @@
 
                                     @if (!string.IsNullOrWhiteSpace(Model.EasternBodyHtml))
                                     {
-                                        <div class="Surit text-right">
+                                        <div class="Surit">
                                             @Html.Raw(Model.EasternBodyHtml)
                                         </div>
                                     }
@@ -221,13 +223,15 @@
 
                                     @if (!string.IsNullOrWhiteSpace(Model.EasternPdfPath))
                                     {
-                                        <a class="btn btn-info mt-3"
-                                           href="@Model.EasternPdfPath"
-                                           target="_blank"
-                                           rel="noopener">
-                                            <i class="fa fa-file-pdf-o"></i>
-                                            Download PDF
-                                        </a>
+                                        <div class="text-center">
+                                            <a class="btn btn-info mt-3"
+                                               href="@Model.EasternPdfPath"
+                                               target="_blank"
+                                               rel="noopener">
+                                                <i class="fa fa-file-pdf-o"></i>
+                                                Download PDF
+                                            </a>
+                                        </div>
                                     }
                                 </div>
                             </div>

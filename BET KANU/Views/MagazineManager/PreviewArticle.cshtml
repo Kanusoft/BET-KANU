@@ -172,46 +172,48 @@
                     {
                         <div class="row g-4 justify-content-between Articles">
                          
-                            @if (hasWestern)
-                            {
-                                <div class="@colClass">
-                                    <div class="well h-100 text-center"
-                                         style="direction: rtl"
-                                         id="western">
-                                        <h3 class="padding-bottom-10"
-                                            style="direction:ltr">
-                                            Western Syriac
-                                        </h3>
-                                        <br>
+                          <!-- Western Syriac -->
+                        @if (hasWestern)
+                        {
+                            <div class="@colClass">
+                                <div class="well h-100"
+                                     style="direction:rtl"
+                                     id="western">
+                                    <h3 class="padding-bottom-10 text-center"
+                                        style="direction:ltr">
+                                        Western Syriac
+                                    </h3>
+                                    <br>
 
-                                        @if (!string.IsNullOrWhiteSpace(Model.WesternTitle))
-                                        {
-                                            <span class="Surayt bold text-center">
-                                                @Model.WesternTitle
-                                            </span>
-                                        }
-                                        <br>
+                                    @if (!string.IsNullOrWhiteSpace(Model.WesternTitle))
+                                    {
+                                        <div class="Surayt">
+                                            @Html.Raw(Model.WesternTitle)
+                                        </div>
+                                    }
+                                    <br>
 
-                                        @if (!string.IsNullOrWhiteSpace(Model.WesternIntroduction))
-                                        {
-                                            <p style="direction:ltr">@Model.WesternIntroduction</p>
-                                        }
+                                    @if (!string.IsNullOrWhiteSpace(Model.WesternIntroduction))
+                                    {
+                                        <p style="direction:ltr">@Model.WesternIntroduction</p>
+                                    }
 
-                                        @if (!string.IsNullOrWhiteSpace(Model.WesternBodyHtml))
-                                        {
-                                            <div class="Surayt text-right">
-                                                @Html.Raw(Model.WesternBodyHtml)
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <p>
-                                                Western Syriac content is not currently available.
-                                            </p>
-                                        }
+                                    @if (!string.IsNullOrWhiteSpace(Model.WesternBodyHtml))
+                                    {
+                                        <div class="Surayt">
+                                            @Html.Raw(Model.WesternBodyHtml)
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <p>
+                                            Western Syriac content is not currently available.
+                                        </p>
+                                    }
 
-                                        @if (!string.IsNullOrWhiteSpace(Model.WesternPdfUrl))
-                                        {
+                                    @if (!string.IsNullOrWhiteSpace(Model.WesternPdfUrl))
+                                    {
+                                        <div class="text-center">
                                             <a class="btn btn-info mt-3"
                                                href="@Model.WesternPdfUrl"
                                                target="_blank"
@@ -219,51 +221,53 @@
                                                 <i class="fa fa-file-pdf-o"></i>
                                                 Download PDF
                                             </a>
-                                        }
-                                    </div>
+                                        </div>
+                                    }
                                 </div>
-                            }
+                            </div>
+                        }
 
-                            @if (hasEastern)
-                            {
-                                <div class="@colClass">
-                                    <div class="well h-100 text-center"
-                                         style="direction: rtl"
-                                         id="eastern">
-                                        <h3 class="padding-bottom-10"
-                                            style="direction:ltr">
-                                            Eastern Syriac
-                                        </h3>
-                                        <br>
+                        @if (hasEastern)
+                        {
+                            <div class="@colClass">
+                                <div class="well h-100"
+                                     style="direction: rtl"
+                                     id="eastern">
+                                    <h3 class="padding-bottom-10 text-center"
+                                        style="direction:ltr">
+                                        Eastern Syriac
+                                    </h3>
+                                    <br>
 
-                                        @if (!string.IsNullOrWhiteSpace(Model.EasternTitle))
-                                        {
-                                            <span class="Surit bold text-center">
-                                                @Model.EasternTitle
-                                            </span>
-                                        }
-                                        <br>
+                                    @if (!string.IsNullOrWhiteSpace(Model.EasternTitle))
+                                    {
+                                        <div class="Surit">
+                                            @Html.Raw(Model.EasternTitle)
+                                        </div>
+                                    }
+                                    <br>
 
-                                        @if (!string.IsNullOrWhiteSpace(Model.EasternIntroduction))
-                                        {
-                                            <p style="direction:ltr">@Model.EasternIntroduction</p>
-                                        }
+                                    @if (!string.IsNullOrWhiteSpace(Model.EasternIntroduction))
+                                    {
+                                        <p style="direction:ltr">@Model.EasternIntroduction</p>
+                                    }
 
-                                        @if (!string.IsNullOrWhiteSpace(Model.EasternBodyHtml))
-                                        {
-                                            <div class="Surit text-right">
-                                                @Html.Raw(Model.EasternBodyHtml)
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <p>
-                                                Eastern Syriac content is not currently available.
-                                            </p>
-                                        }
+                                    @if (!string.IsNullOrWhiteSpace(Model.EasternBodyHtml))
+                                    {
+                                        <div class="Surit">
+                                            @Html.Raw(Model.EasternBodyHtml)
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <p>
+                                            Eastern Syriac content is not currently available.
+                                        </p>
+                                    }
 
-                                        @if (!string.IsNullOrWhiteSpace(Model.EasternPdfUrl))
-                                        {
+                                    @if (!string.IsNullOrWhiteSpace(Model.EasternPdfUrl))
+                                    {
+                                        <div class="text-center">
                                             <a class="btn btn-info mt-3"
                                                href="@Model.EasternPdfUrl"
                                                target="_blank"
@@ -271,10 +275,11 @@
                                                 <i class="fa fa-file-pdf-o"></i>
                                                 Download PDF
                                             </a>
-                                        }
-                                    </div>
+                                        </div>
+                                    }
                                 </div>
-                            }
+                            </div>
+                        }
 
                             @if (hasEnglish)
                             {
