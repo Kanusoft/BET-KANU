@@ -1,0 +1,11 @@
+/* Custom Styles for BET KANU */
+
+/* Preserve image aspect ratio and prevent stretching across cards, thumbnails, and partner logos */
+.card .card-img img,
+.card-video .card-img img,
+.post-thumbnail img,
+.card-img img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
