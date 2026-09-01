@@ -1,4 +1,4 @@
-﻿﻿
+﻿
 <head>
     @{
         ViewBag.Title = "Contact";
@@ -35,13 +35,13 @@
                             <div class="clear"></div>
                         </div>
                         <div class="text-center">
-                            <input type="submit" class="btn btn-success btn-form marg-right5" value="Send Message" />
+                            <input type="submit" id="btnSubmit" class="btn btn-success btn-form marg-right5" value="Send Message" />
                             <input type="reset" class="btn btn-danger btn-form" value="Reset" />
                         </div>
                         <div class="clear pad45"></div>
                     </form>
                 </div>
-                <div name="messageResult" id="messageResult"></div>
+                <div name="messageResult" id="messageResult" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center"></div>
             </div>
         </div>
     </section>
@@ -56,32 +56,38 @@
             const subject = $("#subject").val();
             const body = $("#message").val();
 
-            const completeSubject = `Name: ${fromName}, Subject: ${subject}`;
+            const btn = $("#btnSubmit");
+            btn.prop("disabled", true).val("Sending...");
+            $("#messageResult").html("");
 
             $.ajax({
-                url: "https://www.dargushti.com/api/v6/email_contactus",
-                type: "post",
-                data: {
-                    fromEmail,
-                    subject: completeSubject,
-                    body,
-                },
-                headers: {
-                    "x-api-key": "API_KEY_SECRET",
-                },
-                dataType: "json",
-                success(data) {
-                    if (data.result) {
+                url: "/api/EmailService",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    name: fromName,
+                    email: fromEmail,
+                    subject: subject,
+                    toEmail: "info@betkanu.com",
+                    message: body
+                }),
+                success: function (data) {
+                    btn.prop("disabled", false).val("Send Message");
+                    if (data && data.result) {
                         $("#name").val("");
                         $("#Email").val("");
                         $("#subject").val("");
                         $("#message").val("");
 
-                        $("#messageResult2").html("<a>Success</a>");
+                        $("#messageResult").html('<div class="alert alert-success mt-3" style="padding: 15px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 4px;"><i class="fa fa-check-circle"></i> Thank you! Your message has been sent successfully.</div>');
                     } else {
-                        $("#messageResult2").html("<a>Error sending the message</a>");
+                        $("#messageResult").html('<div class="alert alert-danger mt-3" style="padding: 15px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 4px;"><i class="fa fa-exclamation-triangle"></i> ' + (data.message || 'Error sending the message. Please try again later.') + '</div>');
                     }
                 },
+                error: function (xhr) {
+                    btn.prop("disabled", false).val("Send Message");
+                    $("#messageResult").html('<div class="alert alert-danger mt-3" style="padding: 15px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 4px;"><i class="fa fa-exclamation-triangle"></i> Error sending the message. Please try again or send an email directly to <strong>info@betkanu.com</strong>.</div>');
+                }
             });
         });
     </script>

@@ -74,6 +74,18 @@ namespace BET_KANU.Controllers
             return View();
         }
 
+        public ActionResult Supporters()
+        {
+            ViewBag.Message = "Supporters";
+
+            return View();
+        }
+
+        public ActionResult Support()
+        {
+            return View("Supporters");
+        }
+
         public ActionResult AkkadSaadi()
         {
             ViewBag.Message = "Your contact page.";
