@@ -9,3 +9,18 @@
     height: auto;
     object-fit: contain;
 }
+
+/* Fix button links focus/hover/active colors */
+footer a.btn-success,
+footer a.btn-success:hover,
+footer a.btn-success:focus,
+footer a.btn-success:active,
+footer a.btn-success:visited,
+.btn-success,
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active {
+    color: #fff !important;
+    text-decoration: none !important;
+    outline: none !important;
+}
