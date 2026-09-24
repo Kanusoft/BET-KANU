@@ -253,21 +253,21 @@
                                        asp-action="ArticleDetail"
                                        asp-route-magazineSlug="@article.Magazine.Slug"
                                        asp-route-articleSlug="@article.Slug">
-                                        @{
+                                       @*  @{
                                             var defaultBanner = !string.IsNullOrWhiteSpace(article.BannerImage)
-                                                ? article.BannerImage
-                                                : article.BannerImage350;
-                                        }
-                                        @if (!string.IsNullOrWhiteSpace(defaultBanner))
+                                                ? article.BannerImage350
+                                            : article.BannerImage;
+                                        } *@
+                                        @if (!string.IsNullOrWhiteSpace(article.BannerImage))
                                         {
                                             <picture>
-                                                @if (!string.IsNullOrWhiteSpace(article.BannerImage350))
+                                                @if (!string.IsNullOrWhiteSpace(article.BannerImage))
                                                 {
                                                     <source media="(max-width: 767.98px)"
-                                                            srcset="@article.BannerImage350" />
+                                                            srcset="@article.BannerImage" />
                                                 }
 
-                                                <img src="@defaultBanner"
+                                                <img src="@article.BannerImage"
                                                      loading="lazy"
                                                      alt="@article.Title" />
                                             </picture>

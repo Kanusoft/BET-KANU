@@ -50,12 +50,12 @@
 <div id="wrapper">
 
     <section class="p-0">
-        @{
+        @* @{
             var desktopBanner = !string.IsNullOrWhiteSpace(Model.BannerImage)
                 ? Model.BannerImage
                 : Model.BannerImage350;
-        }
-        @if (!string.IsNullOrWhiteSpace(desktopBanner))
+        } *@
+        @if (!string.IsNullOrWhiteSpace(Model.BannerImage350))
         {
             <div class="hero hero-game">
                 <picture>
@@ -65,7 +65,7 @@
                                 srcset="@Model.BannerImage350" />
                     }
 
-                    <img src="@desktopBanner"
+                    <img src="@Model.BannerImage350"
                          alt="@Model.Title" />
                 </picture>
             </div>

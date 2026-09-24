@@ -18,6 +18,13 @@ namespace BET_KANU.Controllers
         [HttpGet]
         public ActionResult Get(int? bookId, int? page, int? sec , int? chapterNo, int? pageNavigation = 0)
         {
+            // Backward compatibility for malformed QR URLs such as "?page11"
+            // (missing "="), which ASP.NET does not bind to the page parameter.
+            if (!page.HasValue)
+            {
+                page = GetPageFromMalformedQuery();
+            }
+
             if (Request.Headers.TryGetValue("FROM", out var headervalue))
             {
                 if (headervalue == "BETKANU")
@@ -81,6 +88,34 @@ namespace BET_KANU.Controllers
                // return Redirect("https://betkanu.com/home/reader");
             }
           
+        }
+
+        /// <summary>
+        /// Parses malformed query keys like "page11" / "PAGE11" into a page number.
+        /// Only matches keys that are exactly "page" followed by digits.
+        /// </summary>
+        private int? GetPageFromMalformedQuery()
+        {
+            foreach (var key in Request.Query.Keys)
+            {
+                if (key is null
+                    || !key.StartsWith("page", StringComparison.OrdinalIgnoreCase)
+                    || key.Length <= 4)
+                {
+                    continue;
+                }
+
+                var pagePart = key.Substring(4);
+
+                if (pagePart.All(char.IsDigit)
+                    && int.TryParse(pagePart, out var parsedPage)
+                    && parsedPage > 0)
+                {
+                    return parsedPage;
+                }
+            }
+
+            return null;
         }
     }
 }
