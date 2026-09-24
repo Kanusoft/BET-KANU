@@ -190,12 +190,12 @@
 <div id="wrapper">
 
     <section class="p-0">
-        @{
+     @*    @{
             var heroCover = magazine != null && !string.IsNullOrWhiteSpace(magazine.CoverImage)
                 ? magazine.CoverImage
                 : magazine?.CoverImage350;
-        }
-        @if (magazine != null && !string.IsNullOrWhiteSpace(heroCover))
+        } *@
+        @if (magazine != null && !string.IsNullOrWhiteSpace(magazine.CoverImage350))
         {
             <div class="hero hero-game">
                 <picture>
@@ -205,13 +205,13 @@
                                 srcset="@magazine.CoverImage350" />
                     }
 
-                    <img src="@heroCover"
+                    <img src="@magazine.CoverImage350"
                          alt="@magazine.Title" />
                 </picture>
             </div>
         }
     </section>
-
+   
     <section>
         <div class="container">
             <div class="row">
