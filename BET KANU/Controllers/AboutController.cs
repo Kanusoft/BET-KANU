@@ -451,6 +451,51 @@ namespace BET_KANU.Controllers
                 };
             }
 
+            if (id == "crownfoodxl" || id.Contains("crown"))
+            {
+                return new PartnerDetailViewModel
+                {
+                    Id = "crownfoodxl",
+                    Name = "Crown Food XL",
+                    Category = "Partner & Contributor",
+                    LogoUrl = "/img/partners/crownfoodxl.png",
+                    WebsiteUrl = "#",
+                    Description = "Crown Food XL is a valued contributor and partner of BET KANU.",
+                    Photos = new List<string> { "/img/partners/crownfoodxl.png" },
+                    JointWorks = new List<JointWorkItem>()
+                };
+            }
+
+            if (id == "w.e.s b.v" || id == "wesbv" || id.Contains("w.e.s") || id.Contains("mediterrane"))
+            {
+                return new PartnerDetailViewModel
+                {
+                    Id = "w.e.s b.v",
+                    Name = "W.E.S B.V - Mediterrane",
+                    Category = "Partner & Contributor",
+                    LogoUrl = "/img/partners/W.E.S B.V - Mediterrane.png",
+                    WebsiteUrl = "#",
+                    Description = "W.E.S B.V - Mediterrane is a valued contributor and partner of BET KANU.",
+                    Photos = new List<string> { "/img/partners/W.E.S B.V - Mediterrane.png" },
+                    JointWorks = new List<JointWorkItem>()
+                };
+            }
+
+            if (id == "ado" || id.Contains("ado") || id.Contains("enschede"))
+            {
+                return new PartnerDetailViewModel
+                {
+                    Id = "ado",
+                    Name = "Assyrische Mesopotamische Vereniging Enschede",
+                    Category = "Partner & Contributor",
+                    LogoUrl = "/img/partners/ADO - Enschede Netherlands.png",
+                    WebsiteUrl = "#",
+                    Description = "Assyrische Mesopotamische Vereniging Enschede is a valued contributor and partner of BET KANU.",
+                    Photos = new List<string> { "/img/partners/ADO - Enschede Netherlands.png" },
+                    JointWorks = new List<JointWorkItem>()
+                };
+            }
+
             // Fallback for any other partner/contributor
             string formattedTitle = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.Replace("-", " ").Replace("_", " "));
             return new PartnerDetailViewModel
