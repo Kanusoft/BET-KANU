@@ -459,7 +459,7 @@ namespace BET_KANU.Controllers
                     Name = "Crown Food XL",
                     Category = "Partner & Contributor",
                     LogoUrl = "/img/partners/crownfoodxl.png",
-                    WebsiteUrl = "#",
+                    WebsiteUrl = "https://crownfoodxl.nl/",
                     Description = "Crown Food XL is a valued contributor and partner of BET KANU.",
                     Photos = new List<string> { "/img/partners/crownfoodxl.png" },
                     JointWorks = new List<JointWorkItem>()

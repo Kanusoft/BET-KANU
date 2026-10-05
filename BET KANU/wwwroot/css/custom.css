@@ -24,3 +24,111 @@ footer a.btn-success:visited,
     text-decoration: none !important;
     outline: none !important;
 }
+
+/* =========================================================
+   Partners & Contributors Interactive Hover Animations
+   ========================================================= */
+
+/* --- Partners & Contributors Page Items --- */
+.partners-page .col-md-4,
+.partners-page .col-sm-6,
+.contributors-page section[id$="c"] .col-md-4,
+.contributors-page section[id$="c"] .col-sm-6 {
+    margin-bottom: 30px;
+}
+
+.partners-page .post-thumbnail,
+.contributors-page section[id$="c"] .post-thumbnail {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    padding: 16px;
+    height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                box-shadow 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                border-color 0.35s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+.partners-page .post-thumbnail a,
+.contributors-page section[id$="c"] .post-thumbnail a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.partners-page .post-thumbnail img,
+.contributors-page section[id$="c"] .post-thumbnail img {
+    max-height: 150px;
+    max-width: 90%;
+    object-fit: contain;
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.partners-page .col-md-4:hover .post-thumbnail,
+.partners-page .post-thumbnail:hover,
+.contributors-page section[id$="c"] .col-md-4:hover .post-thumbnail,
+.contributors-page section[id$="c"] .post-thumbnail:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 142, 43, 0.35);
+    border-color: #ff8e2b;
+}
+
+.partners-page .col-md-4:hover .post-thumbnail img,
+.partners-page .post-thumbnail:hover img,
+.contributors-page section[id$="c"] .col-md-4:hover .post-thumbnail img,
+.contributors-page section[id$="c"] .post-thumbnail:hover img {
+    transform: scale(1.08);
+}
+
+.partners-page h4,
+.contributors-page section[id$="c"] h4 {
+    margin-top: 14px;
+    margin-bottom: 0;
+}
+
+.partners-page h4 a,
+.contributors-page section[id$="c"] h4 a {
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 16px;
+    transition: color 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.partners-page .col-md-4:hover h4 a,
+.contributors-page section[id$="c"] .col-md-4:hover h4 a {
+    color: #ff8e2b !important;
+}
+
+/* --- Partner Details Joint Works & Photos Hover Animations --- */
+.card.card-video.shadow-sm,
+.card.shadow-sm {
+    transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                box-shadow 0.35s cubic-bezier(0.25, 0.8, 0.25, 1),
+                border-color 0.35s ease;
+}
+
+.card.card-video.shadow-sm:hover,
+.card.shadow-sm:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card.shadow-sm:hover img {
+    transform: scale(1.05);
+}
+
+.card.shadow-sm img {
+    transition: transform 0.35s ease;
+}
+
