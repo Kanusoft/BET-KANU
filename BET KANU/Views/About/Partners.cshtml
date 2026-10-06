@@ -1,75 +1,92 @@
-<head>
-    @{
-        ViewBag.Title = "Our Partners";
-    }
-</head>
-<div id="wrapper" class="partners-page">
-    <section class="padding-top-20 padding-bottom-20 border-bottom-1 border-grey-300">
-        <div class="container">
-            <div class="headline no-margin">
-                <h4><i class="fa fa-users"></i> Our Partners </h4>
-            </div>
+@{
+    ViewBag.Title = "Our Partners";
+}
+
+<div id="wrapper" class="partners-page" style="background-color: #f8fafc; min-height: 85vh; padding: 40px 0 60px 0;">
+    <div class="container">
+        <!-- Page Title Header -->
+        <div class="text-center" style="margin-bottom: 30px;">
+            <h2 style="font-weight: 800; color: #0b4570; font-size: 32px; letter-spacing: -0.3px; margin-bottom: 0;">
+                <i class="fa fa-users" style="margin-right: 8px;"></i> OUR PARTNERS
+            </h2>
         </div>
-    </section>
-    <section class="bg-grey-50 padding-top-30 padding-bottom-30">
-        <div class="container">
-            <div class="row row-gap-4">
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=ajm"><img src="/img/partners/ajm.jpg" alt="AJM"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=ajm" style="color:inherit; text-decoration:none;">AJM</a></h4>
-                </div>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=capni"><img src="/img/partners/capni2.jpg" alt="CAPNI"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=capni" style="color:inherit; text-decoration:none;">CAPNI</a></h4>
+        <!-- Partners Cards Grid (3 columns on desktop) -->
+        <div class="partners-modern-grid">
+            <!-- 1. AJM -->
+            <a href="/about/partnerdetails?id=ajm" class="partner-modern-card">
+                <div class="partner-logo-box">
+                    <img src="/img/partners/ajm.jpg" alt="AJM" loading="lazy" />
                 </div>
+                <span class="partner-card-name">AJM</span>
+            </a>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=etuti"><img src="/img/partners/Etuti.jpg" alt="Etuti Institute"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=etuti" style="color:inherit; text-decoration:none;">Etuti Institute</a></h4>
+            <!-- 2. CAPNI -->
+            <a href="/about/partnerdetails?id=capni" class="partner-modern-card">
+                <div class="partner-logo-box">
+                    <img src="/img/partners/capni.jpg" alt="CAPNI" loading="lazy" />
                 </div>
+                <span class="partner-card-name">CAPNI</span>
+            </a>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=naby"><img src="/img/partners/Naby.jpg" alt="Naby Frye Assyrian Fund for Culture"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=naby" style="color:inherit; text-decoration:none;">Naby Frye Assyrian Fund for Culture</a></h4>
+            <!-- 3. Etuti Institute -->
+            <a href="/about/partnerdetails?id=etuti" class="partner-modern-card">
+                <div class="partner-logo-box">
+                    <img src="/img/partners/Etuti.jpg" alt="Etuti Institute" loading="lazy" />
                 </div>
+                <span class="partner-card-name">Etuti Institute</span>
+            </a>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=sos"><img src="/img/partners/SOS.jpg" alt="SOS 1915"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=sos" style="color:inherit; text-decoration:none;">SOS 1915</a></h4>
+            <!-- 4. Naby Frye Assyrian Fund for Culture -->
+            <a href="/about/partnerdetails?id=naby" class="partner-modern-card">
+                <div class="partner-logo-box">
+                    <img src="/img/partners/Naby.jpg" alt="Naby Frye Assyrian Fund for Culture" loading="lazy" />
                 </div>
+                <span class="partner-card-name">Naby Frye Assyrian Fund for Culture</span>
+            </a>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=syriac-culture"><img src="/img/partners/Syriac-heritage-museum_logo-.png" alt="General Directorate of Syriac Culture and Arts"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=syriac-culture" style="color:inherit; text-decoration:none;">General Directorate of Syriac Culture and Arts</a></h4>
+            <!-- 5. SOS 1915 -->
+            <a href="/about/partnerdetails?id=sos" class="partner-modern-card">
+                <div class="partner-logo-box">
+                    <img src="/img/partners/sos.jpg" alt="SOS 1915" loading="lazy" />
                 </div>
+                <span class="partner-card-name">SOS 1915</span>
+            </a>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=shlama"><img src="/img/partners/Shlama Foundation.jpg" alt="Shlama Foundation"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=shlama" style="color:inherit; text-decoration:none;">Shlama Foundation</a></h4>
+            <!-- 6. General Directorate of Syriac Culture and Arts -->
+            <a href="/about/partnerdetails?id=syriac-culture" class="partner-modern-card">
+                <div class="partner-logo-box">
+                    <img src="/img/partners/Syriac-heritage-museum_logo-.png" alt="General Directorate of Syriac Culture and Arts" loading="lazy" />
                 </div>
+                <span class="partner-card-name">General Directorate of Syriac Culture and Arts</span>
+            </a>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=afa"><img src="/img/partners/Assyrian Foundation of America.jpg" alt="Assyrian Foundation of America"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=afa" style="color:inherit; text-decoration:none;">Assyrian Foundation of America</a></h4>
+            <!-- 7. Shlama Foundation -->
+            <a href="/about/partnerdetails?id=shlama" class="partner-modern-card">
+                <div class="partner-logo-box">
+                    <img src="/img/partners/Shlama Foundation.jpg" alt="Shlama Foundation" loading="lazy" />
                 </div>
-            </div>
+                <span class="partner-card-name">Shlama Foundation</span>
+            </a>
+
+            <!-- 8. Assyrian Foundation of America -->
+            <a href="/about/partnerdetails?id=afa" class="partner-modern-card">
+                <div class="partner-logo-box">
+                    <img src="/img/partners/Assyrian Foundation of America.jpg" alt="Assyrian Foundation of America" loading="lazy" />
+                </div>
+                <span class="partner-card-name">Assyrian Foundation of America</span>
+            </a>
         </div>
-    </section>
+
+        <!-- Bottom CTA Section -->
+        <div class="partner-cta-card-box">
+            <h3 class="partner-cta-title">Help us create more in Syriac.</h3>
+            <p class="partner-cta-subtitle">Join the organizations helping preserve our language and culture.</p>
+            <button type="button" class="btn btn-partner-cta" data-bs-toggle="modal" data-bs-target="#partnerModal" data-toggle="modal" data-target="#partnerModal">
+                Become a Partner &rarr;
+            </button>
+        </div>
+    </div>
 </div>
+
+<partial name="_PartnerModal" />

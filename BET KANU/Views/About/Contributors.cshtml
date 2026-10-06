@@ -1,431 +1,409 @@
-<head>
-    @{
-        ViewBag.Title = "Contributors ";
-    }
-</head>
-<div id="wrapper" class="contributors-page">
-    <section class="padding-top-20 padding-bottom-20 border-bottom-1 border-grey-300">
-        <div class="container">
-            <div class="headline no-margin">
-                <h4><i class="fa fa-users"></i> Contributors </h4>
+@{
+    ViewBag.Title = "Our Contributors";
+}
 
-                <div class="dropdown" style="display:inline">
-                    <button type="button" class="btn btn-info btn-outline my-2" id="2026" onclick="EnableDisableYear(this.id)" disabled>2026 <i class="fa fa-calendar"></i></button>
-                    <button type="button" class="btn btn-info btn-outline my-2" id="2025" onclick="EnableDisableYear(this.id)">2025 <i class="fa fa-calendar"></i></button>
-                    <button type="button" class="btn btn-info btn-outline my-2" id="2024" onclick="EnableDisableYear(this.id)">2024 <i class="fa fa-calendar"></i></button>
-                    <button type="button" class="btn btn-info btn-outline my-2" id="2023" onclick="EnableDisableYear(this.id)">2023 <i class="fa fa-calendar"></i></button>
-                    <button type="button" class="btn btn-info btn-outline my-2" id="2022" onclick="EnableDisableYear(this.id)">2022 <i class="fa fa-calendar"></i></button>
-                    <button type="button" class="btn btn-info btn-outline my-2" id="2021" onclick="EnableDisableYear(this.id)">2021 <i class="fa fa-calendar"></i></button>
-                    <button type="button" class="btn btn-info btn-outline my-2" id="2020" onclick="EnableDisableYear(this.id)">2020 <i class="fa fa-calendar"></i></button>
-                    <button type="button" class="btn btn-info btn-outline my-2" id="2019" onclick="EnableDisableYear(this.id)">2019 <i class="fa fa-calendar"></i></button>
-                    <button type="button" class="btn btn-info btn-outline my-2" id="2018" onclick="EnableDisableYear(this.id)">2018 <i class="fa fa-calendar"></i></button>
-                    <button type="button" class="btn btn-info btn-outline my-2" id="2017" onclick="EnableDisableYear(this.id)">2017 <i class="fa fa-calendar"></i></button>
-                </div>
+<div id="wrapper" class="contributors-page" style="background-color: #f8fafc; min-height: 85vh; padding: 40px 0 60px 0;">
+    <div class="container">
+        <!-- Page Title & Header -->
+        <div class="text-center" style="margin-bottom: 25px;">
+            <h2 style="font-weight: 800; color: #0b4570; font-size: 32px; letter-spacing: -0.3px; margin-bottom: 8px;">
+                <i class="fa fa-users" style="margin-right: 8px;"></i> OUR CONTRIBUTORS
+            </h2>
+            <p style="font-size: 16px; color: #2c6e9c; font-weight: 500; margin-bottom: 0;">
+                Celebrating the organizations that help bring Syriac language and culture to life.
+            </p>
+        </div>
+
+        <!-- Year Tabs Filter -->
+        <div class="contributor-year-nav">
+            <button type="button" class="contributor-year-btn active" id="2026" onclick="EnableDisableYear('2026')" disabled>2026</button>
+            <button type="button" class="contributor-year-btn" id="2025" onclick="EnableDisableYear('2025')">2025</button>
+            <button type="button" class="contributor-year-btn" id="2024" onclick="EnableDisableYear('2024')">2024</button>
+            <button type="button" class="contributor-year-btn" id="2023" onclick="EnableDisableYear('2023')">2023</button>
+            <button type="button" class="contributor-year-btn" id="2022" onclick="EnableDisableYear('2022')">2022</button>
+            <button type="button" class="contributor-year-btn" id="2021" onclick="EnableDisableYear('2021')">2021</button>
+            <button type="button" class="contributor-year-btn" id="2020" onclick="EnableDisableYear('2020')">2020</button>
+            <button type="button" class="contributor-year-btn" id="2019" onclick="EnableDisableYear('2019')">2019</button>
+            <button type="button" class="contributor-year-btn" id="2018" onclick="EnableDisableYear('2018')">2018</button>
+            <button type="button" class="contributor-year-btn" id="2017" onclick="EnableDisableYear('2017')">2017</button>
+        </div>
+
+        <!-- Dynamic Year Section Header -->
+        <div class="text-center" style="margin-bottom: 25px;">
+            <h3 id="activeYearTitle" style="font-weight: 800; color: #0b4570; font-size: 26px; margin-top: 0; margin-bottom: 6px;">
+                Our 2026 Contributors
+            </h3>
+            <p id="activeYearSubtitle" style="font-size: 15px; color: #2c6e9c; margin-bottom: 0;">
+                Thank you to the organizations that supported our work in 2026.
+            </p>
+        </div>
+
+        <!-- 2026 Contributors -->
+        <div id="2026c" class="year-contributors-content">
+            <div class="contributors-modern-grid">
+                <a href="/about/partnerdetails?id=crownfoodxl" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/crownfoodxl.png" alt="Crown Food XL" loading="lazy" /></div>
+                    <span class="partner-card-name">Crown Food XL</span>
+                </a>
+                <a href="/about/partnerdetails?id=W.E.S B.V" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/W.E.S B.V - Mediterrane.png" alt="W.E.S B.V - Mediterrane" loading="lazy" /></div>
+                    <span class="partner-card-name">W.E.S B.V - Mediterrane</span>
+                </a>
+                <a href="/about/partnerdetails?id=ADO" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/ADO - Enschede Netherlands.png" alt="Assyrische Mesopotamische Vereniging Enschede" loading="lazy" /></div>
+                    <span class="partner-card-name">Assyrische Mesopotamische Vereniging Enschede</span>
+                </a>
+                <a href="/about/partnerdetails?id=capni" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/capni.jpg" alt="Christian Aid Program" loading="lazy" /></div>
+                    <span class="partner-card-name">Christian Aid Program</span>
+                </a>
+                <a href="/about/partnerdetails?id=ajm" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/ajm.jpg" alt="Assyrischer Jugendverband Mitteleuropa e.V." loading="lazy" /></div>
+                    <span class="partner-card-name">Assyrischer Jugendverband Mitteleuropa e.V.</span>
+                </a>
+                <a href="/about/partnerdetails?id=sos" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/sos.jpg" alt="Save Our Souls SOS 1915" loading="lazy" /></div>
+                    <span class="partner-card-name">Save Our Souls SOS 1915</span>
+                </a>
+                <a href="/about/partnerdetails?id=attratv" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/AttraTV.png" alt="ATTRA TV" loading="lazy" /></div>
+                    <span class="partner-card-name">ATTRA TV</span>
+                </a>
+                <a href="/about/partnerdetails?id=assyrians-without-borders" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/Assyrians Without Borders.png" alt="Assyrians Without Borders" loading="lazy" /></div>
+                    <span class="partner-card-name">Assyrians Without Borders</span>
+                </a>
+                <a href="/about/partnerdetails?id=shlama" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/Shlama Foundation.jpg" alt="Shlama Foundation" loading="lazy" /></div>
+                    <span class="partner-card-name">Shlama Foundation</span>
+                </a>
+                <a href="/about/partnerdetails?id=afa" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/Assyrian Foundation of America.jpg" alt="Assyrian Foundation of America" loading="lazy" /></div>
+                    <span class="partner-card-name">Assyrian Foundation of America</span>
+                </a>
             </div>
         </div>
-    </section>
-    <section id="2026c">
-        <div class="container">
-            <div class="row row-gap-4">
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=crownfoodxl"><img src="/img/partners/crownfoodxl.png" alt="ADO - Enschede Netherlands"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=crownfoodxl" style="color:inherit; text-decoration:none;">Crown Food XL</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=W.E.S B.V"><img src="/img/partners/W.E.S B.V - Mediterrane.png" alt="W.E.S B.V - Mediterrane"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=W.E.S B.V" style="color:inherit; text-decoration:none;">W.E.S B.V - Mediterrane</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=ADO"><img src="/img/partners/ADO - Enschede Netherlands.png" alt="ADO - Enschede Netherlands"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=ADO" style="color:inherit; text-decoration:none;">Assyrische Mesopotamische Vereniging Enschede</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=capni"><img src="/img/partners/capni.jpg" alt="Christian Aid Program"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=capni" style="color:inherit; text-decoration:none;">Christian Aid Program</a></h4>
-                </div>
 
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=ajm"><img src="/img/partners/ajm.jpg" alt="Assyrischer Jugendverband Mitteleuropa e.V."></a>
-                    </div>
-                    <h4 style="text-align:center">
-                        <a href="/about/partnerdetails?id=ajm" style="color:inherit; text-decoration:none;">Assyrischer Jugendverband<br>Mitteleuropa e.V.</a>
-                    </h4>
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=sos"><img src="/img/partners/sos.jpg" alt="Save Our Souls SOS 1915"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=sos" style="color:inherit; text-decoration:none;">Save Our Souls SOS 1915</a></h4>
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail text-center">
-                        <a href="/about/partnerdetails?id=attratv"><img style="max-width:48%; margin:0 auto; display:block;" src="/img/partners/AttraTV.png" alt="ATTRA TV"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=attratv" style="color:inherit; text-decoration:none;">ATTRA TV</a></h4>
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=assyrians-without-borders"><img src="/img/partners/Assyrians Without Borders.png" alt="Assyrians Without Borders"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=assyrians-without-borders" style="color:inherit; text-decoration:none;">Assyrians Without Borders</a></h4>
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=shlama"><img src="/img/partners/Shlama Foundation.jpg" alt="Shlama Foundation"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=shlama" style="color:inherit; text-decoration:none;">Shlama Foundation</a></h4>
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=afa"><img src="/img/partners/Assyrian Foundation of America.jpg" alt="Assyrian Foundation of America"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=afa" style="color:inherit; text-decoration:none;">Assyrian Foundation of America</a></h4>
-                </div>
+        <!-- 2025 Contributors -->
+        <div id="2025c" class="year-contributors-content" style="display:none">
+            <div class="contributors-modern-grid">
+                <a href="/about/partnerdetails?id=capni" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/capni.jpg" alt="Christian Aid Program" loading="lazy" /></div>
+                    <span class="partner-card-name">Christian Aid Program</span>
+                </a>
+                <a href="/about/partnerdetails?id=ajm" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/ajm.jpg" alt="Assyrischer Jugendverband Mitteleuropa e.V." loading="lazy" /></div>
+                    <span class="partner-card-name">Assyrischer Jugendverband Mitteleuropa e.V.</span>
+                </a>
+                <a href="/about/partnerdetails?id=sos" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/sos.jpg" alt="Save Our Souls SOS 1915" loading="lazy" /></div>
+                    <span class="partner-card-name">Save Our Souls SOS 1915</span>
+                </a>
+                <a href="/about/partnerdetails?id=attratv" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/AttraTV.png" alt="ATTRA TV" loading="lazy" /></div>
+                    <span class="partner-card-name">ATTRA TV</span>
+                </a>
+                <a href="/about/partnerdetails?id=syriac-culture" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/General Directorate of Syriac Culture and Arts logo.png" alt="General Directorate of Syriac Culture and Arts" loading="lazy" /></div>
+                    <span class="partner-card-name">General Directorate of Syriac Culture and Arts</span>
+                </a>
+                <a href="/about/partnerdetails?id=afa" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/IMG-20260116-WA0072.jpg" alt="Assyrian Foundation of America" loading="lazy" /></div>
+                    <span class="partner-card-name">Assyrian Foundation of America</span>
+                </a>
+                <a href="/about/partnerdetails?id=tony-kalogerakos" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/Tony S. Kalogerakos.jpg" alt="Tony S. Kalogerakos" loading="lazy" /></div>
+                    <span class="partner-card-name">Tony S. Kalogerakos</span>
+                </a>
             </div>
         </div>
-    </section>
 
-    <section id="2025c" style="display:none">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=capni"><img src="/img/partners/capni.jpg" alt="Christian Aid Program"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=capni" style="color:inherit; text-decoration:none;">Christian Aid Program</a></h4>
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=ajm"><img src="/img/partners/ajm.jpg" alt="AJM"></a>
-                    </div>
-                    <h4 style="text-align:center">
-                        <a href="/about/partnerdetails?id=ajm" style="color:inherit; text-decoration:none;">Assyrischer Jugendverband<br>Mitteleuropa e.V.</a>
-                    </h4>
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=sos"><img src="/img/partners/sos.jpg" alt="Save Our Souls SOS 1915"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=sos" style="color:inherit; text-decoration:none;">Save Our Souls SOS 1915</a></h4>
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail text-center">
-                        <a href="/about/partnerdetails?id=attratv"><img style="max-width:48%; margin:0 auto; display:block;" src="/img/partners/AttraTV.png" alt="ATTRA TV"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=attratv" style="color:inherit; text-decoration:none;">ATTRA TV</a></h4>
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=syriac-culture"><img src="/img/partners/General Directorate of Syriac Culture and Arts logo.png" alt="Syriac Culture"></a>
-                    </div>
-                    <h4 style="text-align:center">
-                        <a href="/about/partnerdetails?id=syriac-culture" style="color:inherit; text-decoration:none;">General Directorate of<br>Syriac Culture and Arts</a>
-                    </h4>
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=afa"><img src="/img/partners/IMG-20260116-WA0072.jpg" alt="Assyrian Foundation of America"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=afa" style="color:inherit; text-decoration:none;">Assyrian Foundation of America</a></h4>
-                </div>
-
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail">
-                        <a href="/about/partnerdetails?id=tony-kalogerakos"><img src="/img/partners/Tony S. Kalogerakos.jpg" alt="Tony S. Kalogerakos"></a>
-                    </div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=tony-kalogerakos" style="color:inherit; text-decoration:none;">Tony S. Kalogerakos</a></h4>
-                </div>
+        <!-- 2024 Contributors -->
+        <div id="2024c" class="year-contributors-content" style="display:none">
+            <div class="contributors-modern-grid">
+                <a href="/about/partnerdetails?id=ajm" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/ajm.jpg" alt="AJM" loading="lazy" /></div>
+                    <span class="partner-card-name">AJM</span>
+                </a>
+                <a href="/about/partnerdetails?id=capni" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/capni2.jpg" alt="CAP" loading="lazy" /></div>
+                    <span class="partner-card-name">CAP</span>
+                </a>
+                <a href="/about/partnerdetails?id=ecews" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/ecews.jpg" alt="ECEWS" loading="lazy" /></div>
+                    <span class="partner-card-name">ECEWS</span>
+                </a>
+                <a href="/about/partnerdetails?id=sos" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/sos.jpg" alt="SOS 1915" loading="lazy" /></div>
+                    <span class="partner-card-name">SOS 1915</span>
+                </a>
+                <a href="/about/partnerdetails?id=naby" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/naby.jpg" alt="NFAFC" loading="lazy" /></div>
+                    <span class="partner-card-name">NFAFC</span>
+                </a>
+                <a href="/about/partnerdetails?id=attratv" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/AttraTV.png" alt="Attra TV" loading="lazy" /></div>
+                    <span class="partner-card-name">Attra TV</span>
+                </a>
             </div>
         </div>
-    </section>
 
-    <section id="2024c" style="display:none">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=ajm"><img src="/img/partners/ajm.jpg" alt="AJM"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=ajm" style="color:inherit; text-decoration:none;">AJM</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=capni"><img src="/img/partners/capni2.jpg" alt="CAP"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=capni" style="color:inherit; text-decoration:none;">CAP</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=ecews"><img src="/img/partners/ecews.jpg" alt="ECEWS"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=ecews" style="color:inherit; text-decoration:none;">ECEWS</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=sos"><img src="/img/partners/sos.jpg" alt="SOS 1915"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=sos" style="color:inherit; text-decoration:none;">SOS 1915</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=naby"><img src="/img/partners/naby.jpg" alt="NFAFC"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=naby" style="color:inherit; text-decoration:none;">NFAFC</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail text-center"><a href="/about/partnerdetails?id=attratv"><img style="max-width: 48%; margin:0 auto; display:block;" src="/img/partners/AttraTV.png" alt="Attra TV"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=attratv" style="color:inherit; text-decoration:none;">Attra TV</a></h4>
-                </div>
+        <!-- 2023 Contributors -->
+        <div id="2023c" class="year-contributors-content" style="display:none">
+            <div class="contributors-modern-grid">
+                <a href="/about/partnerdetails?id=ajm" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/ajm.jpg" alt="AJM" loading="lazy" /></div>
+                    <span class="partner-card-name">AJM</span>
+                </a>
+                <a href="/about/partnerdetails?id=capni" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/capni.jpg" alt="CAPNI" loading="lazy" /></div>
+                    <span class="partner-card-name">CAPNI</span>
+                </a>
+                <a href="/about/partnerdetails?id=ecews" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/ecews.jpg" alt="ECEWS" loading="lazy" /></div>
+                    <span class="partner-card-name">ECEWS</span>
+                </a>
+                <a href="/about/partnerdetails?id=sos" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/sos.jpg" alt="SOS 1915" loading="lazy" /></div>
+                    <span class="partner-card-name">SOS 1915</span>
+                </a>
+                <a href="/about/partnerdetails?id=naby" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/naby.jpg" alt="NFAFC" loading="lazy" /></div>
+                    <span class="partner-card-name">NFAFC</span>
+                </a>
+                <a href="/about/partnerdetails?id=attratv" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/AttraTV.png" alt="Attra TV" loading="lazy" /></div>
+                    <span class="partner-card-name">Attra TV</span>
+                </a>
             </div>
         </div>
-    </section>
-    <section id="2023c" style="display:none">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=ajm"><img src="/img/partners/ajm.jpg" alt="AJM"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=ajm" style="color:inherit; text-decoration:none;">AJM</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=capni"><img src="/img/partners/capni.jpg" alt="CAPNI"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=capni" style="color:inherit; text-decoration:none;">CAPNI</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=ecews"><img src="/img/partners/ecews.jpg" alt="ECEWS"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=ecews" style="color:inherit; text-decoration:none;">ECEWS</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=sos"><img src="/img/partners/sos.jpg" alt="SOS 1915"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=sos" style="color:inherit; text-decoration:none;">SOS 1915</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=naby"><img src="/img/partners/naby.jpg" alt="NFAFC"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=naby" style="color:inherit; text-decoration:none;">NFAFC</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail text-center"><a href="/about/partnerdetails?id=attratv"><img style="max-width: 48%; margin:0 auto; display:block;" src="/img/partners/AttraTV.png" alt="Attra TV"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=attratv" style="color:inherit; text-decoration:none;">Attra TV</a></h4>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section id="2022c" style="display:none">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=ajm"><img src="/img/partners/ajm.jpg" alt="AJM"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=ajm" style="color:inherit; text-decoration:none;">AJM</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=capni"><img src="/img/partners/capni.jpg" alt="CAPNI"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=capni" style="color:inherit; text-decoration:none;">CAPNI</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=ecews"><img src="/img/partners/ecews.jpg" alt="ECEWS"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=ecews" style="color:inherit; text-decoration:none;">ECEWS</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=sos"><img src="/img/partners/sos.jpg" alt="SOS 1915"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=sos" style="color:inherit; text-decoration:none;">SOS 1915</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=naby"><img src="/img/partners/naby.jpg" alt="NFAFC"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=naby" style="color:inherit; text-decoration:none;">NFAFC</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=mor-afrem"><img src="/img/partners/morafrem.jpg" alt="MOR AFREM"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=mor-afrem" style="color:inherit; text-decoration:none;">MOR AFREM</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail text-center"><a href="/about/partnerdetails?id=attratv"><img style="max-width: 48%; margin:0 auto; display:block;" src="/img/partners/AttraTV.png" alt="Attra TV"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=attratv" style="color:inherit; text-decoration:none;">Attra TV</a></h4>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section id="2021c" style="display:none">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=icrc"><img src="/img/partners/ICRC.jpg" alt="ICRC"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=icrc" style="color:inherit; text-decoration:none;">ICRC</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=ajm"><img src="/img/partners/ajm.jpg" alt="AJM"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=ajm" style="color:inherit; text-decoration:none;">AJM</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=capni"><img src="/img/partners/capni.jpg" alt="CAPNI"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=capni" style="color:inherit; text-decoration:none;">CAPNI</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=ecews"><img src="/img/partners/ecews.jpg" alt="ECEWS"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=ecews" style="color:inherit; text-decoration:none;">ECEWS</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=sos"><img src="/img/partners/sos.jpg" alt="SOS 1915"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=sos" style="color:inherit; text-decoration:none;">SOS 1915</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=naby"><img src="/img/partners/naby.jpg" alt="NFAFC"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=naby" style="color:inherit; text-decoration:none;">NFAFC</a></h4>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section id="2020c" style="display:none">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=ajm"><img src="/img/partners/ajm.jpg" alt="AJM"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=ajm" style="color:inherit; text-decoration:none;">AJM</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=capni"><img src="/img/partners/capni.jpg" alt="CAPNI"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=capni" style="color:inherit; text-decoration:none;">CAPNI</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=sos"><img src="/img/partners/sos.jpg" alt="SOS 1915"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=sos" style="color:inherit; text-decoration:none;">SOS 1915</a></h4>
-                </div>
+        <!-- 2022 Contributors -->
+        <div id="2022c" class="year-contributors-content" style="display:none">
+            <div class="contributors-modern-grid">
+                <a href="/about/partnerdetails?id=ajm" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/ajm.jpg" alt="AJM" loading="lazy" /></div>
+                    <span class="partner-card-name">AJM</span>
+                </a>
+                <a href="/about/partnerdetails?id=capni" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/capni.jpg" alt="CAPNI" loading="lazy" /></div>
+                    <span class="partner-card-name">CAPNI</span>
+                </a>
+                <a href="/about/partnerdetails?id=ecews" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/ecews.jpg" alt="ECEWS" loading="lazy" /></div>
+                    <span class="partner-card-name">ECEWS</span>
+                </a>
+                <a href="/about/partnerdetails?id=sos" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/sos.jpg" alt="SOS 1915" loading="lazy" /></div>
+                    <span class="partner-card-name">SOS 1915</span>
+                </a>
+                <a href="/about/partnerdetails?id=naby" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/naby.jpg" alt="NFAFC" loading="lazy" /></div>
+                    <span class="partner-card-name">NFAFC</span>
+                </a>
+                <a href="/about/partnerdetails?id=mor-afrem" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/morafrem.jpg" alt="MOR AFREM" loading="lazy" /></div>
+                    <span class="partner-card-name">MOR AFREM</span>
+                </a>
+                <a href="/about/partnerdetails?id=attratv" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/AttraTV.png" alt="Attra TV" loading="lazy" /></div>
+                    <span class="partner-card-name">Attra TV</span>
+                </a>
             </div>
         </div>
-    </section>
 
-    <section id="2019c" style="display:none">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=aaam"><img src="/img/partners/aaam.jpg" alt="AAAM"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=aaam" style="color:inherit; text-decoration:none;">AAAM</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=ajm"><img src="/img/partners/ajm.jpg" alt="AJM"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=ajm" style="color:inherit; text-decoration:none;">AJM</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=capni"><img src="/img/partners/capni.jpg" alt="CAPNI"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=capni" style="color:inherit; text-decoration:none;">CAPNI</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=etuti"><img src="/img/partners/etuti.jpg" alt="ETUTI"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=etuti" style="color:inherit; text-decoration:none;">ETUTI</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=sos"><img src="/img/partners/sos.jpg" alt="SOS 1915"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=sos" style="color:inherit; text-decoration:none;">SOS 1915</a></h4>
-                </div>
+        <!-- 2021 Contributors -->
+        <div id="2021c" class="year-contributors-content" style="display:none">
+            <div class="contributors-modern-grid">
+                <a href="/about/partnerdetails?id=icrc" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/ICRC.jpg" alt="ICRC" loading="lazy" /></div>
+                    <span class="partner-card-name">ICRC</span>
+                </a>
+                <a href="/about/partnerdetails?id=ajm" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/ajm.jpg" alt="AJM" loading="lazy" /></div>
+                    <span class="partner-card-name">AJM</span>
+                </a>
+                <a href="/about/partnerdetails?id=capni" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/capni.jpg" alt="CAPNI" loading="lazy" /></div>
+                    <span class="partner-card-name">CAPNI</span>
+                </a>
+                <a href="/about/partnerdetails?id=ecews" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/ecews.jpg" alt="ECEWS" loading="lazy" /></div>
+                    <span class="partner-card-name">ECEWS</span>
+                </a>
+                <a href="/about/partnerdetails?id=sos" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/sos.jpg" alt="SOS 1915" loading="lazy" /></div>
+                    <span class="partner-card-name">SOS 1915</span>
+                </a>
+                <a href="/about/partnerdetails?id=naby" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/naby.jpg" alt="NFAFC" loading="lazy" /></div>
+                    <span class="partner-card-name">NFAFC</span>
+                </a>
             </div>
         </div>
-    </section>
 
-    <section id="2018c" style="display:none">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=aaam"><img src="/img/partners/aaam.jpg" alt="AAAM"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=aaam" style="color:inherit; text-decoration:none;">AAAM</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=ajm"><img src="/img/partners/ajm.jpg" alt="AJM"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=ajm" style="color:inherit; text-decoration:none;">AJM</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=capni"><img src="/img/partners/capni.jpg" alt="CAPNI"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=capni" style="color:inherit; text-decoration:none;">CAPNI</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=etuti"><img src="/img/partners/etuti.jpg" alt="ETUTI"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=etuti" style="color:inherit; text-decoration:none;">ETUTI</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=mor-afrem"><img src="/img/partners/morafrem.jpg" alt="MOR AFREM"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=mor-afrem" style="color:inherit; text-decoration:none;">MOR AFREM</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=naby"><img src="/img/partners/naby.jpg" alt="NFAFC"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=naby" style="color:inherit; text-decoration:none;">NFAFC</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=sos"><img src="/img/partners/sos.jpg" alt="SOS 1915"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=sos" style="color:inherit; text-decoration:none;">SOS 1915</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=ecews"><img src="/img/partners/ecews.jpg" alt="ECEWS"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=ecews" style="color:inherit; text-decoration:none;">ECEWS</a></h4>
-                </div>
+        <!-- 2020 Contributors -->
+        <div id="2020c" class="year-contributors-content" style="display:none">
+            <div class="contributors-modern-grid">
+                <a href="/about/partnerdetails?id=ajm" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/ajm.jpg" alt="AJM" loading="lazy" /></div>
+                    <span class="partner-card-name">AJM</span>
+                </a>
+                <a href="/about/partnerdetails?id=capni" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/capni.jpg" alt="CAPNI" loading="lazy" /></div>
+                    <span class="partner-card-name">CAPNI</span>
+                </a>
+                <a href="/about/partnerdetails?id=sos" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/sos.jpg" alt="SOS 1915" loading="lazy" /></div>
+                    <span class="partner-card-name">SOS 1915</span>
+                </a>
             </div>
         </div>
-    </section>
 
-    <section id="2017c" style="display:none">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=aaam"><img src="/img/partners/aaam.jpg" alt="AAAM"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=aaam" style="color:inherit; text-decoration:none;">AAAM</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=ajm"><img src="/img/partners/ajm.jpg" alt="AJM"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=ajm" style="color:inherit; text-decoration:none;">AJM</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=dolabani"><img src="/img/partners/dolabani.jpg" alt="DOLABANI"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=dolabani" style="color:inherit; text-decoration:none;">DOLABANI</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=elias-hanna"><img src="/img/partners/eliashanna.jpg" alt="ELIAS HANNA"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=elias-hanna" style="color:inherit; text-decoration:none;">ELIAS HANNA</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=etuti"><img src="/img/partners/etuti.jpg" alt="ETUTI"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=etuti" style="color:inherit; text-decoration:none;">ETUTI</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=naby"><img src="/img/partners/naby.jpg" alt="NFAFC"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=naby" style="color:inherit; text-decoration:none;">NFAFC</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=oeuvre-dorient"><img src="/img/partners/Oeuvre-dOrient.jpg" alt="OEUVRE - DORIENT"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=oeuvre-dorient" style="color:inherit; text-decoration:none;">OEUVRE - DORIENT</a></h4>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="post-thumbnail"><a href="/about/partnerdetails?id=sos"><img src="/img/partners/sos.jpg" alt="SOS 1915"></a></div>
-                    <h4 style="text-align:center"><a href="/about/partnerdetails?id=sos" style="color:inherit; text-decoration:none;">SOS 1915</a></h4>
-                </div>
+        <!-- 2019 Contributors -->
+        <div id="2019c" class="year-contributors-content" style="display:none">
+            <div class="contributors-modern-grid">
+                <a href="/about/partnerdetails?id=aaam" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/aaam.jpg" alt="AAAM" loading="lazy" /></div>
+                    <span class="partner-card-name">AAAM</span>
+                </a>
+                <a href="/about/partnerdetails?id=ajm" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/ajm.jpg" alt="AJM" loading="lazy" /></div>
+                    <span class="partner-card-name">AJM</span>
+                </a>
+                <a href="/about/partnerdetails?id=capni" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/capni.jpg" alt="CAPNI" loading="lazy" /></div>
+                    <span class="partner-card-name">CAPNI</span>
+                </a>
+                <a href="/about/partnerdetails?id=etuti" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/etuti.jpg" alt="ETUTI" loading="lazy" /></div>
+                    <span class="partner-card-name">ETUTI</span>
+                </a>
+                <a href="/about/partnerdetails?id=sos" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/sos.jpg" alt="SOS 1915" loading="lazy" /></div>
+                    <span class="partner-card-name">SOS 1915</span>
+                </a>
             </div>
         </div>
-    </section>
 
+        <!-- 2018 Contributors -->
+        <div id="2018c" class="year-contributors-content" style="display:none">
+            <div class="contributors-modern-grid">
+                <a href="/about/partnerdetails?id=aaam" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/aaam.jpg" alt="AAAM" loading="lazy" /></div>
+                    <span class="partner-card-name">AAAM</span>
+                </a>
+                <a href="/about/partnerdetails?id=ajm" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/ajm.jpg" alt="AJM" loading="lazy" /></div>
+                    <span class="partner-card-name">AJM</span>
+                </a>
+                <a href="/about/partnerdetails?id=capni" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/capni.jpg" alt="CAPNI" loading="lazy" /></div>
+                    <span class="partner-card-name">CAPNI</span>
+                </a>
+                <a href="/about/partnerdetails?id=etuti" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/etuti.jpg" alt="ETUTI" loading="lazy" /></div>
+                    <span class="partner-card-name">ETUTI</span>
+                </a>
+                <a href="/about/partnerdetails?id=mor-afrem" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/morafrem.jpg" alt="MOR AFREM" loading="lazy" /></div>
+                    <span class="partner-card-name">MOR AFREM</span>
+                </a>
+                <a href="/about/partnerdetails?id=naby" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/naby.jpg" alt="NFAFC" loading="lazy" /></div>
+                    <span class="partner-card-name">NFAFC</span>
+                </a>
+                <a href="/about/partnerdetails?id=sos" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/sos.jpg" alt="SOS 1915" loading="lazy" /></div>
+                    <span class="partner-card-name">SOS 1915</span>
+                </a>
+                <a href="/about/partnerdetails?id=ecews" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/ecews.jpg" alt="ECEWS" loading="lazy" /></div>
+                    <span class="partner-card-name">ECEWS</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 2017 Contributors -->
+        <div id="2017c" class="year-contributors-content" style="display:none">
+            <div class="contributors-modern-grid">
+                <a href="/about/partnerdetails?id=aaam" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/aaam.jpg" alt="AAAM" loading="lazy" /></div>
+                    <span class="partner-card-name">AAAM</span>
+                </a>
+                <a href="/about/partnerdetails?id=ajm" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/ajm.jpg" alt="AJM" loading="lazy" /></div>
+                    <span class="partner-card-name">AJM</span>
+                </a>
+                <a href="/about/partnerdetails?id=dolabani" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/dolabani.jpg" alt="DOLABANI" loading="lazy" /></div>
+                    <span class="partner-card-name">DOLABANI</span>
+                </a>
+                <a href="/about/partnerdetails?id=elias-hanna" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/eliashanna.jpg" alt="ELIAS HANNA" loading="lazy" /></div>
+                    <span class="partner-card-name">ELIAS HANNA</span>
+                </a>
+                <a href="/about/partnerdetails?id=etuti" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/etuti.jpg" alt="ETUTI" loading="lazy" /></div>
+                    <span class="partner-card-name">ETUTI</span>
+                </a>
+                <a href="/about/partnerdetails?id=naby" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/naby.jpg" alt="NFAFC" loading="lazy" /></div>
+                    <span class="partner-card-name">NFAFC</span>
+                </a>
+                <a href="/about/partnerdetails?id=oeuvre-dorient" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/Oeuvre-dOrient.jpg" alt="OEUVRE - DORIENT" loading="lazy" /></div>
+                    <span class="partner-card-name">OEUVRE - DORIENT</span>
+                </a>
+                <a href="/about/partnerdetails?id=sos" class="partner-modern-card">
+                    <div class="partner-logo-box"><img src="/img/partners/sos.jpg" alt="SOS 1915" loading="lazy" /></div>
+                    <span class="partner-card-name">SOS 1915</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Bottom CTA Section -->
+        <div class="partner-cta-card-box">
+            <h3 class="partner-cta-title">Help bring our next creation to life.</h3>
+            <p class="partner-cta-subtitle">Support Syriac songs, books, apps, and cartoons through your organization.</p>
+            <button type="button" class="btn btn-partner-cta" data-bs-toggle="modal" data-bs-target="#partnerModal" data-toggle="modal" data-target="#partnerModal">
+                Become a Contributor &rarr;
+            </button>
+            <p class="partner-cta-note">Tell us how you would like to help.</p>
+        </div>
+    </div>
 </div>
+
+<partial name="_PartnerModal" />
 
 @section scripts{
     <script>
         function EnableDisableYear(year) {
             var years = ["2026", "2025", "2024", "2023", "2022", "2021", "2020", "2019", "2018", "2017"];
 
-            years.forEach(y => {
-                var element = document.getElementById(y);
+            years.forEach(function(y) {
+                var btn = document.getElementById(y);
                 var container = document.getElementById(y + "c");
 
                 if (y === year) {
-                    element.disabled = true;
-                    container.style.display = "block";
+                    if (btn) {
+                        btn.classList.add("active");
+                        btn.disabled = true;
+                    }
+                    if (container) container.style.display = "block";
                 } else {
-                    element.disabled = false;
-                    container.style.display = "none";
+                    if (btn) {
+                        btn.classList.remove("active");
+                        btn.disabled = false;
+                    }
+                    if (container) container.style.display = "none";
                 }
             });
+
+            var titleEl = document.getElementById("activeYearTitle");
+            var subtitleEl = document.getElementById("activeYearSubtitle");
+            if (titleEl) titleEl.innerText = "Our " + year + " Contributors";
+            if (subtitleEl) subtitleEl.innerText = "Thank you to the organizations that supported our work in " + year + ".";
         }
     </script>
 }

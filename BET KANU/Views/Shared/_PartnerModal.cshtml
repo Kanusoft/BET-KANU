@@ -1,0 +1,158 @@
+<!-- Partnership / Contributor Inquiry Modal Partial -->
+<div class="modal fade partner-modal-wrapper" id="partnerModal" tabindex="-1" role="dialog" aria-labelledby="partnerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered partner-modal-dialog" role="document">
+        <div class="modal-content partner-modal-content">
+            <button type="button" class="partner-modal-close" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close">&times;</button>
+            <div class="partner-modal-body">
+                <!-- Form State -->
+                <div id="partnerFormState">
+                    <h3 class="partner-modal-heading" id="partnerModalLabel">Become a Partner</h3>
+                    <p class="partner-modal-desc">
+                        Help bring Syriac songs, books, apps, and cartoons to more families. Tell us how your organization would like to get involved.
+                    </p>
+
+                    <form id="partnerInquiryForm" onsubmit="submitPartnerInquiry(event)">
+                        <div class="partner-field-group">
+                            <label class="partner-field-label" for="partnerName">Your name <span class="required-star">*</span></label>
+                            <input type="text" id="partnerName" class="partner-input" required placeholder="" autocomplete="name" />
+                        </div>
+
+                        <div class="partner-field-group">
+                            <label class="partner-field-label" for="partnerOrg">Organization / business name <span class="required-star">*</span></label>
+                            <input type="text" id="partnerOrg" class="partner-input" required placeholder="" />
+                        </div>
+
+                        <div class="partner-field-group">
+                            <label class="partner-field-label" for="partnerEmail">Email <span class="required-star">*</span></label>
+                            <input type="email" id="partnerEmail" class="partner-input" required placeholder="" autocomplete="email" />
+                        </div>
+
+                        <div class="partner-field-group">
+                            <label class="partner-field-label">How would you like to help?</label>
+                            <div class="partner-checkbox-list">
+                                <label class="partner-checkbox-item">
+                                    <input type="checkbox" name="helpType" value="Sponsor a project" />
+                                    <span class="partner-checkbox-text">Sponsor a project</span>
+                                </label>
+                                <label class="partner-checkbox-item">
+                                    <input type="checkbox" name="helpType" value="Provide ongoing funding" />
+                                    <span class="partner-checkbox-text">Provide ongoing funding</span>
+                                </label>
+                                <label class="partner-checkbox-item">
+                                    <input type="checkbox" name="helpType" value="Offer services or resources" />
+                                    <span class="partner-checkbox-text">Offer services or resources</span>
+                                </label>
+                                <label class="partner-checkbox-item">
+                                    <input type="checkbox" name="helpType" value="Collaborate" />
+                                    <span class="partner-checkbox-text">Collaborate</span>
+                                </label>
+                                <label class="partner-checkbox-item">
+                                    <input type="checkbox" name="helpType" value="Other" />
+                                    <span class="partner-checkbox-text">Other</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="partner-field-group mb-4">
+                            <label class="partner-field-label" for="partnerMessage">Message (optional)</label>
+                            <textarea id="partnerMessage" class="partner-textarea" rows="2" placeholder=""></textarea>
+                        </div>
+
+                        <div id="partnerErrorAlert" class="partner-error-alert" style="display:none;"></div>
+
+                        <button type="submit" id="partnerSubmitBtn" class="partner-submit-btn">
+                            <span class="btn-text">Send Partnership Inquiry</span>
+                            <span class="btn-spinner" style="display:none;"><i class="fa fa-spinner fa-spin"></i> Sending...</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Success State -->
+                <div id="partnerSuccessState" style="display: none;">
+                    <div class="partner-success-icon-wrap">
+                        <i class="fa fa-check-circle"></i>
+                    </div>
+                    <h3 class="partner-modal-heading">Thank You!</h3>
+                    <p class="partner-success-desc">
+                        Thank you for your interest in supporting BET KANU! Our team will contact you to discuss the possibilities.
+                    </p>
+                    <button type="button" class="partner-submit-btn" data-bs-dismiss="modal" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function submitPartnerInquiry(e) {
+        if (e) e.preventDefault();
+        var name = ($('#partnerName').val() || '').trim();
+        var org = ($('#partnerOrg').val() || '').trim();
+        var email = ($('#partnerEmail').val() || '').trim();
+        var message = ($('#partnerMessage').val() || '').trim();
+        
+        var helpTypes = [];
+        $('input[name="helpType"]:checked').each(function() {
+            helpTypes.push($(this).val());
+        });
+
+        var $errorAlert = $('#partnerErrorAlert');
+        $errorAlert.hide();
+
+        if (!name || !org || !email) {
+            $errorAlert.text('Please provide your name, organization name, and a valid email.').fadeIn();
+            return false;
+        }
+
+        var $btn = $('#partnerSubmitBtn');
+        $btn.prop('disabled', true);
+        $btn.find('.btn-text').hide();
+        $btn.find('.btn-spinner').show();
+
+        var payload = {
+            Name: name,
+            Organization: org,
+            Email: email,
+            HelpTypes: helpTypes,
+            Message: message
+        };
+
+        $.ajax({
+            url: '/api/partnership-inquiry',
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(payload),
+            success: function(response) {
+                $('#partnerFormState').hide();
+                $('#partnerSuccessState').fadeIn();
+            },
+            error: function(xhr) {
+                var errorMsg = 'Unable to send inquiry at the moment. Please reach out to us at info@betkanu.com.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMsg = xhr.responseJSON.message;
+                }
+                $errorAlert.text(errorMsg).fadeIn();
+                $btn.prop('disabled', false);
+                $btn.find('.btn-text').show();
+                $btn.find('.btn-spinner').hide();
+            }
+        });
+        return false;
+    }
+
+    $(document).ready(function() {
+        $('#partnerModal').on('hidden.bs.modal', function () {
+            var form = document.getElementById('partnerInquiryForm');
+            if (form) form.reset();
+            $('#partnerErrorAlert').hide();
+            var $btn = $('#partnerSubmitBtn');
+            $btn.prop('disabled', false);
+            $btn.find('.btn-text').show();
+            $btn.find('.btn-spinner').hide();
+            $('#partnerFormState').show();
+            $('#partnerSuccessState').hide();
+        });
+    });
+</script>
