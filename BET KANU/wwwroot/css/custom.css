@@ -132,3 +132,224 @@ footer a.btn-success:visited,
     transition: transform 0.35s ease;
 }
 
+/* =========================================================
+   Navbar Dropdown Fixes
+   ========================================================= */
+header nav .navbar-nav .dropdown-menu {
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    z-index: 1050 !important;
+    min-width: 200px !important;
+    padding: 8px 0 !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+header nav .navbar-nav .dropdown-menu .dropdown-item,
+header nav .navbar-nav .dropdown-menu > li > a {
+    display: block !important;
+    width: 100% !important;
+    padding: 8px 18px !important;
+    clear: both !important;
+    font-weight: normal !important;
+    color: #334155 !important;
+    text-align: inherit !important;
+    white-space: nowrap !important;
+    background-color: transparent !important;
+    border: 0 !important;
+    line-height: 1.5 !important;
+    font-size: 13px !important;
+    transition: all 0.2s ease !important;
+}
+
+header nav .navbar-nav .dropdown-menu .dropdown-item:hover,
+header nav .navbar-nav .dropdown-menu > li > a:hover {
+    color: #ff8e2b !important;
+    background-color: #f8fafc !important;
+    padding-left: 22px !important;
+}
+
+@media (min-width: 993px) {
+    header nav .navbar-nav .nav-item.dropdown:hover > .dropdown-menu {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+    }
+}
+
+/* =========================================================
+   Dropdown Submenu (Flyout to the Right)
+   ========================================================= */
+header nav .navbar-nav .dropdown-submenu {
+    position: relative !important;
+}
+
+header nav .navbar-nav .dropdown-submenu > .dropdown-toggle::after {
+    display: none !important;
+}
+
+header nav .navbar-nav .dropdown-submenu > .dropdown-menu {
+    position: absolute !important;
+    top: 0 !important;
+    left: 100% !important;
+    right: auto !important;
+    margin-top: -6px !important;
+    margin-left: 2px !important;
+    min-width: 180px !important;
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    border-radius: 8px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12) !important;
+    transition: opacity 0.2s ease, transform 0.2s ease !important;
+    transform: translateX(6px) !important;
+}
+
+@media (min-width: 993px) {
+    header nav .navbar-nav .dropdown-submenu:hover > .dropdown-menu,
+    header nav .navbar-nav .dropdown-submenu.open > .dropdown-menu,
+    header nav .navbar-nav .dropdown-submenu.show > .dropdown-menu {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateX(0) !important;
+    }
+}
+
+/* =========================================================
+   Home Feature Cards Height Alignment (Equal Height)
+   ========================================================= */
+@media (min-width: 768px) {
+    .home-feature-row {
+        display: -webkit-box !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        -ms-flex-wrap: wrap !important;
+        flex-wrap: wrap !important;
+        -webkit-box-align: stretch !important;
+        -ms-flex-align: stretch !important;
+        align-items: stretch !important;
+    }
+
+    .home-feature-row::before,
+    .home-feature-row::after {
+        display: none !important;
+    }
+
+    .home-feature-col {
+        display: -webkit-box !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        -webkit-box-orient: vertical !important;
+        -webkit-box-direction: normal !important;
+        -ms-flex-direction: column !important;
+        flex-direction: column !important;
+    }
+
+    .home-feature-col .widget.widget-game,
+    .home-feature-col .widget.widget-games {
+        -webkit-box-flex: 1 !important;
+        -ms-flex: 1 1 auto !important;
+        flex: 1 1 auto !important;
+        display: -webkit-box !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        -webkit-box-orient: vertical !important;
+        -webkit-box-direction: normal !important;
+        -ms-flex-direction: column !important;
+        flex-direction: column !important;
+        margin-top: 10px !important;
+        margin-bottom: 15px !important;
+        min-height: 460px;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .home-feature-col .widget.widget-game .overlay {
+        height: 100% !important;
+        min-height: 100% !important;
+        display: -webkit-box !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        -webkit-box-orient: vertical !important;
+        -webkit-box-direction: normal !important;
+        -ms-flex-direction: column !important;
+        flex-direction: column !important;
+        -webkit-box-pack: justify !important;
+        -ms-flex-pack: justify !important;
+        justify-content: space-between !important;
+    }
+
+    .home-feature-col .widget.widget-games ul {
+        -webkit-box-flex: 1 !important;
+        -ms-flex: 1 1 100% !important;
+        flex: 1 1 100% !important;
+        display: -webkit-box !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        -webkit-box-orient: vertical !important;
+        -webkit-box-direction: normal !important;
+        -ms-flex-direction: column !important;
+        flex-direction: column !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        height: 100% !important;
+        list-style: none !important;
+    }
+
+    .home-feature-col .widget.widget-games ul li {
+        -webkit-box-flex: 1 !important;
+        -ms-flex: 1 1 25% !important;
+        flex: 1 1 25% !important;
+        height: auto !important;
+        min-height: 115px !important;
+        display: -webkit-box !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        -webkit-box-align: stretch !important;
+        -ms-flex-align: stretch !important;
+        align-items: stretch !important;
+        border-bottom: 1px solid rgba(0,0,0,0.4) !important;
+    }
+
+    .home-feature-col .widget.widget-games ul li:last-child {
+        border-bottom: none !important;
+    }
+
+    .home-feature-col .widget.widget-games ul li .overlay {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 100% !important;
+        display: -webkit-box !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        -webkit-box-align: center !important;
+        -ms-flex-align: center !important;
+        align-items: center !important;
+        padding: 15px 20px !important;
+    }
+
+    .home-feature-col .widget.widget-games ul li .game-meta {
+        padding-top: 0 !important;
+        float: none !important;
+        width: 100% !important;
+    }
+
+    .home-feature-col .widget.widget-games ul li .game-title {
+        margin: 0 !important;
+        font-size: 16px !important;
+    }
+
+    .home-feature-col > .btn {
+        margin-top: auto !important;
+        width: 100% !important;
+    }
+}
+
+
+

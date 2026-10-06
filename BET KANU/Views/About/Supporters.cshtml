@@ -1,35 +1,465 @@
-<head>
-    @{
-        ViewBag.Title = "Supporters";
-    }
-</head>
-<div id="wrapper">
-    <!-- Donation Hero Banner -->
+@{
+    ViewBag.Title = "Supporters";
+}
+<style>
+        /* ========================================================
+           BET KANU SUPPORTERS PAGE - MODERN UI
+           ======================================================== */
+        .supporters-page {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #1e293b;
+            background-color: #f8fafc;
+            min-height: 80vh;
+        }
+
+        /* Support BET KANU Top Block */
+        .support-betkanu-block {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            padding: 28px 24px;
+        }
+        .support-betkanu-block h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+        .support-betkanu-block .lead-text {
+            color: #64748b;
+            font-size: 15px;
+            margin-bottom: 22px;
+        }
+
+        /* Donorbox Action Card */
+        .donorbox-action-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid #52BAFF;
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .donorbox-action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+        .donorbox-action-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        .donorbox-action-card .currencies-subtitle {
+            font-size: 13.5px;
+            color: #64748b;
+            font-weight: 500;
+            margin-bottom: 18px;
+        }
+        .btn-donorbox-primary {
+            background: #0284c7;
+            border: 1px solid #0284c7;
+            color: #ffffff !important;
+            font-weight: 600;
+            font-size: 15px;
+            border-radius: 8px;
+            padding: 12px 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none !important;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+        }
+        .btn-donorbox-primary:hover {
+            background: #0369a1;
+            border-color: #0369a1;
+            color: #ffffff !important;
+            transform: scale(1.02);
+            box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
+        }
+
+        /* Controls Toolbar: Tabs & Search */
+        .controls-toolbar-card {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+            padding: 12px 18px;
+            margin-bottom: 25px;
+        }
+        .custom-tabs-nav {
+            display: flex;
+            gap: 8px;
+            background: #f1f5f9;
+            padding: 5px;
+            border-radius: 10px;
+            list-style: none;
+            margin: 0;
+        }
+        .custom-tab-btn {
+            border: none;
+            background: transparent;
+            color: #475569;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 9px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            outline: none !important;
+            white-space: nowrap;
+        }
+        .custom-tab-btn:hover {
+            color: #0f172a;
+            background: rgba(255, 255, 255, 0.6);
+        }
+        .custom-tab-btn.active {
+            background: #ffffff;
+            color: #0d5487;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+            font-weight: 700;
+        }
+        .custom-tab-btn .tab-pill {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 12px;
+            background: #e2e8f0;
+            color: #334155;
+            transition: all 0.2s ease;
+        }
+        .custom-tab-btn.active .tab-pill {
+            background: #0d5487;
+            color: #ffffff;
+        }
+        .custom-tab-btn .tab-pill-accent {
+            background: #fed7aa;
+            color: #c2410c;
+        }
+        .custom-tab-btn.active .tab-pill-accent {
+            background: #ff8e2b;
+            color: #ffffff;
+        }
+
+        /* Search Box */
+        .search-container {
+            position: relative;
+            width: 100%;
+        }
+        .search-container i.search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 9px 38px 9px 38px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #1e293b;
+            background: #f8fafc;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+        .search-input:focus {
+            background: #ffffff;
+            border-color: #0284c7;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
+        .clear-search-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            display: none;
+            padding: 2px;
+            font-size: 12px;
+        }
+        .clear-search-btn:hover {
+            color: #ef4444;
+        }
+
+        /* Supporter Section Cards */
+        .supporter-section-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+        .supporter-section-card:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+        }
+        .section-header {
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .section-header.header-orange {
+            background: linear-gradient(to right, #fffaf5, #ffffff);
+            border-left: 5px solid #ff8e2b;
+        }
+        .section-header.header-blue {
+            background: linear-gradient(to right, #f4f9ff, #ffffff);
+            border-left: 5px solid #0d5487;
+        }
+        .section-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-icon-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+        }
+        .badge-icon-orange {
+            background: #ffedd5;
+            color: #ea580c;
+        }
+        .badge-icon-blue {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+        .section-title-wrap h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+            color: #0f172a;
+        }
+        .section-title-wrap span {
+            font-size: 13px;
+            color: #64748b;
+            display: block;
+            margin-top: 2px;
+        }
+        .donor-count-badge {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        .count-badge-orange {
+            background: #ffedd5;
+            color: #c2410c;
+        }
+        .count-badge-blue {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        /* Supporter Grid & Items */
+        .donor-list-body {
+            padding: 22px;
+        }
+        .donor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 12px;
+        }
+        .donor-grid-compact {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 10px;
+        }
+        .donor-item-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+        }
+        .donor-item-card:hover {
+            transform: translateY(-2px);
+            border-color: #cbd5e1;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+            background: #fafcff;
+        }
+        .donor-item-card.highlight-orange:hover {
+            border-color: #ff8e2b;
+            box-shadow: 0 6px 16px rgba(255, 142, 43, 0.12);
+        }
+        .donor-item-card.highlight-blue:hover {
+            border-color: #0284c7;
+            box-shadow: 0 6px 16px rgba(2, 132, 199, 0.12);
+        }
+
+        /* Donor Avatar Initials */
+        .donor-avatar {
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .avatar-orange {
+            background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%);
+            color: #c2410c;
+            border: 1px solid #fdba74;
+        }
+        .avatar-blue {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            color: #0369a1;
+            border: 1px solid #7dd3fc;
+        }
+        .donor-info {
+            flex-grow: 1;
+            min-width: 0;
+        }
+        .donor-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .donor-tag {
+            font-size: 11px;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 1px;
+        }
+
+        /* Appreciation Quote Banner */
+        .appreciation-banner {
+            background: #ffffff;
+            border: 1px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 15px;
+        }
+        .appreciation-banner p {
+            color: #475569;
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .appreciation-banner i {
+            color: #e11d48;
+            margin: 0 4px;
+        }
+
+        /* Tab Transition */
+        .tab-pane-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .tab-pane-content.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* No Results State */
+        .no-results-state {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 30px;
+        }
+        .no-results-state i {
+            font-size: 36px;
+            color: #94a3b8;
+            margin-bottom: 12px;
+        }
+        .no-results-state h4 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+        .no-results-state p {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 0;
+        }
+
+        /* Responsive Tweaks */
+        @@media (max-width: 768px) {
+            .support-betkanu-block {
+                padding: 20px 15px;
+            }
+            .support-betkanu-block h3 {
+                font-size: 20px;
+            }
+            .custom-tabs-nav {
+                width: 100%;
+                justify-content: stretch;
+            }
+            .custom-tab-btn {
+                flex: 1;
+                text-align: center;
+                justify-content: center;
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+            .donor-grid, .donor-grid-compact {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+<div id="wrapper" class="supporters-page">
+    <!-- Donation Hero Card Section -->
     <section class="padding-top-30 padding-bottom-20">
         <div class="container">
-            <div id="donate" class="support-betkanu-block p-4 margin-bottom-10" style="background: #ffffff; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
-                <div class="text-center margin-bottom-20">
-                    <h3 style="font-weight: 700; color: #1e293b; margin-bottom: 5px;"><i class="fa fa-heart text-danger"></i> Support BET KANU</h3>
-                    <p style="color: #64748b; font-size: 15px;">Choose your region to support our digital tools and media for the Syriac language.</p>
+            <div id="donate" class="support-betkanu-block margin-bottom-10">
+                <div class="text-center">
+                    <h3><i class="fa fa-heart text-danger"></i> Support BET KANU</h3>
+                    <p class="lead-text">Choose your region to support our digital tools and media for the Syriac language.</p>
                 </div>
+                
                 <div class="row justify-content-center">
-                    <!-- United States / USD -->
-                    <div class="col-md-6 col-sm-12 margin-bottom-15">
-                        <div class="card p-4 h-100 text-center shadow-sm" style="border-top: 4px solid #ff8e2b; background: #f8fafc; border-radius: 8px;">
-                            <h4 style="font-weight: 700; color: #0f172a;" class="mb-2">United States / USD</h4>
-                            <p style="font-size: 14px; color: #475569;" class="mb-3">Donate once or become a monthly supporter.</p>
-                            <a href="https://givebutter.com/fund-digital-tools-for-the-syriac-language-tgqbld" target="_blank" rel="noopener noreferrer" class="btn btn-warning btn-block btn-lg" style="font-weight: 600;">
-                                Donate with Givebutter <i class="fa fa-external-link"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Europe & International -->
-                    <div class="col-md-6 col-sm-12 margin-bottom-15">
-                        <div class="card p-4 h-100 text-center shadow-sm" style="border-top: 4px solid #52BAFF; background: #f8fafc; border-radius: 8px;">
-                            <h4 style="font-weight: 700; color: #0f172a;" class="mb-2">Europe & International</h4>
-                            <p style="font-size: 14px; color: #475569;" class="mb-3">Donate in EUR, SEK and other supported currencies.</p>
-                            <a href="https://donorbox.org/bet-kanu-monthly-support" target="_blank" rel="noopener noreferrer" class="btn btn-info btn-block btn-lg text-white" style="font-weight: 600; color: #fff !important;">
-                                Donate with Donorbox <i class="fa fa-external-link"></i>
+                    <div class="col-lg-6 col-md-8 col-sm-12">
+                        <div class="donorbox-action-card">
+                            <h4>Donate once or become our monthly supporter</h4>
+                            <p class="currencies-subtitle">
+                                <i class="fa fa-globe text-info"></i> Supported Currencies: USD, EUR, SEK, &amp; GBP
+                            </p>
+                            <a href="https://donorbox.org/bet-kanu-monthly-support" target="_blank" rel="noopener noreferrer" class="btn btn-donorbox-primary">
+                                <span>Donate with Donorbox</span>
+                                <i class="fa fa-external-link"></i>
                             </a>
                         </div>
                     </div>
@@ -38,105 +468,501 @@
         </div>
     </section>
 
-    <!-- Supporters Lists Section -->
-    <section class="padding-top-20 padding-bottom-50">
+    <!-- Main Content Area -->
+    <main class="padding-bottom-60">
         <div class="container">
-            <div class="row">
-                <!-- Monthly Supporters (Left Column) -->
-                <div class="col-md-6 col-sm-12 margin-bottom-30">
-                    <div class="headline margin-bottom-20">
-                        <h4 style="font-weight: 700; color: #0d5487;"><i class="fa fa-heart text-danger"></i> MONTHLY SUPPORTERS</h4>
+            <!-- Navigation Toolbar: Tabs & Search -->
+            <div class="controls-toolbar-card">
+                <div class="row align-items-center g-3">
+                    <div class="col-lg-7 col-md-7 col-sm-12">
+                        <ul class="custom-tabs-nav" role="tablist">
+                            <li role="presentation" style="flex: 1;">
+                                <button type="button" class="custom-tab-btn active w-100" id="tabBtn2026" onclick="switchSupporterTab('2026')">
+                                    <i class="fa fa-calendar-check-o text-warning"></i>
+                                    <span>2026 Supporters</span>
+                                    <span class="tab-pill tab-pill-accent">Current</span>
+                                </button>
+                            </li>
+                            <li role="presentation" style="flex: 1;">
+                                <button type="button" class="custom-tab-btn w-100" id="tabBtnPrevious" onclick="switchSupporterTab('previous')">
+                                    <i class="fa fa-history text-primary"></i>
+                                    <span>All Previous Years</span>
+                                    <span class="tab-pill">Archive</span>
+                                </button>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="widget widget-list">
-                                <ul>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Ninos Barkho</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Nibour Abdulahad</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Zelga Gabrial</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Leila Abdulahad</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Ramcina Gabrial</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Alphabet.com</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Zerva Zaito</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Joseph Hermiz</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Nabil Odisho</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Ramin Kabrial</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Abboud Zeitoune</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Habib Lahdo</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Meryem Tastekin</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Bani Chamoun</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Shamoun Hennawi</h3></div></li>
-
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Etana inc.</h3></div></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="widget widget-list">
-                                <ul>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Samson Khoubier</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Orom Shamoun</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Mary Yadegarmooshiabadi</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Jessica Lahdow</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Fadi Kasho</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Orkina Zeito</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Kenora Zeito</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Sargon Tavour</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Steve Netniss</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Walter Ebrahimzadeh</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Leliana Merza</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Ilona Thomas</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">David Yakhins</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Mary Yadegarmooshiabadi</h3></div></li>
-
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">ninos barkho</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Odisho Adam</h3></div></li>
-                                </ul>
-                            </div>
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <div class="search-container">
+                            <i class="fa fa-search search-icon"></i>
+                            <input type="text" id="supporterSearchInput" class="search-input" placeholder="Search supporter by name..." oninput="filterSupporters(this.value)">
+                            <button type="button" id="clearSearchBtn" class="clear-search-btn" onclick="clearSearch()" title="Clear search">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- One-Time Donation (Right Column) -->
-                <div class="col-md-6 col-sm-12 margin-bottom-30">
-                    <div class="headline margin-bottom-20">
-                        <h4 style="font-weight: 700; color: #0d5487;"><i class="fa fa-heart text-danger"></i> ONE-TIME DONATION</h4>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="widget widget-list">
-                                <ul>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Yakoub Yakoub</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Ninos Garis</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Mesa Jajan</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Elana Koussa</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Ramin Talia</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Ninwa Sara Moussa</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Tiodora Zaito</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Nisson Lahdo</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Dilmon Lahdo</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Ebrahim Esa</h3></div></li>
-                                </ul>
+            <!-- Global No-Results Search Alert -->
+            <div id="noResultsState" class="no-results-state">
+                <i class="fa fa-search-minus"></i>
+                <h4>No matching supporters found</h4>
+                <p>Try typing a different name or clear the search to view all supporters.</p>
+            </div>
+
+            <!-- ========================================== -->
+            <!-- TAB 1: 2026 SUPPORTERS (CURRENT)           -->
+            <!-- ========================================== -->
+            <div id="tabPane2026" class="tab-pane-content active">
+                <div class="row">
+                    <!-- 2026 One-Time Donations -->
+                    <div class="col-lg-6 col-md-12">
+                        <div class="supporter-section-card">
+                            <div class="section-header header-orange">
+                                <div class="section-title-wrap">
+                                    <div class="section-icon-badge badge-icon-orange">
+                                        <i class="fa fa-gift"></i>
+                                    </div>
+                                    <div>
+                                        <h3>One-Time Donations</h3>
+                                        <span>2026 Individual Contributors</span>
+                                    </div>
+                                </div>
+                                <span class="donor-count-badge count-badge-orange" id="count-2026-onetime">11 Donors</span>
+                            </div>
+                            <div class="donor-list-body">
+                                <div class="donor-grid" id="grid-2026-onetime">
+                                    <!-- Sarkis David -->
+                                    <div class="donor-item-card highlight-orange" data-name="sarkis david">
+                                        <div class="donor-avatar avatar-orange">SD</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Sarkis David</h4>
+                                            <span class="donor-tag"><i class="fa fa-circle text-warning" style="font-size: 7px;"></i> 2026 One-Time Donor</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Lukas Shamoun -->
+                                    <div class="donor-item-card highlight-orange" data-name="lukas shamoun">
+                                        <div class="donor-avatar avatar-orange">LS</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Lukas Shamoun</h4>
+                                            <span class="donor-tag"><i class="fa fa-circle text-warning" style="font-size: 7px;"></i> 2026 One-Time Donor</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Dina Malek -->
+                                    <div class="donor-item-card highlight-orange" data-name="dina malek">
+                                        <div class="donor-avatar avatar-orange">DM</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Dina Malek</h4>
+                                            <span class="donor-tag"><i class="fa fa-circle text-warning" style="font-size: 7px;"></i> 2026 One-Time Donor</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Paul Aissa -->
+                                    <div class="donor-item-card highlight-orange" data-name="paul aissa">
+                                        <div class="donor-avatar avatar-orange">PA</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Paul Aissa</h4>
+                                            <span class="donor-tag"><i class="fa fa-circle text-warning" style="font-size: 7px;"></i> 2026 One-Time Donor</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Firas Mousa -->
+                                    <div class="donor-item-card highlight-orange" data-name="firas mousa">
+                                        <div class="donor-avatar avatar-orange">FM</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Firas Mousa</h4>
+                                            <span class="donor-tag"><i class="fa fa-circle text-warning" style="font-size: 7px;"></i> 2026 One-Time Donor</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Ninorta Kasso -->
+                                    <div class="donor-item-card highlight-orange" data-name="ninorta kasso">
+                                        <div class="donor-avatar avatar-orange">NK</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Ninorta Kasso</h4>
+                                            <span class="donor-tag"><i class="fa fa-circle text-warning" style="font-size: 7px;"></i> 2026 One-Time Donor</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Rema Shamon -->
+                                    <div class="donor-item-card highlight-orange" data-name="rema shamon">
+                                        <div class="donor-avatar avatar-orange">RS</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Rema Shamon</h4>
+                                            <span class="donor-tag"><i class="fa fa-circle text-warning" style="font-size: 7px;"></i> 2026 One-Time Donor</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Orloma Lahdo -->
+                                    <div class="donor-item-card highlight-orange" data-name="orloma lahdo">
+                                        <div class="donor-avatar avatar-orange">OL</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Orloma Lahdo</h4>
+                                            <span class="donor-tag"><i class="fa fa-circle text-warning" style="font-size: 7px;"></i> 2026 One-Time Donor</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Nisson Lahdo -->
+                                    <div class="donor-item-card highlight-orange" data-name="nisson lahdo">
+                                        <div class="donor-avatar avatar-orange">NL</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Nisson Lahdo</h4>
+                                            <span class="donor-tag"><i class="fa fa-circle text-warning" style="font-size: 7px;"></i> 2026 One-Time Donor</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Dilmon Lahdo -->
+                                    <div class="donor-item-card highlight-orange" data-name="dilmon lahdo">
+                                        <div class="donor-avatar avatar-orange">DL</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Dilmon Lahdo</h4>
+                                            <span class="donor-tag"><i class="fa fa-circle text-warning" style="font-size: 7px;"></i> 2026 One-Time Donor</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Ebrahim Esa -->
+                                    <div class="donor-item-card highlight-orange" data-name="ebrahim esa">
+                                        <div class="donor-avatar avatar-orange">EE</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Ebrahim Esa</h4>
+                                            <span class="donor-tag"><i class="fa fa-circle text-warning" style="font-size: 7px;"></i> 2026 One-Time Donor</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="widget widget-list">
-                                <ul>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Kinora Zaito</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Mateus Sahdo</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Juliana Khamo</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Nebil Akhfidan</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Ninorta Morad</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Ninorta Kasso</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Rema Shamon</h3></div></li>
-                                    <li><div class="widget-list-meta"><h3 class="widget-list-title">Orloma Lahdo</h3></div></li>
-                              
-                                </ul>
+                    </div>
+
+                    <!-- 2026 Recurring Donations (PayPal & Monthly) -->
+                    <div class="col-lg-6 col-md-12">
+                        <div class="supporter-section-card">
+                            <div class="section-header header-blue">
+                                <div class="section-title-wrap">
+                                    <div class="section-icon-badge badge-icon-blue">
+                                        <i class="fa fa-paypal"></i>
+                                    </div>
+                                    <div>
+                                        <h3>Recurring Donations 2026</h3>
+                                        <span>Monthly & PayPal Sustaining Supporters</span>
+                                    </div>
+                                </div>
+                                <span class="donor-count-badge count-badge-blue" id="count-2026-recurring">16 Supporters</span>
+                            </div>
+                            <div class="donor-list-body">
+                                <div class="donor-grid" id="grid-2026-recurring">
+                                    <!-- Mary Yadegarmooshiabadi -->
+                                    <div class="donor-item-card highlight-blue" data-name="mary yadegarmooshiabadi">
+                                        <div class="donor-avatar avatar-blue">MY</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Mary Yadegarmooshiabadi</h4>
+                                            <span class="donor-tag"><i class="fa fa-check-circle text-info"></i> PayPal Recurring 2026</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Ninos Barkho -->
+                                    <div class="donor-item-card highlight-blue" data-name="ninos barkho">
+                                        <div class="donor-avatar avatar-blue">NB</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Ninos Barkho</h4>
+                                            <span class="donor-tag"><i class="fa fa-check-circle text-info"></i> PayPal Recurring 2026</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Odisho Adam -->
+                                    <div class="donor-item-card highlight-blue" data-name="odisho adam">
+                                        <div class="donor-avatar avatar-blue">OA</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Odisho Adam</h4>
+                                            <span class="donor-tag"><i class="fa fa-check-circle text-info"></i> PayPal Recurring 2026</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Steve Netniss -->
+                                    <div class="donor-item-card highlight-blue" data-name="steve netniss">
+                                        <div class="donor-avatar avatar-blue">SN</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Steve Netniss</h4>
+                                            <span class="donor-tag"><i class="fa fa-check-circle text-info"></i> PayPal Recurring 2026</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Etana inc. -->
+                                    <div class="donor-item-card highlight-blue" data-name="etana inc.">
+                                        <div class="donor-avatar avatar-blue">EI</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Etana inc.</h4>
+                                            <span class="donor-tag"><i class="fa fa-check-circle text-info"></i> Sustaining Supporter</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Sargon Tavour -->
+                                    <div class="donor-item-card highlight-blue" data-name="sargon tavour">
+                                        <div class="donor-avatar avatar-blue">ST</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Sargon Tavour</h4>
+                                            <span class="donor-tag"><i class="fa fa-check-circle text-info"></i> PayPal Recurring 2026</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Ramin Kabrial -->
+                                    <div class="donor-item-card highlight-blue" data-name="ramin kabrial">
+                                        <div class="donor-avatar avatar-blue">RK</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Ramin Kabrial</h4>
+                                            <span class="donor-tag"><i class="fa fa-check-circle text-info"></i> Monthly Supporter 2026</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Abboud Zeitoune -->
+                                    <div class="donor-item-card highlight-blue" data-name="abboud zeitoune">
+                                        <div class="donor-avatar avatar-blue">AZ</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Abboud Zeitoune</h4>
+                                            <span class="donor-tag"><i class="fa fa-check-circle text-info"></i> Monthly Supporter 2026</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Habib Lahdo -->
+                                    <div class="donor-item-card highlight-blue" data-name="habib lahdo">
+                                        <div class="donor-avatar avatar-blue">HL</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Habib Lahdo</h4>
+                                            <span class="donor-tag"><i class="fa fa-check-circle text-info"></i> Monthly Supporter 2026</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Meryem Tastekin -->
+                                    <div class="donor-item-card highlight-blue" data-name="meryem tastekin">
+                                        <div class="donor-avatar avatar-blue">MT</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Meryem Tastekin</h4>
+                                            <span class="donor-tag"><i class="fa fa-check-circle text-info"></i> Monthly Supporter 2026</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Bani Chamoun -->
+                                    <div class="donor-item-card highlight-blue" data-name="bani chamoun">
+                                        <div class="donor-avatar avatar-blue">BC</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Bani Chamoun</h4>
+                                            <span class="donor-tag"><i class="fa fa-check-circle text-info"></i> Monthly Supporter 2026</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Shamuon Hennawi -->
+                                    <div class="donor-item-card highlight-blue" data-name="shamuon hennawi">
+                                        <div class="donor-avatar avatar-blue">SH</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Shamuon Hennawi</h4>
+                                            <span class="donor-tag"><i class="fa fa-check-circle text-info"></i> Monthly Supporter 2026</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Ilona Thomas -->
+                                    <div class="donor-item-card highlight-blue" data-name="ilona thomas">
+                                        <div class="donor-avatar avatar-blue">IT</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Ilona Thomas</h4>
+                                            <span class="donor-tag"><i class="fa fa-check-circle text-info"></i> Monthly Supporter 2026</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- David Yakhins -->
+                                    <div class="donor-item-card highlight-blue" data-name="david yakhins">
+                                        <div class="donor-avatar avatar-blue">DY</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">David Yakhins</h4>
+                                            <span class="donor-tag"><i class="fa fa-check-circle text-info"></i> Monthly Supporter 2026</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Walter Ebrahimzadeh -->
+                                    <div class="donor-item-card highlight-blue" data-name="walter ebrahimzadeh">
+                                        <div class="donor-avatar avatar-blue">WE</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Walter Ebrahimzadeh</h4>
+                                            <span class="donor-tag"><i class="fa fa-check-circle text-info"></i> Monthly Supporter 2026</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Leliana Merza -->
+                                    <div class="donor-item-card highlight-blue" data-name="leliana merza">
+                                        <div class="donor-avatar avatar-blue">LM</div>
+                                        <div class="donor-info">
+                                            <h4 class="donor-name">Leliana Merza</h4>
+                                            <span class="donor-tag"><i class="fa fa-check-circle text-info"></i> Monthly Supporter 2026</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- ========================================== -->
+            <!-- TAB 2: ALL OTHER YEARS COMBINED            -->
+            <!-- ========================================== -->
+            <div id="tabPanePrevious" class="tab-pane-content">
+                <div class="row">
+                    <!-- Previous Monthly / Recurring Supporters -->
+                    <div class="col-lg-6 col-md-12">
+                        <div class="supporter-section-card">
+                            <div class="section-header header-blue">
+                                <div class="section-title-wrap">
+                                    <div class="section-icon-badge badge-icon-blue">
+                                        <i class="fa fa-repeat"></i>
+                                    </div>
+                                    <div>
+                                        <h3>Recurring Supporters</h3>
+                                        <span>All Previous Years</span>
+                                    </div>
+                                </div>
+                                <span class="donor-count-badge count-badge-blue" id="count-prev-recurring">Historical Benefactors</span>
+                            </div>
+                            <div class="donor-list-body">
+                                <div class="donor-grid-compact" id="grid-prev-recurring">
+                                    <div class="donor-item-card highlight-blue" data-name="nibour abdulahad"><div class="donor-avatar avatar-blue">NA</div><div class="donor-info"><h4 class="donor-name">Nibour Abdulahad</h4><span class="donor-tag">Monthly Supporter</span></div></div>
+                                    <div class="donor-item-card highlight-blue" data-name="zelga gabrial"><div class="donor-avatar avatar-blue">ZG</div><div class="donor-info"><h4 class="donor-name">Zelga Gabrial</h4><span class="donor-tag">Monthly Supporter</span></div></div>
+                                    <div class="donor-item-card highlight-blue" data-name="leila abdulahad"><div class="donor-avatar avatar-blue">LA</div><div class="donor-info"><h4 class="donor-name">Leila Abdulahad</h4><span class="donor-tag">Monthly Supporter</span></div></div>
+                                    <div class="donor-item-card highlight-blue" data-name="ramcina gabrial"><div class="donor-avatar avatar-blue">RG</div><div class="donor-info"><h4 class="donor-name">Ramcina Gabrial</h4><span class="donor-tag">Monthly Supporter</span></div></div>
+                                    <div class="donor-item-card highlight-blue" data-name="alphabet.com"><div class="donor-avatar avatar-blue">AC</div><div class="donor-info"><h4 class="donor-name">Alphabet.com</h4><span class="donor-tag">Monthly Supporter</span></div></div>
+                                    <div class="donor-item-card highlight-blue" data-name="zerva zaito"><div class="donor-avatar avatar-blue">ZZ</div><div class="donor-info"><h4 class="donor-name">Zerva Zaito</h4><span class="donor-tag">Monthly Supporter</span></div></div>
+                                    <div class="donor-item-card highlight-blue" data-name="joseph hermiz"><div class="donor-avatar avatar-blue">JH</div><div class="donor-info"><h4 class="donor-name">Joseph Hermiz</h4><span class="donor-tag">Monthly Supporter</span></div></div>
+                                    <div class="donor-item-card highlight-blue" data-name="nabil odisho"><div class="donor-avatar avatar-blue">NO</div><div class="donor-info"><h4 class="donor-name">Nabil Odisho</h4><span class="donor-tag">Monthly Supporter</span></div></div>
+                                    <div class="donor-item-card highlight-blue" data-name="samson khoubier"><div class="donor-avatar avatar-blue">SK</div><div class="donor-info"><h4 class="donor-name">Samson Khoubier</h4><span class="donor-tag">Monthly Supporter</span></div></div>
+                                    <div class="donor-item-card highlight-blue" data-name="orom shamoun"><div class="donor-avatar avatar-blue">OS</div><div class="donor-info"><h4 class="donor-name">Orom Shamoun</h4><span class="donor-tag">Monthly Supporter</span></div></div>
+                                    <div class="donor-item-card highlight-blue" data-name="jessica lahdow"><div class="donor-avatar avatar-blue">JL</div><div class="donor-info"><h4 class="donor-name">Jessica Lahdow</h4><span class="donor-tag">Monthly Supporter</span></div></div>
+                                    <div class="donor-item-card highlight-blue" data-name="fadi kasho"><div class="donor-avatar avatar-blue">FK</div><div class="donor-info"><h4 class="donor-name">Fadi Kasho</h4><span class="donor-tag">Monthly Supporter</span></div></div>
+                                    <div class="donor-item-card highlight-blue" data-name="orkina zeito"><div class="donor-avatar avatar-blue">OZ</div><div class="donor-info"><h4 class="donor-name">Orkina Zeito</h4><span class="donor-tag">Monthly Supporter</span></div></div>
+                                    <div class="donor-item-card highlight-blue" data-name="kenora zeito"><div class="donor-avatar avatar-blue">KZ</div><div class="donor-info"><h4 class="donor-name">Kenora Zeito</h4><span class="donor-tag">Monthly Supporter</span></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Previous One-Time Donations -->
+                    <div class="col-lg-6 col-md-12">
+                        <div class="supporter-section-card">
+                            <div class="section-header header-orange">
+                                <div class="section-title-wrap">
+                                    <div class="section-icon-badge badge-icon-orange">
+                                        <i class="fa fa-heart"></i>
+                                    </div>
+                                    <div>
+                                        <h3>One-Time Donations</h3>
+                                        <span>All Previous Years</span>
+                                    </div>
+                                </div>
+                                <span class="donor-count-badge count-badge-orange" id="count-prev-onetime">Historical Donors</span>
+                            </div>
+                            <div class="donor-list-body">
+                                <div class="donor-grid-compact" id="grid-prev-onetime">
+                                    <div class="donor-item-card highlight-orange" data-name="yakoub yakoub"><div class="donor-avatar avatar-orange">YY</div><div class="donor-info"><h4 class="donor-name">Yakoub Yakoub</h4><span class="donor-tag">One-Time Donor</span></div></div>
+                                    <div class="donor-item-card highlight-orange" data-name="ninos garis"><div class="donor-avatar avatar-orange">NG</div><div class="donor-info"><h4 class="donor-name">Ninos Garis</h4><span class="donor-tag">One-Time Donor</span></div></div>
+                                    <div class="donor-item-card highlight-orange" data-name="mesa jajan"><div class="donor-avatar avatar-orange">MJ</div><div class="donor-info"><h4 class="donor-name">Mesa Jajan</h4><span class="donor-tag">One-Time Donor</span></div></div>
+                                    <div class="donor-item-card highlight-orange" data-name="elana koussa"><div class="donor-avatar avatar-orange">EK</div><div class="donor-info"><h4 class="donor-name">Elana Koussa</h4><span class="donor-tag">One-Time Donor</span></div></div>
+                                    <div class="donor-item-card highlight-orange" data-name="ramin talia"><div class="donor-avatar avatar-orange">RT</div><div class="donor-info"><h4 class="donor-name">Ramin Talia</h4><span class="donor-tag">One-Time Donor</span></div></div>
+                                    <div class="donor-item-card highlight-orange" data-name="ninwa sara moussa"><div class="donor-avatar avatar-orange">NM</div><div class="donor-info"><h4 class="donor-name">Ninwa Sara Moussa</h4><span class="donor-tag">One-Time Donor</span></div></div>
+                                    <div class="donor-item-card highlight-orange" data-name="tiodora zaito"><div class="donor-avatar avatar-orange">TZ</div><div class="donor-info"><h4 class="donor-name">Tiodora Zaito</h4><span class="donor-tag">One-Time Donor</span></div></div>
+                                    <div class="donor-item-card highlight-orange" data-name="kinora zaito"><div class="donor-avatar avatar-orange">KZ</div><div class="donor-info"><h4 class="donor-name">Kinora Zaito</h4><span class="donor-tag">One-Time Donor</span></div></div>
+                                    <div class="donor-item-card highlight-orange" data-name="mateus sahdo"><div class="donor-avatar avatar-orange">MS</div><div class="donor-info"><h4 class="donor-name">Mateus Sahdo</h4><span class="donor-tag">One-Time Donor</span></div></div>
+                                    <div class="donor-item-card highlight-orange" data-name="juliana khamo"><div class="donor-avatar avatar-orange">JK</div><div class="donor-info"><h4 class="donor-name">Juliana Khamo</h4><span class="donor-tag">One-Time Donor</span></div></div>
+                                    <div class="donor-item-card highlight-orange" data-name="nebil akhfidan"><div class="donor-avatar avatar-orange">NA</div><div class="donor-info"><h4 class="donor-name">Nebil Akhfidan</h4><span class="donor-tag">One-Time Donor</span></div></div>
+                                    <div class="donor-item-card highlight-orange" data-name="ninorta morad"><div class="donor-avatar avatar-orange">NM</div><div class="donor-info"><h4 class="donor-name">Ninorta Morad</h4><span class="donor-tag">One-Time Donor</span></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Appreciation Banner -->
+            <div class="appreciation-banner">
+                <p>
+                    <i class="fa fa-heart"></i> Thank you to every supporter, volunteer, and organization making our mission possible.
+                    Together, we are preserving our beautiful Syriac heritage for generations to come.
+                </p>
+            </div>
         </div>
-    </section>
+    </main>
 </div>
+
+@section scripts{
+    <script>
+        // Tab switching logic
+        function switchSupporterTab(tabName) {
+            var tab2026 = document.getElementById('tabPane2026');
+            var tabPrevious = document.getElementById('tabPanePrevious');
+            var btn2026 = document.getElementById('tabBtn2026');
+            var btnPrevious = document.getElementById('tabBtnPrevious');
+
+            if (tabName === '2026') {
+                tab2026.classList.add('active');
+                tabPrevious.classList.remove('active');
+                btn2026.classList.add('active');
+                btnPrevious.classList.remove('active');
+            } else {
+                tabPrevious.classList.add('active');
+                tab2026.classList.remove('active');
+                btnPrevious.classList.add('active');
+                btn2026.classList.remove('active');
+            }
+
+            // Re-apply current search filter to newly visible tab
+            var searchInput = document.getElementById('supporterSearchInput');
+            if (searchInput && searchInput.value) {
+                filterSupporters(searchInput.value);
+            }
+        }
+
+        // Live supporter search filter
+        function filterSupporters(query) {
+            var term = (query || '').toLowerCase().trim();
+            var clearBtn = document.getElementById('clearSearchBtn');
+            var noResultsState = document.getElementById('noResultsState');
+
+            if (clearBtn) {
+                clearBtn.style.display = term.length > 0 ? 'block' : 'none';
+            }
+
+            // Find current active pane
+            var activePane = document.querySelector('.tab-pane-content.active');
+            if (!activePane) return;
+
+            var cards = activePane.querySelectorAll('.donor-item-card');
+            var matchCount = 0;
+
+            cards.forEach(function(card) {
+                var name = card.getAttribute('data-name') || card.textContent.toLowerCase();
+                if (term === '' || name.indexOf(term) !== -1) {
+                    card.style.display = 'flex';
+                    matchCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Handle empty search feedback
+            if (noResultsState) {
+                if (term.length > 0 && matchCount === 0) {
+                    noResultsState.style.display = 'block';
+                } else {
+                    noResultsState.style.display = 'none';
+                }
+            }
+        }
+
+        function clearSearch() {
+            var searchInput = document.getElementById('supporterSearchInput');
+            if (searchInput) {
+                searchInput.value = '';
+                filterSupporters('');
+                searchInput.focus();
+            }
+        }
+    </script>
+}

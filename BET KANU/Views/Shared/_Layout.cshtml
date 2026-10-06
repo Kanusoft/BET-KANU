@@ -106,18 +106,17 @@
                                     </li>
 
                                     <li class="nav-item dropdown">
-                                        <a alt="BETKANU About" class="dropdown-toggle" href="#" id="navbarDropdownAbout" role="button"
+                                        <a alt="BETKANU About" class="dropdown-toggle" href="#" id="navbarDropdownAboutModal" role="button"
                                            data-bs-toggle="dropdown" aria-expanded="false">
                                             About
                                         </a>
-                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownAbout">
-
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownAboutModal">
                                             <li class="col-md-12">
                                                 <ul>
                                                     <li><a alt="BETKANU Partners" class="dropdown-item" href="~/about/partners">Partners</a></li>
                                                     <li><a alt="BETKANU Contributors" class="dropdown-item" href="~/about/Contributors">Contributors</a></li>
                                                     <li><a alt="BETKANU Special" class="dropdown-item" href="~/about/SpecialThanks">Special Thanks</a></li>
-                                                
+
                                                 </ul>
                                             </li>
                                             <li class="col-md-12">
@@ -125,10 +124,7 @@
                                                     <li><a alt="BETKANU About" class="dropdown-item" href="~/about/betkanu">BET KANU</a></li>
                                                     <li><a alt="BETKANU Team" class="dropdown-item" href="~/about/Team">Team</a></li>
                                                     <li><a alt="BETKANU Center" class="dropdown-item" href="~/about/ourcenter">Our Center</a></li>
-                                                </ul>
-                                            </li>
-
-
+                                                    </u
                                         </ul>
                                     </li>
                                     <li class="nav-item">
@@ -168,8 +164,11 @@
                             <ul class="dropdown-menu dropdown-nav-menu" aria-labelledby="navbarDropdown">
                                 <li><a alt="BETKANU Studio" class="dropdown-item" href="~/studio">About Studio</a></li>
                                 <li class="dropdown-submenu">
-                                    <a alt="BETKANU Cartoon" class="dropdown-item">Cartoon Series</a>
-                                    <ul class="dropdown-menu">
+                                    <a alt="BETKANU Cartoon" class="dropdown-item dropdown-toggle d-flex justify-content-between align-items-center" href="javascript:void(0);">
+                                        <span>Cartoon Series</span>
+                                        <i class="fa fa-angle-right" style="font-size: 13px; margin-left: 12px;"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-nav-menu dropdown-submenu-menu">
                                         <li class="w-100"><a alt="BETKANU ninoandmia" class="dropdown-item" href="~/studio/ninoandmia">Nino and Mia</a></li>
                                         <li class="w-100"><a alt="BETKANU alphabetseries" class="dropdown-item" href="~/studio/alphabetseries">Alphabet Series</a></li>
                                     </ul>
@@ -215,26 +214,14 @@
                                data-bs-toggle="dropdown" aria-expanded="false">
                                 About
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownAbout">
-
-                                <li class="col-md-6">
-                                    <ul>
-                                        <li class="w-100"><a alt="BETKANU Partners" class="dropdown-item" href="~/about/partners">Partners</a></li>
-                                        <li class="w-100"><a alt="BETKANU Contributors" class="dropdown-item" href="~/about/Contributors">Contributors</a></li>
-                                        <li class="w-100"><a alt="BETKANU Supporters" class="dropdown-item" href="~/about/supporters">Supporters</a></li>
-                                        <li class="w-100"><a alt="BETKANU Special" class="dropdown-item" href="~/about/SpecialThanks">Special Thanks</a></li>
-                                 @*       <li class="w-100" style="background-color:#faa61a"><a alt="BETKANU Donate" class="dropdown-item" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B2LWBB7C4J29G&source=url&return=https://localhost:7124/About/SpecialThanks">Donate</a></li>
-                                  *@  </ul>
-                                </li>
-                                <li class="col-md-6">
-                                    <ul>
-                                        <li class="w-100"><a alt="BETKANU About" class="dropdown-item" href="~/about/betkanu">BET KANU</a></li>
-                                        <li class="w-100"><a alt="BETKANU Team" class="dropdown-item" href="~/about/Team">Team</a></li>
-                                        <li class="w-100"><a alt="BETKANU Center" class="dropdown-item" href="~/about/ourcenter">Our Center</a></li>
-                                    </ul>
-                                </li>
-                              
-                     
+                            <ul class="dropdown-menu dropdown-nav-menu" aria-labelledby="navbarDropdownAbout">
+                                <li><a alt="BETKANU About" class="dropdown-item" href="~/about/betkanu">BET KANU</a></li>
+                                <li><a alt="BETKANU Team" class="dropdown-item" href="~/about/Team">Team</a></li>
+                                <li><a alt="BETKANU Center" class="dropdown-item" href="~/about/ourcenter">Our Center</a></li>
+                                <li><a alt="BETKANU Partners" class="dropdown-item" href="~/about/partners">Partners</a></li>
+                                <li><a alt="BETKANU Contributors" class="dropdown-item" href="~/about/Contributors">Contributors</a></li>
+                                <li><a alt="BETKANU Supporters" class="dropdown-item" href="~/about/supporters">Supporters</a></li>
+                                <li><a alt="BETKANU Special" class="dropdown-item" href="~/about/SpecialThanks">Special Thanks</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -268,16 +255,20 @@
                     </p>
                     <div class="margin-top-15 p-3" style="background: rgba(255,255,255,0.08); border-radius: 8px; color: #fff;">
                         <h4 style="font-weight:700; color:#fff; margin-bottom: 12px;">Support BET KANU</h4>
-                        <div class="margin-bottom-15">
+                  @*       <div class="margin-bottom-15">
                             <strong style="color: #faa61a;">United States / USD</strong>
                             <p style="font-size:13px; color:#e2e8f0; margin-bottom: 5px;">Donate once or become a monthly supporter.</p>
                             <a href="https://givebutter.com/fund-digital-tools-for-the-syriac-language-tgqbld" target="_blank" rel="noopener noreferrer" class="btn btn-warning btn-block btn-sm" style="font-weight: 600;">
                                 Givebutter <i class="fa fa-external-link"></i>
                             </a>
-                        </div>
+                        </div> *@
                         <div>
-                            <strong style="color: #52BAFF;">Europe & International</strong>
-                            <p style="font-size:13px; color:#e2e8f0; margin-bottom: 5px;">Donate in EUR, SEK and other supported currencies.</p>
+                            <strong style="color: #52BAFF;">
+                                Donate once or become our monthly supporter
+                            </strong>
+                            <p style="font-size:13px; color:#e2e8f0; margin-bottom: 5px;">
+                                <i class="fa fa-globe text-info"></i>    Supported Currencies: USD, EUR, SEK, & GBP .
+                            </p>
                             <a href="https://donorbox.org/bet-kanu-monthly-support" target="_blank" rel="noopener noreferrer" class="btn btn-info btn-block btn-sm text-white" style="font-weight: 600; color: #fff !important;">
                                 Donorbox <i class="fa fa-external-link"></i>
                             </a>
