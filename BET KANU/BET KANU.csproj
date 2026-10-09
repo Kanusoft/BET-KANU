@@ -5,10 +5,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>BET_KANU</RootNamespace>
+    <UserSecretsId>202f2971-f7e7-47e3-b62a-45549953b4a8</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Antlr" Version="3.5.0.2" />
+    <PackageReference Include="MailKit" Version="4.18.1" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNet.Identity.Owin" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNet.Web.Optimization" Version="1.1.3" />
