@@ -12,7 +12,7 @@ namespace BetKanu.Models
         public int BookId { get; set; }
         public Book? Book { get; set; }
         public string? XMLUrlId { get; set; }
-        public int ChapterNo { get; set; }
+        public int? ChapterNo { get; set; }
         public string? ImageURL { get; set; }
         public string? TextURL { get; set; }
         public string? TextLanguage { get; set; }

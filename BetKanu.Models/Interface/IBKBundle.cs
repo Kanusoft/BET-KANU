@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace BetKanu.Models.Interface
 {
     public interface IBKBundle
@@ -14,5 +9,12 @@ namespace BetKanu.Models.Interface
         BKRBundle? GetBundle(int? BookId, int? pageNo, int? SecNo, int? pageNavigation);
         IEnumerable<BKRBundle> GetBundles(int bookId, int chapterNo);
         IEnumerable<BKRBundle> GetBundles(int bookId);
+
+        Task<BkReaderWindowDto?> GetReaderWindowAsync(
+            int bookId,
+            int pageNo,
+            int secNo,
+            int? chapterNo = null,
+            CancellationToken cancellationToken = default);
     }
 }
