@@ -1,12 +1,18 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+using BET_KANU.Services;
 using BetKanu.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+
 
 namespace BET_KANU.Controllers
 {
     public class AboutController : Controller
     {
+        private readonly ISupporterService _supporters;
+
+        public AboutController(ISupporterService supporters)
+        {
+            _supporters = supporters;
+        }
         public ActionResult Index()
         {
             return View();
@@ -74,16 +80,32 @@ namespace BET_KANU.Controllers
             return View();
         }
 
-        public ActionResult Supporters()
+        public async Task<IActionResult> Supporters(
+     CancellationToken ct)
         {
-            ViewBag.Message = "Supporters";
+            var model = await BuildSupportersPageAsync(ct);
 
-            return View();
+            return View("Supporters", model);
         }
 
-        public ActionResult Support()
+        public async Task<IActionResult> Support(
+            CancellationToken ct)
         {
-            return View("Supporters");
+            var model = await BuildSupportersPageAsync(ct);
+
+            return View("Supporters", model);
+        }
+
+        private async Task<SupportersPageViewModel>
+            BuildSupportersPageAsync(CancellationToken ct)
+        {
+            int currentYear = DateTime.UtcNow.Year;
+
+            var published = await _supporters
+                .GetPublishedAsync(currentYear, ct);
+
+            return SupportersPageViewModel.FromEntities(
+                published, currentYear);
         }
 
         public ActionResult AkkadSaadi()

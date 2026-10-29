@@ -530,14 +530,14 @@ namespace BetKanu.Data.Repositories
                 .Take(2)
                 .ToListAsync(cancellationToken);
 
-            var currentItem = MapReaderItem(current, book.Name, book.URL);
+            var currentItem = MapReaderItem(current, book.Name,book.DownloadableDocument ?? string.Empty, book.URL);
             currentItem.Content.IsFirst = previousCandidates.Count == 0;
             currentItem.Content.IsLast = nextCandidates.Count == 0;
 
             BkReaderWindowItemDto? previousItem = null;
             if (previousCandidates.Count > 0)
             {
-                previousItem = MapReaderItem(previousCandidates[0], book.Name, book.URL);
+                previousItem = MapReaderItem(previousCandidates[0], book.Name, book.DownloadableDocument ?? string.Empty, book.URL);
                 previousItem.Content.IsFirst = previousCandidates.Count == 1;
                 previousItem.Content.IsLast = false;
             }
@@ -545,7 +545,7 @@ namespace BetKanu.Data.Repositories
             BkReaderWindowItemDto? nextItem = null;
             if (nextCandidates.Count > 0)
             {
-                nextItem = MapReaderItem(nextCandidates[0], book.Name, book.URL);
+                nextItem = MapReaderItem(nextCandidates[0], book.Name, book.DownloadableDocument ?? string.Empty, book.URL);
                 nextItem.Content.IsFirst = false;
                 nextItem.Content.IsLast = nextCandidates.Count == 1;
             }
@@ -562,7 +562,7 @@ namespace BetKanu.Data.Repositories
         }
 
         private static BkReaderWindowItemDto MapReaderItem(
-            Bundle bundle, string? bookName, string? bookUrl)
+            Bundle bundle, string? bookName,string bookDownloadURL, string? bookUrl)
         {
             return new BkReaderWindowItemDto
             {
@@ -574,7 +574,8 @@ namespace BetKanu.Data.Repositories
                 {
                     Book = new()
                     {
-                        Name = bookName
+                        Name = bookName,
+                        DownloadableDocument = bookDownloadURL,
                     },
                     AudioURL = (bookUrl + bundle.AudioURL).Replace("\r", "").Replace("\n", ""),
                     ExternalURL = bundle.ExternalURL,

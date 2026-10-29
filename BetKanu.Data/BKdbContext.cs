@@ -14,6 +14,7 @@ namespace BetKanu.Data
 
         public DbSet<Magazine> Magazines { get; set; } = null!;
         public DbSet<MagazineArticle> MagazineArticles { get; set; } = null!;
+        public DbSet<Supporter> Supporters { get; set; } = null!;
 
         public BKdbContext(DbContextOptions<BKdbContext> options) : base(options)
         {
@@ -23,6 +24,51 @@ namespace BetKanu.Data
         ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<Supporter>(entity =>
+            {
+                entity.ToTable("Supporters");
+
+                entity.HasKey(x => x.Id);
+
+                entity.Property(x => x.Id)
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(x => x.Name)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(x => x.Type)
+                    .HasColumnName("SupporterType")
+                    .HasConversion<int>()
+                    .IsRequired();
+
+                entity.Property(x => x.Period)
+                    .HasColumnName("Period")
+                    .IsRequired();
+
+                entity.Property(x => x.RecognitionYear)
+                    .HasColumnName("Year")
+                    .IsRequired();
+
+                entity.Property(x => x.DisplayLabel)
+                    .HasColumnName("Tag")
+                    .HasMaxLength(120);
+
+                entity.Property(x => x.IsPublished)
+                    .HasColumnName("IsVisible")
+                    .IsRequired();
+
+                entity.Property(x => x.DisplayOrder)
+                    .IsRequired();
+
+                entity.Property(x => x.CreatedAtUtc)
+                    .HasColumnType("datetime2")
+                    .IsRequired();
+
+                entity.Property(x => x.UpdatedAtUtc)
+                    .HasColumnType("datetime2");
+            });
 
             builder.Entity<Magazine>(entity =>
             {
@@ -133,6 +179,8 @@ namespace BetKanu.Data
                 entity.Property(x => x.EnglishPdfPath)
                     .HasMaxLength(500);
             });
+
+          
         }
     }
 }

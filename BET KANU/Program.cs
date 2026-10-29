@@ -18,6 +18,9 @@ builder.Services.AddMvc();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
+builder.Services.AddScoped<
+    ISupporterService,
+    SupporterService>();
 
 var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<BKdbContext>(options =>
@@ -25,7 +28,7 @@ builder.Services.AddDbContext<BKdbContext>(options =>
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<BKdbContext>();
-
+builder.Services.AddSingleton<EmailService>();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Password settings.

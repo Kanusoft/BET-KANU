@@ -1,0 +1,236 @@
+﻿@model SupporterAdminIndexViewModel
+@using BET_KANU.Models
+@{
+    ViewBag.Title = "Manage Supporters";
+}
+<style>
+    .sup-admin-page {
+        max-width: 1400px;
+        margin: 30px auto;
+        padding: 0 15px;
+        color: #1e293b;
+    }
+
+    .sup-admin-panel {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .sup-admin-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .sup-admin-caption {
+        color: #64748b;
+        margin: 6px 0 0;
+    }
+
+    .sup-admin-filters {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto;
+        align-items: end;
+        gap: 12px;
+    }
+
+        .sup-admin-filters label {
+            font-weight: 600;
+            font-size: 13px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .sup-admin-filters input, .sup-admin-filters select {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 9px;
+        }
+
+    .sup-table-wrap {
+        overflow: auto;
+    }
+
+    .sup-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .sup-table th, .sup-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+            text-align: left;
+        }
+
+        .sup-table th {
+            background: #f8fafc;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+    .sup-actions {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+        .sup-actions form {
+            display: inline;
+            margin: 0;
+        }
+
+    .sup-btn {
+        display: inline-block;
+        border-radius: 7px;
+        border: 1px solid #cbd5e1;
+        background: white;
+        padding: 8px 11px;
+        color: #1e293b;
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 13px;
+    }
+
+    .sup-btn-primary {
+        background: #0284c7;
+        border-color: #0284c7;
+        color: white;
+    }
+
+    .sup-btn-danger {
+        color: #b91c1c;
+    }
+
+    .sup-pill {
+        padding: 4px 8px;
+        border-radius: 10px;
+        background: #e2e8f0;
+        font-size: 12px;
+    }
+
+    .sup-pill-on {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .sup-pill-off {
+        background: #f1f5f9;
+        color: #475569;
+    }
+
+    @@media (max-width:900px) {
+        .sup-admin-filters {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @@media (max-width:600px) {
+        .sup-admin-filters {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+<div class="sup-admin-page">
+    <section class="sup-admin-panel sup-admin-head">
+        <div>
+            <h2 style="margin:0">Supporters Management</h2>
+            <p class="sup-admin-caption">Manage public supporter recognition by type and year. Publishing a name makes it visible on BET KANU's website.</p>
+        </div>
+        <a class="sup-btn sup-btn-primary" href="@Url.Action("Create", "AdminSupporters")">+ Add Supporter</a>
+    </section>
+
+    @if (TempData["SupporterSuccess"] is string success)
+    {
+        <div class="alert alert-success" role="status">@success</div>
+    }
+
+    <section class="sup-admin-panel">
+        <form method="get" action="@Url.Action("Index", "AdminSupporters")" class="sup-admin-filters">
+            <div><label for="q">Search name</label><input id="q" name="q" value="@Model.Query" placeholder="Supporter name" /></div>
+            <div>
+                <label for="type">Support type</label><select id="type" name="type">
+                    <option value="">All types</option>
+                    @foreach (var type in Enum.GetValues<SupporterType>())
+                    {
+                        <option value="@((int)type)" selected="@(Model.Type == type)">@(type == SupporterType.OneTime ? "One-Time" : type.ToString())</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <label for="period">Period</label><select id="period" name="period">
+                    <option value="">All periods</option>
+                    <option value="@((int)SupporterPeriod.Current)" selected="@(Model.Period == (int)SupporterPeriod.Current)">Current Supporters</option>
+                    <option value="@((int)SupporterPeriod.Previous)" selected="@(Model.Period == (int)SupporterPeriod.Previous)">Previous Supporters</option>
+                </select>
+            </div>
+            <div><label for="year">Recognition Year</label><input id="year" name="year" value="@Model.Year" type="number" min="1900" max="2100" placeholder="All years" /></div>
+            <div>
+                <label for="published">Published</label><select id="published" name="published">
+                    <option value="">All</option>
+                    <option value="true" selected="@(Model.Published == true)">Published</option>
+                    <option value="false" selected="@(Model.Published == false)">Hidden</option>
+                </select>
+            </div>
+            <div><button class="sup-btn sup-btn-primary" type="submit">Filter</button></div>
+        </form>
+        <p class="sup-admin-caption">@Model.Items.Count result(s). Names are public only when marked Published.</p>
+    </section>
+
+    <section class="sup-admin-panel sup-table-wrap">
+        <table class="sup-table">
+            <thead><tr><th>Supporter Name</th><th>Supporter Type</th><th>Period</th><th>Recognition Year</th><th>Display Order</th><th>Published</th><th>Actions</th></tr></thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    var periodLabel = item.Period == (int)SupporterPeriod.Previous
+                        ? "Previous Supporters"
+                        : item.Period == (int)SupporterPeriod.Current
+                            ? "Current Supporters"
+                            : $"Period {item.Period}";
+                    var yearLabel = item.RecognitionYear > 0
+                        ? item.RecognitionYear.ToString()
+                        : "Historical (unknown)";
+                    <tr>
+                        <td>
+                            <strong>@item.Name</strong>
+                            @if (!string.IsNullOrWhiteSpace(item.DisplayLabel))
+                            {
+                                <div class="sup-admin-caption">@item.DisplayLabel</div>
+                            }
+                        </td>
+                        <td>@(item.Type == SupporterType.OneTime ? "One-Time" : item.Type.ToString())</td>
+                        <td>@periodLabel</td>
+                        <td>@yearLabel</td>
+                        <td>@item.DisplayOrder</td>
+                        <td><span class="sup-pill @(item.IsPublished ? "sup-pill-on" : "sup-pill-off")">@(item.IsPublished ? "Published" : "Hidden")</span></td>
+                        <td>
+                            <div class="sup-actions">
+                                <a class="sup-btn" href="@Url.Action("Edit", "AdminSupporters", new { id = item.Id })">Edit</a>
+                                <form method="post" action="@Url.Action("SetPublished", "AdminSupporters", new { id = item.Id })">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="published" value="@(item.IsPublished ? "false" : "true")" />
+                                    <button class="sup-btn" type="submit">@(item.IsPublished ? "Unpublish" : "Publish")</button>
+                                </form>
+                                <form method="post" action="@Url.Action("Delete", "AdminSupporters", new { id = item.Id })" onsubmit="return confirm('Delete this supporter record? This cannot be undone.');">
+                                    @Html.AntiForgeryToken()
+                                    <button class="sup-btn sup-btn-danger" type="submit">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                @if (Model.Items.Count == 0)
+                {
+                    <tr><td colspan="7">No supporters found. Try adjusting the filters or add a supporter.</td></tr>
+                }
+            </tbody>
+        </table>
+    </section>
+</div>

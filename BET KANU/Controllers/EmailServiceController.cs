@@ -1,5 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 using BET_KANU.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace BET_KANU.Controllers
 {
@@ -7,85 +13,95 @@ namespace BET_KANU.Controllers
     [ApiController]
     public class EmailServiceController : ControllerBase
     {
-        [HttpPost]
-        public IActionResult Post([FromBody] EmailModel value)
+        private readonly EmailService _emailService;
+        private readonly ILogger<EmailServiceController> _logger;
+
+        private static readonly HashSet<string> AllowedHelpTypes = new(StringComparer.Ordinal)
         {
+            "Sponsor a project",
+            "Provide ongoing funding",
+            "Offer services or resources",
+            "Collaborate",
+            "Other"
+        };
+
+        public EmailServiceController(
+            EmailService emailService,
+            ILogger<EmailServiceController> logger)
+        {
+            _emailService = emailService;
+            _logger = logger;
+        }
+
+        // Existing Contact Us route: POST /api/EmailService
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] EmailModel value)
+        {
+            if (value == null ||
+                string.IsNullOrWhiteSpace(value.email) ||
+                string.IsNullOrWhiteSpace(value.message))
+            {
+                return BadRequest(new
+                {
+                    result = false,
+                    message = "Please provide a valid email and message."
+                });
+            }
+
             try
             {
-                if (value == null || (string.IsNullOrWhiteSpace(value.email) && string.IsNullOrWhiteSpace(value.message)))
+                // Do not use Task.Run: wait for SendGrid to accept or reject the request.
+                await _emailService.SendMailAsync(value);
+                return Ok(new
                 {
-                    return BadRequest(new { result = false, message = "Please provide your email and message." });
-                }
-
-                // Dispatch email sending in background task so UI doesn't block on SMTP network timeouts
-                _ = Task.Run(() =>
-                {
-                    try
-                    {
-                        Console.WriteLine($"[Contact Form Received] From: {value.name} ({value.email}), Subject: {value.subject}");
-                        EmailService emailService = new EmailService();
-                        emailService.SendMail(value);
-                        Console.WriteLine($"[Contact Form Email Dispatched Successfully] To: info@betkanu.com");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"[Contact Form Email Failed] {ex.Message}");
-                    }
+                    result = true,
+                    message = "Thank you! Your message has been submitted."
                 });
-
-                return Ok(new { result = true, message = "Thank you! Your message has been sent successfully. A copy has been delivered to info@betkanu.com." });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { result = false, message = ex.Message });
+                _logger.LogError(ex, "BET KANU contact email submission failed");
+                return StatusCode(502, new
+                {
+                    result = false,
+                    message = "Unable to send your message right now. Please try again later."
+                });
             }
         }
 
+        // Keep BOTH existing partnership routes:
+        // POST /api/EmailService/partnership
+        // POST /api/partnership-inquiry  <-- your existing modal URL
         [HttpPost("partnership")]
         [HttpPost("/api/partnership-inquiry")]
-        public IActionResult SubmitPartnership([FromBody] PartnershipInquiryModel model)
+        public async Task<IActionResult> SubmitPartnership([FromBody] PartnershipInquiryModel model)
         {
+            if (model == null ||
+                string.IsNullOrWhiteSpace(model.Name) ||
+                string.IsNullOrWhiteSpace(model.Organization) ||
+                string.IsNullOrWhiteSpace(model.Email))
+            {
+                return BadRequest(new
+                {
+                    result = false,
+                    message = "Please provide your name, organization name, and a valid email."
+                });
+            }
+
+            if (model.HelpTypes != null &&
+                (model.HelpTypes.Count > AllowedHelpTypes.Count ||
+                 model.HelpTypes.Any(x => x == null || !AllowedHelpTypes.Contains(x))))
+            {
+                return BadRequest(new
+                {
+                    result = false,
+                    message = "One or more selected partnership options are invalid."
+                });
+            }
+
             try
             {
-                if (model == null || string.IsNullOrWhiteSpace(model.Name) || string.IsNullOrWhiteSpace(model.Email) || string.IsNullOrWhiteSpace(model.Organization))
-                {
-                    return BadRequest(new { result = false, message = "Please provide your name, organization name, and email address." });
-                }
-
-                var helpList = model.HelpTypes != null && model.HelpTypes.Any()
-                    ? string.Join(", ", model.HelpTypes)
-                    : "None selected";
-
-                string subject = $"Partnership Inquiry: {model.Organization} ({model.Name})";
-                string messageBody = $"New Partnership Inquiry Received:\n\n" +
-                                     $"Name: {model.Name}\n" +
-                                     $"Organization / Business: {model.Organization}\n" +
-                                     $"Email: {model.Email}\n" +
-                                     $"How would you like to help:\n  • {(model.HelpTypes != null && model.HelpTypes.Any() ? string.Join("\n  • ", model.HelpTypes) : "None selected")}\n\n" +
-                                     $"Message:\n{(string.IsNullOrWhiteSpace(model.Message) ? "(No message provided)" : model.Message)}";
-
-                var emailModel = new EmailModel
-                {
-                    name = model.Name,
-                    email = model.Email,
-                    subject = subject,
-                    message = messageBody
-                };
-
-                _ = Task.Run(() =>
-                {
-                    try
-                    {
-                        Console.WriteLine($"[Partnership Form Received] From: {model.Name} - {model.Organization} ({model.Email})");
-                        EmailService emailService = new EmailService();
-                        emailService.SendMail(emailModel);
-                        Console.WriteLine($"[Partnership Form Email Dispatched Successfully] To: info@betkanu.com");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"[Partnership Form Email Failed] {ex.Message}");
-                    }
-                });
+                await _emailService.SendPartnershipInquiryAsync(model);
 
                 return Ok(new
                 {
@@ -95,31 +111,50 @@ namespace BET_KANU.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { result = false, message = ex.Message });
+                _logger.LogError(ex, "BET KANU partnership email submission failed");
+                return StatusCode(502, new
+                {
+                    result = false,
+                    message = "Unable to send your partnership inquiry right now. Please try again later."
+                });
             }
         }
     }
 
+    // Existing payload shape preserved: Name, Organization, Email, HelpTypes, Message
     public class PartnershipInquiryModel
     {
+        [Required, StringLength(120)]
         public string? Name { get; set; }
+
+        [Required, StringLength(160)]
         public string? Organization { get; set; }
+
+        [Required, EmailAddress, StringLength(254)]
         public string? Email { get; set; }
+
         public List<string>? HelpTypes { get; set; }
+
+        [StringLength(4000)]
         public string? Message { get; set; }
     }
 
+    // Existing contact form JSON property names preserved.
     public class EmailModel
     {
+        [StringLength(120)]
         public string? name { get; set; }
 
+        [Required, EmailAddress, StringLength(254)]
         public string? email { get; set; }
 
+        [StringLength(180)]
         public string? subject { get; set; }
 
+        // Kept for backward compatibility, but a public form may NOT set recipients.
         public string? toEmail { get; set; }
 
+        [Required, StringLength(4000)]
         public string? message { get; set; }
     }
 }
-

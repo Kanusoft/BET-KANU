@@ -90,7 +90,7 @@ namespace BetKanu.Data.Migrations
                     b.Property<int>("BookId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ChapterNo")
+                    b.Property<int?>("ChapterNo")
                         .HasColumnType("int");
 
                     b.Property<string>("ExternalURL")
@@ -527,6 +527,62 @@ namespace BetKanu.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Shops");
+                });
+
+            modelBuilder.Entity("BetKanu.Models.Supporter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DisplayLabel")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<int>("DisplayOrder")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<bool>("IsPublished")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("Period")
+                        .HasColumnType("int")
+                        .HasColumnName("Period");
+
+                    b.Property<int?>("RecognitionYear")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsPublished", "RecognitionYear", "Type", "DisplayOrder")
+                        .HasDatabaseName("IX_Supporters_PublicListing");
+
+                    b.ToTable("Supporters", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_Supporters_RecognitionYear", "[RecognitionYear] IS NULL OR ([RecognitionYear] BETWEEN 1900 AND 2100)");
+
+                            t.HasCheckConstraint("CK_Supporters_Type", "[Type] IN (1, 2, 3)");
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -1,4 +1,644 @@
+@model SupportersPageViewModel
 @{
+    ViewBag.Title = "Supporters";
+}
+<style>
+    /* ========================================================
+                   BET KANU SUPPORTERS PAGE - MODERN UI
+                   ======================================================== */
+    .supporters-page {
+        font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        color: #1e293b;
+        background-color: #f8fafc;
+        min-height: 80vh;
+    }
+
+    /* Support BET KANU Top Block */
+    .support-betkanu-block {
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e2e8f0;
+        padding: 28px 24px;
+    }
+
+        .support-betkanu-block h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+
+        .support-betkanu-block .lead-text {
+            color: #64748b;
+            font-size: 15px;
+            margin-bottom: 22px;
+        }
+
+    /* Donorbox Action Card */
+    .donorbox-action-card {
+        background: #f8fafc;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+        border-top: 4px solid #52BAFF;
+        padding: 24px 20px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .donorbox-action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .donorbox-action-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .donorbox-action-card .currencies-subtitle {
+            font-size: 13.5px;
+            color: #64748b;
+            font-weight: 500;
+            margin-bottom: 18px;
+        }
+
+    .btn-donorbox-primary {
+        background: #0284c7;
+        border: 1px solid #0284c7;
+        color: #ffffff !important;
+        font-weight: 600;
+        font-size: 15px;
+        border-radius: 8px;
+        padding: 12px 28px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none !important;
+        transition: all 0.25s ease;
+        box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+    }
+
+        .btn-donorbox-primary:hover {
+            background: #0369a1;
+            border-color: #0369a1;
+            color: #ffffff !important;
+            transform: scale(1.02);
+            box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
+        }
+
+    /* Controls Toolbar: Tabs & Search */
+    .controls-toolbar-card {
+        background: #ffffff;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+        padding: 12px 18px;
+        margin-bottom: 25px;
+    }
+
+    .custom-tabs-nav {
+        display: flex;
+        gap: 8px;
+        background: #f1f5f9;
+        padding: 5px;
+        border-radius: 10px;
+        list-style: none;
+        margin: 0;
+    }
+
+    .custom-tab-btn {
+        border: none;
+        background: transparent;
+        color: #475569;
+        font-weight: 600;
+        font-size: 14px;
+        padding: 9px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        outline: none !important;
+        white-space: nowrap;
+    }
+
+        .custom-tab-btn:hover {
+            color: #0f172a;
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .custom-tab-btn.active {
+            background: #ffffff;
+            color: #0d5487;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+            font-weight: 700;
+        }
+
+        .custom-tab-btn .tab-pill {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 12px;
+            background: #e2e8f0;
+            color: #334155;
+            transition: all 0.2s ease;
+        }
+
+        .custom-tab-btn.active .tab-pill {
+            background: #0d5487;
+            color: #ffffff;
+        }
+
+        .custom-tab-btn .tab-pill-accent {
+            background: #fed7aa;
+            color: #c2410c;
+        }
+
+        .custom-tab-btn.active .tab-pill-accent {
+            background: #ff8e2b;
+            color: #ffffff;
+        }
+
+    /* Search Box */
+    .search-container {
+        position: relative;
+        width: 100%;
+    }
+
+        .search-container i.search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+    .search-input {
+        width: 100%;
+        padding: 9px 38px 9px 38px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 13px;
+        color: #1e293b;
+        background: #f8fafc;
+        transition: all 0.2s ease;
+        outline: none;
+    }
+
+        .search-input:focus {
+            background: #ffffff;
+            border-color: #0284c7;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
+
+    .clear-search-btn {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #94a3b8;
+        cursor: pointer;
+        display: none;
+        padding: 2px;
+        font-size: 12px;
+    }
+
+        .clear-search-btn:hover {
+            color: #ef4444;
+        }
+
+    /* Supporter Section Cards */
+    .supporter-section-card {
+        background: #ffffff;
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+        margin-bottom: 30px;
+        overflow: hidden;
+        transition: box-shadow 0.3s ease;
+    }
+
+        .supporter-section-card:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+        }
+
+    .section-header {
+        padding: 18px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+        .section-header.header-orange {
+            background: linear-gradient(to right, #fffaf5, #ffffff);
+            border-left: 5px solid #ff8e2b;
+        }
+
+        .section-header.header-blue {
+            background: linear-gradient(to right, #f4f9ff, #ffffff);
+            border-left: 5px solid #0d5487;
+        }
+
+    .section-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .section-icon-badge {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+    }
+
+    .badge-icon-orange {
+        background: #ffedd5;
+        color: #ea580c;
+    }
+
+    .badge-icon-blue {
+        background: #e0f2fe;
+        color: #0369a1;
+    }
+
+    .section-title-wrap h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin: 0;
+        color: #0f172a;
+    }
+
+    .section-title-wrap span {
+        font-size: 13px;
+        color: #64748b;
+        display: block;
+        margin-top: 2px;
+    }
+
+    .donor-count-badge {
+        font-size: 12px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 20px;
+    }
+
+    .count-badge-orange {
+        background: #ffedd5;
+        color: #c2410c;
+    }
+
+    .count-badge-blue {
+        background: #e0f2fe;
+        color: #0369a1;
+    }
+
+    /* Supporter Grid & Items */
+    .donor-list-body {
+        padding: 22px;
+    }
+
+    .donor-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 12px;
+    }
+
+    .donor-grid-compact {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 10px;
+    }
+
+    .donor-item-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+    }
+
+        .donor-item-card:hover {
+            transform: translateY(-2px);
+            border-color: #cbd5e1;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+            background: #fafcff;
+        }
+
+        .donor-item-card.highlight-orange:hover {
+            border-color: #ff8e2b;
+            box-shadow: 0 6px 16px rgba(255, 142, 43, 0.12);
+        }
+
+        .donor-item-card.highlight-blue:hover {
+            border-color: #0284c7;
+            box-shadow: 0 6px 16px rgba(2, 132, 199, 0.12);
+        }
+
+    /* Donor Avatar Initials */
+    .donor-avatar {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    .avatar-orange {
+        background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%);
+        color: #c2410c;
+        border: 1px solid #fdba74;
+    }
+
+    .avatar-blue {
+        background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+        color: #0369a1;
+        border: 1px solid #7dd3fc;
+    }
+
+    .donor-info {
+        flex-grow: 1;
+        min-width: 0;
+    }
+
+    .donor-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #1e293b;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .donor-tag {
+        font-size: 11px;
+        color: #64748b;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: 1px;
+    }
+
+    /* Appreciation Quote Banner */
+    .appreciation-banner {
+        background: #ffffff;
+        border: 1px dashed #cbd5e1;
+        border-radius: 12px;
+        padding: 24px;
+        text-align: center;
+        margin-top: 15px;
+    }
+
+        .appreciation-banner p {
+            color: #475569;
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .appreciation-banner i {
+            color: #e11d48;
+            margin: 0 4px;
+        }
+
+    /* Tab Transition */
+    .tab-pane-content {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+        .tab-pane-content.active {
+            display: block;
+            opacity: 1;
+        }
+
+    /* No Results State */
+    .no-results-state {
+        display: none;
+        text-align: center;
+        padding: 40px 20px;
+        background: #ffffff;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        margin-bottom: 30px;
+    }
+
+        .no-results-state i {
+            font-size: 36px;
+            color: #94a3b8;
+            margin-bottom: 12px;
+        }
+
+        .no-results-state h4 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        .no-results-state p {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 0;
+        }
+
+    /* Responsive Tweaks */
+    @@media (max-width: 768px) {
+        .support-betkanu-block {
+            padding: 20px 15px;
+        }
+
+            .support-betkanu-block h3 {
+                font-size: 20px;
+            }
+
+        .custom-tabs-nav {
+            width: 100%;
+            justify-content: stretch;
+        }
+
+        .custom-tab-btn {
+            flex: 1;
+            text-align: center;
+            justify-content: center;
+            padding: 8px 10px;
+            font-size: 13px;
+        }
+
+        .donor-grid, .donor-grid-compact {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<style>
+    .sup-empty-category {
+        font-size: 13px;
+        color: #64748b;
+        margin: 0;
+        padding: 12px 4px;
+    }</style>
+<div id="wrapper" class="supporters-page">
+    <!-- Donation Hero Card Section -->
+    <section class="padding-top-30 padding-bottom-20">
+        <div class="container">
+            <div id="donate" class="support-betkanu-block margin-bottom-10">
+                <div class="text-center">
+                    <h3><i class="fa fa-heart text-danger"></i> Support BET KANU</h3>
+                    @*  <p class="lead-text">Choose your region to support our digital tools and media for the Syriac language.</p> *@
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 col-md-8 col-sm-12">
+                        <div class="donorbox-action-card">
+                            <h4>Donate once or become our monthly supporter</h4>
+                            <p class="currencies-subtitle">
+                                <i class="fa fa-globe text-info"></i> Supported Currencies: USD, EUR, SEK, &amp; GBP
+                            </p>
+                            <a href="https://donorbox.org/bet-kanu-monthly-support" target="_blank" rel="noopener noreferrer" class="btn btn-donorbox-primary">
+                                <span>Donate with Donorbox</span>
+                                <i class="fa fa-external-link"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Area -->
+    <main class="padding-bottom-60">
+        <div class="container">
+            <!-- Navigation Toolbar: Tabs & Search -->
+            <div class="controls-toolbar-card">
+                <div class="row align-items-center g-3">
+                    <div class="col-lg-7 col-md-7 col-sm-12">
+                        <ul class="custom-tabs-nav" role="tablist">
+                            <li role="presentation" style="flex:1">
+                                <button type="button" class="custom-tab-btn active w-100" id="tabBtnCurrent" onclick="switchSupporterTab('current')">
+                                    <i class="fa fa-calendar-check-o text-warning"></i>
+                                    <span>@Model.CurrentYear Supporters</span>
+                                    <span class="tab-pill tab-pill-accent">Current</span>
+                                </button>
+                            </li>
+                            <li role="presentation" style="flex:1">
+                                <button type="button" class="custom-tab-btn w-100" id="tabBtnPrevious" onclick="switchSupporterTab('previous')">
+                                    <i class="fa fa-history text-primary"></i>
+                                    <span>All Previous Years</span>
+                                    <span class="tab-pill">Archive</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <div class="search-container">
+                            <i class="fa fa-search search-icon"></i>
+                            <input type="text" id="supporterSearchInput" class="search-input" placeholder="Search supporter by name..." oninput="filterSupporters(this.value)" />
+                            <button type="button" id="clearSearchBtn" class="clear-search-btn" onclick="clearSearch()" title="Clear search">
+                                <i class="fa fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="noResultsState" class="no-results-state">
+                <i class="fa fa-search-minus"></i>
+                <h4>No matching supporters found</h4>
+                <p>Try typing a different name or clear the search to view all supporters.</p>
+            </div>
+
+            <div id="tabPaneCurrent" class="tab-pane-content active">
+                <div class="row">
+                    @foreach (var group in Model.CurrentSections)
+                    {
+                        @await Html.PartialAsync("_SupporterSection", group)
+                    }
+                </div>
+            </div>
+
+            <div id="tabPanePrevious" class="tab-pane-content">
+                <div class="row">
+                    @foreach (var group in Model.HistoricalSections)
+                    {
+                        @await Html.PartialAsync("_SupporterSection", group)
+                    }
+                </div>
+            </div>
+
+            <div class="appreciation-banner">
+                <p>
+                    <i class="fa fa-heart"></i> Thank you to every supporter, volunteer, and organization making our mission possible.
+                    Together, we are preserving our beautiful Syriac heritage for generations to come.
+                </p>
+            </div>
+        </div>
+    </main>
+</div>
+
+@section scripts {
+    <script>
+        function switchSupporterTab(tabName) {
+            const current = tabName === 'current';
+            document.getElementById('tabPaneCurrent').classList.toggle('active', current);
+            document.getElementById('tabPanePrevious').classList.toggle('active', !current);
+            document.getElementById('tabBtnCurrent').classList.toggle('active', current);
+            document.getElementById('tabBtnPrevious').classList.toggle('active', !current);
+            filterSupporters(document.getElementById('supporterSearchInput').value);
+        }
+
+        function filterSupporters(query) {
+            const term = (query || '').toLowerCase().trim();
+            const clearBtn = document.getElementById('clearSearchBtn');
+            const emptyState = document.getElementById('noResultsState');
+            clearBtn.style.display = term ? 'block' : 'none';
+            const pane = document.querySelector('.tab-pane-content.active');
+            if (!pane) return;
+            let matched = 0;
+            pane.querySelectorAll('.donor-item-card').forEach(card => {
+                const name = card.getAttribute('data-name') || '';
+                const visible = term === '' || name.includes(term);
+                card.style.display = visible ? 'flex' : 'none';
+                if (visible) matched++;
+            });
+            emptyState.style.display = term && matched === 0 ? 'block' : 'none';
+        }
+
+        function clearSearch() {
+            const search = document.getElementById('supporterSearchInput');
+            search.value = '';
+            filterSupporters('');
+            search.focus();
+        }
+    </script>
+}
+
+
+@* @{
     ViewBag.Title = "Supporters";
 }
 <style>
@@ -447,7 +1087,7 @@
             <div id="donate" class="support-betkanu-block margin-bottom-10">
                 <div class="text-center">
                     <h3><i class="fa fa-heart text-danger"></i> Support BET KANU</h3>
-                   @*  <p class="lead-text">Choose your region to support our digital tools and media for the Syriac language.</p> *@
+                   @*  <p class="lead-text">Choose your region to support our digital tools and media for the Syriac language.</p> 
                 </div>
                 
                 <div class="row justify-content-center">
@@ -1081,3 +1721,4 @@
         }
     </script>
 }
+ *@

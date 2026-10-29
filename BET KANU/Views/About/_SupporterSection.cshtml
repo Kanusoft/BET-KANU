@@ -1,0 +1,35 @@
+@model SupporterSectionViewModel
+<div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="supporter-section-card">
+        <div class="section-header header-@Model.Theme">
+            <div class="section-title-wrap">
+                <div class="section-icon-badge badge-icon-@Model.Theme">
+                    <i class="fa @Model.Icon"></i>
+                </div>
+                <div>
+                    <h3>@Model.Title</h3>
+                    <span>@(Model.Historical ? "All Previous Years" : "Current Year")</span>
+                </div>
+            </div>
+            <span class="donor-count-badge count-badge-@Model.Theme" id="count-@Model.Key">@Model.Cards.Count</span>
+        </div>
+        <div class="donor-list-body">
+            <div class="@(Model.Historical ? "donor-grid-compact" : "donor-grid")" id="grid-@Model.Key">
+                @foreach (var card in Model.Cards)
+                {
+                    <div class="donor-item-card highlight-@Model.Theme" data-name="@card.Name.ToLowerInvariant()">
+                        <div class="donor-avatar avatar-@Model.Theme">@card.Initials</div>
+                        <div class="donor-info">
+                            <h4 class="donor-name" title="@card.Name">@card.Name</h4>
+                            <span class="donor-tag">@card.Tag</span>
+                        </div>
+                    </div>
+                }
+                @if (Model.Cards.Count == 0)
+                {
+                    <p class="sup-empty-category">No supporters listed in this category yet.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
