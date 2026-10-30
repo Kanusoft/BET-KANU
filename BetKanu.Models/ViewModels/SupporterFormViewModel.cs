@@ -1,4 +1,4 @@
-﻿using BetKanu.Models.Common;
+using BetKanu.Models.Common;
 using System.ComponentModel.DataAnnotations;
 
 
@@ -82,7 +82,9 @@ namespace BetKanu.Models.ViewModels
         public string Key { get; init; } = string.Empty;
         public SupporterType Type { get; init; }
         public bool Historical { get; init; }
+        public string Subtitle { get; init; } = string.Empty;
         public IReadOnlyList<SupporterCardViewModel> Cards { get; init; } = Array.Empty<SupporterCardViewModel>();
+        public string ColumnClass { get; set; } = "col-lg-4 col-md-6 col-sm-12";
 
         public string Title => Type switch
         {
@@ -99,37 +101,98 @@ namespace BetKanu.Models.ViewModels
         };
     }
 
+    /// <summary>
+    /// One public tab per recognition year for supporters in the "Current" period.
+    /// </summary>
+    public sealed class SupporterYearTabViewModel
+    {
+        public int Year { get; init; }
+        public bool IsCurrentYear { get; init; }
+        public bool IsUpcoming { get; init; }
+        public string Key => $"year-{Year}";
+        public IReadOnlyList<SupporterSectionViewModel> Sections { get; init; } = Array.Empty<SupporterSectionViewModel>();
+    }
+
     public sealed class SupportersPageViewModel
     {
+        public const string PreviousTabKey = "previous";
+
         public int CurrentYear { get; init; }
-        public IReadOnlyList<SupporterSectionViewModel> CurrentSections { get; init; } = Array.Empty<SupporterSectionViewModel>();
+        public IReadOnlyList<SupporterYearTabViewModel> YearTabs { get; init; } = Array.Empty<SupporterYearTabViewModel>();
         public IReadOnlyList<SupporterSectionViewModel> HistoricalSections { get; init; } = Array.Empty<SupporterSectionViewModel>();
+        public string DefaultTabKey { get; init; } = PreviousTabKey;
 
         public static SupportersPageViewModel FromEntities(IReadOnlyCollection<Supporter> items, int year)
         {
-            var frequencies = new[] { SupporterType.Monthly, SupporterType.Yearly, SupporterType.OneTime };
+            var current = items.Where(x => x.Period == (int)SupporterPeriod.Current).ToList();
+            var previous = items.Where(x => x.Period == (int)SupporterPeriod.Previous).ToList();
+
+            // Every recognition year used by a current supporter gets its own tab (newest first).
+            var years = current.Where(x => x.RecognitionYear > 0)
+                .Select(x => x.RecognitionYear)
+                .Distinct()
+                .OrderByDescending(x => x)
+                .ToList();
+            if (years.Count == 0) years.Add(year);
+
+            // Open the calendar year's tab by default; otherwise the newest year.
+            int defaultYear = years.Contains(year) ? year : years[0];
+
+            var tabs = years.Select(tabYear =>
+            {
+                // Current supporters without a known year (legacy, stored as 0) show in the default tab.
+                var tabItems = current.Where(x => x.RecognitionYear == tabYear
+                    || (x.RecognitionYear <= 0 && tabYear == defaultYear));
+
+                return new SupporterYearTabViewModel
+                {
+                    Year = tabYear,
+                    IsCurrentYear = tabYear == year,
+                    IsUpcoming = tabYear > year,
+                    Sections = BuildSections(tabItems, historical: false, $"year-{tabYear}", $"{tabYear} Supporters")
+                };
+            }).ToList();
+
             return new SupportersPageViewModel
             {
                 CurrentYear = year,
-                CurrentSections = frequencies.Select(type => BuildSection(items, type, historical: false)).ToList(),
-                HistoricalSections = frequencies.Select(type => BuildSection(items, type, historical: true)).ToList()
+                YearTabs = tabs,
+                HistoricalSections = BuildSections(previous, historical: true, "historic", "All Previous Years"),
+                DefaultTabKey = $"year-{defaultYear}"
             };
         }
 
-        private static SupporterSectionViewModel BuildSection(
-            IEnumerable<Supporter> items, SupporterType type, bool historical)
+        private static IReadOnlyList<SupporterSectionViewModel> BuildSections(
+            IEnumerable<Supporter> items, bool historical, string keyPrefix, string subtitle)
         {
-            int period = historical ? (int)SupporterPeriod.Previous : (int)SupporterPeriod.Current;
+            var list = items.ToList();
+            var frequencies = new[] { SupporterType.Monthly, SupporterType.Yearly, SupporterType.OneTime };
 
-            var matches = items.Where(x => x.Type == type && x.Period == period)
+            // Hide the Yearly column when it has no supporters, so the remaining columns fill the row.
+            var sections = frequencies
+                .Select(type => BuildSection(list, type, historical, keyPrefix, subtitle))
+                .Where(section => section.Type != SupporterType.Yearly || section.Cards.Count > 0)
+                .ToList();
+
+            string columnClass = sections.Count == 2 ? "col-lg-6 col-md-6 col-sm-12" : "col-lg-4 col-md-6 col-sm-12";
+            foreach (var section in sections) section.ColumnClass = columnClass;
+
+            return sections;
+        }
+
+        private static SupporterSectionViewModel BuildSection(
+            IEnumerable<Supporter> items, SupporterType type, bool historical, string keyPrefix, string subtitle)
+        {
+            var matches = items.Where(x => x.Type == type)
                 .OrderBy(x => x.DisplayOrder)
                 .ThenBy(x => x.Name);
 
             return new SupporterSectionViewModel
             {
-                Key = $"{(historical ? "historic" : "current")}-{type.ToString().ToLowerInvariant()}",
+                Key = $"{keyPrefix}-{type.ToString().ToLowerInvariant()}",
                 Type = type,
                 Historical = historical,
+                Subtitle = subtitle,
                 Cards = matches.Select(x => new SupporterCardViewModel
                 {
                     Name = x.Name,

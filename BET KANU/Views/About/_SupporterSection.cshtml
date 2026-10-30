@@ -1,5 +1,5 @@
 @model SupporterSectionViewModel
-<div class="col-lg-4 col-md-6 col-sm-12">
+<div class="@Model.ColumnClass">
     <div class="supporter-section-card">
         <div class="section-header header-@Model.Theme">
             <div class="section-title-wrap">
@@ -8,7 +8,7 @@
                 </div>
                 <div>
                     <h3>@Model.Title</h3>
-                    <span>@(Model.Historical ? "All Previous Years" : "Current Year")</span>
+                    <span>@Model.Subtitle</span>
                 </div>
             </div>
             <span class="donor-count-badge count-badge-@Model.Theme" id="count-@Model.Key">@Model.Cards.Count</span>

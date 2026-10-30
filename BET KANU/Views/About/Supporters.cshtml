@@ -388,9 +388,9 @@
         font-weight: 600;
         color: #1e293b;
         margin: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        line-height: 1.3;
+        /* Show the full name; long names wrap instead of being cut off with "..." */
+        overflow-wrap: anywhere;
     }
 
     .donor-tag {
@@ -501,7 +501,22 @@
         color: #64748b;
         margin: 0;
         padding: 12px 4px;
-    }</style>
+    }
+
+    /* Year tabs sit in one full-width row; on narrow screens they scroll sideways instead of wrapping. */
+    .custom-tabs-nav {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
+        .custom-tabs-nav li {
+            min-width: 170px;
+        }
+
+        .custom-tabs-nav .custom-tab-btn {
+            justify-content: center;
+        }
+    </style>
 <div id="wrapper" class="supporters-page">
     <!-- Donation Hero Card Section -->
     <section class="padding-top-30 padding-bottom-20">
@@ -535,18 +550,31 @@
         <div class="container">
             <!-- Navigation Toolbar: Tabs & Search -->
             <div class="controls-toolbar-card">
-                <div class="row align-items-center g-3">
-                    <div class="col-lg-7 col-md-7 col-sm-12">
+                <div class="row justify-content-center g-3">
+                    <div class="col-12">
                         <ul class="custom-tabs-nav" role="tablist">
+                            @foreach (var tab in Model.YearTabs)
+                            {
+                                var tabIcon = tab.IsCurrentYear ? "fa-calendar-check-o text-warning"
+                                    : tab.IsUpcoming ? "fa-calendar-plus-o text-success"
+                                    : "fa-calendar-o text-primary";
+                                <li role="presentation" style="flex:1">
+                                    <button type="button" class="custom-tab-btn w-100 @(tab.Key == Model.DefaultTabKey ? "active" : "")" id="tabBtn-@tab.Key" data-tab="@tab.Key" onclick="switchSupporterTab('@tab.Key')">
+                                        <i class="fa @tabIcon"></i>
+                                        <span>@tab.Year Supporters</span>
+                                        @if (tab.IsCurrentYear)
+                                        {
+                                            <span class="tab-pill tab-pill-accent">Current</span>
+                                        }
+                                        else if (tab.IsUpcoming)
+                                        {
+                                            <span class="tab-pill">Upcoming</span>
+                                        }
+                                    </button>
+                                </li>
+                            }
                             <li role="presentation" style="flex:1">
-                                <button type="button" class="custom-tab-btn active w-100" id="tabBtnCurrent" onclick="switchSupporterTab('current')">
-                                    <i class="fa fa-calendar-check-o text-warning"></i>
-                                    <span>@Model.CurrentYear Supporters</span>
-                                    <span class="tab-pill tab-pill-accent">Current</span>
-                                </button>
-                            </li>
-                            <li role="presentation" style="flex:1">
-                                <button type="button" class="custom-tab-btn w-100" id="tabBtnPrevious" onclick="switchSupporterTab('previous')">
+                                <button type="button" class="custom-tab-btn w-100 @(Model.DefaultTabKey == SupportersPageViewModel.PreviousTabKey ? "active" : "")" id="tabBtnPrevious" data-tab="@SupportersPageViewModel.PreviousTabKey" onclick="switchSupporterTab('@SupportersPageViewModel.PreviousTabKey')">
                                     <i class="fa fa-history text-primary"></i>
                                     <span>All Previous Years</span>
                                     <span class="tab-pill">Archive</span>
@@ -554,7 +582,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-lg-5 col-md-5 col-sm-12">
+                    <div class="col-lg-6 col-md-8 col-sm-12 mx-auto">
                         <div class="search-container">
                             <i class="fa fa-search search-icon"></i>
                             <input type="text" id="supporterSearchInput" class="search-input" placeholder="Search supporter by name..." oninput="filterSupporters(this.value)" />
@@ -572,16 +600,19 @@
                 <p>Try typing a different name or clear the search to view all supporters.</p>
             </div>
 
-            <div id="tabPaneCurrent" class="tab-pane-content active">
-                <div class="row">
-                    @foreach (var group in Model.CurrentSections)
-                    {
-                        @await Html.PartialAsync("_SupporterSection", group)
-                    }
+            @foreach (var tab in Model.YearTabs)
+            {
+                <div id="tabPane-@tab.Key" data-tab="@tab.Key" class="tab-pane-content @(tab.Key == Model.DefaultTabKey ? "active" : "")">
+                    <div class="row">
+                        @foreach (var group in tab.Sections)
+                        {
+                            @await Html.PartialAsync("_SupporterSection", group)
+                        }
+                    </div>
                 </div>
-            </div>
+            }
 
-            <div id="tabPanePrevious" class="tab-pane-content">
+            <div id="tabPanePrevious" data-tab="@SupportersPageViewModel.PreviousTabKey" class="tab-pane-content @(Model.DefaultTabKey == SupportersPageViewModel.PreviousTabKey ? "active" : "")">
                 <div class="row">
                     @foreach (var group in Model.HistoricalSections)
                     {
@@ -602,12 +633,13 @@
 
 @section scripts {
     <script>
-        function switchSupporterTab(tabName) {
-            const current = tabName === 'current';
-            document.getElementById('tabPaneCurrent').classList.toggle('active', current);
-            document.getElementById('tabPanePrevious').classList.toggle('active', !current);
-            document.getElementById('tabBtnCurrent').classList.toggle('active', current);
-            document.getElementById('tabBtnPrevious').classList.toggle('active', !current);
+        function switchSupporterTab(tabKey) {
+            document.querySelectorAll('.custom-tab-btn[data-tab]').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-tab') === tabKey);
+            });
+            document.querySelectorAll('.tab-pane-content[data-tab]').forEach(pane => {
+                pane.classList.toggle('active', pane.getAttribute('data-tab') === tabKey);
+            });
             filterSupporters(document.getElementById('supporterSearchInput').value);
         }
 

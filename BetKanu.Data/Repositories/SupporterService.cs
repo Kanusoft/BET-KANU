@@ -14,8 +14,9 @@ public sealed class SupporterService : ISupporterService
 
     public Task<List<Supporter>> GetPublishedAsync(int currentYear, CancellationToken ct = default)
         => _context.Supporters.AsNoTracking()
-            // RecognitionYear 0 = legacy unknown year; keep those visible with historical listings.
-            .Where(x => x.IsPublished && (x.RecognitionYear == 0 || x.RecognitionYear <= currentYear))
+            // All published supporters are public, including upcoming years (shown in their own year tab).
+            // RecognitionYear 0 = legacy unknown year; still listed.
+            .Where(x => x.IsPublished)
             .OrderBy(x => x.Period)
             .ThenBy(x => x.DisplayOrder)
             .ThenBy(x => x.Name)

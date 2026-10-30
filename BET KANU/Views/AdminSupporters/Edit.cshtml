@@ -1,129 +1,146 @@
-﻿@model SupporterFormViewModel
+@model SupporterFormViewModel
 @using BET_KANU.Models
+<link rel="stylesheet" href="~/css/dashboard.css">
+
 @{
     var isEdit = Model.Id.HasValue;
     ViewBag.Title = isEdit ? "Edit Supporter" : "Add Supporter";
 }
+
+<div id="wrapper">
+    <section class="bg-grey-500 promo">
+        <div class="container">
+            <h1 style="color:white">&nbsp;@ViewBag.Title</h1>
+        </div>
+    </section>
+
+    <section>
+        <div class="container py-4">
+            <p class="text-muted mb-4">
+                <i class="fa-solid fa-circle-info me-1" aria-hidden="true"></i>
+                Add the name exactly as it should appear on the public BET KANU Supporters page. New supporters require a recognition year.
+                Use “historical year unknown” only when editing legacy records.
+            </p>
+
+            <form method="post" action="@(isEdit ? Url.Action("Edit", "AdminSupporters", new { id = Model.Id }) : Url.Action("Create", "AdminSupporters"))">
+                @Html.AntiForgeryToken()
+                <input asp-for="Id" type="hidden" />
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3 class="card-title mb-0"><i class="fa-solid fa-user me-2" aria-hidden="true"></i>Supporter Details</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <div class="form-group mb-3">
+                                            <label asp-for="Name" class="form-label">Supporter Name *</label>
+                                            <input asp-for="Name" class="form-control" maxlength="200" required />
+                                            <span asp-validation-for="Name" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label asp-for="Type" class="form-label">Supporter Type *</label>
+                                            <select asp-for="Type" class="form-control form-select" required>
+                                                <option value="1">Monthly</option>
+                                                <option value="2">Yearly</option>
+                                                <option value="3">One-Time</option>
+                                            </select>
+                                            <span asp-validation-for="Type" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label asp-for="Period" class="form-label">Period *</label>
+                                            <select asp-for="Period" class="form-control form-select" required>
+                                                <option value="@((int)SupporterPeriod.Current)">Current Supporters</option>
+                                                <option value="@((int)SupporterPeriod.Previous)">Previous Supporters</option>
+                                            </select>
+                                            <span asp-validation-for="Period" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-0">
+                                            <label asp-for="RecognitionYear" class="form-label">Recognition Year *</label>
+                                            <input asp-for="RecognitionYear" class="form-control" type="number" min="1900" max="2100" />
+                                            <span asp-validation-for="RecognitionYear" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                               @*      @if (isEdit)
+                                    {
+                                        <div class="col-md-6">
+                                            <div class="form-check mt-md-4 pt-md-2">
+                                                <input asp-for="UnknownHistoricalYear" class="form-check-input" type="checkbox" />
+                                                <label asp-for="UnknownHistoricalYear" class="form-check-label">
+                                                    Historical year is unknown
+                                                </label>
+                                                <div class="form-text">Legacy record; stored as year 0.</div>
+                                            </div>
+                                        </div>
+                                    } *@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3 class="card-title mb-0"><i class="fa-solid fa-sliders me-2" aria-hidden="true"></i>Display</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group mb-3">
+                                    <label asp-for="DisplayLabel" class="form-label">Display Label</label>
+                                    <input asp-for="DisplayLabel" class="form-control" maxlength="120" placeholder="Leave blank to use the standard type + year" />
+                                    <div class="form-text">For example: PayPal Recurring 2026, Sustaining Supporter. Does not affect the support category.</div>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <label asp-for="DisplayOrder" class="form-label">Display Order</label>
+                                    <input asp-for="DisplayOrder" type="number" min="0" max="100000" class="form-control" />
+                                    <div class="form-text">Lower values appear first.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title mb-0"><i class="fa-solid fa-globe me-2" aria-hidden="true"></i>Publication</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-check form-switch">
+                                    <input asp-for="IsPublished" class="form-check-input" type="checkbox" role="switch" />
+                                    <label asp-for="IsPublished" class="form-check-label">Published</label>
+                                </div>
+                                <div class="form-text">Confirm that the supporter has agreed to public recognition before publishing.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3 justify-content-end mt-3">
+                    <div class="col-sm-6 col-md-3">
+                        <a href="@Url.Action("Index", "AdminSupporters")" class="btn btn-secondary w-100">
+                            Cancel
+                        </a>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <button type="submit" class="btn btn-Create w-100">
+                            <i class="fa-solid @(isEdit ? "fa-floppy-disk" : "fa-plus") me-1" aria-hidden="true"></i>
+                            @(isEdit ? "Save Changes" : "Add Supporter")
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
 <style>
-    .sup-form-wrap {
-        max-width: 760px;
-        margin: 32px auto;
-        padding: 25px;
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-        background: #fff;
-    }
-
-        .sup-form-wrap h2 {
-            margin: 0 0 8px;
-        }
-
-    .sup-help {
-        color: #64748b;
-        font-size: 13px;
-        margin-bottom: 14px;
-    }
-
-    .sup-field {
-        margin: 16px 0;
-    }
-
-        .sup-field label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .sup-field .form-control {
-            display: block;
-            width: 100%;
-            border: 1px solid #cbd5e1;
-            border-radius: 7px;
-            padding: 10px;
-        }
-
-    .sup-form-actions {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-        margin-top: 22px;
-    }
-
-    .sup-form-btn {
-        background: #0284c7;
-        color: #fff;
-        border: 0;
-        padding: 10px 18px;
-        border-radius: 7px;
-        cursor: pointer;
-    }
-
-    .sup-form-back {
-        color: #475569;
-        text-decoration: none;
-        padding: 10px 14px;
-    }
-
-    .sup-validation {
-        color: #b91c1c;
-        font-size: 13px;
+    #wrapper .form-text {
+        color: #8f98c1;
     }
 </style>
-<div class="sup-form-wrap">
-    <h2>@ViewBag.Title</h2>
-    <p class="sup-help">Add the name exactly as it should appear on the public BET KANU Supporters page. New supporters require a recognition year. Use “historical year unknown” only when editing legacy records.</p>
-    <form method="post" action="@(isEdit ? Url.Action("Edit", "AdminSupporters", new { id = Model.Id }) : Url.Action("Create", "AdminSupporters"))">
-        @Html.AntiForgeryToken()
-        <input asp-for="Id" type="hidden" />
-        <div asp-validation-summary="ModelOnly" class="sup-validation"></div>
-        <div class="sup-field">
-            <label asp-for="Name">Supporter Name *</label>
-            <input asp-for="Name" class="form-control" maxlength="200" required />
-            <span asp-validation-for="Name" class="sup-validation"></span>
-        </div>
-        <div class="sup-field">
-            <label asp-for="Type">Supporter Type *</label>
-            <select asp-for="Type" class="form-control" required>
-                <option value="1">Monthly</option>
-                <option value="2">Yearly</option>
-                <option value="3">One-Time</option>
-            </select>
-            <span asp-validation-for="Type" class="sup-validation"></span>
-        </div>
-        <div class="sup-field">
-            <label asp-for="Period">Period *</label>
-            <select asp-for="Period" class="form-control" required>
-                <option value="@((int)SupporterPeriod.Current)">Current Supporters</option>
-                <option value="@((int)SupporterPeriod.Previous)">Previous Supporters</option>
-            </select>
-            <span asp-validation-for="Period" class="sup-validation"></span>
-        </div>
-        <div class="sup-field">
-            <label asp-for="RecognitionYear">Recognition Year *</label>
-            <input asp-for="RecognitionYear" class="form-control" type="number" min="1900" max="2100" />
-            <span asp-validation-for="RecognitionYear" class="sup-validation"></span>
-            @if (isEdit)
-            {
-                <div style="margin-top:8px"><label style="font-weight:400"><input asp-for="UnknownHistoricalYear" /> Historical year is unknown (legacy record; stored as year 0)</label></div>
-            }
-        </div>
-        <div class="sup-field">
-            <label asp-for="DisplayLabel">Display Label</label>
-            <input asp-for="DisplayLabel" class="form-control" maxlength="120" placeholder="Leave blank to use the standard type + year" />
-            <p class="sup-help">For example: PayPal Recurring 2026, Sustaining Supporter. Does not affect the support category.</p>
-        </div>
-        <div class="sup-field">
-            <label asp-for="DisplayOrder">Display Order</label>
-            <input asp-for="DisplayOrder" type="number" min="0" max="100000" class="form-control" />
-            <p class="sup-help">Lower values appear first.</p>
-        </div>
-        <div class="sup-field">
-            <label style="font-weight:400"><input asp-for="IsPublished" /> Published</label>
-            <p class="sup-help">Confirm that the supporter has agreed to public recognition before publishing.</p>
-        </div>
-        <div class="sup-form-actions">
-            <button type="submit" class="sup-form-btn">@(isEdit ? "Save Changes" : "Add Supporter")</button>
-            <a class="sup-form-back" href="@Url.Action("Index", "AdminSupporters")">Cancel</a>
-        </div>
-    </form>
-</div>
