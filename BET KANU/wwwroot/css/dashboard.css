@@ -19049,6 +19049,7 @@ textarea[cols] {
 .form-label {
 	display: block;
 	margin-bottom: .375rem;
+	word-wrap: normal;
 	font-weight: 600;
 	font-size: 0.875rem;
 }
