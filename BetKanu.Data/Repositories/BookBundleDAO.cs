@@ -289,9 +289,9 @@ namespace BetKanu.Data.Repositories
         /// <param name="PageNo"></param>
         /// <param name="SecNo"></param>
         /// <returns></returns>
-        private bool IsTherePreviousPage(int? BookId, int? PageNo , int? SecNo)
+        private bool IsTherePreviousPage(int? BookId, int? PageNo, int? SecNo)
         {
-            if(SecNo == 1)
+            if (SecNo == 1)
             {
                 var previousPageNumber = _db.Bundles
                      .Where(b => b.BookId == BookId && b.PageNo < PageNo)
@@ -308,7 +308,7 @@ namespace BetKanu.Data.Repositories
                     return true;
                 }
             }
-            return false;         
+            return false;
         }
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace BetKanu.Data.Repositories
                     .Select(b => b.PageNo)
                     .FirstOrDefault();
 
-                if(nextPage == 0)
+                if (nextPage == 0)
                 {
                     return true;
                 }
@@ -361,7 +361,7 @@ namespace BetKanu.Data.Repositories
                                     .Max();
 
                     return isLastPage && isLastSection;
-                }         
+                }
             }
         }
 
@@ -432,8 +432,12 @@ namespace BetKanu.Data.Repositories
             // Do not expose unreleased content from the public V2 endpoint.
             var book = await _db.Books
                 .AsNoTracking()
-                .FirstOrDefaultAsync(b => b.Id == bookId && b.IsReleased == true,
-                    cancellationToken);
+                .FirstOrDefaultAsync(
+                b => b.Id == bookId
+                && b.IsReleased == true &&
+                b.Id != 27 &&
+                b.Id != 28 ,
+                cancellationToken);
 
             if (book is null)
                 return null;
@@ -530,7 +534,7 @@ namespace BetKanu.Data.Repositories
                 .Take(2)
                 .ToListAsync(cancellationToken);
 
-            var currentItem = MapReaderItem(current, book.Name,book.DownloadableDocument ?? string.Empty, book.URL);
+            var currentItem = MapReaderItem(current, book.Name, book.DownloadableDocument ?? string.Empty, book.URL);
             currentItem.Content.IsFirst = previousCandidates.Count == 0;
             currentItem.Content.IsLast = nextCandidates.Count == 0;
 
@@ -562,7 +566,7 @@ namespace BetKanu.Data.Repositories
         }
 
         private static BkReaderWindowItemDto MapReaderItem(
-            Bundle bundle, string? bookName,string bookDownloadURL, string? bookUrl)
+            Bundle bundle, string? bookName, string bookDownloadURL, string? bookUrl)
         {
             return new BkReaderWindowItemDto
             {

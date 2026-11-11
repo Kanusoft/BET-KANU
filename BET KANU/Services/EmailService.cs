@@ -19,7 +19,7 @@ namespace BET_KANU.Services
         {
             _logger = logger;
 
-            var apiKey = configuration["SendGrid:ApiKey"];
+            var apiKey = configuration["SENDGRID_API_KEY"];
 
             if (string.IsNullOrWhiteSpace(apiKey))
             {
@@ -79,6 +79,11 @@ namespace BET_KANU.Services
             var email = MailHelper.CreateSingleEmail(
                 _from, _inbox, "[BET KANU Contact] " + subject, plainText, html);
 
+            if (_partnershipCc != null)
+            {
+                email.AddCc(_partnershipCc);
+            }
+
             email.SetReplyTo(new EmailAddress(address, OneLine(name)));
             await SendGridAsync(email);
         }
@@ -102,9 +107,9 @@ namespace BET_KANU.Services
                 ? string.Join(", ", model.HelpTypes)
                 : "None selected";
 
-            var subject = "[BET KANU] New Partnership Inquiry: " + OneLine(org);
+            var subject = "[BET KANU] New Contributor Inquiry: " + OneLine(org);
             var plainText =
-                "New Partnership Inquiry Received\n\n" +
+                "New Contribution Inquiry Received\n\n" +
                 $"Name: {name}\n" +
                 $"Organization / Business: {org}\n" +
                 $"Email: {address}\n" +
@@ -112,7 +117,7 @@ namespace BET_KANU.Services
                 $"Message:\n{message}";
 
             var html =
-                "<h2>New Partnership Inquiry</h2>" +
+                "<h2>New Contributor Inquiry</h2>" +
                 $"<p><strong>Name:</strong> {Html(name)}</p>" +
                 $"<p><strong>Organization / Business:</strong> {Html(org)}</p>" +
                 $"<p><strong>Email:</strong> {Html(address)}</p>" +
