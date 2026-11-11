@@ -69,7 +69,10 @@ namespace BET_KANU.Controllers
                     else
                     {
                         // Handle the request without any parameters
-                        var books = _unitOfWork.bKBundle.GetBooks();
+                        var books = _unitOfWork.bKBundle.GetBooks().Where(b =>
+                        b.Id != 27 &&
+                        b.Id != 28)
+                    .ToList();
 
                         if(books.Count() == 0)
                             return BadRequest("No Content");
@@ -93,31 +96,59 @@ namespace BET_KANU.Controllers
 
 
         /// <summary>
-        /// Returns the scanned content and its immediate previous/next reading units.
-        /// Public readers may call V2 without the legacy FROM header.
-        /// Unreleased books are not exposed.
+        /// BK Reader V2 endpoint.
+        /// Without bookId: Returns the available books list.
+        /// With bookId and page: Returns the scanned bundle with
+        /// its immediate previous and next bundles.
+        /// Requires FROM: BETKANU header.
         /// </summary>
-        /// <example>
-        /// GET /api/BkReader/v2?bookId=5&amp;page=10&amp;sec=2&amp;chapterNo=3
-        /// </example>
         [HttpGet("v2")]
-        public async Task<ActionResult<BkReaderWindowDto>> GetV2(
+        public async Task<IActionResult> GetV2(
             [FromQuery] int? bookId,
             [FromQuery] int? page,
             [FromQuery] int? sec = null,
             [FromQuery] int? chapterNo = null,
             CancellationToken cancellationToken = default)
         {
-            // Keep compatibility with already-printed QR codes containing ?page11.
-            page ??= GetPageFromMalformedQuery();
+            // Validate the FROM header (same behavior as V1).
+            if (!Request.Headers.TryGetValue("FROM", out var headerValue) ||
+                !string.Equals(
+                    headerValue.ToString(),
+                    "BETKANU",
+                    StringComparison.OrdinalIgnoreCase))
+            {
+                return Redirect("https://betkanu.com/home/reader");
+            }
 
-            if (!bookId.HasValue || bookId.Value <= 0)
+            // No bookId: Return the books list (same as V1).
+            if (!bookId.HasValue)
+            {
+                var books = _unitOfWork.bKBundle.GetBooks()
+                    .Where(b =>
+                        b.Id != 27 &&
+                        b.Id != 28)
+                    .ToList();
+
+                if (books.Count == 0)
+                    return BadRequest("No Content");
+
+                return Ok(books);
+            }
+
+            // Validate bookId.
+            if (bookId.Value <= 0)
                 return BadRequest("A positive bookId is required.");
+
+            // Keep compatibility with malformed QR codes.
+            // Example: ?page11 instead of ?page=11.
+            page ??= GetPageFromMalformedQuery();
 
             if (!page.HasValue || page.Value <= 0)
                 return BadRequest("A positive page is required.");
 
+            // Default section number.
             int sectionNumber = sec ?? 1;
+
             if (sectionNumber <= 0)
                 return BadRequest("sec must be a positive number.");
 
@@ -131,7 +162,10 @@ namespace BET_KANU.Controllers
                     cancellationToken);
 
                 if (window is null)
-                    return BadRequest("Released book or requested content not found.");
+                {
+                    return BadRequest(
+                        "Released book or requested content not found.");
+                }
 
                 return Ok(window);
             }
