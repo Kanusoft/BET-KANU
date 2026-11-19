@@ -1,0 +1,146 @@
+@model PartnerContributorDetailsViewModel
+@using BetKanu.Models.Common
+<link rel="stylesheet" href="~/css/dashboard.css">
+<link rel="stylesheet" href="~/css/collaboration-admin.css">
+
+@{
+    ViewBag.Title = Model.Item.Name;
+    var item = Model.Item;
+}
+
+<div id="wrapper">
+    <section class="bg-success promo">
+        <div class="container">
+            <h1 style="color:white">&nbsp;@item.Name</h1>
+        </div>
+    </section>
+
+    <section>
+        <div class="container py-4">
+            <partial name="_CollaborationMessages" />
+
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Manger")">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index")">Partners &amp; Contributors</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@item.Name</li>
+                </ol>
+            </nav>
+
+            <div class="d-flex gap-2 mb-4">
+                <a class="btn btn-Create" href="@Url.Action("Edit", new { id = item.Id })">Edit</a>
+                <a class="btn btn-outline-secondary" href="@Url.Action("Index")">Back to list</a>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            @if (!string.IsNullOrWhiteSpace(item.LogoUrl))
+                            {
+                                <img src="@item.LogoUrl" alt="" class="collab-thumb-lg mb-3" />
+                            }
+                            else
+                            {
+                                <div class="collab-logo-placeholder mx-auto mb-3" style="width:120px;height:120px"><i class="fa-solid fa-building fa-2x"></i></div>
+                            }
+                            <h2 class="h4">@item.Name</h2>
+                            <span class="badge bg-primary">@item.Category</span>
+                            @if (item.IsActive)
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Inactive</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-header"><h3 class="card-title mb-0">Organization Details</h3></div>
+                        <div class="card-body">
+                            <dl class="row mb-0">
+                                <dt class="col-sm-3">Partner Type</dt>
+                                <dd class="col-sm-9">@(item.PartnerType ?? "—")</dd>
+                                <dt class="col-sm-3">Year</dt>
+                                <dd class="col-sm-9">@(item.Year?.ToString() ?? "—")</dd>
+                                <dt class="col-sm-3">Website</dt>
+                                <dd class="col-sm-9">
+                                    @if (!string.IsNullOrWhiteSpace(item.WebsiteUrl))
+                                    {
+                                        <a href="@item.WebsiteUrl" target="_blank" rel="noopener">@item.WebsiteUrl</a>
+                                    }
+                                    else
+                                    {
+                                        <text>—</text>
+                                    }
+                                </dd>
+                                <dt class="col-sm-3">Display Order</dt>
+                                <dd class="col-sm-9">@item.DisplayOrder</dd>
+                                <dt class="col-sm-3">Short Description</dt>
+                                <dd class="col-sm-9">@(item.ShortDescription ?? "—")</dd>
+                                <dt class="col-sm-3">Long Description</dt>
+                                <dd class="col-sm-9" style="white-space:pre-wrap">@(item.LongDescription ?? "—")</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h3 class="card-title mb-0">Projects (@item.Projects.Count)</h3>
+                            <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Edit", new { id = item.Id, tab = "projects" })">Manage</a>
+                        </div>
+                        <div class="card-body">
+                            @if (item.Projects.Count == 0)
+                            {
+                                <p class="text-muted mb-0">No projects linked.</p>
+                            }
+                            else
+                            {
+                                <ul class="mb-0">
+                                    @foreach (var p in item.Projects)
+                                    {
+                                        <li><a href="@Url.Action("Edit", "CollaborationProjects", new { id = p.Id })">@p.Title</a> (@(p.IsActive ? "Active" : "Inactive"))</li>
+                                    }
+                                </ul>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h3 class="card-title mb-0">Media (@item.Media.Count)</h3>
+                            <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Edit", new { id = item.Id, tab = "media" })">Manage</a>
+                        </div>
+                        <div class="card-body">
+                            @if (item.Media.Count == 0)
+                            {
+                                <p class="text-muted mb-0">No media files.</p>
+                            }
+                            else
+                            {
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach (var m in item.Media.Take(12))
+                                    {
+                                        if (m.MediaType == CollaborationMediaType.Image)
+                                        {
+                                            <a href="@m.FileUrl" target="_blank" rel="noopener">
+                                                <img src="@m.FileUrl" alt="@m.Title" class="collab-thumb" />
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span class="collab-file-icon" title="@m.FileName"><i class="fa-solid fa-file"></i></span>
+                                        }
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

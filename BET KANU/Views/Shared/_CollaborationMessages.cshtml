@@ -1,0 +1,21 @@
+@if (TempData["CollabSuccess"] is string success)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="status">
+        <i class="fa-solid fa-circle-check me-2" aria-hidden="true"></i>@success
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["CollabWarning"] is string warning)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="status">
+        <i class="fa-solid fa-triangle-exclamation me-2" aria-hidden="true"></i>@warning
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["CollabError"] is string error)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-circle-exclamation me-2" aria-hidden="true"></i>@error
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}

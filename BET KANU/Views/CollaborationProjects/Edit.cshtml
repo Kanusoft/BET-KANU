@@ -1,0 +1,161 @@
+@model CollaborationProjectFormViewModel
+@using BetKanu.Models.Common
+@using BetKanu.Models.ViewModels.Collaboration
+<link rel="stylesheet" href="~/css/dashboard.css">
+<link rel="stylesheet" href="~/css/collaboration-admin.css">
+
+@{
+    var isEdit = Model.Id.HasValue;
+    ViewBag.Title = isEdit ? "Edit Project" : "Add Project";
+    var mediaType = ViewBag.MediaType as CollaborationMediaType?;
+    var returnMediaUrl = isEdit
+        ? Url.Action("Edit", new { id = Model.Id, tab = "media", mediaType })
+        : string.Empty;
+}
+
+<div id="wrapper">
+    <section class="bg-grey-500 promo">
+        <div class="container">
+            <h1 style="color:white">&nbsp;@ViewBag.Title</h1>
+        </div>
+    </section>
+
+    <section>
+        <div class="container py-4">
+            <partial name="_CollaborationMessages" />
+
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Manger")">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "PartnerContributors")">Partners &amp; Contributors</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Edit", "PartnerContributors", new { id = Model.PartnerContributorId, tab = "projects" })">@Model.PartnerContributorName</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@(isEdit ? Model.Title : "New Project")</li>
+                </ol>
+            </nav>
+
+            @if (isEdit)
+            {
+                <ul class="nav nav-tabs collab-tab-nav mb-4">
+                    <li class="nav-item">
+                        <a class="nav-link @(Model.ActiveTab == "information" ? "active" : null)" href="@Url.Action("Edit", new { id = Model.Id, tab = "information" })">Information</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(Model.ActiveTab == "media" ? "active" : null)" href="@Url.Action("Edit", new { id = Model.Id, tab = "media" })">Photos &amp; Media</a>
+                    </li>
+                </ul>
+            }
+
+            @if (!isEdit || Model.ActiveTab == "information")
+            {
+                <form method="post" enctype="multipart/form-data"
+                      action="@(isEdit ? Url.Action("Edit", new { id = Model.Id }) : Url.Action("Create"))">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="PartnerContributorId" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="row g-4">
+                        <div class="col-lg-8">
+                            <div class="card mb-4">
+                                <div class="card-header"><h3 class="card-title mb-0">Project Details</h3></div>
+                                <div class="card-body">
+                                    <p class="text-muted">Organization: <strong>@Model.PartnerContributorName</strong></p>
+                                    <div class="mb-3">
+                                        <label asp-for="Title" class="form-label">Project Title *</label>
+                                        <input asp-for="Title" class="form-control" maxlength="250" required />
+                                        <span asp-validation-for="Title" class="text-danger"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label asp-for="ShortDescription" class="form-label">Short Description</label>
+                                        <textarea asp-for="ShortDescription" class="form-control" rows="3" maxlength="1000"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label asp-for="LongDescription" class="form-label">Long Description</label>
+                                        <textarea asp-for="LongDescription" class="form-control" rows="8"></textarea>
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label asp-for="ProjectLink" class="form-label">Project Link</label>
+                                            <input asp-for="ProjectLink" class="form-control" placeholder="https://..." />
+                                            <span asp-validation-for="ProjectLink" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label asp-for="ProjectType" class="form-label">Project Type</label>
+                                            <input asp-for="ProjectType" class="form-control" maxlength="150" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label asp-for="BookId" class="form-label">Linked Book</label>
+                                            <select asp-for="BookId" class="form-select">
+                                                @foreach (var book in Model.BookOptions)
+                                                {
+                                                    <option value="@book.Value" selected="@(Model.BookId?.ToString() == book.Value)">@book.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label asp-for="Year" class="form-label">Year</label>
+                                            <input asp-for="Year" type="number" min="1900" max="2100" class="form-control" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label asp-for="ContentPageId" class="form-label">Content Page Id</label>
+                                            <input asp-for="ContentPageId" type="number" min="1" class="form-control" />
+                                            <small class="text-muted">Optional advanced association. No verified page catalog yet.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card mb-4">
+                                <div class="card-header"><h3 class="card-title mb-0">Project Logo</h3></div>
+                                <div class="card-body text-center">
+                                    @if (!string.IsNullOrWhiteSpace(Model.ExistingLogoUrl))
+                                    {
+                                        <img id="projectLogoPreview" src="@Model.ExistingLogoUrl" alt="" class="collab-thumb-lg mb-3" />
+                                    }
+                                    else
+                                    {
+                                        <img id="projectLogoPreview" src="" alt="" class="collab-thumb-lg mb-3 d-none" />
+                                        <div class="collab-logo-placeholder mx-auto mb-3" style="width:120px;height:120px"><i class="fa-solid fa-image fa-2x"></i></div>
+                                    }
+                                    <input asp-for="LogoFile" id="ProjectLogoFile" type="file" accept=".jpg,.jpeg,.png,.webp" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header"><h3 class="card-title mb-0">Display Settings</h3></div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label asp-for="DisplayOrder" class="form-label">Display Order</label>
+                                        <input asp-for="DisplayOrder" type="number" min="0" class="form-control" />
+                                    </div>
+                                    <div class="form-check">
+                                        <input asp-for="IsActive" class="form-check-input" />
+                                        <label asp-for="IsActive" class="form-check-label">Active</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-Create">@(isEdit ? "Save Project" : "Create Project")</button>
+                                <a class="btn btn-outline-secondary" href="@Url.Action("Edit", "PartnerContributors", new { id = Model.PartnerContributorId, tab = "projects" })">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            }
+
+            @if (isEdit && Model.ActiveTab == "media")
+            {
+                <partial name="_CollaborationMediaGallery" model="new CollaborationMediaGalleryViewModel {
+                    PartnerContributorId = null,
+                    CollaborationProjectId = Model.Id,
+                    ParentName = Model.Title,
+                    FilterType = mediaType,
+                    Items = Model.Media,
+                    ReturnUrl = returnMediaUrl ?? string.Empty
+                }" />
+            }
+        </div>
+    </section>
+</div>
+
+<script src="~/js/collaboration-admin.js" asp-append-version="true"></script>

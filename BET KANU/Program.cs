@@ -1,5 +1,7 @@
 using BET_KANU.Services;
 using BetKanu.Data;
+using BetKanu.Data.Repositories.Collaboration;
+using BetKanu.Models.Common;
 using BetKanu.Models.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +23,11 @@ builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 builder.Services.AddScoped<
     ISupporterService,
     SupporterService>();
+builder.Services.Configure<CollaborationUploadOptions>(
+    builder.Configuration.GetSection(CollaborationUploadOptions.SectionName));
+builder.Services.AddScoped<IPartnerContributorService, PartnerContributorService>();
+builder.Services.AddScoped<ICollaborationProjectService, CollaborationProjectService>();
+builder.Services.AddScoped<ICollaborationMediaService, CollaborationMediaService>();
 
 var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<BKdbContext>(options =>

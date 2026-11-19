@@ -1,0 +1,169 @@
+@model CollaborationMediaGalleryViewModel
+@using BetKanu.Models.Common
+@{
+    string IconFor(CollaborationMediaType type) => type switch
+    {
+        CollaborationMediaType.Image => "fa-image",
+        CollaborationMediaType.Video => "fa-video",
+        CollaborationMediaType.Pdf => "fa-file-pdf",
+        CollaborationMediaType.Document => "fa-file-word",
+        _ => "fa-file"
+    };
+
+    string SizeLabel(long bytes) =>
+        bytes < 1024 ? $"{bytes} B" :
+        bytes < 1048576 ? $"{bytes / 1024.0:0.0} KB" :
+        $"{bytes / 1048576.0:0.0} MB";
+
+    var items = Model.FilterType.HasValue
+        ? Model.Items.Where(x => x.MediaType == Model.FilterType.Value).ToList()
+        : Model.Items.ToList();
+}
+
+<div class="card mb-4">
+    <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <h3 class="card-title mb-0"><i class="fa-solid fa-photo-film me-2"></i>Photos &amp; Media</h3>
+        @{
+            string BuildFilter(int? type)
+            {
+                if (Model.PartnerContributorId.HasValue)
+                    return Url.Action("Edit", "PartnerContributors", new { id = Model.PartnerContributorId, tab = "media", mediaType = type })!;
+                if (Model.CollaborationProjectId.HasValue)
+                    return Url.Action("Edit", "CollaborationProjects", new { id = Model.CollaborationProjectId, tab = "media", mediaType = type })!;
+                return Model.ReturnUrl;
+            }
+        }
+        <div class="btn-group btn-group-sm" role="group" aria-label="Media filters">
+            <a class="btn btn-outline-secondary @(Model.FilterType == null ? "active" : null)" href="@BuildFilter(null)">All</a>
+            <a class="btn btn-outline-secondary @(Model.FilterType == CollaborationMediaType.Image ? "active" : null)" href="@BuildFilter(1)">Images</a>
+            <a class="btn btn-outline-secondary @(Model.FilterType == CollaborationMediaType.Video ? "active" : null)" href="@BuildFilter(2)">Videos</a>
+            <a class="btn btn-outline-secondary @(Model.FilterType == CollaborationMediaType.Pdf ? "active" : null)" href="@BuildFilter(3)">PDFs</a>
+            <a class="btn btn-outline-secondary @(Model.FilterType == CollaborationMediaType.Document ? "active" : null)" href="@BuildFilter(4)">Documents</a>
+            <a class="btn btn-outline-secondary @(Model.FilterType == CollaborationMediaType.OtherFile ? "active" : null)" href="@BuildFilter(5)">Other</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <partial name="_CollaborationMediaUpload" model="new CollaborationMediaUploadFormViewModel {
+            PartnerContributorId = Model.PartnerContributorId,
+            CollaborationProjectId = Model.CollaborationProjectId,
+            ReturnUrl = Model.ReturnUrl,
+            IsActive = true
+        }" />
+
+        @if (items.Count == 0)
+        {
+            <div class="collab-empty">
+                <i class="fa-solid fa-folder-open fa-2x mb-2"></i>
+                <p class="mb-0">No media files yet for @Model.ParentName.</p>
+            </div>
+        }
+        else
+        {
+            <div class="collab-media-grid mt-3">
+                @foreach (var item in items.OrderBy(x => x.DisplayOrder).ThenBy(x => x.Id))
+                {
+                    <div class="collab-media-card">
+                        <div class="collab-media-preview">
+                            @if (item.MediaType == CollaborationMediaType.Image)
+                            {
+                                <a href="@item.FileUrl" target="_blank" rel="noopener">
+                                    <img src="@item.FileUrl" alt="@item.Title" />
+                                </a>
+                            }
+                            else if (item.MediaType == CollaborationMediaType.Video)
+                            {
+                                <video controls preload="metadata" src="@item.FileUrl"></video>
+                            }
+                            else
+                            {
+                                <div class="collab-file-icon" style="width:72px;height:72px;font-size:28px">
+                                    <i class="fa-solid @IconFor(item.MediaType)"></i>
+                                </div>
+                            }
+                        </div>
+                        <div class="collab-media-body">
+                            <div class="fw-semibold text-truncate" title="@item.Title">@(string.IsNullOrWhiteSpace(item.Title) ? item.FileName : item.Title)</div>
+                            <div class="collab-media-meta">@item.MediaType · @SizeLabel(item.FileSizeBytes)</div>
+                            @if (!string.IsNullOrWhiteSpace(item.Caption))
+                            {
+                                <div class="small text-muted mt-1">@item.Caption</div>
+                            }
+                            <div class="mt-2">
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Inactive</span>
+                                }
+                                <span class="badge bg-light text-dark">Order @item.DisplayOrder</span>
+                            </div>
+                            <div class="collab-actions mt-3">
+                                <a class="btn btn-sm btn-outline-secondary" href="@item.FileUrl" target="_blank" rel="noopener">Open</a>
+                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                        data-bs-toggle="modal" data-bs-target="#mediaEditModal-@item.Id">Edit</button>
+                                <form method="post" asp-controller="CollaborationMedia" asp-action="SetActive" asp-route-id="@item.Id">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="isActive" value="@(item.IsActive ? "false" : "true")" />
+                                    <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">@(item.IsActive ? "Deactivate" : "Activate")</button>
+                                </form>
+                                <form method="post" asp-controller="CollaborationMedia" asp-action="Delete" asp-route-id="@item.Id"
+                                      onsubmit="return confirm('Delete this media file? This cannot be undone.');">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="mediaEditModal-@item.Id" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form method="post" asp-controller="CollaborationMedia" asp-action="Update" asp-route-id="@item.Id">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="Id" value="@item.Id" />
+                                    <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Edit Media</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="small text-muted">@item.FileName</p>
+                                        <div class="mb-3">
+                                            <label class="form-label">Title</label>
+                                            <input name="Title" class="form-control" value="@item.Title" maxlength="250" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Caption</label>
+                                            <input name="Caption" class="form-control" value="@item.Caption" maxlength="1000" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Description</label>
+                                            <textarea name="Description" class="form-control" rows="3">@item.Description</textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Display Order</label>
+                                            <input name="DisplayOrder" type="number" min="0" class="form-control" value="@item.DisplayOrder" />
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="hidden" name="IsActive" value="false" />
+                                            <input class="form-check-input" type="checkbox" name="IsActive" value="true" id="mediaActive-@item.Id" @(item.IsActive ? "checked" : null) />
+                                            <label class="form-check-label" for="mediaActive-@item.Id">Active</label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-Create">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
