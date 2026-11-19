@@ -15,6 +15,9 @@ namespace BetKanu.Data
         public DbSet<Magazine> Magazines { get; set; } = null!;
         public DbSet<MagazineArticle> MagazineArticles { get; set; } = null!;
         public DbSet<Supporter> Supporters { get; set; } = null!;
+        public DbSet<PartnerContributor> PartnerContributors => Set<PartnerContributor>();
+        public DbSet<CollaborationProject> CollaborationProjects => Set<CollaborationProject>();
+        public DbSet<CollaborationMedia> CollaborationMedias => Set<CollaborationMedia>();
 
         public BKdbContext(DbContextOptions<BKdbContext> options) : base(options)
         {
@@ -180,7 +183,142 @@ namespace BetKanu.Data
                     .HasMaxLength(500);
             });
 
-          
+            builder.Entity<PartnerContributor>(entity =>
+            {
+                entity.ToTable("PartnerContributors");
+                entity.HasKey(x => x.Id);
+
+                entity.Property(x => x.Name)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(x => x.LogoUrl).HasMaxLength(1000);
+                entity.Property(x => x.ShortDescription).HasMaxLength(1000);
+                entity.Property(x => x.LongDescription)
+                    .HasColumnType("nvarchar(max)");
+
+                entity.Property(x => x.WebsiteUrl).HasMaxLength(1000);
+                entity.Property(x => x.PartnerType).HasMaxLength(150);
+
+                entity.Property(x => x.Category)
+                    .HasConversion<int>()
+                    .IsRequired();
+
+                entity.Property(x => x.CreatedAt)
+                    .HasColumnType("datetime2");
+
+                entity.Property(x => x.UpdatedAt)
+                    .HasColumnType("datetime2");
+
+                entity.HasIndex(x => new
+                {
+                    x.Category,
+                    x.IsActive,
+                    x.DisplayOrder
+                });
+
+                entity.HasIndex(x => new
+                {
+                    x.Year,
+                    x.IsActive
+                });
+
+                entity.HasMany(x => x.Projects)
+                    .WithOne(x => x.PartnerContributor)
+                    .HasForeignKey(x => x.PartnerContributorId)
+                    .OnDelete(DeleteBehavior.NoAction);
+            });
+
+            builder.Entity<CollaborationProject>(entity =>
+            {
+                entity.ToTable("CollaborationProjects");
+                entity.HasKey(x => x.Id);
+
+                entity.Property(x => x.Title)
+                    .IsRequired()
+                    .HasMaxLength(250);
+
+                entity.Property(x => x.LogoUrl).HasMaxLength(1000);
+                entity.Property(x => x.ShortDescription).HasMaxLength(1000);
+                entity.Property(x => x.LongDescription)
+                    .HasColumnType("nvarchar(max)");
+
+                entity.Property(x => x.ProjectLink).HasMaxLength(1000);
+                entity.Property(x => x.ProjectType).HasMaxLength(150);
+
+                entity.Property(x => x.CreatedAt)
+                    .HasColumnType("datetime2");
+
+                entity.Property(x => x.UpdatedAt)
+                    .HasColumnType("datetime2");
+
+                entity.HasIndex(x => new
+                {
+                    x.PartnerContributorId,
+                    x.DisplayOrder
+                });
+            });
+
+            builder.Entity<CollaborationMedia>(entity =>
+            {
+                entity.ToTable("CollaborationMedias", table =>
+                    table.HasCheckConstraint(
+                        "CK_CollaborationMedias_OneParent",
+                        "([PartnerContributorId] IS NOT NULL " +
+                        "AND [CollaborationProjectId] IS NULL) " +
+                        "OR ([PartnerContributorId] IS NULL " +
+                        "AND [CollaborationProjectId] IS NOT NULL)"));
+
+                entity.HasKey(x => x.Id);
+
+                entity.Property(x => x.FileName)
+                    .IsRequired()
+                    .HasMaxLength(260);
+
+                entity.Property(x => x.FileUrl)
+                    .IsRequired()
+                    .HasMaxLength(1500);
+
+                entity.Property(x => x.BlobName).HasMaxLength(700);
+                entity.Property(x => x.ContentType).HasMaxLength(150);
+
+                entity.Property(x => x.MediaType)
+                    .HasConversion<int>()
+                    .IsRequired();
+
+                entity.Property(x => x.Title).HasMaxLength(250);
+                entity.Property(x => x.Caption).HasMaxLength(1000);
+                entity.Property(x => x.Description)
+                    .HasColumnType("nvarchar(max)");
+
+                entity.Property(x => x.ThumbnailUrl)
+                    .HasMaxLength(1500);
+
+                entity.Property(x => x.CreatedAt)
+                    .HasColumnType("datetime2");
+
+                entity.HasOne(x => x.PartnerContributor)
+                    .WithMany(x => x.Media)
+                    .HasForeignKey(x => x.PartnerContributorId)
+                    .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasOne(x => x.CollaborationProject)
+                    .WithMany(x => x.Media)
+                    .HasForeignKey(x => x.CollaborationProjectId)
+                    .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasIndex(x => new
+                {
+                    x.PartnerContributorId,
+                    x.DisplayOrder
+                });
+
+                entity.HasIndex(x => new
+                {
+                    x.CollaborationProjectId,
+                    x.DisplayOrder
+                });
+            });
         }
     }
 }

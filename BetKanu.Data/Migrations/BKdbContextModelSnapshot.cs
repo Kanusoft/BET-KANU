@@ -136,6 +136,143 @@ namespace BetKanu.Data.Migrations
                     b.ToTable("Bundles");
                 });
 
+            modelBuilder.Entity("BetKanu.Models.CollaborationMedia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BlobName")
+                        .HasMaxLength(700)
+                        .HasColumnType("nvarchar(700)");
+
+                    b.Property<string>("Caption")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int?>("CollaborationProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ContentType")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(260)
+                        .HasColumnType("nvarchar(260)");
+
+                    b.Property<long>("FileSizeBytes")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("FileUrl")
+                        .IsRequired()
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MediaType")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PartnerContributorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ThumbnailUrl")
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CollaborationProjectId", "DisplayOrder");
+
+                    b.HasIndex("PartnerContributorId", "DisplayOrder");
+
+                    b.ToTable("CollaborationMedias", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_CollaborationMedias_OneParent", "([PartnerContributorId] IS NOT NULL AND [CollaborationProjectId] IS NULL) OR ([PartnerContributorId] IS NULL AND [CollaborationProjectId] IS NOT NULL)");
+                        });
+                });
+
+            modelBuilder.Entity("BetKanu.Models.CollaborationProject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ContentPageId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LogoUrl")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("LongDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PartnerContributorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProjectLink")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ProjectType")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("ShortDescription")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PartnerContributorId", "DisplayOrder");
+
+                    b.ToTable("CollaborationProjects", (string)null);
+                });
+
             modelBuilder.Entity("BetKanu.Models.Magazine", b =>
                 {
                     b.Property<int>("Id")
@@ -309,6 +446,65 @@ namespace BetKanu.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("MagazineArticles");
+                });
+
+            modelBuilder.Entity("BetKanu.Models.PartnerContributor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LogoUrl")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("LongDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("PartnerType")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("ShortDescription")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("WebsiteUrl")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int?>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Year", "IsActive");
+
+                    b.HasIndex("Category", "IsActive", "DisplayOrder");
+
+                    b.ToTable("PartnerContributors", (string)null);
                 });
 
             modelBuilder.Entity("BetKanu.Models.Product", b =>
@@ -542,17 +738,15 @@ namespace BetKanu.Data.Migrations
 
                     b.Property<string>("DisplayLabel")
                         .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
+                        .HasColumnType("nvarchar(120)")
+                        .HasColumnName("Tag");
 
                     b.Property<int>("DisplayOrder")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsPublished")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasColumnName("IsVisible");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -563,26 +757,20 @@ namespace BetKanu.Data.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Period");
 
-                    b.Property<int?>("RecognitionYear")
-                        .HasColumnType("int");
+                    b.Property<int>("RecognitionYear")
+                        .HasColumnType("int")
+                        .HasColumnName("Year");
 
                     b.Property<int>("Type")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("SupporterType");
 
                     b.Property<DateTime?>("UpdatedAtUtc")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IsPublished", "RecognitionYear", "Type", "DisplayOrder")
-                        .HasDatabaseName("IX_Supporters_PublicListing");
-
-                    b.ToTable("Supporters", null, t =>
-                        {
-                            t.HasCheckConstraint("CK_Supporters_RecognitionYear", "[RecognitionYear] IS NULL OR ([RecognitionYear] BETWEEN 1900 AND 2100)");
-
-                            t.HasCheckConstraint("CK_Supporters_Type", "[Type] IN (1, 2, 3)");
-                        });
+                    b.ToTable("Supporters", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -798,6 +986,34 @@ namespace BetKanu.Data.Migrations
                     b.Navigation("Book");
                 });
 
+            modelBuilder.Entity("BetKanu.Models.CollaborationMedia", b =>
+                {
+                    b.HasOne("BetKanu.Models.CollaborationProject", "CollaborationProject")
+                        .WithMany("Media")
+                        .HasForeignKey("CollaborationProjectId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("BetKanu.Models.PartnerContributor", "PartnerContributor")
+                        .WithMany("Media")
+                        .HasForeignKey("PartnerContributorId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("CollaborationProject");
+
+                    b.Navigation("PartnerContributor");
+                });
+
+            modelBuilder.Entity("BetKanu.Models.CollaborationProject", b =>
+                {
+                    b.HasOne("BetKanu.Models.PartnerContributor", "PartnerContributor")
+                        .WithMany("Projects")
+                        .HasForeignKey("PartnerContributorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("PartnerContributor");
+                });
+
             modelBuilder.Entity("BetKanu.Models.MagazineArticle", b =>
                 {
                     b.HasOne("BetKanu.Models.Magazine", "Magazine")
@@ -871,9 +1087,21 @@ namespace BetKanu.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BetKanu.Models.CollaborationProject", b =>
+                {
+                    b.Navigation("Media");
+                });
+
             modelBuilder.Entity("BetKanu.Models.Magazine", b =>
                 {
                     b.Navigation("Articles");
+                });
+
+            modelBuilder.Entity("BetKanu.Models.PartnerContributor", b =>
+                {
+                    b.Navigation("Media");
+
+                    b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618
         }
