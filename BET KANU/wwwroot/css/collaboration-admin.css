@@ -1,10 +1,362 @@
+/* Partners & Contributors Admin Panel Styles
+   Aligned with BET KANU dark-card dashboard UI (AdminSupporters & MagazineManager) */
+
+/* Neutralize theme.css global nav { float: left; display: inline-block; } */
+.collab-admin nav.collab-breadcrumb-nav,
+.collab-admin nav.collab-pagination-nav {
+    display: block !important;
+    float: none !important;
+    clear: both;
+    width: 100%;
+    padding: 0;
+}
+
+.collab-admin nav .breadcrumb,
+.collab-admin nav .pagination {
+    display: flex !important;
+    flex-wrap: wrap;
+    float: none !important;
+}
+
+.collab-admin nav .breadcrumb li,
+.collab-admin nav .pagination li,
+.collab-admin .collab-tab-nav li {
+    float: none !important;
+}
+
+/* Breadcrumb bar */
+.collab-admin .collab-breadcrumb {
+    background-color: #f1f5f9 !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 6px !important;
+    padding: 0.65rem 1rem !important;
+    margin: 0 !important;
+    align-items: center;
+}
+
+.collab-admin .collab-breadcrumb .breadcrumb-item,
+.collab-admin .collab-breadcrumb .breadcrumb-item a {
+    font-size: 0.9rem !important;
+    font-weight: 500;
+    line-height: 1.4;
+    text-decoration: none;
+}
+
+.collab-admin .collab-breadcrumb .breadcrumb-item a {
+    color: #0d5487 !important;
+}
+
+.collab-admin .collab-breadcrumb .breadcrumb-item a:hover {
+    color: #9f78ff !important;
+    text-decoration: underline;
+}
+
+.collab-admin .collab-breadcrumb .breadcrumb-item.active {
+    color: #475569 !important;
+    font-weight: 600;
+}
+
+.collab-admin .collab-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    content: "/" !important;
+    font-family: inherit !important;
+    color: #94a3b8 !important;
+    padding: 0 0.55rem !important;
+    font-size: 0.9rem !important;
+}
+
+/* Section intro text on light page surface */
+.collab-admin .collab-intro-text {
+    color: #5b6780 !important;
+    font-size: 0.95rem;
+}
+
+/* Tabs matching MagazineManager/_ArticleForm */
+.collab-admin .collab-tab-nav {
+    display: flex !important;
+    flex-wrap: wrap;
+    border-bottom: 2px solid #0d5487 !important;
+    margin: 0 0 1.5rem 0 !important;
+    padding: 0 !important;
+    gap: 6px;
+}
+
+.collab-admin .collab-tab-nav .nav-item {
+    margin-bottom: -2px !important;
+}
+
+.collab-admin .collab-tab-nav .nav-link {
+    color: #cbd5e1 !important;
+    background-color: #424b65 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-bottom: 2px solid #0d5487 !important;
+    border-radius: 6px 6px 0 0 !important;
+    padding: 0.65rem 1.2rem !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease !important;
+}
+
+.collab-admin .collab-tab-nav .nav-link:hover {
+    color: #fff !important;
+    background-color: #4e5978 !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+.collab-admin .collab-tab-nav .nav-link.active {
+    color: #fff !important;
+    background-color: #0d5487 !important;
+    border-color: #0d5487 !important;
+    font-weight: 600 !important;
+}
+
+.collab-admin .collab-tab-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.35rem;
+    height: 1.35rem;
+    padding: 0 0.4rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+}
+
+/* Dark Cards matching MagazineManager & AdminSupporters */
+.collab-admin .card {
+    background-color: #3e4966 !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-radius: 8px;
+    color: #e2e8f0;
+}
+
+.collab-admin .card-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background-color: transparent !important;
+    min-height: auto !important;
+    padding: 1rem 1.5rem !important;
+}
+
+.collab-admin .card-title {
+    color: #fff !important;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.collab-admin .card-body {
+    padding: 1.5rem;
+}
+
+.collab-admin .card p {
+    color: #cbd5e1;
+}
+
+.collab-admin .card .text-muted {
+    color: #9aa5c4 !important;
+}
+
+.collab-admin .card .form-text {
+    color: #8f98c1 !important;
+    font-size: 0.82rem;
+    margin-top: 0.35rem;
+}
+
+.collab-admin .card .text-danger {
+    color: #ff5b5b !important;
+}
+
+.collab-admin .card a:not(.btn):not(.page-link) {
+    color: #52baff;
+}
+
+.collab-admin .card a:not(.btn):not(.page-link):hover {
+    color: #93d5ff;
+    text-decoration: underline;
+}
+
+/* Form controls inside dark cards */
+.collab-admin .card label,
+.collab-admin .card .control-label,
+.collab-admin .card .form-label {
+    color: #fff !important;
+    margin: 0 0 0.45rem 0;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.collab-admin .card .form-check {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.collab-admin .card .form-check .form-check-input {
+    position: static !important;
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    float: none !important;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.collab-admin .card .form-check-label {
+    color: #fff !important;
+    margin: 0 !important;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.collab-admin .card .form-control,
+.collab-admin .card .form-select {
+    color: #f1f5f9 !important;
+    background-color: #424b65 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 4px !important;
+    min-height: 42px;
+    height: 42px;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+}
+
+.collab-admin .card select.form-select {
+    padding-right: 2.25rem;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23cbd5e1' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.75rem center !important;
+    background-size: 14px 10px !important;
+}
+
+.collab-admin .card select.form-select option {
+    background-color: #3e4966;
+    color: #fff;
+}
+
+.collab-admin .card textarea.form-control {
+    height: auto !important;
+    min-height: 100px;
+}
+
+.collab-admin .card input[type="file"].form-control {
+    height: auto !important;
+    min-height: 42px;
+    padding: 0.4rem 0.65rem;
+    color: #cbd5e1 !important;
+}
+
+.collab-admin .card input[type="file"].form-control::file-selector-button {
+    background-color: #363f57;
+    color: #fff;
+    border: none;
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.4rem 0.85rem;
+    margin: -0.4rem 0.75rem -0.4rem -0.65rem;
+    border-radius: 3px 0 0 3px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.collab-admin .card input[type="file"].form-control::file-selector-button:hover {
+    background-color: #4e5978;
+}
+
+.collab-admin .card .form-control::placeholder {
+    color: #8f98c1 !important;
+    opacity: 1;
+}
+
+.collab-admin .card .form-control:focus,
+.collab-admin .card .form-select:focus {
+    color: #fff !important;
+    background-color: #48526e !important;
+    border-color: #4eceb2 !important;
+    box-shadow: 0 0 0 2px rgba(78, 206, 178, 0.2) !important;
+    outline: 0;
+}
+
+.collab-admin .collab-filter-actions .btn {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Buttons alignment inside admin panel */
+.collab-admin .btn i {
+    margin-left: 0;
+    font-size: 0.9em;
+}
+
+.collab-admin .btn.btn-Create {
+    border: 1px solid #7984a0 !important;
+}
+
+.collab-admin .btn.btn-Create:hover {
+    border-color: #00a0cc !important;
+}
+
+/* Dropify dark theme tweaks */
+.collab-admin .dropify-wrapper {
+    background-color: #424b65 !important;
+    border: 1px dashed rgba(255, 255, 255, 0.2) !important;
+    border-radius: 6px !important;
+    color: #cbd5e1 !important;
+}
+
+.collab-admin .dropify-wrapper:hover {
+    background-image: linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.04) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.04) 50%,
+        rgba(255, 255, 255, 0.04) 75%,
+        transparent 75%,
+        transparent
+    ) !important;
+}
+
+.collab-admin .dropify-wrapper .dropify-preview {
+    background-color: #424b65 !important;
+}
+
+.collab-admin .dropify-wrapper .dropify-preview .dropify-render img {
+    background-color: #f8fafc !important;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+/* Tables */
+.collab-admin .table td {
+    vertical-align: middle !important;
+    color: #e2e8f0;
+}
+
+.collab-admin .table td .fw-semibold {
+    color: #fff;
+}
+
+.collab-admin .table td small.text-muted {
+    color: #9aa5c4 !important;
+    display: block;
+}
+
 .collab-thumb {
     width: 48px;
     height: 48px;
     object-fit: contain;
     border-radius: 6px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    padding: 2px;
 }
 
 .collab-thumb-lg {
@@ -12,8 +364,9 @@
     height: 120px;
     object-fit: contain;
     border-radius: 8px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    padding: 6px;
 }
 
 .collab-logo-placeholder,
@@ -24,8 +377,9 @@
     align-items: center;
     justify-content: center;
     border-radius: 6px;
-    background: #e2e8f0;
-    color: #475569;
+    background: #2d3448;
+    color: #8f98c1;
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .collab-actions {
@@ -39,24 +393,126 @@
     margin: 0;
 }
 
+/* Category & Order Badges */
+.collab-badge-partner {
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 0.35em 0.65em;
+    font-weight: 600;
+}
+
+.collab-badge-contributor {
+    background: #ffedd5;
+    color: #c2410c;
+    padding: 0.35em 0.65em;
+    font-weight: 600;
+}
+
+.collab-badge-both {
+    background: #ede9fe;
+    color: #6d28d9;
+    padding: 0.35em 0.65em;
+    font-weight: 600;
+}
+
+.collab-badge-order {
+    background-color: #424b65;
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-weight: 500;
+}
+
+/* Empty states inside dark cards */
+.collab-empty {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    color: #9aa5c4;
+}
+
+.collab-empty i {
+    color: #8f98c1;
+}
+
+.collab-empty h2,
+.collab-empty h4 {
+    color: #fff !important;
+}
+
+.collab-empty p {
+    color: #9aa5c4 !important;
+}
+
+/* Media upload panel inside dark card */
+.collab-upload-box {
+    background-color: #353f59;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.collab-upload-box h4 {
+    color: #fff !important;
+}
+
+.collab-upload-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+}
+
+.collab-upload-list li {
+    font-size: 13px;
+    color: #e2e8f0;
+    padding: 4px 0;
+}
+
+/* Media Filter Pills */
+.collab-media-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.collab-media-filters .btn {
+    background-color: #424b65 !important;
+    color: #cbd5e1 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 4px !important;
+    padding: 0.3rem 0.7rem !important;
+    font-size: 0.82rem;
+}
+
+.collab-media-filters .btn:hover {
+    background-color: #4e5978 !important;
+    color: #fff !important;
+}
+
+.collab-media-filters .btn.active {
+    background-color: #0d5487 !important;
+    color: #fff !important;
+    border-color: #0d5487 !important;
+}
+
+/* Media Cards Grid inside dark card */
 .collab-media-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 16px;
 }
 
 .collab-media-card {
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    background: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 8px;
+    background: #353f59;
     overflow: hidden;
     display: flex;
     flex-direction: column;
 }
 
 .collab-media-preview {
-    height: 140px;
-    background: #f1f5f9;
+    height: 150px;
+    background: #2d3448;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -71,40 +527,319 @@
 }
 
 .collab-media-body {
-    padding: 12px;
+    padding: 14px;
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    color: #f1f5f9;
+}
+
+.collab-media-body .collab-actions {
+    margin-top: auto;
+    padding-top: 12px;
 }
 
 .collab-media-meta {
-    color: #64748b;
+    color: #9aa5c4;
     font-size: 12px;
+    margin-top: 2px;
 }
 
-.collab-upload-list {
+/* Details page definition list & project list */
+.collab-dl dt {
+    color: #9aa5c4;
+    font-weight: 600;
+    margin-bottom: 0.45rem;
+}
+
+.collab-dl dd {
+    color: #f1f5f9;
+    margin-bottom: 0.75rem;
+}
+
+.collab-detail-list {
     list-style: none;
+    margin: 0;
     padding: 0;
-    margin: 8px 0 0;
 }
 
-.collab-upload-list li {
-    font-size: 13px;
-    color: #475569;
-    padding: 4px 0;
+.collab-detail-list li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.collab-tab-nav .nav-link {
+.collab-detail-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* Pagination on dark card */
+.collab-admin .pagination .page-link {
+    background-color: #424b65;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #f1f5f9;
+}
+
+.collab-admin .pagination .page-link:hover {
+    background-color: #4e5978;
+    color: #fff;
+}
+
+.collab-admin .pagination .page-item.disabled .page-link {
+    background-color: #363f57;
+    border-color: rgba(255, 255, 255, 0.06);
+    color: #8f98c1;
+}
+
+/* Dark-themed modals matching AdminSupporters & MagazineManager */
+html.collab-modal-open,
+html.collab-modal-open body,
+html:has(.collab-modal.show),
+html:has(.collab-modal.show) body {
+    overflow: hidden !important;
+}
+
+body.modal-open .collab-modal.modal,
+.collab-modal.modal {
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    z-index: 10550 !important;
+    padding: 1rem !important;
+    background-color: rgba(0, 0, 0, 0.45) !important;
+}
+
+.collab-modal .modal-dialog {
+    margin: 0 auto !important;
+    min-height: calc(100vh - 2rem) !important;
+    max-height: calc(100vh - 2rem) !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+.collab-modal .modal-content {
+    background-color: #3e4966 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+    color: #fff !important;
+    width: 100% !important;
+    max-height: calc(100vh - 2rem) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+}
+
+.collab-modal .modal-content > form {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    max-height: calc(100vh - 2rem) !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+}
+
+.collab-modal .modal-header,
+.collab-modal .modal-footer {
+    flex-shrink: 0 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    padding: 0.95rem 1.25rem !important;
+}
+
+.collab-modal .modal-footer {
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.collab-modal .modal-body {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    padding: 1.15rem 1.25rem !important;
+}
+
+.collab-modal .modal-title,
+.collab-modal .modal-body p,
+.collab-modal .form-label,
+.collab-modal .form-check-label {
+    color: #fff !important;
+}
+
+.collab-modal .form-label {
+    margin: 0 0 0.45rem 0;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.collab-modal .form-check {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding-left: 0;
+}
+
+.collab-modal .form-check .form-check-input {
+    position: static !important;
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    float: none !important;
+    flex-shrink: 0;
     cursor: pointer;
 }
 
-.collab-empty {
-    text-align: center;
-    padding: 2.5rem 1rem;
-    color: #64748b;
+.collab-modal .form-check-label {
+    margin: 0 !important;
+    cursor: pointer;
 }
 
-.collab-badge-partner { background: #dbeafe; color: #1d4ed8; }
-.collab-badge-contributor { background: #ffedd5; color: #c2410c; }
-.collab-badge-both { background: #ede9fe; color: #6d28d9; }
+.collab-modal .btn i {
+    margin-left: 0;
+    font-size: 0.9em;
+}
+
+.collab-modal .btn.btn-Create {
+    border: 1px solid #7984a0 !important;
+}
+
+.collab-modal .btn.btn-Create:hover {
+    border-color: #00a0cc !important;
+}
+
+.collab-modal .text-muted {
+    color: #9aa5c4 !important;
+}
+
+.collab-modal .form-control {
+    color: #f1f5f9 !important;
+    background-color: #424b65 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    min-height: 40px;
+    padding: 0.45rem 0.75rem;
+    border-radius: 4px !important;
+}
+
+.collab-modal textarea.form-control {
+    height: auto !important;
+    min-height: 76px;
+}
+
+.collab-modal .form-control:focus {
+    color: #fff !important;
+    background-color: #48526e !important;
+    border-color: #4eceb2 !important;
+    box-shadow: 0 0 0 2px rgba(78, 206, 178, 0.2) !important;
+}
+
+.collab-modal .btn-close {
+    filter: invert(1) !important;
+}
+
+/* Tab bar wrapper with Preview action on Edit page */
+.collab-admin .collab-tab-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 0.75rem;
+    border-bottom: 2px solid #0d5487;
+    margin-bottom: 1.5rem;
+}
+
+.collab-admin .collab-tab-header .collab-tab-nav {
+    border-bottom: none !important;
+    margin-bottom: 0 !important;
+}
+
+.collab-admin .collab-tab-header .collab-tab-nav .nav-item {
+    margin-bottom: 0 !important;
+}
+
+.collab-admin .collab-tab-header .collab-tab-nav .nav-link {
+    border-bottom: none !important;
+}
+
+.collab-admin .collab-tab-preview-btn {
+    margin-bottom: 0.4rem;
+}
+
+/* Admin Preview Page (mirrors public PartnerDetails frontend with admin header bar) */
+.collab-preview-bar {
+    text-align: left !important;
+    padding: 26px 0 !important;
+}
+
+.collab-preview-bar .btn {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0 !important;
+}
+
+.collab-preview-bar .btn i {
+    margin-left: 0;
+    font-size: 0.9em;
+}
+
+.collab-preview .btn-outline-warning {
+    border: 1px solid #ff8e2b !important;
+    color: #d97706 !important;
+}
+
+.collab-preview .btn-outline-warning:hover {
+    background-color: #ff8e2b !important;
+    color: #fff !important;
+}
+
+.collab-preview .btn-outline-primary {
+    border: 1px solid #0d5487 !important;
+    color: #0d5487 !important;
+}
+
+.collab-preview .btn-outline-primary:hover {
+    background-color: #0d5487 !important;
+    color: #fff !important;
+}
+
+.collab-preview .btn-outline-secondary {
+    border: 1px solid #64748b !important;
+    color: #475569 !important;
+}
+
+.collab-preview .btn-outline-secondary:hover {
+    background-color: #64748b !important;
+    color: #fff !important;
+}
+
+.collab-preview .headline h4 {
+    font-weight: 700;
+    color: #0b4570;
+}
+
+.collab-preview .collab-preview-media-doc {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: #f8fafc;
+    border-radius: 6px;
+    padding: 1rem;
+    color: #0d5487;
+    text-align: center;
+}
 
 @media (max-width: 768px) {
     .collab-actions {

@@ -1,7 +1,7 @@
 @model PartnerContributorIndexViewModel
 @using BetKanu.Models.Common
 <link rel="stylesheet" href="~/css/dashboard.css">
-<link rel="stylesheet" href="~/css/collaboration-admin.css">
+<link rel="stylesheet" href="~/css/collaboration-admin.css" asp-append-version="true">
 
 @{
     ViewBag.Title = "Partners & Contributors";
@@ -14,7 +14,7 @@
     };
 }
 
-<div id="wrapper">
+<div id="wrapper" class="collab-admin">
     <section class="bg-success promo">
         <div class="container">
             <h1 style="color:white">&nbsp;Partners &amp; Contributors</h1>
@@ -25,25 +25,27 @@
         <div class="container py-4">
             <partial name="_CollaborationMessages" />
 
-            <nav aria-label="breadcrumb" class="mb-3">
-                <ol class="breadcrumb mb-0">
+            <nav aria-label="breadcrumb" class="collab-breadcrumb-nav mb-3">
+                <ol class="breadcrumb collab-breadcrumb">
                     <li class="breadcrumb-item"><a href="@Url.Action("Index", "Manger")">Dashboard</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Partners &amp; Contributors</li>
                 </ol>
             </nav>
 
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
-                <p class="mb-0 text-muted">
+                <p class="mb-0 collab-intro-text">
                     Manage partner and contributor organizations, their collaboration projects, and media.
                 </p>
                 <a href="@Url.Action("Create")" class="btn btn-Create">
-                    <i class="fa-solid fa-plus me-1"></i>Add Organization
+                    <i class="fa-solid fa-plus me-1" aria-hidden="true"></i>Add Organization
                 </a>
             </div>
 
             <div class="card mb-4">
                 <div class="card-header">
-                    <h3 class="card-title mb-0"><i class="fa-solid fa-filter me-2"></i>Filters</h3>
+                    <h3 class="card-title mb-0">
+                        <i class="fa-solid fa-filter me-2" aria-hidden="true"></i>Filter Organizations
+                    </h3>
                 </div>
                 <div class="card-body">
                     <form method="get" class="row g-3 align-items-end">
@@ -53,7 +55,7 @@
                         </div>
                         <div class="col-lg-2 col-md-6">
                             <label class="form-label" for="category">Category</label>
-                            <select id="category" name="category" class="form-select">
+                            <select id="category" name="category" class="form-control form-select">
                                 <option value="">All</option>
                                 <option value="1" selected="@(Model.Category == CollaborationCategory.Partner)">Partners</option>
                                 <option value="2" selected="@(Model.Category == CollaborationCategory.Contributor)">Contributors</option>
@@ -62,7 +64,7 @@
                         </div>
                         <div class="col-lg-2 col-md-6">
                             <label class="form-label" for="isActive">Status</label>
-                            <select id="isActive" name="isActive" class="form-select">
+                            <select id="isActive" name="isActive" class="form-control form-select">
                                 <option value="">All</option>
                                 <option value="true" selected="@(Model.IsActive == true)">Active</option>
                                 <option value="false" selected="@(Model.IsActive == false)">Inactive</option>
@@ -72,24 +74,33 @@
                             <label class="form-label" for="year">Year</label>
                             <input id="year" name="year" type="number" min="1900" max="2100" value="@Model.Year" class="form-control" placeholder="All years" />
                         </div>
-                        <div class="col-lg-3 col-md-6">
-                            <button type="submit" class="btn btn-Create me-2">Apply</button>
-                            <a class="btn btn-outline-secondary" href="@Url.Action("Index")">Reset</a>
+                        <div class="col-lg-3 col-md-6 d-flex gap-2 collab-filter-actions">
+                            <button type="submit" class="btn btn-Create flex-fill">
+                                <i class="fa-solid fa-magnifying-glass me-1" aria-hidden="true"></i>Filter
+                            </button>
+                            <a class="btn btn-secondary" href="@Url.Action("Index")" title="Reset filters" aria-label="Reset filters">
+                                <i class="fa-solid fa-rotate-left me-1" aria-hidden="true"></i>Reset
+                            </a>
                         </div>
                     </form>
+                    <p class="text-muted small mt-3 mb-0">
+                        <i class="fa-solid fa-circle-info me-1" aria-hidden="true"></i>
+                        @results.TotalCount organization(s) found.
+                    </p>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-body">
-                    <p class="text-muted">@results.TotalCount organization(s)</p>
                     @if (results.Items.Count == 0)
                     {
                         <div class="collab-empty">
-                            <i class="fa-solid fa-handshake fa-3x mb-3"></i>
-                            <h2 class="h5">No organizations found</h2>
-                            <p>Try adjusting filters or add a new partner/contributor.</p>
-                            <a class="btn btn-Create" href="@Url.Action("Create")">Add Organization</a>
+                            <i class="fa-solid fa-handshake fa-3x mb-3" aria-hidden="true"></i>
+                            <h2 class="h5 mb-2">No organizations found</h2>
+                            <p class="mb-4">Try adjusting the filters or add a new partner/contributor.</p>
+                            <a class="btn btn-Create" href="@Url.Action("Create")">
+                                <i class="fa-solid fa-plus me-1" aria-hidden="true"></i>Add Organization
+                            </a>
                         </div>
                     }
                     else
@@ -98,15 +109,15 @@
                             <table class="table table-striped table-bordered align-middle mb-0">
                                 <thead>
                                     <tr>
-                                        <th style="color:white">Logo</th>
-                                        <th style="color:white">Organization</th>
-                                        <th style="color:white">Category</th>
-                                        <th style="color:white">Type</th>
-                                        <th style="color:white">Year</th>
-                                        <th style="color:white">Projects</th>
-                                        <th style="color:white">Status</th>
-                                        <th style="color:white">Order</th>
-                                        <th style="color:white">Actions</th>
+                                        <th scope="col" style="color:white">Logo</th>
+                                        <th scope="col" style="color:white">Organization</th>
+                                        <th scope="col" style="color:white">Category</th>
+                                        <th scope="col" style="color:white">Type</th>
+                                        <th scope="col" style="color:white">Year</th>
+                                        <th scope="col" style="color:white">Projects</th>
+                                        <th scope="col" style="color:white">Status</th>
+                                        <th scope="col" style="color:white">Order</th>
+                                        <th scope="col" style="color:white">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -116,11 +127,13 @@
                                             <td>
                                                 @if (!string.IsNullOrWhiteSpace(item.LogoUrl))
                                                 {
-                                                    <img src="@item.LogoUrl" alt="" class="collab-thumb" />
+                                                    <img src="@item.LogoUrl" alt="@item.Name" class="collab-thumb" />
                                                 }
                                                 else
                                                 {
-                                                    <div class="collab-logo-placeholder"><i class="fa-solid fa-building"></i></div>
+                                                    <div class="collab-logo-placeholder" aria-hidden="true">
+                                                        <i class="fa-solid fa-building"></i>
+                                                    </div>
                                                 }
                                             </td>
                                             <td>
@@ -147,22 +160,35 @@
                                             <td>@item.DisplayOrder</td>
                                             <td>
                                                 <div class="collab-actions">
-                                                    <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("Details", new { id = item.Id })">View</a>
-                                                    <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Edit", new { id = item.Id })">Edit</a>
-                                                    <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Edit", new { id = item.Id, tab = "projects" })">Projects</a>
-                                                    <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Edit", new { id = item.Id, tab = "media" })">Media</a>
+                                                    <a class="btn btn-sm btn-Create" href="@Url.Action("Details", new { id = item.Id })">
+                                                        <i class="fa-solid fa-eye me-1" aria-hidden="true"></i>Preview
+                                                    </a>
+                                                    <a class="btn btn-sm btn-primary" href="@Url.Action("Edit", new { id = item.Id })">
+                                                        <i class="fa-solid fa-pen-to-square me-1" aria-hidden="true"></i>Edit
+                                                    </a>
+                                                    <a class="btn btn-sm btn-info" href="@Url.Action("Edit", new { id = item.Id, tab = "projects" })">
+                                                        <i class="fa-solid fa-folder-open me-1" aria-hidden="true"></i>Projects
+                                                    </a>
+                                                    <a class="btn btn-sm btn-info" href="@Url.Action("Edit", new { id = item.Id, tab = "media" })">
+                                                        <i class="fa-solid fa-photo-film me-1" aria-hidden="true"></i>Media
+                                                    </a>
                                                     <form method="post" asp-action="SetActive" asp-route-id="@item.Id">
                                                         @Html.AntiForgeryToken()
                                                         <input type="hidden" name="isActive" value="@(item.IsActive ? "false" : "true")" />
                                                         <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
-                                                        <button type="submit" class="btn btn-sm btn-outline-secondary">@(item.IsActive ? "Deactivate" : "Activate")</button>
+                                                        <button type="submit" class="btn btn-sm @(item.IsActive ? "btn-secondary" : "btn-success")">
+                                                            <i class="fa-solid @(item.IsActive ? "fa-eye-slash" : "fa-eye") me-1" aria-hidden="true"></i>@(item.IsActive ? "Deactivate" : "Activate")
+                                                        </button>
                                                     </form>
-                                                    <form method="post" asp-action="Delete" asp-route-id="@item.Id"
-                                                          onsubmit="return confirm('Delete this organization? This is only allowed when it has no projects or media.');">
-                                                        @Html.AntiForgeryToken()
-                                                        <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
-                                                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                                                    </form>
+                                                    <button type="button"
+                                                            class="btn btn-sm btn-danger"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#deleteOrganizationModal"
+                                                            data-delete-url="@Url.Action("Delete", new { id = item.Id })"
+                                                            data-delete-name="@item.Name"
+                                                            aria-label="Delete @item.Name">
+                                                        <i class="fa-solid fa-trash-can me-1" aria-hidden="true"></i>Delete
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -173,7 +199,7 @@
 
                         @if (results.TotalPages > 1)
                         {
-                            <nav class="mt-3" aria-label="Organization pagination">
+                            <nav class="mt-3 collab-pagination-nav" aria-label="Organization pagination">
                                 <ul class="pagination mb-0">
                                     <li class="page-item @(results.Page <= 1 ? "disabled" : null)">
                                         <a class="page-link" href="@Url.Action("Index", new { search = Model.Search, category = Model.Category, isActive = Model.IsActive, year = Model.Year, page = results.Page - 1, pageSize = results.PageSize })">Previous</a>
@@ -191,3 +217,42 @@
         </div>
     </section>
 </div>
+
+<div class="modal fade collab-modal collab-delete-modal"
+     id="deleteOrganizationModal"
+     tabindex="-1"
+     aria-labelledby="deleteOrganizationModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="deleteOrganizationModalLabel">Delete Organization</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-2">
+                    Are you sure you want to delete
+                    <strong class="collab-delete-name"></strong>?
+                </p>
+                <p class="mb-0 small text-muted">
+                    <i class="fa-solid fa-triangle-exclamation me-1" aria-hidden="true"></i>
+                    Deletion is only allowed when this organization has no projects or media files. To hide it temporarily, use Deactivate instead.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form method="post" action="" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa-solid fa-trash-can me-1" aria-hidden="true"></i>Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/collaboration-admin.js" asp-append-version="true"></script>
+}

@@ -403,6 +403,7 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
         Title = x.Title,
         LogoUrl = x.LogoUrl,
         ShortDescription = x.ShortDescription,
+        ProjectLink = x.ProjectLink,
         ProjectType = x.ProjectType,
         Year = x.Year,
         IsActive = x.IsActive,

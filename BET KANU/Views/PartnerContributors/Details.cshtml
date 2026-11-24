@@ -1,146 +1,335 @@
 @model PartnerContributorDetailsViewModel
 @using BetKanu.Models.Common
-<link rel="stylesheet" href="~/css/dashboard.css">
-<link rel="stylesheet" href="~/css/collaboration-admin.css">
+<link rel="stylesheet" href="~/css/collaboration-admin.css" asp-append-version="true">
 
 @{
-    ViewBag.Title = Model.Item.Name;
     var item = Model.Item;
+    ViewBag.Title = $"Preview — {item.Name}";
+
+    var categoryLabel = item.Category switch
+    {
+        CollaborationCategory.Partner => "Partner",
+        CollaborationCategory.Contributor => "Contributor",
+        CollaborationCategory.Both => "Partner & Contributor",
+        _ => item.Category.ToString()
+    };
+
+    var overviewText = !string.IsNullOrWhiteSpace(item.LongDescription)
+        ? item.LongDescription
+        : item.ShortDescription;
 }
 
-<div id="wrapper">
-    <section class="bg-success promo">
-        <div class="container">
-            <h1 style="color:white">&nbsp;@item.Name</h1>
+<div id="wrapper" class="collab-preview">
+    <!-- Admin Preview Header Bar (matches MagazineManager/PreviewArticle.cshtml) -->
+    <section class="bg-grey-500 promo collab-preview-bar">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+                <h1 style="color:white" class="mb-1">
+                    Organization Preview
+                </h1>
+                <div style="color:white; font-size: 1.05rem;">
+                    @item.Name
+                </div>
+                <div class="mt-2 d-flex flex-wrap align-items-center gap-2">
+                    @if (item.IsActive)
+                    {
+                        <span class="badge bg-success">Active (Visible on Public Site)</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Inactive (Draft Preview — Hidden from Public Site)</span>
+                    }
+                    <span class="badge bg-info text-dark">Display Order: @item.DisplayOrder</span>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap align-items-center gap-2">
+                <a href="@Url.Action("Index")" class="btn btn-secondary">
+                    <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                    Back to List
+                </a>
+                <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-primary">
+                    <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+                    Edit Organization
+                </a>
+                <form method="post" asp-action="SetActive" asp-route-id="@item.Id" class="d-inline m-0">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="isActive" value="@(item.IsActive ? "false" : "true")" />
+                    <input type="hidden" name="returnUrl" value="@Url.Action("Details", new { id = item.Id })" />
+                    <button type="submit" class="btn @(item.IsActive ? "btn-warning text-dark" : "btn-success")">
+                        <i class="fa-solid @(item.IsActive ? "fa-eye-slash" : "fa-check")" aria-hidden="true"></i>
+                        @(item.IsActive ? "Deactivate" : "Publish / Activate")
+                    </button>
+                </form>
+            </div>
         </div>
     </section>
 
-    <section>
-        <div class="container py-4">
+    <!-- Public Partner Details Hero (mirrors About/PartnerDetails.cshtml) -->
+    <section class="padding-top-30 padding-bottom-30 border-bottom-1 border-grey-300 bg-grey-50">
+        <div class="container">
             <partial name="_CollaborationMessages" />
 
-            <nav aria-label="breadcrumb" class="mb-3">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Manger")">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="@Url.Action("Index")">Partners &amp; Contributors</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">@item.Name</li>
-                </ol>
-            </nav>
-
-            <div class="d-flex gap-2 mb-4">
-                <a class="btn btn-Create" href="@Url.Action("Edit", new { id = item.Id })">Edit</a>
-                <a class="btn btn-outline-secondary" href="@Url.Action("Index")">Back to list</a>
-            </div>
-
-            <div class="row g-4">
-                <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-body text-center">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4 mb-3 mb-md-0">
+                    <div class="p-3 shadow-sm" style="background: #fff; border-radius: 8px;">
+                        <div class="card-img" style="height: 180px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
                             @if (!string.IsNullOrWhiteSpace(item.LogoUrl))
                             {
-                                <img src="@item.LogoUrl" alt="" class="collab-thumb-lg mb-3" />
+                                <img src="@item.LogoUrl" alt="@item.Name" style="max-height: 160px; max-width: 100%; object-fit: contain;">
                             }
                             else
                             {
-                                <div class="collab-logo-placeholder mx-auto mb-3" style="width:120px;height:120px"><i class="fa-solid fa-building fa-2x"></i></div>
-                            }
-                            <h2 class="h4">@item.Name</h2>
-                            <span class="badge bg-primary">@item.Category</span>
-                            @if (item.IsActive)
-                            {
-                                <span class="badge bg-success">Active</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-secondary">Inactive</span>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-8">
-                    <div class="card mb-4">
-                        <div class="card-header"><h3 class="card-title mb-0">Organization Details</h3></div>
-                        <div class="card-body">
-                            <dl class="row mb-0">
-                                <dt class="col-sm-3">Partner Type</dt>
-                                <dd class="col-sm-9">@(item.PartnerType ?? "—")</dd>
-                                <dt class="col-sm-3">Year</dt>
-                                <dd class="col-sm-9">@(item.Year?.ToString() ?? "—")</dd>
-                                <dt class="col-sm-3">Website</dt>
-                                <dd class="col-sm-9">
-                                    @if (!string.IsNullOrWhiteSpace(item.WebsiteUrl))
-                                    {
-                                        <a href="@item.WebsiteUrl" target="_blank" rel="noopener">@item.WebsiteUrl</a>
-                                    }
-                                    else
-                                    {
-                                        <text>—</text>
-                                    }
-                                </dd>
-                                <dt class="col-sm-3">Display Order</dt>
-                                <dd class="col-sm-9">@item.DisplayOrder</dd>
-                                <dt class="col-sm-3">Short Description</dt>
-                                <dd class="col-sm-9">@(item.ShortDescription ?? "—")</dd>
-                                <dt class="col-sm-3">Long Description</dt>
-                                <dd class="col-sm-9" style="white-space:pre-wrap">@(item.LongDescription ?? "—")</dd>
-                            </dl>
-                        </div>
-                    </div>
-
-                    <div class="card mb-4">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h3 class="card-title mb-0">Projects (@item.Projects.Count)</h3>
-                            <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Edit", new { id = item.Id, tab = "projects" })">Manage</a>
-                        </div>
-                        <div class="card-body">
-                            @if (item.Projects.Count == 0)
-                            {
-                                <p class="text-muted mb-0">No projects linked.</p>
-                            }
-                            else
-                            {
-                                <ul class="mb-0">
-                                    @foreach (var p in item.Projects)
-                                    {
-                                        <li><a href="@Url.Action("Edit", "CollaborationProjects", new { id = p.Id })">@p.Title</a> (@(p.IsActive ? "Active" : "Inactive"))</li>
-                                    }
-                                </ul>
-                            }
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h3 class="card-title mb-0">Media (@item.Media.Count)</h3>
-                            <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Edit", new { id = item.Id, tab = "media" })">Manage</a>
-                        </div>
-                        <div class="card-body">
-                            @if (item.Media.Count == 0)
-                            {
-                                <p class="text-muted mb-0">No media files.</p>
-                            }
-                            else
-                            {
-                                <div class="d-flex flex-wrap gap-2">
-                                    @foreach (var m in item.Media.Take(12))
-                                    {
-                                        if (m.MediaType == CollaborationMediaType.Image)
-                                        {
-                                            <a href="@m.FileUrl" target="_blank" rel="noopener">
-                                                <img src="@m.FileUrl" alt="@m.Title" class="collab-thumb" />
-                                            </a>
-                                        }
-                                        else
-                                        {
-                                            <span class="collab-file-icon" title="@m.FileName"><i class="fa-solid fa-file"></i></span>
-                                        }
-                                    }
+                                <div style="color: #94a3b8; text-align: center;">
+                                    <i class="fa-solid fa-building fa-3x mb-2" aria-hidden="true"></i>
+                                    <div style="font-size: 13px;">No logo uploaded</div>
                                 </div>
                             }
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                        <span class="badge bg-warning text-dark padding-5 padding-x-10" style="font-size: 13px; text-transform: uppercase;">
+                            <i class="fa fa-handshake-o" aria-hidden="true"></i> @categoryLabel
+                        </span>
+                        @if (!string.IsNullOrWhiteSpace(item.PartnerType))
+                        {
+                            <span class="badge bg-secondary padding-5 padding-x-10" style="font-size: 12px;">
+                                @item.PartnerType
+                            </span>
+                        }
+                        @if (item.Year.HasValue)
+                        {
+                            <span class="badge bg-info text-dark padding-5 padding-x-10" style="font-size: 12px;">
+                                @item.Year
+                            </span>
+                        }
+                    </div>
+                    <h2 class="margin-top-5 margin-bottom-5" style="font-weight: 700; color: #333;">@item.Name</h2>
+
+                    @if (!string.IsNullOrWhiteSpace(item.ShortDescription) && !string.IsNullOrWhiteSpace(item.LongDescription))
+                    {
+                        <p style="font-size: 15px; color: #555; margin-top: 8px; margin-bottom: 0;">@item.ShortDescription</p>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(item.WebsiteUrl) && item.WebsiteUrl != "#")
+                    {
+                        <div class="margin-top-15">
+                            <a href="@item.WebsiteUrl" target="_blank" rel="noopener noreferrer" class="btn btn-warning" style="font-weight: 600;">
+                                <i class="fa fa-external-link" aria-hidden="true"></i> Visit Official Website
+                            </a>
+                        </div>
+                    }
+                </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="padding-top-40 padding-bottom-40">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="headline margin-bottom-20">
+                        <h4><i class="fa fa-info-circle" aria-hidden="true"></i> Overview</h4>
+                    </div>
+                    <div class="card p-4 shadow-sm" style="background: #fff; border-radius: 8px; border-left: 4px solid #ff8e2b;">
+                        @if (!string.IsNullOrWhiteSpace(overviewText))
+                        {
+                            <p style="font-size: 16px; line-height: 1.8; color: #444; margin-bottom: 0; white-space: pre-wrap;">@overviewText</p>
+                        }
+                        else
+                        {
+                            <p style="font-size: 15px; color: #888; font-style: italic; margin-bottom: 0;">
+                                No overview description has been added yet.
+                            </p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Joint Works & Collaborations Section -->
+    <section class="padding-top-30 padding-bottom-40 bg-grey-50">
+        <div class="container">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 margin-bottom-30">
+                <div class="headline mb-0">
+                    <h4><i class="fa fa-cubes" aria-hidden="true"></i> Joint Works &amp; Collaborations</h4>
+                </div>
+                <a href="@Url.Action("Edit", new { id = item.Id, tab = "projects" })" class="btn btn-sm btn-outline-primary">
+                    <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> Manage Projects
+                </a>
+            </div>
+
+            @if (item.Projects != null && item.Projects.Count > 0)
+            {
+                <div class="row">
+                    @foreach (var work in item.Projects)
+                    {
+                        <div class="col-lg-6 col-md-6 margin-bottom-30">
+                            <div class="card card-video h-100 shadow-sm" style="background: #fff; border-radius: 8px; overflow: hidden;">
+                                <div class="card-img" style="height: 180px; overflow: hidden; background: #f9f9f9; display: flex; align-items: center; justify-content: center;">
+                                    @if (!string.IsNullOrWhiteSpace(work.LogoUrl))
+                                    {
+                                        <img src="@work.LogoUrl" alt="@work.Title" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                                    }
+                                    else
+                                    {
+                                        <i class="fa-solid fa-folder-open fa-3x" style="color: #cbd5e1;" aria-hidden="true"></i>
+                                    }
+                                </div>
+                                <div class="caption p-4">
+                                    <div class="d-flex flex-wrap gap-1 mb-2">
+                                        <span class="badge bg-secondary">@(string.IsNullOrWhiteSpace(work.ProjectType) ? "Collaboration" : work.ProjectType)</span>
+                                        @if (work.Year.HasValue)
+                                        {
+                                            <span class="badge bg-info text-dark">@work.Year</span>
+                                        }
+                                        @if (!work.IsActive)
+                                        {
+                                            <span class="badge bg-danger">Inactive (Hidden)</span>
+                                        }
+                                    </div>
+                                    <h4 class="card-title" style="font-weight: 700; color: #222;">@work.Title</h4>
+                                    @if (!string.IsNullOrWhiteSpace(work.ShortDescription))
+                                    {
+                                        <p style="font-size: 14px; color: #666;" class="mt-2">@work.ShortDescription</p>
+                                    }
+                                    <div class="d-flex flex-wrap gap-2 mt-3">
+                                        @if (!string.IsNullOrWhiteSpace(work.ProjectLink))
+                                        {
+                                            <a href="@work.ProjectLink" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-warning">
+                                                View Project <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                            </a>
+                                        }
+                                        <a href="@Url.Action("Edit", "CollaborationProjects", new { id = work.Id })" class="btn btn-sm btn-outline-primary">
+                                            <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> Edit Project
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="card p-4 shadow-sm text-center" style="background: #fff; border-radius: 8px;">
+                    <p style="font-size: 15px; color: #64748b; margin-bottom: 12px;">
+                        No collaboration projects have been added for this organization yet.
+                    </p>
+                    <div>
+                        <a href="@Url.Action("Create", "CollaborationProjects", new { partnerId = item.Id })" class="btn btn-sm btn-warning" style="font-weight: 600;">
+                            <i class="fa-solid fa-plus" aria-hidden="true"></i> Add Project
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+
+    <!-- Photos & Media Gallery Section -->
+    <section class="padding-top-40 padding-bottom-40">
+        <div class="container">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 margin-bottom-20">
+                <div class="headline mb-0">
+                    <h4><i class="fa fa-camera" aria-hidden="true"></i> Photos &amp; Media</h4>
+                </div>
+                <a href="@Url.Action("Edit", new { id = item.Id, tab = "media" })" class="btn btn-sm btn-outline-primary">
+                    <i class="fa-solid fa-photo-film" aria-hidden="true"></i> Manage Media
+                </a>
+            </div>
+
+            @if (item.Media != null && item.Media.Count > 0)
+            {
+                <div class="row">
+                    @foreach (var media in item.Media)
+                    {
+                        var mediaTitle = string.IsNullOrWhiteSpace(media.Title) ? media.FileName : media.Title;
+                        <div class="col-lg-4 col-md-6 col-sm-6 margin-bottom-20">
+                            <div class="card shadow-sm p-2 h-100" style="border-radius: 8px; background: #fff;">
+                                @if (media.MediaType == CollaborationMediaType.Image)
+                                {
+                                    <a href="@media.FileUrl" target="_blank" rel="noopener noreferrer" class="card-img" style="height: 200px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                                        <img src="@media.FileUrl" alt="@mediaTitle" style="max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 6px;">
+                                    </a>
+                                }
+                                else if (media.MediaType == CollaborationMediaType.Video)
+                                {
+                                    <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #000; border-radius: 6px; overflow: hidden;">
+                                        <video controls preload="metadata" src="@media.FileUrl" style="max-height: 100%; width: 100%;"></video>
+                                    </div>
+                                }
+                                else
+                                {
+                                    var iconClass = media.MediaType switch
+                                    {
+                                        CollaborationMediaType.Pdf => "fa-file-pdf",
+                                        CollaborationMediaType.Document => "fa-file-word",
+                                        _ => "fa-file"
+                                    };
+                                    <a href="@media.FileUrl" target="_blank" rel="noopener noreferrer" class="collab-preview-media-doc">
+                                        <i class="fa-solid @iconClass fa-3x" aria-hidden="true"></i>
+                                        <span class="fw-semibold text-truncate w-100">@mediaTitle</span>
+                                        <span class="btn btn-sm btn-outline-primary">Open File</span>
+                                    </a>
+                                }
+
+                                @if (!string.IsNullOrWhiteSpace(media.Title) || !string.IsNullOrWhiteSpace(media.Caption) || !media.IsActive)
+                                {
+                                    <div class="p-2">
+                                        @if (!string.IsNullOrWhiteSpace(media.Title))
+                                        {
+                                            <div class="fw-semibold text-truncate" style="color: #222; font-size: 14px;">@media.Title</div>
+                                        }
+                                        @if (!string.IsNullOrWhiteSpace(media.Caption))
+                                        {
+                                            <div class="small" style="color: #666;">@media.Caption</div>
+                                        }
+                                        @if (!media.IsActive)
+                                        {
+                                            <span class="badge bg-danger mt-1">Inactive (Hidden)</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="card p-4 shadow-sm text-center" style="background: #fff; border-radius: 8px;">
+                    <p style="font-size: 15px; color: #64748b; margin-bottom: 12px;">
+                        No photos or media files have been uploaded for this organization yet.
+                    </p>
+                    <div>
+                        <a href="@Url.Action("Edit", new { id = item.Id, tab = "media" })" class="btn btn-sm btn-warning" style="font-weight: 600;">
+                            <i class="fa-solid fa-upload" aria-hidden="true"></i> Upload Media
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+
+    <!-- Navigation Action Footer -->
+    <section class="padding-top-20 padding-bottom-40 bg-grey-50 border-top">
+        <div class="container text-center d-flex flex-wrap justify-content-center gap-2">
+            <a href="@Url.Action("Index")" class="btn btn-outline-secondary" style="font-weight: 600;">
+                <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back to Partners &amp; Contributors
+            </a>
+            <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-warning" style="font-weight: 600;">
+                <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> Edit Organization
+            </a>
+            <a href="@Url.Action("Edit", new { id = item.Id, tab = "projects" })" class="btn btn-outline-primary" style="font-weight: 600;">
+                <i class="fa-solid fa-folder-open" aria-hidden="true"></i> Manage Projects
+            </a>
+            <a href="@Url.Action("Edit", new { id = item.Id, tab = "media" })" class="btn btn-outline-primary" style="font-weight: 600;">
+                <i class="fa-solid fa-photo-film" aria-hidden="true"></i> Manage Media
+            </a>
         </div>
     </section>
 </div>

@@ -449,6 +449,7 @@ public sealed class PartnerContributorService : IPartnerContributorService
                 Title = p.Title,
                 LogoUrl = p.LogoUrl,
                 ShortDescription = p.ShortDescription,
+                ProjectLink = p.ProjectLink,
                 ProjectType = p.ProjectType,
                 Year = p.Year,
                 IsActive = p.IsActive,

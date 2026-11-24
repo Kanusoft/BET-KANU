@@ -1,8 +1,9 @@
 @model CollaborationProjectFormViewModel
 @using BetKanu.Models.Common
 @using BetKanu.Models.ViewModels.Collaboration
+<link href="~/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="~/css/dashboard.css">
-<link rel="stylesheet" href="~/css/collaboration-admin.css">
+<link rel="stylesheet" href="~/css/collaboration-admin.css" asp-append-version="true">
 
 @{
     var isEdit = Model.Id.HasValue;
@@ -13,7 +14,7 @@
         : string.Empty;
 }
 
-<div id="wrapper">
+<div id="wrapper" class="collab-admin">
     <section class="bg-grey-500 promo">
         <div class="container">
             <h1 style="color:white">&nbsp;@ViewBag.Title</h1>
@@ -24,8 +25,8 @@
         <div class="container py-4">
             <partial name="_CollaborationMessages" />
 
-            <nav aria-label="breadcrumb" class="mb-3">
-                <ol class="breadcrumb mb-0">
+            <nav aria-label="breadcrumb" class="collab-breadcrumb-nav mb-3">
+                <ol class="breadcrumb collab-breadcrumb">
                     <li class="breadcrumb-item"><a href="@Url.Action("Index", "Manger")">Dashboard</a></li>
                     <li class="breadcrumb-item"><a href="@Url.Action("Index", "PartnerContributors")">Partners &amp; Contributors</a></li>
                     <li class="breadcrumb-item"><a href="@Url.Action("Edit", "PartnerContributors", new { id = Model.PartnerContributorId, tab = "projects" })">@Model.PartnerContributorName</a></li>
@@ -35,12 +36,19 @@
 
             @if (isEdit)
             {
-                <ul class="nav nav-tabs collab-tab-nav mb-4">
+                <ul class="nav nav-tabs collab-tab-nav mb-4" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link @(Model.ActiveTab == "information" ? "active" : null)" href="@Url.Action("Edit", new { id = Model.Id, tab = "information" })">Information</a>
+                        <a class="nav-link @(Model.ActiveTab == "information" ? "active" : null)" href="@Url.Action("Edit", new { id = Model.Id, tab = "information" })">
+                            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                            <span>Information</span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @(Model.ActiveTab == "media" ? "active" : null)" href="@Url.Action("Edit", new { id = Model.Id, tab = "media" })">Photos &amp; Media</a>
+                        <a class="nav-link @(Model.ActiveTab == "media" ? "active" : null)" href="@Url.Action("Edit", new { id = Model.Id, tab = "media" })">
+                            <i class="fa-solid fa-photo-film" aria-hidden="true"></i>
+                            <span>Photos &amp; Media</span>
+                            <span class="collab-tab-count">@Model.Media.Count</span>
+                        </a>
                     </li>
                 </ul>
             }
@@ -56,10 +64,17 @@
 
                     <div class="row g-4">
                         <div class="col-lg-8">
-                            <div class="card mb-4">
-                                <div class="card-header"><h3 class="card-title mb-0">Project Details</h3></div>
+                            <div class="card mb-0">
+                                <div class="card-header">
+                                    <h3 class="card-title mb-0">
+                                        <i class="fa-solid fa-folder-open me-2" aria-hidden="true"></i>Project Details
+                                    </h3>
+                                </div>
                                 <div class="card-body">
-                                    <p class="text-muted">Organization: <strong>@Model.PartnerContributorName</strong></p>
+                                    <p class="mb-3">
+                                        <span class="text-muted">Organization:</span>
+                                        <strong class="text-white">@Model.PartnerContributorName</strong>
+                                    </p>
                                     <div class="mb-3">
                                         <label asp-for="Title" class="form-label">Project Title *</label>
                                         <input asp-for="Title" class="form-control" maxlength="250" required />
@@ -81,11 +96,11 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label asp-for="ProjectType" class="form-label">Project Type</label>
-                                            <input asp-for="ProjectType" class="form-control" maxlength="150" />
+                                            <input asp-for="ProjectType" class="form-control" maxlength="150" placeholder="e.g. App, Book, Video" />
                                         </div>
                                         <div class="col-md-6">
                                             <label asp-for="BookId" class="form-label">Linked Book</label>
-                                            <select asp-for="BookId" class="form-select">
+                                            <select asp-for="BookId" class="form-control form-select">
                                                 @foreach (var book in Model.BookOptions)
                                                 {
                                                     <option value="@book.Value" selected="@(Model.BookId?.ToString() == book.Value)">@book.Text</option>
@@ -94,50 +109,72 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label asp-for="Year" class="form-label">Year</label>
-                                            <input asp-for="Year" type="number" min="1900" max="2100" class="form-control" />
+                                            <input asp-for="Year" type="number" min="1900" max="2100" class="form-control" placeholder="e.g. 2026" />
                                         </div>
                                         <div class="col-md-3">
                                             <label asp-for="ContentPageId" class="form-label">Content Page Id</label>
                                             <input asp-for="ContentPageId" type="number" min="1" class="form-control" />
-                                            <small class="text-muted">Optional advanced association. No verified page catalog yet.</small>
+                                            <div class="form-text">Optional advanced association. No verified page catalog yet.</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-lg-4">
                             <div class="card mb-4">
-                                <div class="card-header"><h3 class="card-title mb-0">Project Logo</h3></div>
-                                <div class="card-body text-center">
-                                    @if (!string.IsNullOrWhiteSpace(Model.ExistingLogoUrl))
-                                    {
-                                        <img id="projectLogoPreview" src="@Model.ExistingLogoUrl" alt="" class="collab-thumb-lg mb-3" />
-                                    }
-                                    else
-                                    {
-                                        <img id="projectLogoPreview" src="" alt="" class="collab-thumb-lg mb-3 d-none" />
-                                        <div class="collab-logo-placeholder mx-auto mb-3" style="width:120px;height:120px"><i class="fa-solid fa-image fa-2x"></i></div>
-                                    }
-                                    <input asp-for="LogoFile" id="ProjectLogoFile" type="file" accept=".jpg,.jpeg,.png,.webp" class="form-control" />
+                                <div class="card-header">
+                                    <h3 class="card-title mb-0">
+                                        <i class="fa-solid fa-image me-2" aria-hidden="true"></i>Project Logo
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <input asp-for="LogoFile"
+                                           id="ProjectLogoFile"
+                                           type="file"
+                                           class="dropify"
+                                           accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                                           data-height="190"
+                                           data-show-remove="false"
+                                           data-allowed-file-extensions="jpg jpeg png webp"
+                                           data-default-file="@(isEdit && !string.IsNullOrWhiteSpace(Model.ExistingLogoUrl) ? Model.ExistingLogoUrl : "")" />
+                                    <div class="form-text mt-2 mb-0">JPG, PNG, or WebP. Max size follows CollaborationUpload settings.</div>
                                 </div>
                             </div>
-                            <div class="card mb-4">
-                                <div class="card-header"><h3 class="card-title mb-0">Display Settings</h3></div>
+
+                            <div class="card mb-0">
+                                <div class="card-header">
+                                    <h3 class="card-title mb-0">
+                                        <i class="fa-solid fa-sliders me-2" aria-hidden="true"></i>Display Settings
+                                    </h3>
+                                </div>
                                 <div class="card-body">
                                     <div class="mb-3">
                                         <label asp-for="DisplayOrder" class="form-label">Display Order</label>
                                         <input asp-for="DisplayOrder" type="number" min="0" class="form-control" />
+                                        <div class="form-text">Lower values appear first.</div>
                                     </div>
-                                    <div class="form-check">
-                                        <input asp-for="IsActive" class="form-check-input" />
+                                    <div class="form-check form-switch">
+                                        <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch" />
                                         <label asp-for="IsActive" class="form-check-label">Active</label>
                                     </div>
+                                    <div class="form-text">Controls whether this project is visible publicly.</div>
                                 </div>
                             </div>
-                            <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-Create">@(isEdit ? "Save Project" : "Create Project")</button>
-                                <a class="btn btn-outline-secondary" href="@Url.Action("Edit", "PartnerContributors", new { id = Model.PartnerContributorId, tab = "projects" })">Back</a>
-                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 justify-content-end mt-3">
+                        <div class="col-sm-6 col-md-3">
+                            <a class="btn btn-secondary w-100" href="@Url.Action("Edit", "PartnerContributors", new { id = Model.PartnerContributorId, tab = "projects" })">
+                                Back
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <button type="submit" class="btn btn-Create w-100">
+                                <i class="fa-solid @(isEdit ? "fa-floppy-disk" : "fa-plus") me-1" aria-hidden="true"></i>
+                                @(isEdit ? "Save Project" : "Create Project")
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -158,4 +195,7 @@
     </section>
 </div>
 
-<script src="~/js/collaboration-admin.js" asp-append-version="true"></script>
+@section Scripts {
+    <script src="~/plugins/fileuploads/js/dropify.js"></script>
+    <script src="~/js/collaboration-admin.js" asp-append-version="true"></script>
+}

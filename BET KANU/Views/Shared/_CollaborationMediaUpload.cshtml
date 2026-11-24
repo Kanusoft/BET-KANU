@@ -1,7 +1,9 @@
 @model CollaborationMediaUploadFormViewModel
 
-<div class="border rounded p-3 mb-3 bg-light">
-    <h4 class="h6 mb-3"><i class="fa-solid fa-cloud-arrow-up me-1"></i>Upload media</h4>
+<div class="collab-upload-box">
+    <h4 class="h6 mb-3">
+        <i class="fa-solid fa-cloud-arrow-up me-1" aria-hidden="true"></i>Upload media
+    </h4>
     <form id="collabMediaUploadForm" method="post" enctype="multipart/form-data"
           asp-controller="CollaborationMedia" asp-action="Upload">
         @Html.AntiForgeryToken()
@@ -14,11 +16,11 @@
                 <input id="MediaFiles" name="Files" type="file" class="form-control" multiple
                        accept=".jpg,.jpeg,.png,.webp,.mp4,.webm,.pdf,.docx,.xlsx,.pptx,.txt,.zip,.csv" />
                 <ul id="mediaSelectedList" class="collab-upload-list"></ul>
-                <p class="small text-muted mb-0">Images, videos, PDFs, Office documents, and approved other files. Limits follow CollaborationUpload settings.</p>
+                <div class="form-text mb-0">Images, videos, PDFs, Office documents, and approved other files. Limits follow CollaborationUpload settings.</div>
             </div>
             <div class="col-md-3">
                 <label asp-for="Title" class="form-label">Default title</label>
-                <input asp-for="Title" class="form-control" maxlength="250" />
+                <input asp-for="Title" class="form-control" maxlength="250" placeholder="Optional title" />
             </div>
             <div class="col-md-3">
                 <label asp-for="DisplayOrder" class="form-label">Display order</label>
@@ -26,15 +28,15 @@
             </div>
             <div class="col-md-6">
                 <label asp-for="Caption" class="form-label">Caption</label>
-                <input asp-for="Caption" class="form-control" maxlength="1000" />
+                <input asp-for="Caption" class="form-control" maxlength="1000" placeholder="Optional caption" />
             </div>
-            <div class="col-md-6 d-flex align-items-end">
-                <div class="form-check me-3">
-                    <input asp-for="IsActive" class="form-check-input" />
+            <div class="col-md-6 d-flex flex-wrap align-items-end justify-content-md-end gap-3">
+                <div class="form-check form-switch mb-2">
+                    <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch" />
                     <label asp-for="IsActive" class="form-check-label">Active after upload</label>
                 </div>
                 <button type="submit" class="btn btn-Create">
-                    <i class="fa-solid fa-upload me-1"></i>Upload
+                    <i class="fa-solid fa-upload me-1" aria-hidden="true"></i>Upload
                 </button>
             </div>
         </div>
