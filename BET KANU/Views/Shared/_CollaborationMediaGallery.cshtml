@@ -170,9 +170,9 @@
                                         <input name="DisplayOrder" type="number" min="0" class="form-control" value="@item.DisplayOrder" />
                                     </div>
                                     <div class="form-check form-switch">
-                                        <input type="hidden" name="IsActive" value="false" />
                                         <input class="form-check-input" type="checkbox" role="switch" name="IsActive" value="true" id="mediaActive-@item.Id" @(item.IsActive ? "checked" : null) />
                                         <label class="form-check-label" for="mediaActive-@item.Id">Active</label>
+                                        <input type="hidden" name="IsActive" value="false" />
                                     </div>
                                 </div>
                                 <div class="modal-footer">
