@@ -1,5 +1,6 @@
 @model PartnerContributorDetailsViewModel
 @using BetKanu.Models.Common
+@using BetKanu.Models.DTOs.Collaboration
 <link rel="stylesheet" href="~/css/collaboration-admin.css" asp-append-version="true">
 
 @{
@@ -187,6 +188,10 @@
                                         {
                                             <span class="badge bg-info text-dark">@work.Year</span>
                                         }
+                                        @if (work.MediaCount > 0)
+                                        {
+                                            <span class="badge bg-primary">@work.MediaCount Media</span>
+                                        }
                                         @if (!work.IsActive)
                                         {
                                             <span class="badge bg-danger">Inactive (Hidden)</span>
@@ -197,6 +202,31 @@
                                     {
                                         <p style="font-size: 14px; color: #666;" class="mt-2">@work.ShortDescription</p>
                                     }
+                                    @if (work.Media != null && work.Media.Count > 0)
+                                    {
+                                        <div class="d-flex flex-wrap align-items-center gap-2 mt-3">
+                                            @foreach (var pm in work.Media.Take(4))
+                                            {
+                                                var pmTitle = string.IsNullOrWhiteSpace(pm.Title) ? pm.FileName : pm.Title;
+                                                <a href="@pm.FileUrl" target="_blank" rel="noopener noreferrer"
+                                                   title="@pmTitle@(pm.IsActive ? "" : " (Inactive)")"
+                                                   style="position: relative; width: 56px; height: 56px; border-radius: 6px; overflow: hidden; border: 1px solid #e2e8f0; background: #f8fafc; display: inline-flex; align-items: center; justify-content: center;">
+                                                    @if (pm.MediaType == CollaborationMediaType.Image)
+                                                    {
+                                                        <img src="@pm.FileUrl" alt="@pmTitle" style="width: 100%; height: 100%; object-fit: cover;" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa-solid @(pm.MediaType == CollaborationMediaType.Video ? "fa-video" : pm.MediaType == CollaborationMediaType.Pdf ? "fa-file-pdf" : "fa-file")" style="color: #0d5487;" aria-hidden="true"></i>
+                                                    }
+                                                </a>
+                                            }
+                                            @if (work.Media.Count > 4)
+                                            {
+                                                <span class="badge bg-secondary">+@(work.Media.Count - 4) more</span>
+                                            }
+                                        </div>
+                                    }
                                     <div class="d-flex flex-wrap gap-2 mt-3">
                                         @if (!string.IsNullOrWhiteSpace(work.ProjectLink))
                                         {
@@ -206,6 +236,9 @@
                                         }
                                         <a href="@Url.Action("Edit", "CollaborationProjects", new { id = work.Id })" class="btn btn-sm btn-outline-primary">
                                             <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> Edit Project
+                                        </a>
+                                        <a href="@Url.Action("Edit", "CollaborationProjects", new { id = work.Id, tab = "media" })" class="btn btn-sm btn-outline-secondary">
+                                            <i class="fa-solid fa-photo-film" aria-hidden="true"></i> Project Media (@work.MediaCount)
                                         </a>
                                     </div>
                                 </div>
@@ -242,72 +275,107 @@
                 </a>
             </div>
 
-            @if (item.Media != null && item.Media.Count > 0)
-            {
-                <div class="row">
-                    @foreach (var media in item.Media)
-                    {
-                        var mediaTitle = string.IsNullOrWhiteSpace(media.Title) ? media.FileName : media.Title;
-                        <div class="col-lg-4 col-md-6 col-sm-6 margin-bottom-20">
-                            <div class="card shadow-sm p-2 h-100" style="border-radius: 8px; background: #fff;">
-                                @if (media.MediaType == CollaborationMediaType.Image)
-                                {
-                                    <a href="@media.FileUrl" target="_blank" rel="noopener noreferrer" class="card-img" style="height: 200px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-                                        <img src="@media.FileUrl" alt="@mediaTitle" style="max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 6px;">
-                                    </a>
-                                }
-                                else if (media.MediaType == CollaborationMediaType.Video)
-                                {
-                                    <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #000; border-radius: 6px; overflow: hidden;">
-                                        <video controls preload="metadata" src="@media.FileUrl" style="max-height: 100%; width: 100%;"></video>
-                                    </div>
-                                }
-                                else
-                                {
-                                    var iconClass = media.MediaType switch
-                                    {
-                                        CollaborationMediaType.Pdf => "fa-file-pdf",
-                                        CollaborationMediaType.Document => "fa-file-word",
-                                        _ => "fa-file"
-                                    };
-                                    <a href="@media.FileUrl" target="_blank" rel="noopener noreferrer" class="collab-preview-media-doc">
-                                        <i class="fa-solid @iconClass fa-3x" aria-hidden="true"></i>
-                                        <span class="fw-semibold text-truncate w-100">@mediaTitle</span>
-                                        <span class="btn btn-sm btn-outline-primary">Open File</span>
-                                    </a>
-                                }
+            @{
+                var projectsWithMedia = (item.Projects ?? Array.Empty<CollaborationProjectListDto>())
+                    .Where(p => p.Media != null && p.Media.Count > 0)
+                    .ToList();
+                var mediaGroups = new List<(string? GroupTitle, string ManageUrl, IReadOnlyList<CollaborationMediaDto> Items)>();
+                if (item.Media != null && item.Media.Count > 0)
+                {
+                    mediaGroups.Add((
+                        projectsWithMedia.Count > 0 ? "Organization Media" : null,
+                        Url.Action("Edit", new { id = item.Id, tab = "media" })!,
+                        item.Media));
+                }
+                foreach (var proj in projectsWithMedia)
+                {
+                    mediaGroups.Add((
+                        $"From Project: {proj.Title}",
+                        Url.Action("Edit", "CollaborationProjects", new { id = proj.Id, tab = "media" })!,
+                        proj.Media));
+                }
+            }
 
-                                @if (!string.IsNullOrWhiteSpace(media.Title) || !string.IsNullOrWhiteSpace(media.Caption) || !media.IsActive)
-                                {
-                                    <div class="p-2">
-                                        @if (!string.IsNullOrWhiteSpace(media.Title))
-                                        {
-                                            <div class="fw-semibold text-truncate" style="color: #222; font-size: 14px;">@media.Title</div>
-                                        }
-                                        @if (!string.IsNullOrWhiteSpace(media.Caption))
-                                        {
-                                            <div class="small" style="color: #666;">@media.Caption</div>
-                                        }
-                                        @if (!media.IsActive)
-                                        {
-                                            <span class="badge bg-danger mt-1">Inactive (Hidden)</span>
-                                        }
-                                    </div>
-                                }
-                            </div>
+            @if (mediaGroups.Count > 0)
+            {
+                @foreach (var group in mediaGroups)
+                {
+                    if (!string.IsNullOrWhiteSpace(group.GroupTitle))
+                    {
+                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3 mt-2">
+                            <h5 class="mb-0" style="color: #0b4570; font-weight: 700;">
+                                <i class="fa-solid fa-folder-open me-1" aria-hidden="true"></i>@group.GroupTitle (@group.Items.Count)
+                            </h5>
+                            <a href="@group.ManageUrl" class="btn btn-sm btn-outline-secondary">
+                                <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> Manage
+                            </a>
                         </div>
                     }
-                </div>
+                    <div class="row mb-3">
+                        @foreach (var media in group.Items)
+                        {
+                            var mediaTitle = string.IsNullOrWhiteSpace(media.Title) ? media.FileName : media.Title;
+                            <div class="col-lg-4 col-md-6 col-sm-6 margin-bottom-20">
+                                <div class="card shadow-sm p-2 h-100" style="border-radius: 8px; background: #fff;">
+                                    @if (media.MediaType == CollaborationMediaType.Image)
+                                    {
+                                        <a href="@media.FileUrl" target="_blank" rel="noopener noreferrer" class="card-img" style="height: 200px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                                            <img src="@media.FileUrl" alt="@mediaTitle" style="max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 6px;">
+                                        </a>
+                                    }
+                                    else if (media.MediaType == CollaborationMediaType.Video)
+                                    {
+                                        <div style="height: 200px; display: flex; align-items: center; justify-content: center; background: #000; border-radius: 6px; overflow: hidden;">
+                                            <video controls preload="metadata" src="@media.FileUrl" style="max-height: 100%; width: 100%;"></video>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        var iconClass = media.MediaType switch
+                                        {
+                                            CollaborationMediaType.Pdf => "fa-file-pdf",
+                                            CollaborationMediaType.Document => "fa-file-word",
+                                            _ => "fa-file"
+                                        };
+                                        <a href="@media.FileUrl" target="_blank" rel="noopener noreferrer" class="collab-preview-media-doc">
+                                            <i class="fa-solid @iconClass fa-3x" aria-hidden="true"></i>
+                                            <span class="fw-semibold text-truncate w-100">@mediaTitle</span>
+                                            <span class="btn btn-sm btn-outline-primary">Open File</span>
+                                        </a>
+                                    }
+
+                                    @if (!string.IsNullOrWhiteSpace(media.Title) || !string.IsNullOrWhiteSpace(media.Caption) || !media.IsActive)
+                                    {
+                                        <div class="p-2">
+                                            @if (!string.IsNullOrWhiteSpace(media.Title))
+                                            {
+                                                <div class="fw-semibold text-truncate" style="color: #222; font-size: 14px;">@media.Title</div>
+                                            }
+                                            @if (!string.IsNullOrWhiteSpace(media.Caption))
+                                            {
+                                                <div class="small" style="color: #666;">@media.Caption</div>
+                                            }
+                                            @if (!media.IsActive)
+                                            {
+                                                <span class="badge bg-danger mt-1">Inactive (Hidden)</span>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
             }
             else
             {
                 <div class="card p-4 shadow-sm text-center" style="background: #fff; border-radius: 8px;">
                     <p style="font-size: 15px; color: #64748b; margin-bottom: 12px;">
-                        No photos or media files have been uploaded for this organization yet.
+                        No photos or media files have been uploaded for this organization or its projects yet.
                     </p>
                     <div>
                         <a href="@Url.Action("Edit", new { id = item.Id, tab = "media" })" class="btn btn-sm btn-warning" style="font-weight: 600;">
-                            <i class="fa-solid fa-upload" aria-hidden="true"></i> Upload Media
+                            <i class="fa-solid fa-upload" aria-hidden="true"></i> Upload Organization Media
                         </a>
                     </div>
                 </div>

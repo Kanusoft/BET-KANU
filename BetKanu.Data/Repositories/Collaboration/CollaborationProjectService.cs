@@ -408,7 +408,12 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
         Year = x.Year,
         IsActive = x.IsActive,
         DisplayOrder = x.DisplayOrder,
-        MediaCount = x.Media?.Count ?? 0
+        MediaCount = x.Media?.Count ?? 0,
+        Media = (x.Media ?? Enumerable.Empty<CollaborationMedia>())
+            .OrderBy(m => m.DisplayOrder)
+            .ThenBy(m => m.Id)
+            .Select(CollaborationMediaService.MapDto)
+            .ToList()
     };
 
     private static CollaborationProjectDetailsDto MapDetails(CollaborationProject x) => new()

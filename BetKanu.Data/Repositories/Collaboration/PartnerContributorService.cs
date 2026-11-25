@@ -44,6 +44,7 @@ public sealed class PartnerContributorService : IPartnerContributorService
         var entity = await _db.PartnerContributors
             .AsNoTracking()
             .Include(x => x.Projects)
+                .ThenInclude(p => p.Media)
             .Include(x => x.Media)
             .FirstOrDefaultAsync(x => x.Id == id, ct);
 
@@ -454,7 +455,12 @@ public sealed class PartnerContributorService : IPartnerContributorService
                 Year = p.Year,
                 IsActive = p.IsActive,
                 DisplayOrder = p.DisplayOrder,
-                MediaCount = p.Media?.Count ?? 0
+                MediaCount = p.Media?.Count ?? 0,
+                Media = (p.Media ?? Enumerable.Empty<CollaborationMedia>())
+                    .OrderBy(m => m.DisplayOrder)
+                    .ThenBy(m => m.Id)
+                    .Select(CollaborationMediaService.MapDto)
+                    .ToList()
             }).ToList(),
         Media = (x.Media ?? Enumerable.Empty<CollaborationMedia>())
             .OrderBy(m => m.DisplayOrder)

@@ -266,7 +266,7 @@
                                                             <i class="fa-solid fa-pen-to-square me-1" aria-hidden="true"></i>Edit
                                                         </a>
                                                         <a class="btn btn-sm btn-info" href="@Url.Action("Edit", "CollaborationProjects", new { id = project.Id, tab = "media" })">
-                                                            <i class="fa-solid fa-photo-film me-1" aria-hidden="true"></i>Media
+                                                            <i class="fa-solid fa-photo-film me-1" aria-hidden="true"></i>Media (@project.MediaCount)
                                                         </a>
                                                         <form method="post" asp-controller="CollaborationProjects" asp-action="SetActive" asp-route-id="@project.Id">
                                                             @Html.AntiForgeryToken()

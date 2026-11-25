@@ -385,6 +385,34 @@ public class CollaborationServiceTests : IDisposable
         Assert.True(orderUpdate.Succeeded);
     }
 
+    [Fact]
+    public async Task GetById_includes_project_media_for_organization_details()
+    {
+        var partner = await SeedPartnerAsync();
+        var project = await _projects.CreateAsync(new CollaborationProjectCreateDto
+        {
+            PartnerContributorId = partner.Id,
+            Title = "Joint Project",
+            IsActive = true
+        });
+        Assert.True(project.Succeeded);
+
+        var upload = await _media.UploadAsync(new CollaborationMediaUploadDto
+        {
+            CollaborationProjectId = project.Data!.Id,
+            Title = "Project Photo",
+            IsActive = true
+        }, CreateJpeg("project-photo.jpg"));
+        Assert.True(upload.Succeeded);
+
+        var details = await _partners.GetByIdAsync(partner.Id);
+        Assert.NotNull(details);
+        var loadedProject = Assert.Single(details!.Projects);
+        Assert.Equal(1, loadedProject.MediaCount);
+        var loadedMedia = Assert.Single(loadedProject.Media);
+        Assert.Equal("Project Photo", loadedMedia.Title);
+    }
+
     private async Task<PartnerContributorDetailsDto> SeedPartnerAsync()
     {
         var result = await _partners.CreateAsync(new PartnerContributorCreateDto

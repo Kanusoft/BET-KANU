@@ -91,6 +91,8 @@ namespace BetKanu.Models.DTOs.Collaboration
         public bool IsActive { get; init; }
         public int DisplayOrder { get; init; }
         public int MediaCount { get; init; }
+        public IReadOnlyList<CollaborationMediaDto> Media { get; init; }
+            = Array.Empty<CollaborationMediaDto>();
     }
 
     public sealed class CollaborationProjectDetailsDto
