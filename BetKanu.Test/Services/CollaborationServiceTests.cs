@@ -413,6 +413,44 @@ public class CollaborationServiceTests : IDisposable
         Assert.Equal("Project Photo", loadedMedia.Title);
     }
 
+    [Fact]
+    public async Task GetById_includes_linked_book_metadata_for_projects()
+    {
+        var book = new Book
+        {
+            Name = "Nino and Mia Story",
+            Dialect = "Western",
+            BookImageURL = "https://example.test/book.jpg",
+            ProjectURL = "https://betkanu.com/products/details/1",
+            IsReleased = true
+        };
+        _db.Books.Add(book);
+        await _db.SaveChangesAsync();
+
+        var partner = await SeedPartnerAsync();
+        var project = await _projects.CreateAsync(new CollaborationProjectCreateDto
+        {
+            PartnerContributorId = partner.Id,
+            Title = "Book Collaboration",
+            ShortDescription = "Short summary",
+            LongDescription = "Full detailed collaboration story.",
+            BookId = book.Id,
+            IsActive = true
+        });
+        Assert.True(project.Succeeded);
+
+        var details = await _partners.GetByIdAsync(partner.Id);
+        Assert.NotNull(details);
+        var loadedProject = Assert.Single(details!.Projects);
+        Assert.Equal("Short summary", loadedProject.ShortDescription);
+        Assert.Equal("Full detailed collaboration story.", loadedProject.LongDescription);
+        Assert.Equal(book.Id, loadedProject.BookId);
+        Assert.Equal("Nino and Mia Story", loadedProject.BookName);
+        Assert.Equal("Western", loadedProject.BookDialect);
+        Assert.Equal("https://example.test/book.jpg", loadedProject.BookImageUrl);
+        Assert.Equal("https://betkanu.com/products/details/1", loadedProject.BookProjectUrl);
+    }
+
     private async Task<PartnerContributorDetailsDto> SeedPartnerAsync()
     {
         var result = await _partners.CreateAsync(new PartnerContributorCreateDto

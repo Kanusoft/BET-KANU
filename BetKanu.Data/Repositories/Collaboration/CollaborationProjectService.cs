@@ -36,7 +36,8 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
             .ThenBy(x => x.Title)
             .ToListAsync(ct);
 
-        return rows.Select(MapList).ToList();
+        var booksById = await LoadBooksAsync(rows, ct);
+        return rows.Select(x => MapList(x, booksById)).ToList();
     }
 
     public async Task<CollaborationProjectDetailsDto?> GetByIdAsync(int id, CancellationToken ct = default)
@@ -60,7 +61,8 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
             .ThenBy(x => x.Title)
             .ToListAsync(ct);
 
-        return rows.Select(MapList).ToList();
+        var booksById = await LoadBooksAsync(rows, ct);
+        return rows.Select(x => MapList(x, booksById)).ToList();
     }
 
     public async Task<IReadOnlyList<CollaborationProjectListDto>> GetActiveByPartnerContributorIdAsync(
@@ -73,7 +75,8 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
             .ThenBy(x => x.Title)
             .ToListAsync(ct);
 
-        return rows.Select(MapList).ToList();
+        var booksById = await LoadBooksAsync(rows, ct);
+        return rows.Select(x => MapList(x, booksById)).ToList();
     }
 
     public async Task<PagedResult<CollaborationProjectListDto>> GetAdminPagedAsync(
@@ -113,9 +116,10 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
             .Take(pageSize)
             .ToListAsync(ct);
 
+        var booksById = await LoadBooksAsync(items, ct);
         return new PagedResult<CollaborationProjectListDto>
         {
-            Items = items.Select(MapList).ToList(),
+            Items = items.Select(x => MapList(x, booksById)).ToList(),
             TotalCount = total,
             Page = page,
             PageSize = pageSize
@@ -395,26 +399,62 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
         }
     }
 
-    private static CollaborationProjectListDto MapList(CollaborationProject x) => new()
+    private async Task<IReadOnlyDictionary<int, Book>> LoadBooksAsync(
+        IEnumerable<CollaborationProject> projects,
+        CancellationToken ct)
     {
-        Id = x.Id,
-        PartnerContributorId = x.PartnerContributorId,
-        PartnerContributorName = x.PartnerContributor?.Name ?? string.Empty,
-        Title = x.Title,
-        LogoUrl = x.LogoUrl,
-        ShortDescription = x.ShortDescription,
-        ProjectLink = x.ProjectLink,
-        ProjectType = x.ProjectType,
-        Year = x.Year,
-        IsActive = x.IsActive,
-        DisplayOrder = x.DisplayOrder,
-        MediaCount = x.Media?.Count ?? 0,
-        Media = (x.Media ?? Enumerable.Empty<CollaborationMedia>())
-            .OrderBy(m => m.DisplayOrder)
-            .ThenBy(m => m.Id)
-            .Select(CollaborationMediaService.MapDto)
-            .ToList()
-    };
+        var bookIds = projects
+            .Where(p => p.BookId.HasValue)
+            .Select(p => p.BookId!.Value)
+            .Distinct()
+            .ToList();
+
+        if (bookIds.Count == 0)
+            return new Dictionary<int, Book>();
+
+        return await _db.Books
+            .AsNoTracking()
+            .Where(b => bookIds.Contains(b.Id))
+            .ToDictionaryAsync(b => b.Id, ct);
+    }
+
+    private static CollaborationProjectListDto MapList(
+        CollaborationProject x,
+        IReadOnlyDictionary<int, Book>? booksById = null)
+    {
+        Book? book = null;
+        if (x.BookId.HasValue && booksById != null)
+            booksById.TryGetValue(x.BookId.Value, out book);
+
+        return new()
+        {
+            Id = x.Id,
+            PartnerContributorId = x.PartnerContributorId,
+            PartnerContributorName = x.PartnerContributor?.Name ?? string.Empty,
+            Title = x.Title,
+            LogoUrl = x.LogoUrl,
+            ShortDescription = x.ShortDescription,
+            LongDescription = x.LongDescription,
+            ProjectLink = x.ProjectLink,
+            ProjectType = x.ProjectType,
+            BookId = x.BookId,
+            BookName = book is not null
+                ? (string.IsNullOrWhiteSpace(book.Name) ? $"Book #{book.Id}" : book.Name)
+                : (x.BookId.HasValue ? $"Book #{x.BookId.Value}" : null),
+            BookDialect = book?.Dialect,
+            BookImageUrl = book?.BookImageURL,
+            BookProjectUrl = book?.ProjectURL,
+            Year = x.Year,
+            IsActive = x.IsActive,
+            DisplayOrder = x.DisplayOrder,
+            MediaCount = x.Media?.Count ?? 0,
+            Media = (x.Media ?? Enumerable.Empty<CollaborationMedia>())
+                .OrderBy(m => m.DisplayOrder)
+                .ThenBy(m => m.Id)
+                .Select(CollaborationMediaService.MapDto)
+                .ToList()
+        };
+    }
 
     private static CollaborationProjectDetailsDto MapDetails(CollaborationProject x) => new()
     {

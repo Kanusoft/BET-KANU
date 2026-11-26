@@ -48,7 +48,11 @@ public sealed class PartnerContributorService : IPartnerContributorService
             .Include(x => x.Media)
             .FirstOrDefaultAsync(x => x.Id == id, ct);
 
-        return entity is null ? null : MapDetails(entity);
+        if (entity is null)
+            return null;
+
+        var booksById = await LoadBooksAsync(entity.Projects, ct);
+        return MapDetails(entity, booksById);
     }
 
     public async Task<PagedResult<PartnerContributorListDto>> GetAdminPagedAsync(
@@ -192,7 +196,8 @@ public sealed class PartnerContributorService : IPartnerContributorService
         entity.UpdatedAt = DateTime.UtcNow;
 
         await _db.SaveChangesAsync(ct);
-        return ServiceResult<PartnerContributorDetailsDto>.Success(MapDetails(entity));
+        var booksById = await LoadBooksAsync(entity.Projects, ct);
+        return ServiceResult<PartnerContributorDetailsDto>.Success(MapDetails(entity, booksById));
     }
 
     public async Task<ServiceResult> SetActiveAsync(int id, bool isActive, CancellationToken ct = default)
@@ -424,7 +429,28 @@ public sealed class PartnerContributorService : IPartnerContributorService
         MediaCount = x.Media?.Count ?? 0
     };
 
-    private static PartnerContributorDetailsDto MapDetails(PartnerContributor x) => new()
+    private async Task<IReadOnlyDictionary<int, Book>> LoadBooksAsync(
+        IEnumerable<CollaborationProject>? projects,
+        CancellationToken ct)
+    {
+        var bookIds = (projects ?? Enumerable.Empty<CollaborationProject>())
+            .Where(p => p.BookId.HasValue)
+            .Select(p => p.BookId!.Value)
+            .Distinct()
+            .ToList();
+
+        if (bookIds.Count == 0)
+            return new Dictionary<int, Book>();
+
+        return await _db.Books
+            .AsNoTracking()
+            .Where(b => bookIds.Contains(b.Id))
+            .ToDictionaryAsync(b => b.Id, ct);
+    }
+
+    private static PartnerContributorDetailsDto MapDetails(
+        PartnerContributor x,
+        IReadOnlyDictionary<int, Book>? booksById = null) => new()
     {
         Id = x.Id,
         Name = x.Name,
@@ -442,25 +468,40 @@ public sealed class PartnerContributorService : IPartnerContributorService
         Projects = (x.Projects ?? Enumerable.Empty<CollaborationProject>())
             .OrderBy(p => p.DisplayOrder)
             .ThenBy(p => p.Title)
-            .Select(p => new CollaborationProjectListDto
+            .Select(p =>
             {
-                Id = p.Id,
-                PartnerContributorId = p.PartnerContributorId,
-                PartnerContributorName = x.Name,
-                Title = p.Title,
-                LogoUrl = p.LogoUrl,
-                ShortDescription = p.ShortDescription,
-                ProjectLink = p.ProjectLink,
-                ProjectType = p.ProjectType,
-                Year = p.Year,
-                IsActive = p.IsActive,
-                DisplayOrder = p.DisplayOrder,
-                MediaCount = p.Media?.Count ?? 0,
-                Media = (p.Media ?? Enumerable.Empty<CollaborationMedia>())
-                    .OrderBy(m => m.DisplayOrder)
-                    .ThenBy(m => m.Id)
-                    .Select(CollaborationMediaService.MapDto)
-                    .ToList()
+                Book? book = null;
+                if (p.BookId.HasValue && booksById != null)
+                    booksById.TryGetValue(p.BookId.Value, out book);
+
+                return new CollaborationProjectListDto
+                {
+                    Id = p.Id,
+                    PartnerContributorId = p.PartnerContributorId,
+                    PartnerContributorName = x.Name,
+                    Title = p.Title,
+                    LogoUrl = p.LogoUrl,
+                    ShortDescription = p.ShortDescription,
+                    LongDescription = p.LongDescription,
+                    ProjectLink = p.ProjectLink,
+                    ProjectType = p.ProjectType,
+                    BookId = p.BookId,
+                    BookName = book is not null
+                        ? (string.IsNullOrWhiteSpace(book.Name) ? $"Book #{book.Id}" : book.Name)
+                        : (p.BookId.HasValue ? $"Book #{p.BookId.Value}" : null),
+                    BookDialect = book?.Dialect,
+                    BookImageUrl = book?.BookImageURL,
+                    BookProjectUrl = book?.ProjectURL,
+                    Year = p.Year,
+                    IsActive = p.IsActive,
+                    DisplayOrder = p.DisplayOrder,
+                    MediaCount = p.Media?.Count ?? 0,
+                    Media = (p.Media ?? Enumerable.Empty<CollaborationMedia>())
+                        .OrderBy(m => m.DisplayOrder)
+                        .ThenBy(m => m.Id)
+                        .Select(CollaborationMediaService.MapDto)
+                        .ToList()
+                };
             }).ToList(),
         Media = (x.Media ?? Enumerable.Empty<CollaborationMedia>())
             .OrderBy(m => m.DisplayOrder)

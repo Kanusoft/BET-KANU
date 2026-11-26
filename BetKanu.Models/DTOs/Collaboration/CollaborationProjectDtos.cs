@@ -85,8 +85,14 @@ namespace BetKanu.Models.DTOs.Collaboration
         public string Title { get; init; } = string.Empty;
         public string? LogoUrl { get; init; }
         public string? ShortDescription { get; init; }
+        public string? LongDescription { get; init; }
         public string? ProjectLink { get; init; }
         public string? ProjectType { get; init; }
+        public int? BookId { get; init; }
+        public string? BookName { get; init; }
+        public string? BookDialect { get; init; }
+        public string? BookImageUrl { get; init; }
+        public string? BookProjectUrl { get; init; }
         public int? Year { get; init; }
         public bool IsActive { get; init; }
         public int DisplayOrder { get; init; }

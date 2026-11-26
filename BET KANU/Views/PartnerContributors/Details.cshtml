@@ -27,31 +27,7 @@
         .Where(m => m.IsActive)
         .ToList();
 
-    var projectMediaEntries = new List<(string ProjectKey, string ProjectTitle, CollaborationMediaDto Media)>();
-    var projectFilterSources = new List<(string Key, string Label, int Count)>();
-
-    foreach (var proj in activeProjects)
-    {
-        var activeProjMedia = (proj.Media ?? Array.Empty<CollaborationMediaDto>())
-            .Where(m => m.IsActive)
-            .ToList();
-        if (activeProjMedia.Count == 0) continue;
-
-        var key = $"project-{proj.Id}";
-        projectFilterSources.Add((key, proj.Title, activeProjMedia.Count));
-        foreach (var media in activeProjMedia)
-        {
-            projectMediaEntries.Add((key, proj.Title, media));
-        }
-    }
-
-    var hasAnyMedia = activeOrgMedia.Count > 0 || projectMediaEntries.Count > 0;
-    var showProjectFilters = projectFilterSources.Count > 1;
-    var orgMediaColClass = activeOrgMedia.Count == 1
-        ? "col-lg-6 col-md-8"
-        : activeOrgMedia.Count == 2
-            ? "col-lg-6 col-md-6"
-            : "col-lg-4 col-md-6 col-sm-6";
+    var orgMediaColClass = "col-lg-3 col-md-6 col-sm-6";
 }
 
 <div id="wrapper" class="collab-preview">
@@ -106,7 +82,7 @@
 
             <!-- Organization Hero Card -->
             <div class="collab-preview-hero">
-                <div class="row align-items-center g-4">
+                <div class="row align-items-start g-4">
                     <div class="col-lg-3 col-md-4">
                         <div class="collab-preview-logo-frame">
                             @if (!string.IsNullOrWhiteSpace(item.LogoUrl))
@@ -123,21 +99,30 @@
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-8">
-                        <div class="collab-preview-pills">
-                            <span class="collab-preview-pill collab-preview-pill-category">
-                                <i class="fa fa-handshake-o" aria-hidden="true"></i> @categoryLabel
-                            </span>
-                            @if (!string.IsNullOrWhiteSpace(item.PartnerType))
-                            {
-                                <span class="collab-preview-pill collab-preview-pill-type">
-                                    @item.PartnerType
+                        <div class="collab-preview-hero-topbar">
+                            <div class="collab-preview-pills mb-0">
+                                <span class="collab-preview-pill collab-preview-pill-category">
+                                    <i class="fa fa-handshake-o" aria-hidden="true"></i> @categoryLabel
                                 </span>
-                            }
-                            @if (item.Year.HasValue)
+                                @if (!string.IsNullOrWhiteSpace(item.PartnerType))
+                                {
+                                    <span class="collab-preview-pill collab-preview-pill-type">
+                                        @item.PartnerType
+                                    </span>
+                                }
+                                @if (item.Year.HasValue)
+                                {
+                                    <span class="collab-preview-pill collab-preview-pill-year">
+                                        <i class="fa-regular fa-calendar" aria-hidden="true"></i> @item.Year
+                                    </span>
+                                }
+                            </div>
+
+                            @if (!string.IsNullOrWhiteSpace(item.WebsiteUrl) && item.WebsiteUrl != "#")
                             {
-                                <span class="collab-preview-pill collab-preview-pill-year">
-                                    <i class="fa-regular fa-calendar" aria-hidden="true"></i> @item.Year
-                                </span>
+                                <a href="@item.WebsiteUrl" target="_blank" rel="noopener noreferrer" class="btn collab-preview-website-btn">
+                                    <i class="fa fa-external-link" aria-hidden="true"></i> Visit Official Website
+                                </a>
                             }
                         </div>
 
@@ -146,15 +131,6 @@
                         @if (!string.IsNullOrWhiteSpace(item.ShortDescription) && !string.IsNullOrWhiteSpace(item.LongDescription))
                         {
                             <p class="collab-preview-short-desc">@item.ShortDescription</p>
-                        }
-
-                        @if (!string.IsNullOrWhiteSpace(item.WebsiteUrl) && item.WebsiteUrl != "#")
-                        {
-                            <div class="mt-3">
-                                <a href="@item.WebsiteUrl" target="_blank" rel="noopener noreferrer" class="btn collab-preview-website-btn">
-                                    <i class="fa fa-external-link" aria-hidden="true"></i> Visit Official Website
-                                </a>
-                            </div>
                         }
                     </div>
                 </div>
@@ -174,81 +150,9 @@
                     </div>
                 </div>
             }
-
-            <!-- Joint Works & Collaborations Section -->
-            @if (activeProjects.Count > 0)
-            {
-                <div class="collab-preview-section">
-                    <div class="collab-preview-section-header">
-                        <h3 class="collab-preview-section-title">
-                            <i class="fa-solid fa-cubes" aria-hidden="true"></i> Joint Works &amp; Collaborations
-                        </h3>
-                    </div>
-
-                    <div class="row g-4">
-                        @foreach (var work in activeProjects)
-                        {
-                            var activeWorkMediaCount = (work.Media ?? Array.Empty<CollaborationMediaDto>())
-                                .Count(m => m.IsActive);
-                            <div class="col-lg-6 col-md-6">
-                                <div class="collab-preview-project-card">
-                                    <div class="collab-preview-project-img">
-                                        @if (!string.IsNullOrWhiteSpace(work.LogoUrl))
-                                        {
-                                            <img src="@work.LogoUrl" alt="@work.Title" loading="lazy" />
-                                        }
-                                        else
-                                        {
-                                            <i class="fa-solid fa-folder-open fa-3x" style="color: #cbd5e1;" aria-hidden="true"></i>
-                                        }
-                                    </div>
-                                    <div class="collab-preview-project-body">
-                                        <div class="collab-preview-pills mb-2">
-                                            <span class="collab-preview-pill collab-preview-pill-type">
-                                                @(string.IsNullOrWhiteSpace(work.ProjectType) ? "Collaboration" : work.ProjectType)
-                                            </span>
-                                            @if (work.Year.HasValue)
-                                            {
-                                                <span class="collab-preview-pill collab-preview-pill-year">
-                                                    @work.Year
-                                                </span>
-                                            }
-                                        </div>
-                                        <h4 class="collab-preview-project-title">@work.Title</h4>
-                                        @if (!string.IsNullOrWhiteSpace(work.ShortDescription))
-                                        {
-                                            <p class="collab-preview-project-desc">@work.ShortDescription</p>
-                                        }
-                                        @if (!string.IsNullOrWhiteSpace(work.ProjectLink) || activeWorkMediaCount > 0)
-                                        {
-                                            <div class="mt-auto pt-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
-                                                @if (!string.IsNullOrWhiteSpace(work.ProjectLink))
-                                                {
-                                                    <a href="@work.ProjectLink" target="_blank" rel="noopener noreferrer" class="collab-preview-project-link mt-0">
-                                                        View Project <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-                                                    </a>
-                                                }
-                                                @if (activeWorkMediaCount > 0)
-                                                {
-                                                    <a href="#collabProjectMediaSection"
-                                                       class="collab-preview-project-media-link"
-                                                       data-jump-project-media="project-@work.Id">
-                                                        <i class="fa-regular fa-images" aria-hidden="true"></i>
-                                                        @activeWorkMediaCount @(activeWorkMediaCount == 1 ? "Media Item" : "Media Items")
-                                                    </a>
-                                                }
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-            }
-
-            <!-- Photos & Media Gallery Section (Organization Media separated from nested Project Media) -->
-            @if (hasAnyMedia)
+            
+            <!-- Photos & Media Gallery Section (Organization Media) -->
+            @if (activeOrgMedia.Count > 0)
             {
                 <div class="collab-preview-section">
                     <div class="collab-preview-section-header">
@@ -257,174 +161,292 @@
                         </h3>
                     </div>
 
-                    @if (activeOrgMedia.Count > 0)
-                    {
-                        <!-- Primary: Main Organization Media -->
-                        <div class="collab-preview-org-media-block">
-                            <div class="collab-preview-media-subhead">
-                                <h4 class="collab-preview-media-subhead-title">
-                                    <i class="fa-solid fa-building" aria-hidden="true"></i>
-                                    @item.Name Gallery
-                                    <span class="collab-preview-media-count">@activeOrgMedia.Count</span>
-                                </h4>
-                            </div>
+                    <div class="collab-preview-org-media-block">
+                        <div class="collab-preview-media-subhead">
+                            <h4 class="collab-preview-media-subhead-title">
+                                <i class="fa-solid fa-building" aria-hidden="true"></i>
+                                @item.Name Gallery
+                                <span class="collab-preview-media-count">@activeOrgMedia.Count</span>
+                            </h4>
+                        </div>
 
-                            <div class="row g-4">
-                                @foreach (var media in activeOrgMedia)
-                                {
-                                    var mediaTitle = string.IsNullOrWhiteSpace(media.Title) ? media.FileName : media.Title;
-                                    <div class="@orgMediaColClass">
-                                        <div class="collab-preview-media-card collab-preview-media-card-org">
-                                            <div class="collab-preview-media-frame">
-                                                @if (media.MediaType == CollaborationMediaType.Image)
-                                                {
-                                                    <button type="button"
-                                                            class="collab-preview-media-trigger"
-                                                            data-lightbox-src="@media.FileUrl"
-                                                            data-lightbox-title="@(media.Title ?? string.Empty)"
-                                                            data-lightbox-caption="@(media.Caption ?? string.Empty)"
-                                                            data-lightbox-source="@item.Name"
-                                                            aria-label="View @mediaTitle">
-                                                        <img src="@media.FileUrl" alt="@mediaTitle" loading="lazy" />
-                                                    </button>
-                                                }
-                                                else if (media.MediaType == CollaborationMediaType.Video)
-                                                {
-                                                    <div class="collab-preview-media-video">
-                                                        <video controls preload="metadata" src="@media.FileUrl"></video>
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    var iconClass = media.MediaType switch
-                                                    {
-                                                        CollaborationMediaType.Pdf => "fa-file-pdf",
-                                                        CollaborationMediaType.Document => "fa-file-word",
-                                                        _ => "fa-file"
-                                                    };
-                                                    <a href="@media.FileUrl" target="_blank" rel="noopener noreferrer" class="collab-preview-media-doc">
-                                                        <i class="fa-solid @iconClass fa-3x" aria-hidden="true"></i>
-                                                        <span class="fw-semibold text-truncate w-100">@mediaTitle</span>
-                                                        <span class="btn btn-sm btn-outline-primary">Open File</span>
-                                                    </a>
-                                                }
-                                            </div>
-
-                                            @if (!string.IsNullOrWhiteSpace(media.Title) || !string.IsNullOrWhiteSpace(media.Caption))
+                        <div class="row g-4">
+                            @foreach (var media in activeOrgMedia)
+                            {
+                                var mediaTitle = string.IsNullOrWhiteSpace(media.Title) ? media.FileName : media.Title;
+                                <div class="@orgMediaColClass">
+                                    <div class="collab-preview-media-card collab-preview-media-card-org">
+                                        <div class="collab-preview-media-frame">
+                                            @if (media.MediaType == CollaborationMediaType.Image)
                                             {
-                                                <div class="collab-preview-media-meta">
-                                                    @if (!string.IsNullOrWhiteSpace(media.Title))
-                                                    {
-                                                        <div class="collab-preview-media-title text-truncate" title="@media.Title">@media.Title</div>
-                                                    }
-                                                    @if (!string.IsNullOrWhiteSpace(media.Caption))
-                                                    {
-                                                        <div class="collab-preview-media-caption">@media.Caption</div>
-                                                    }
+                                                <button type="button"
+                                                        class="collab-preview-media-trigger"
+                                                        data-lightbox-src="@media.FileUrl"
+                                                        data-lightbox-title="@(media.Title ?? string.Empty)"
+                                                        data-lightbox-caption="@(media.Caption ?? string.Empty)"
+                                                        data-lightbox-description="@(media.Description ?? string.Empty)"
+                                                        data-lightbox-source="@item.Name"
+                                                        aria-label="View @mediaTitle">
+                                                    <img src="@media.FileUrl" alt="@mediaTitle" loading="lazy" />
+                                                </button>
+                                            }
+                                            else if (media.MediaType == CollaborationMediaType.Video)
+                                            {
+                                                <div class="collab-preview-media-video">
+                                                    <video controls preload="metadata" src="@media.FileUrl"></video>
                                                 </div>
                                             }
+                                            else
+                                            {
+                                                var iconClass = media.MediaType switch
+                                                {
+                                                    CollaborationMediaType.Pdf => "fa-file-pdf",
+                                                    CollaborationMediaType.Document => "fa-file-word",
+                                                    _ => "fa-file"
+                                                };
+                                                <a href="@media.FileUrl" target="_blank" rel="noopener noreferrer" class="collab-preview-media-doc">
+                                                    <i class="fa-solid @iconClass fa-3x" aria-hidden="true"></i>
+                                                    <span class="fw-semibold text-truncate w-100">@mediaTitle</span>
+                                                    <span class="btn btn-sm btn-outline-primary">Open File</span>
+                                                </a>
+                                            }
                                         </div>
+
+                                        @if (!string.IsNullOrWhiteSpace(media.Title) || !string.IsNullOrWhiteSpace(media.Caption) || !string.IsNullOrWhiteSpace(media.Description))
+                                        {
+                                            <div class="collab-preview-media-meta">
+                                                @if (!string.IsNullOrWhiteSpace(media.Title))
+                                                {
+                                                    <div class="collab-preview-media-title text-truncate" title="@media.Title">@media.Title</div>
+                                                }
+                                                @if (!string.IsNullOrWhiteSpace(media.Caption))
+                                                {
+                                                    <div class="collab-preview-media-caption">@media.Caption</div>
+                                                }
+                                                @if (!string.IsNullOrWhiteSpace(media.Description))
+                                                {
+                                                    <div class="collab-preview-media-desc">@media.Description</div>
+                                                }
+                                            </div>
+                                        }
                                     </div>
-                                }
-                            </div>
-                        </div>
-                    }
-
-                    @if (projectMediaEntries.Count > 0)
-                    {
-                        <!-- Nested: Collaboration Projects Media (inside the Organization) -->
-                        <div class="collab-preview-project-media-block" id="collabProjectMediaSection">
-                            <div class="collab-preview-media-subhead">
-                                <h4 class="collab-preview-media-subhead-title">
-                                    <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
-                                    Project Media
-                                    <span class="collab-preview-media-count">@projectMediaEntries.Count</span>
-                                </h4>
-                            </div>
-                            <p class="collab-preview-project-media-subtitle">
-                                Photos and files from collaboration projects with @item.Name.
-                            </p>
-
-                            @if (showProjectFilters)
-                            {
-                                <div class="collab-preview-media-filters" role="group" aria-label="Filter project media">
-                                    <button type="button" class="collab-preview-filter-btn active" data-media-filter="all">
-                                        All Projects (@projectMediaEntries.Count)
-                                    </button>
-                                    @foreach (var src in projectFilterSources)
-                                    {
-                                        <button type="button" class="collab-preview-filter-btn" data-media-filter="@src.Key">
-                                            @src.Label (@src.Count)
-                                        </button>
-                                    }
                                 </div>
                             }
+                        </div>
+                    </div>
+                </div>
+            }
+            <!-- Joint Works & Collaborations Section -->
+            @if (activeProjects.Count > 0)
+            {
+                <div class="collab-preview-section">
+                    <div class="collab-preview-section-header">
+                        <h3 class="collab-preview-section-title">
+                            <i class="fa-solid fa-cubes" aria-hidden="true"></i> Joint Works &amp; Collaborations
+                            <span class="collab-preview-media-count">@activeProjects.Count</span>
+                        </h3>
+                    </div>
 
-                            <div class="row g-4" id="collabPreviewMediaGrid">
-                                @foreach (var entry in projectMediaEntries)
-                                {
-                                    var media = entry.Media;
-                                    var mediaTitle = string.IsNullOrWhiteSpace(media.Title) ? media.FileName : media.Title;
-                                    <div class="col-lg-4 col-md-6 col-sm-6" data-media-source="@entry.ProjectKey">
-                                        <div class="collab-preview-media-card">
-                                            <div class="collab-preview-media-frame">
-                                                <span class="collab-preview-media-source">@entry.ProjectTitle</span>
+                    <div class="collab-preview-projects-stack">
+                        @foreach (var work in activeProjects)
+                        {
+                            var activeWorkMedia = (work.Media ?? Array.Empty<CollaborationMediaDto>())
+                                .Where(m => m.IsActive)
+                                .ToList();
+                            var projectMediaGridClass = activeWorkMedia.Count switch
+                            {
+                                1 => "is-single",
+                                2 => "is-double",
+                                3 => "is-triple",
+                                _ => string.Empty
+                            };
+                            <article class="collab-preview-project-card">
+                                <div class="collab-preview-project-header">
+                                    <div class="collab-preview-project-img">
+                                        @if (!string.IsNullOrWhiteSpace(work.LogoUrl))
+                                        {
+                                            <img src="@work.LogoUrl" alt="@work.Title" loading="lazy" />
+                                        }
+                                        else
+                                        {
+                                            <i class="fa-solid fa-folder-open fa-2x" style="color: #cbd5e1;" aria-hidden="true"></i>
+                                        }
+                                    </div>
 
-                                                @if (media.MediaType == CollaborationMediaType.Image)
+                                    <div class="collab-preview-project-main">
+                                        <div class="collab-preview-project-topbar">
+                                            <div class="collab-preview-pills mb-0">
+                                                <span class="collab-preview-pill collab-preview-pill-type">
+                                                    @(string.IsNullOrWhiteSpace(work.ProjectType) ? "Collaboration" : work.ProjectType)
+                                                </span>
+                                                @if (work.Year.HasValue)
                                                 {
-                                                    <button type="button"
-                                                            class="collab-preview-media-trigger"
-                                                            data-lightbox-src="@media.FileUrl"
-                                                            data-lightbox-title="@(media.Title ?? string.Empty)"
-                                                            data-lightbox-caption="@(media.Caption ?? string.Empty)"
-                                                            data-lightbox-source="@entry.ProjectTitle"
-                                                            aria-label="View @mediaTitle">
-                                                        <img src="@media.FileUrl" alt="@mediaTitle" loading="lazy" />
-                                                    </button>
-                                                }
-                                                else if (media.MediaType == CollaborationMediaType.Video)
-                                                {
-                                                    <div class="collab-preview-media-video">
-                                                        <video controls preload="metadata" src="@media.FileUrl"></video>
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    var iconClass = media.MediaType switch
-                                                    {
-                                                        CollaborationMediaType.Pdf => "fa-file-pdf",
-                                                        CollaborationMediaType.Document => "fa-file-word",
-                                                        _ => "fa-file"
-                                                    };
-                                                    <a href="@media.FileUrl" target="_blank" rel="noopener noreferrer" class="collab-preview-media-doc">
-                                                        <i class="fa-solid @iconClass fa-3x" aria-hidden="true"></i>
-                                                        <span class="fw-semibold text-truncate w-100">@mediaTitle</span>
-                                                        <span class="btn btn-sm btn-outline-primary">Open File</span>
-                                                    </a>
+                                                    <span class="collab-preview-pill collab-preview-pill-year">
+                                                        <i class="fa-regular fa-calendar" aria-hidden="true"></i> @work.Year
+                                                    </span>
                                                 }
                                             </div>
 
-                                            @if (!string.IsNullOrWhiteSpace(media.Title) || !string.IsNullOrWhiteSpace(media.Caption))
+                                            @if (!string.IsNullOrWhiteSpace(work.ProjectLink))
                                             {
-                                                <div class="collab-preview-media-meta">
-                                                    @if (!string.IsNullOrWhiteSpace(media.Title))
+                                                <a href="@work.ProjectLink" target="_blank" rel="noopener noreferrer" class="collab-preview-project-cta">
+                                                    View Project <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                                                </a>
+                                            }
+                                        </div>
+
+                                        <h4 class="collab-preview-project-title">@work.Title</h4>
+
+                                        @if (!string.IsNullOrWhiteSpace(work.ShortDescription))
+                                        {
+                                            <p class="collab-preview-project-desc">@work.ShortDescription</p>
+                                        }
+
+                                        @if (!string.IsNullOrWhiteSpace(work.LongDescription))
+                                        {
+                                            <div class="collab-preview-project-long-desc">@work.LongDescription</div>
+                                        }
+                                    </div>
+
+                                    @if (work.BookId.HasValue)
+                                    {
+                                        var bookTitle = string.IsNullOrWhiteSpace(work.BookName) ? $"Book #{work.BookId.Value}" : work.BookName;
+                                        var hasBookUrl = !string.IsNullOrWhiteSpace(work.BookProjectUrl) && work.BookProjectUrl != "#";
+                                        <div class="collab-preview-project-book-col">
+                                            @if (hasBookUrl)
+                                            {
+                                                <a href="@work.BookProjectUrl" target="_blank" rel="noopener noreferrer" class="collab-preview-linked-book is-link">
+                                                    <div class="collab-preview-linked-book-cover">
+                                                        @if (!string.IsNullOrWhiteSpace(work.BookImageUrl))
+                                                        {
+                                                            <img src="@work.BookImageUrl" alt="@bookTitle" loading="lazy" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fa-solid fa-book-open" aria-hidden="true"></i>
+                                                        }
+                                                    </div>
+                                                    <div class="collab-preview-linked-book-info">
+                                                        <div class="collab-preview-linked-book-eyebrow">
+                                                            <span><i class="fa-solid fa-book" aria-hidden="true"></i> Linked Book</span>
+                                                            @if (!string.IsNullOrWhiteSpace(work.BookDialect))
+                                                            {
+                                                                <span class="collab-preview-linked-book-dialect">@work.BookDialect</span>
+                                                            }
+                                                        </div>
+                                                        <div class="collab-preview-linked-book-title" title="@bookTitle">@bookTitle</div>
+                                                    </div>
+                                                    <span class="collab-preview-linked-book-arrow" aria-hidden="true">
+                                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                                    </span>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <div class="collab-preview-linked-book">
+                                                    <div class="collab-preview-linked-book-cover">
+                                                        @if (!string.IsNullOrWhiteSpace(work.BookImageUrl))
+                                                        {
+                                                            <img src="@work.BookImageUrl" alt="@bookTitle" loading="lazy" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fa-solid fa-book-open" aria-hidden="true"></i>
+                                                        }
+                                                    </div>
+                                                    <div class="collab-preview-linked-book-info">
+                                                        <div class="collab-preview-linked-book-eyebrow">
+                                                            <span><i class="fa-solid fa-book" aria-hidden="true"></i> Linked Book</span>
+                                                            @if (!string.IsNullOrWhiteSpace(work.BookDialect))
+                                                            {
+                                                                <span class="collab-preview-linked-book-dialect">@work.BookDialect</span>
+                                                            }
+                                                        </div>
+                                                        <div class="collab-preview-linked-book-title" title="@bookTitle">@bookTitle</div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+
+                                @if (activeWorkMedia.Count > 0)
+                                {
+                                    <div class="collab-preview-project-media">
+                                        <div class="collab-preview-project-media-head">
+                                            <span class="collab-preview-project-media-label">
+                                                <i class="fa-regular fa-images" aria-hidden="true"></i>
+                                                Media
+                                            </span>
+                                            <span class="collab-preview-media-count">@activeWorkMedia.Count</span>
+                                        </div>
+                                        <div class="collab-preview-project-media-grid @projectMediaGridClass">
+                                            @foreach (var media in activeWorkMedia)
+                                            {
+                                                var mediaTitle = string.IsNullOrWhiteSpace(media.Title) ? media.FileName : media.Title;
+                                                <div class="collab-preview-project-media-item">
+                                                    <div class="collab-preview-project-media-thumb">
+                                                        @if (media.MediaType == CollaborationMediaType.Image)
+                                                        {
+                                                            <button type="button"
+                                                                    class="collab-preview-media-trigger collab-preview-project-media-trigger"
+                                                                    data-lightbox-src="@media.FileUrl"
+                                                                    data-lightbox-title="@(media.Title ?? string.Empty)"
+                                                                    data-lightbox-caption="@(media.Caption ?? string.Empty)"
+                                                                    data-lightbox-description="@(media.Description ?? string.Empty)"
+                                                                    data-lightbox-source="@work.Title"
+                                                                    aria-label="View @mediaTitle">
+                                                                <img src="@media.FileUrl" alt="@mediaTitle" loading="lazy" />
+                                                            </button>
+                                                        }
+                                                        else if (media.MediaType == CollaborationMediaType.Video)
+                                                        {
+                                                            <div class="collab-preview-media-video">
+                                                                <video controls preload="metadata" src="@media.FileUrl"></video>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            var iconClass = media.MediaType switch
+                                                            {
+                                                                CollaborationMediaType.Pdf => "fa-file-pdf",
+                                                                CollaborationMediaType.Document => "fa-file-word",
+                                                                _ => "fa-file"
+                                                            };
+                                                            <a href="@media.FileUrl" target="_blank" rel="noopener noreferrer" class="collab-preview-project-media-doc" title="@mediaTitle">
+                                                                <i class="fa-solid @iconClass fa-2x" aria-hidden="true"></i>
+                                                                <span class="fw-semibold text-truncate w-100">@mediaTitle</span>
+                                                            </a>
+                                                        }
+                                                    </div>
+                                                    @if (!string.IsNullOrWhiteSpace(media.Title) || !string.IsNullOrWhiteSpace(media.Caption) || !string.IsNullOrWhiteSpace(media.Description))
                                                     {
-                                                        <div class="collab-preview-media-title text-truncate" title="@media.Title">@media.Title</div>
-                                                    }
-                                                    @if (!string.IsNullOrWhiteSpace(media.Caption))
-                                                    {
-                                                        <div class="collab-preview-media-caption">@media.Caption</div>
+                                                        <div class="collab-preview-project-media-meta">
+                                                            @if (!string.IsNullOrWhiteSpace(media.Title))
+                                                            {
+                                                                <div class="collab-preview-project-media-title text-truncate" title="@media.Title">@media.Title</div>
+                                                            }
+                                                            @if (!string.IsNullOrWhiteSpace(media.Caption))
+                                                            {
+                                                                <div class="collab-preview-project-media-caption text-truncate" title="@media.Caption">@media.Caption</div>
+                                                            }
+                                                            @if (!string.IsNullOrWhiteSpace(media.Description))
+                                                            {
+                                                                <div class="collab-preview-project-media-desc" title="@media.Description">@media.Description</div>
+                                                            }
+                                                        </div>
                                                     }
                                                 </div>
                                             }
                                         </div>
                                     </div>
                                 }
-                            </div>
-                        </div>
-                    }
+                            </article>
+                        }
+                    </div>
                 </div>
             }
+
 
             <!-- Public Frontend Footer Navigation (mirrors About/PartnerDetails.cshtml) -->
             <div class="collab-preview-footer">
@@ -453,6 +475,7 @@
             <div class="modal-body text-center pt-2">
                 <img id="collabLightboxImage" src="" alt="" class="collab-preview-lightbox-img rounded" />
                 <p id="collabLightboxCaption" class="text-muted small mt-3 mb-0"></p>
+                <p id="collabLightboxDescription" class="collab-preview-lightbox-desc mb-0"></p>
             </div>
         </div>
     </div>
@@ -461,38 +484,11 @@
 @section Scripts {
     <script>
         (function () {
-            var filterButtons = document.querySelectorAll('.collab-preview-filter-btn');
-            var mediaItems = document.querySelectorAll('#collabPreviewMediaGrid [data-media-source]');
-
-            function applyProjectFilter(target) {
-                filterButtons.forEach(function (b) {
-                    b.classList.toggle('active', b.getAttribute('data-media-filter') === target);
-                });
-                mediaItems.forEach(function (card) {
-                    var src = card.getAttribute('data-media-source');
-                    card.style.display = (target === 'all' || src === target) ? '' : 'none';
-                });
-            }
-
-            filterButtons.forEach(function (btn) {
-                btn.addEventListener('click', function () {
-                    applyProjectFilter(btn.getAttribute('data-media-filter'));
-                });
-            });
-
-            document.querySelectorAll('[data-jump-project-media]').forEach(function (link) {
-                link.addEventListener('click', function () {
-                    var key = link.getAttribute('data-jump-project-media');
-                    if (key && filterButtons.length > 0) {
-                        applyProjectFilter(key);
-                    }
-                });
-            });
-
             var modalEl = document.getElementById('collabPreviewLightbox');
             var imgEl = document.getElementById('collabLightboxImage');
             var titleEl = document.getElementById('collabLightboxTitle');
             var captionEl = document.getElementById('collabLightboxCaption');
+            var descEl = document.getElementById('collabLightboxDescription');
             var sourceEl = document.getElementById('collabLightboxSource');
 
             if (modalEl && imgEl) {
@@ -515,6 +511,7 @@
                         var src = trigger.getAttribute('data-lightbox-src') || '';
                         var title = trigger.getAttribute('data-lightbox-title') || '';
                         var caption = trigger.getAttribute('data-lightbox-caption') || '';
+                        var description = trigger.getAttribute('data-lightbox-description') || '';
                         var source = trigger.getAttribute('data-lightbox-source') || '';
 
                         imgEl.src = src;
@@ -525,6 +522,10 @@
                         titleEl.style.display = title ? '' : 'none';
                         captionEl.textContent = caption;
                         captionEl.style.display = caption ? '' : 'none';
+                        if (descEl) {
+                            descEl.textContent = description;
+                            descEl.style.display = description ? '' : 'none';
+                        }
 
                         if (window.bootstrap && window.bootstrap.Modal) {
                             window.bootstrap.Modal.getOrCreateInstance(modalEl, { backdrop: false }).show();
