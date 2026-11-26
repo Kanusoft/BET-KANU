@@ -99,13 +99,37 @@
                                             <input asp-for="ProjectType" class="form-control" maxlength="150" placeholder="e.g. App, Book, Video" />
                                         </div>
                                         <div class="col-md-6">
-                                            <label asp-for="BookId" class="form-label">Linked Book</label>
-                                            <select asp-for="BookId" class="form-control form-select">
-                                                @foreach (var book in Model.BookOptions)
+                                            <label asp-for="ContentSelection" class="form-label">Associated BET KANU Content</label>
+                                            <select asp-for="ContentSelection" class="form-control form-select">
+                                                @{
+                                                    string? currentGroup = null;
+                                                }
+                                                @foreach (var option in Model.ContentOptions)
                                                 {
-                                                    <option value="@book.Value" selected="@(Model.BookId?.ToString() == book.Value)">@book.Text</option>
+                                                    if (string.IsNullOrEmpty(option.Group))
+                                                    {
+                                                        <option value="@option.Value" selected="@(Model.ContentSelection == option.Value)">@option.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        if (currentGroup != option.Group)
+                                                        {
+                                                            if (currentGroup != null)
+                                                            {
+                                                                @:</optgroup>
+                                                            }
+                                                            currentGroup = option.Group;
+                                                            @:<optgroup label="@option.Group">
+                                                        }
+                                                        <option value="@option.Value" selected="@(Model.ContentSelection == option.Value)">@option.Text</option>
+                                                    }
+                                                }
+                                                @if (currentGroup != null)
+                                                {
+                                                    @:</optgroup>
                                                 }
                                             </select>
+                                            <span asp-validation-for="ContentSelection" class="text-danger"></span>
                                         </div>
                                         <div class="col-md-3">
                                             <label asp-for="Year" class="form-label">Year</label>

@@ -51,8 +51,8 @@ public sealed class PartnerContributorService : IPartnerContributorService
         if (entity is null)
             return null;
 
-        var booksById = await LoadBooksAsync(entity.Projects, ct);
-        return MapDetails(entity, booksById);
+        var (books, products) = await CollaborationContentLookup.LoadAsync(_db, entity.Projects, ct);
+        return MapDetails(entity, books, products);
     }
 
     public async Task<PagedResult<PartnerContributorListDto>> GetAdminPagedAsync(
@@ -196,8 +196,8 @@ public sealed class PartnerContributorService : IPartnerContributorService
         entity.UpdatedAt = DateTime.UtcNow;
 
         await _db.SaveChangesAsync(ct);
-        var booksById = await LoadBooksAsync(entity.Projects, ct);
-        return ServiceResult<PartnerContributorDetailsDto>.Success(MapDetails(entity, booksById));
+        var (books, products) = await CollaborationContentLookup.LoadAsync(_db, entity.Projects, ct);
+        return ServiceResult<PartnerContributorDetailsDto>.Success(MapDetails(entity, books, products));
     }
 
     public async Task<ServiceResult> SetActiveAsync(int id, bool isActive, CancellationToken ct = default)
@@ -429,28 +429,10 @@ public sealed class PartnerContributorService : IPartnerContributorService
         MediaCount = x.Media?.Count ?? 0
     };
 
-    private async Task<IReadOnlyDictionary<int, Book>> LoadBooksAsync(
-        IEnumerable<CollaborationProject>? projects,
-        CancellationToken ct)
-    {
-        var bookIds = (projects ?? Enumerable.Empty<CollaborationProject>())
-            .Where(p => p.BookId.HasValue)
-            .Select(p => p.BookId!.Value)
-            .Distinct()
-            .ToList();
-
-        if (bookIds.Count == 0)
-            return new Dictionary<int, Book>();
-
-        return await _db.Books
-            .AsNoTracking()
-            .Where(b => bookIds.Contains(b.Id))
-            .ToDictionaryAsync(b => b.Id, ct);
-    }
-
     private static PartnerContributorDetailsDto MapDetails(
         PartnerContributor x,
-        IReadOnlyDictionary<int, Book>? booksById = null) => new()
+        IReadOnlyDictionary<int, Book>? books = null,
+        IReadOnlyDictionary<int, Product>? products = null) => new()
     {
         Id = x.Id,
         Name = x.Name,
@@ -470,9 +452,11 @@ public sealed class PartnerContributorService : IPartnerContributorService
             .ThenBy(p => p.Title)
             .Select(p =>
             {
-                Book? book = null;
-                if (p.BookId.HasValue && booksById != null)
-                    booksById.TryGetValue(p.BookId.Value, out book);
+                var content = CollaborationContentLookup.Resolve(
+                    p.ContentType,
+                    p.ContentId,
+                    books,
+                    products);
 
                 return new CollaborationProjectListDto
                 {
@@ -485,13 +469,13 @@ public sealed class PartnerContributorService : IPartnerContributorService
                     LongDescription = p.LongDescription,
                     ProjectLink = p.ProjectLink,
                     ProjectType = p.ProjectType,
-                    BookId = p.BookId,
-                    BookName = book is not null
-                        ? (string.IsNullOrWhiteSpace(book.Name) ? $"Book #{book.Id}" : book.Name)
-                        : (p.BookId.HasValue ? $"Book #{p.BookId.Value}" : null),
-                    BookDialect = book?.Dialect,
-                    BookImageUrl = book?.BookImageURL,
-                    BookProjectUrl = book?.ProjectURL,
+                    ContentType = p.ContentType,
+                    ContentId = p.ContentId,
+                    ContentTitle = content?.Title,
+                    ContentGroup = content?.Group,
+                    ContentSubtitle = content?.Subtitle,
+                    ContentImageUrl = content?.ImageUrl,
+                    ContentUrl = content?.Url,
                     Year = p.Year,
                     IsActive = p.IsActive,
                     DisplayOrder = p.DisplayOrder,

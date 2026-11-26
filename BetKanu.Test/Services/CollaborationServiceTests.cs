@@ -414,7 +414,7 @@ public class CollaborationServiceTests : IDisposable
     }
 
     [Fact]
-    public async Task GetById_includes_linked_book_metadata_for_projects()
+    public async Task GetById_includes_linked_reader_book_metadata_for_projects()
     {
         var book = new Book
         {
@@ -434,7 +434,8 @@ public class CollaborationServiceTests : IDisposable
             Title = "Book Collaboration",
             ShortDescription = "Short summary",
             LongDescription = "Full detailed collaboration story.",
-            BookId = book.Id,
+            ContentType = CollaborationContentType.ReaderBook,
+            ContentId = book.Id,
             IsActive = true
         });
         Assert.True(project.Succeeded);
@@ -444,11 +445,168 @@ public class CollaborationServiceTests : IDisposable
         var loadedProject = Assert.Single(details!.Projects);
         Assert.Equal("Short summary", loadedProject.ShortDescription);
         Assert.Equal("Full detailed collaboration story.", loadedProject.LongDescription);
-        Assert.Equal(book.Id, loadedProject.BookId);
-        Assert.Equal("Nino and Mia Story", loadedProject.BookName);
-        Assert.Equal("Western", loadedProject.BookDialect);
-        Assert.Equal("https://example.test/book.jpg", loadedProject.BookImageUrl);
-        Assert.Equal("https://betkanu.com/products/details/1", loadedProject.BookProjectUrl);
+        Assert.Equal(CollaborationContentType.ReaderBook, loadedProject.ContentType);
+        Assert.Equal(book.Id, loadedProject.ContentId);
+        Assert.Equal("Nino and Mia Story", loadedProject.ContentTitle);
+        Assert.Equal("Western", loadedProject.ContentSubtitle);
+        Assert.Equal("https://example.test/book.jpg", loadedProject.ContentImageUrl);
+        Assert.Equal("https://betkanu.com/products/details/1", loadedProject.ContentUrl);
+        Assert.Equal("BK Reader Books", loadedProject.ContentGroup);
+    }
+
+    [Fact]
+    public async Task Create_project_with_product_association_distinguishes_same_numeric_id()
+    {
+        var book = new Book { Name = "Reader Book Fifteen", IsReleased = true };
+        _db.Books.Add(book);
+        await _db.SaveChangesAsync();
+
+        var product = new Product
+        {
+            Title = "Product Fifteen",
+            Category = Category.Songs,
+            ReleaseDate = DateTime.UtcNow.Date
+        };
+        _db.Products.Add(product);
+        await _db.SaveChangesAsync();
+
+        // Force identical IDs where InMemory allows by using the actual generated IDs and asserting distinction by ContentType.
+        var partner = await SeedPartnerAsync();
+        var asBook = await _projects.CreateAsync(new CollaborationProjectCreateDto
+        {
+            PartnerContributorId = partner.Id,
+            Title = "Reader Association",
+            ContentType = CollaborationContentType.ReaderBook,
+            ContentId = book.Id,
+            IsActive = true
+        });
+        var asProduct = await _projects.CreateAsync(new CollaborationProjectCreateDto
+        {
+            PartnerContributorId = partner.Id,
+            Title = "Product Association",
+            ContentType = CollaborationContentType.Product,
+            ContentId = product.Id,
+            IsActive = true
+        });
+
+        Assert.True(asBook.Succeeded);
+        Assert.True(asProduct.Succeeded);
+        Assert.Equal(CollaborationContentType.ReaderBook, asBook.Data!.ContentType);
+        Assert.Equal(CollaborationContentType.Product, asProduct.Data!.ContentType);
+        Assert.Equal("Reader Book Fifteen", asBook.Data.ContentTitle);
+        Assert.Equal("Product Fifteen", asProduct.Data.ContentTitle);
+        Assert.Equal("Products — Songs", asProduct.Data.ContentGroup);
+    }
+
+    [Fact]
+    public async Task Create_rejects_invalid_and_missing_content_associations()
+    {
+        var partner = await SeedPartnerAsync();
+
+        var malformed = await _projects.CreateAsync(new CollaborationProjectCreateDto
+        {
+            PartnerContributorId = partner.Id,
+            Title = "Bad Half Association",
+            ContentType = CollaborationContentType.Product,
+            ContentId = null,
+            IsActive = true
+        });
+        Assert.False(malformed.Succeeded);
+        Assert.Contains(malformed.Errors, e => e.Contains("selected content is invalid", StringComparison.OrdinalIgnoreCase));
+
+        var missingProduct = await _projects.CreateAsync(new CollaborationProjectCreateDto
+        {
+            PartnerContributorId = partner.Id,
+            Title = "Missing Product",
+            ContentType = CollaborationContentType.Product,
+            ContentId = 999999,
+            IsActive = true
+        });
+        Assert.False(missingProduct.Succeeded);
+        Assert.Contains(missingProduct.Errors, e => e.Contains("product was not found", StringComparison.OrdinalIgnoreCase));
+
+        var missingBook = await _projects.CreateAsync(new CollaborationProjectCreateDto
+        {
+            PartnerContributorId = partner.Id,
+            Title = "Missing Book",
+            ContentType = CollaborationContentType.ReaderBook,
+            ContentId = 999999,
+            IsActive = true
+        });
+        Assert.False(missingBook.Succeeded);
+        Assert.Contains(missingBook.Errors, e => e.Contains("BK Reader book was not found", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task Update_can_change_and_clear_content_association()
+    {
+        var book = new Book { Name = "Book A", IsReleased = true };
+        var product = new Product { Title = "Collection A", Category = Category.Collection, ReleaseDate = DateTime.UtcNow.Date };
+        _db.Books.Add(book);
+        _db.Products.Add(product);
+        await _db.SaveChangesAsync();
+
+        var partner = await SeedPartnerAsync();
+        var created = await _projects.CreateAsync(new CollaborationProjectCreateDto
+        {
+            PartnerContributorId = partner.Id,
+            Title = "Switchable",
+            ContentType = CollaborationContentType.ReaderBook,
+            ContentId = book.Id,
+            IsActive = true
+        });
+        Assert.True(created.Succeeded);
+
+        var toProduct = await _projects.UpdateAsync(created.Data!.Id, new CollaborationProjectUpdateDto
+        {
+            PartnerContributorId = partner.Id,
+            Title = "Switchable",
+            ContentType = CollaborationContentType.Product,
+            ContentId = product.Id,
+            IsActive = true
+        });
+        Assert.True(toProduct.Succeeded);
+        Assert.Equal(CollaborationContentType.Product, toProduct.Data!.ContentType);
+        Assert.Equal(product.Id, toProduct.Data.ContentId);
+        Assert.Equal("Collection A", toProduct.Data.ContentTitle);
+
+        var cleared = await _projects.UpdateAsync(created.Data.Id, new CollaborationProjectUpdateDto
+        {
+            PartnerContributorId = partner.Id,
+            Title = "Switchable",
+            ContentType = null,
+            ContentId = null,
+            IsActive = true
+        });
+        Assert.True(cleared.Succeeded);
+        Assert.Null(cleared.Data!.ContentType);
+        Assert.Null(cleared.Data.ContentId);
+    }
+
+    [Fact]
+    public void ContentSelection_parser_accepts_valid_and_rejects_malformed_values()
+    {
+        Assert.True(CollaborationContentSelection.TryParse(null, out var t1, out var id1, out var e1));
+        Assert.Null(t1);
+        Assert.Null(id1);
+        Assert.Null(e1);
+
+        Assert.True(CollaborationContentSelection.TryParse("product:15", out var t2, out var id2, out _));
+        Assert.Equal(CollaborationContentType.Product, t2);
+        Assert.Equal(15, id2);
+
+        Assert.True(CollaborationContentSelection.TryParse("readerbook:27", out var t3, out var id3, out _));
+        Assert.Equal(CollaborationContentType.ReaderBook, t3);
+        Assert.Equal(27, id3);
+
+        Assert.False(CollaborationContentSelection.TryParse("episode:1", out _, out _, out var err));
+        Assert.Contains("not supported", err!, StringComparison.OrdinalIgnoreCase);
+
+        Assert.False(CollaborationContentSelection.TryParse("product:0", out _, out _, out var err2));
+        Assert.Contains("invalid", err2!, StringComparison.OrdinalIgnoreCase);
+
+        Assert.False(CollaborationContentSelection.TryParse("not-a-value", out _, out _, out var err3));
+        Assert.Contains("invalid", err3!, StringComparison.OrdinalIgnoreCase);
     }
 
     private async Task<PartnerContributorDetailsDto> SeedPartnerAsync()

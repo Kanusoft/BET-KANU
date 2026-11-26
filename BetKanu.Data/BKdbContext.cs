@@ -231,7 +231,13 @@ namespace BetKanu.Data
 
             builder.Entity<CollaborationProject>(entity =>
             {
-                entity.ToTable("CollaborationProjects");
+                entity.ToTable("CollaborationProjects", table =>
+                    table.HasCheckConstraint(
+                        "CK_CollaborationProjects_ContentAssociation",
+                        "([ContentType] IS NULL AND [ContentId] IS NULL) " +
+                        "OR ([ContentType] IS NOT NULL AND [ContentId] IS NOT NULL " +
+                        "AND [ContentId] > 0 AND [ContentType] IN (1, 2))"));
+
                 entity.HasKey(x => x.Id);
 
                 entity.Property(x => x.Title)
@@ -246,6 +252,9 @@ namespace BetKanu.Data
                 entity.Property(x => x.ProjectLink).HasMaxLength(1000);
                 entity.Property(x => x.ProjectType).HasMaxLength(150);
 
+                entity.Property(x => x.ContentType)
+                    .HasConversion<int?>();
+
                 entity.Property(x => x.CreatedAt)
                     .HasColumnType("datetime2");
 
@@ -256,6 +265,12 @@ namespace BetKanu.Data
                 {
                     x.PartnerContributorId,
                     x.DisplayOrder
+                });
+
+                entity.HasIndex(x => new
+                {
+                    x.ContentType,
+                    x.ContentId
                 });
             });
 

@@ -1,13 +1,15 @@
+using BetKanu.Models.Common;
 using BetKanu.Models.DTOs.Collaboration;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace BetKanu.Models.ViewModels.Collaboration
 {
-    public sealed class BookOptionItem
+    public sealed class CollaborationContentOptionItem
     {
         public string Value { get; init; } = string.Empty;
         public string Text { get; init; } = string.Empty;
+        public string Group { get; init; } = string.Empty;
     }
 
     public sealed class CollaborationProjectFormViewModel
@@ -34,7 +36,8 @@ namespace BetKanu.Models.ViewModels.Collaboration
         [StringLength(150)]
         public string? ProjectType { get; set; }
 
-        public int? BookId { get; set; }
+        [Display(Name = "Associated BET KANU Content")]
+        public string? ContentSelection { get; set; }
 
         [Range(1900, 2100)]
         public int? Year { get; set; }
@@ -52,15 +55,15 @@ namespace BetKanu.Models.ViewModels.Collaboration
 
         public string ActiveTab { get; set; } = "information";
 
-        public IEnumerable<BookOptionItem> BookOptions { get; set; }
-            = Enumerable.Empty<BookOptionItem>();
+        public IEnumerable<CollaborationContentOptionItem> ContentOptions { get; set; }
+            = Enumerable.Empty<CollaborationContentOptionItem>();
 
         public IReadOnlyList<CollaborationMediaDto> Media { get; set; }
             = Array.Empty<CollaborationMediaDto>();
 
         public static CollaborationProjectFormViewModel FromDetails(
             CollaborationProjectDetailsDto dto,
-            IEnumerable<BookOptionItem> books) => new()
+            IEnumerable<CollaborationContentOptionItem> contentOptions) => new()
         {
             Id = dto.Id,
             PartnerContributorId = dto.PartnerContributorId,
@@ -70,17 +73,25 @@ namespace BetKanu.Models.ViewModels.Collaboration
             LongDescription = dto.LongDescription,
             ProjectLink = dto.ProjectLink,
             ProjectType = dto.ProjectType,
-            BookId = dto.BookId,
+            ContentSelection = CollaborationContentSelection.Format(dto.ContentType, dto.ContentId),
             Year = dto.Year,
             ContentPageId = dto.ContentPageId,
             IsActive = dto.IsActive,
             DisplayOrder = dto.DisplayOrder,
             ExistingLogoUrl = dto.LogoUrl,
-            BookOptions = books,
+            ContentOptions = contentOptions,
             Media = dto.Media
         };
 
-        public CollaborationProjectCreateDto ToCreateDto() => new()
+        public bool TryApplyContentSelection(
+            out CollaborationContentType? contentType,
+            out int? contentId,
+            out string? error)
+            => CollaborationContentSelection.TryParse(ContentSelection, out contentType, out contentId, out error);
+
+        public CollaborationProjectCreateDto ToCreateDto(
+            CollaborationContentType? contentType,
+            int? contentId) => new()
         {
             PartnerContributorId = PartnerContributorId,
             Title = Title,
@@ -88,14 +99,17 @@ namespace BetKanu.Models.ViewModels.Collaboration
             LongDescription = LongDescription,
             ProjectLink = ProjectLink,
             ProjectType = ProjectType,
-            BookId = BookId,
+            ContentType = contentType,
+            ContentId = contentId,
             Year = Year,
             ContentPageId = ContentPageId,
             IsActive = IsActive,
             DisplayOrder = DisplayOrder
         };
 
-        public CollaborationProjectUpdateDto ToUpdateDto() => new()
+        public CollaborationProjectUpdateDto ToUpdateDto(
+            CollaborationContentType? contentType,
+            int? contentId) => new()
         {
             PartnerContributorId = PartnerContributorId,
             Title = Title,
@@ -103,7 +117,8 @@ namespace BetKanu.Models.ViewModels.Collaboration
             LongDescription = LongDescription,
             ProjectLink = ProjectLink,
             ProjectType = ProjectType,
-            BookId = BookId,
+            ContentType = contentType,
+            ContentId = contentId,
             Year = Year,
             ContentPageId = ContentPageId,
             IsActive = IsActive,

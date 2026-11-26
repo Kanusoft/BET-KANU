@@ -308,18 +308,25 @@
                                         }
                                     </div>
 
-                                    @if (work.BookId.HasValue)
+                                    @if (work.ContentType.HasValue && work.ContentId.HasValue)
                                     {
-                                        var bookTitle = string.IsNullOrWhiteSpace(work.BookName) ? $"Book #{work.BookId.Value}" : work.BookName;
-                                        var hasBookUrl = !string.IsNullOrWhiteSpace(work.BookProjectUrl) && work.BookProjectUrl != "#";
+                                        var contentTitle = string.IsNullOrWhiteSpace(work.ContentTitle)
+                                            ? (work.ContentType == CollaborationContentType.Product
+                                                ? $"Product #{work.ContentId.Value}"
+                                                : $"Book #{work.ContentId.Value}")
+                                            : work.ContentTitle;
+                                        var contentLabel = string.IsNullOrWhiteSpace(work.ContentGroup)
+                                            ? "Associated Content"
+                                            : work.ContentGroup;
+                                        var hasContentUrl = !string.IsNullOrWhiteSpace(work.ContentUrl) && work.ContentUrl != "#";
                                         <div class="collab-preview-project-book-col">
-                                            @if (hasBookUrl)
+                                            @if (hasContentUrl)
                                             {
-                                                <a href="@work.BookProjectUrl" target="_blank" rel="noopener noreferrer" class="collab-preview-linked-book is-link">
+                                                <a href="@work.ContentUrl" target="_blank" rel="noopener noreferrer" class="collab-preview-linked-book is-link">
                                                     <div class="collab-preview-linked-book-cover">
-                                                        @if (!string.IsNullOrWhiteSpace(work.BookImageUrl))
+                                                        @if (!string.IsNullOrWhiteSpace(work.ContentImageUrl))
                                                         {
-                                                            <img src="@work.BookImageUrl" alt="@bookTitle" loading="lazy" />
+                                                            <img src="@work.ContentImageUrl" alt="@contentTitle" loading="lazy" />
                                                         }
                                                         else
                                                         {
@@ -328,13 +335,13 @@
                                                     </div>
                                                     <div class="collab-preview-linked-book-info">
                                                         <div class="collab-preview-linked-book-eyebrow">
-                                                            <span><i class="fa-solid fa-book" aria-hidden="true"></i> Linked Book</span>
-                                                            @if (!string.IsNullOrWhiteSpace(work.BookDialect))
+                                                            <span><i class="fa-solid fa-link" aria-hidden="true"></i> @contentLabel</span>
+                                                            @if (!string.IsNullOrWhiteSpace(work.ContentSubtitle))
                                                             {
-                                                                <span class="collab-preview-linked-book-dialect">@work.BookDialect</span>
+                                                                <span class="collab-preview-linked-book-dialect">@work.ContentSubtitle</span>
                                                             }
                                                         </div>
-                                                        <div class="collab-preview-linked-book-title" title="@bookTitle">@bookTitle</div>
+                                                        <div class="collab-preview-linked-book-title" title="@contentTitle">@contentTitle</div>
                                                     </div>
                                                     <span class="collab-preview-linked-book-arrow" aria-hidden="true">
                                                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
@@ -345,9 +352,9 @@
                                             {
                                                 <div class="collab-preview-linked-book">
                                                     <div class="collab-preview-linked-book-cover">
-                                                        @if (!string.IsNullOrWhiteSpace(work.BookImageUrl))
+                                                        @if (!string.IsNullOrWhiteSpace(work.ContentImageUrl))
                                                         {
-                                                            <img src="@work.BookImageUrl" alt="@bookTitle" loading="lazy" />
+                                                            <img src="@work.ContentImageUrl" alt="@contentTitle" loading="lazy" />
                                                         }
                                                         else
                                                         {
@@ -356,13 +363,13 @@
                                                     </div>
                                                     <div class="collab-preview-linked-book-info">
                                                         <div class="collab-preview-linked-book-eyebrow">
-                                                            <span><i class="fa-solid fa-book" aria-hidden="true"></i> Linked Book</span>
-                                                            @if (!string.IsNullOrWhiteSpace(work.BookDialect))
+                                                            <span><i class="fa-solid fa-link" aria-hidden="true"></i> @contentLabel</span>
+                                                            @if (!string.IsNullOrWhiteSpace(work.ContentSubtitle))
                                                             {
-                                                                <span class="collab-preview-linked-book-dialect">@work.BookDialect</span>
+                                                                <span class="collab-preview-linked-book-dialect">@work.ContentSubtitle</span>
                                                             }
                                                         </div>
-                                                        <div class="collab-preview-linked-book-title" title="@bookTitle">@bookTitle</div>
+                                                        <div class="collab-preview-linked-book-title" title="@contentTitle">@contentTitle</div>
                                                     </div>
                                                 </div>
                                             }

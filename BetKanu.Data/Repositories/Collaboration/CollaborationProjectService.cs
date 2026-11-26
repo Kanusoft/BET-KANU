@@ -36,8 +36,8 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
             .ThenBy(x => x.Title)
             .ToListAsync(ct);
 
-        var booksById = await LoadBooksAsync(rows, ct);
-        return rows.Select(x => MapList(x, booksById)).ToList();
+        var (books, products) = await CollaborationContentLookup.LoadAsync(_db, rows, ct);
+        return rows.Select(x => MapList(x, books, products)).ToList();
     }
 
     public async Task<CollaborationProjectDetailsDto?> GetByIdAsync(int id, CancellationToken ct = default)
@@ -48,7 +48,11 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
             .Include(x => x.Media)
             .FirstOrDefaultAsync(x => x.Id == id, ct);
 
-        return entity is null ? null : MapDetails(entity);
+        if (entity is null)
+            return null;
+
+        var (books, products) = await CollaborationContentLookup.LoadAsync(_db, new[] { entity }, ct);
+        return MapDetails(entity, books, products);
     }
 
     public async Task<IReadOnlyList<CollaborationProjectListDto>> GetByPartnerContributorIdAsync(
@@ -61,8 +65,8 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
             .ThenBy(x => x.Title)
             .ToListAsync(ct);
 
-        var booksById = await LoadBooksAsync(rows, ct);
-        return rows.Select(x => MapList(x, booksById)).ToList();
+        var (books, products) = await CollaborationContentLookup.LoadAsync(_db, rows, ct);
+        return rows.Select(x => MapList(x, books, products)).ToList();
     }
 
     public async Task<IReadOnlyList<CollaborationProjectListDto>> GetActiveByPartnerContributorIdAsync(
@@ -75,8 +79,8 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
             .ThenBy(x => x.Title)
             .ToListAsync(ct);
 
-        var booksById = await LoadBooksAsync(rows, ct);
-        return rows.Select(x => MapList(x, booksById)).ToList();
+        var (books, products) = await CollaborationContentLookup.LoadAsync(_db, rows, ct);
+        return rows.Select(x => MapList(x, books, products)).ToList();
     }
 
     public async Task<PagedResult<CollaborationProjectListDto>> GetAdminPagedAsync(
@@ -108,6 +112,13 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
         if (filter.IsActive.HasValue)
             query = query.Where(x => x.IsActive == filter.IsActive.Value);
 
+        if (filter.ContentType.HasValue && filter.ContentId.HasValue)
+        {
+            query = query.Where(x =>
+                x.ContentType == filter.ContentType.Value &&
+                x.ContentId == filter.ContentId.Value);
+        }
+
         var total = await query.CountAsync(ct);
         var items = await query
             .OrderBy(x => x.DisplayOrder)
@@ -116,10 +127,10 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
             .Take(pageSize)
             .ToListAsync(ct);
 
-        var booksById = await LoadBooksAsync(items, ct);
+        var (books, products) = await CollaborationContentLookup.LoadAsync(_db, items, ct);
         return new PagedResult<CollaborationProjectListDto>
         {
-            Items = items.Select(x => MapList(x, booksById)).ToList(),
+            Items = items.Select(x => MapList(x, books, products)).ToList(),
             TotalCount = total,
             Page = page,
             PageSize = pageSize
@@ -138,7 +149,8 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
             dto.ShortDescription,
             dto.Year,
             dto.DisplayOrder,
-            dto.BookId,
+            dto.ContentType,
+            dto.ContentId,
             dto.ContentPageId,
             ct);
 
@@ -153,7 +165,8 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
             LongDescription = CollaborationValidation.NormalizeOptional(dto.LongDescription),
             ProjectLink = CollaborationValidation.NormalizeOptional(dto.ProjectLink),
             ProjectType = CollaborationValidation.NormalizeOptional(dto.ProjectType),
-            BookId = dto.BookId,
+            ContentType = dto.ContentType,
+            ContentId = dto.ContentId,
             Year = dto.Year,
             ContentPageId = dto.ContentPageId,
             IsActive = dto.IsActive,
@@ -182,7 +195,8 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
             dto.ShortDescription,
             dto.Year,
             dto.DisplayOrder,
-            dto.BookId,
+            dto.ContentType,
+            dto.ContentId,
             dto.ContentPageId,
             ct);
 
@@ -203,7 +217,8 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
         entity.LongDescription = CollaborationValidation.NormalizeOptional(dto.LongDescription);
         entity.ProjectLink = CollaborationValidation.NormalizeOptional(dto.ProjectLink);
         entity.ProjectType = CollaborationValidation.NormalizeOptional(dto.ProjectType);
-        entity.BookId = dto.BookId;
+        entity.ContentType = dto.ContentType;
+        entity.ContentId = dto.ContentId;
         entity.Year = dto.Year;
         entity.ContentPageId = dto.ContentPageId;
         entity.IsActive = dto.IsActive;
@@ -211,7 +226,9 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
         entity.UpdatedAt = DateTime.UtcNow;
 
         await _db.SaveChangesAsync(ct);
-        return ServiceResult<CollaborationProjectDetailsDto>.Success(MapDetails(entity));
+
+        var (books, products) = await CollaborationContentLookup.LoadAsync(_db, new[] { entity }, ct);
+        return ServiceResult<CollaborationProjectDetailsDto>.Success(MapDetails(entity, books, products));
     }
 
     public async Task<ServiceResult> SetActiveAsync(int id, bool isActive, CancellationToken ct = default)
@@ -316,7 +333,8 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
         string? shortDescription,
         int? year,
         int displayOrder,
-        int? bookId,
+        CollaborationContentType? contentType,
+        int? contentId,
         int? contentPageId,
         CancellationToken ct)
     {
@@ -348,16 +366,39 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
         if (displayOrder < 0)
             errors.Add("Display order must be zero or greater.");
 
-        if (bookId.HasValue)
+        var contentHasType = contentType.HasValue;
+        var contentHasId = contentId.HasValue;
+
+        if (contentHasType != contentHasId)
         {
-            if (bookId.Value <= 0 ||
-                !await _db.Books.AsNoTracking().AnyAsync(x => x.Id == bookId.Value, ct))
+            errors.Add("The selected content is invalid.");
+        }
+        else if (contentHasType && contentHasId)
+        {
+            if (contentId!.Value <= 0)
             {
-                errors.Add("BookId must reference an existing book.");
+                errors.Add("The selected content is invalid.");
+            }
+            else if (!Enum.IsDefined(typeof(CollaborationContentType), contentType!.Value))
+            {
+                errors.Add("The selected content type is not supported.");
+            }
+            else if (contentType == CollaborationContentType.Product)
+            {
+                if (!await _db.Products.AsNoTracking().AnyAsync(x => x.Id == contentId.Value, ct))
+                    errors.Add("The selected product was not found.");
+            }
+            else if (contentType == CollaborationContentType.ReaderBook)
+            {
+                if (!await _db.Books.AsNoTracking().AnyAsync(x => x.Id == contentId.Value, ct))
+                    errors.Add("The selected BK Reader book was not found.");
+            }
+            else
+            {
+                errors.Add("The selected content type is not supported.");
             }
         }
 
-        // ContentPageId is a soft association only; no ContentPage entity exists in this solution.
         if (contentPageId.HasValue && contentPageId.Value <= 0)
             errors.Add("ContentPageId must be a positive value when provided.");
 
@@ -399,32 +440,12 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
         }
     }
 
-    private async Task<IReadOnlyDictionary<int, Book>> LoadBooksAsync(
-        IEnumerable<CollaborationProject> projects,
-        CancellationToken ct)
-    {
-        var bookIds = projects
-            .Where(p => p.BookId.HasValue)
-            .Select(p => p.BookId!.Value)
-            .Distinct()
-            .ToList();
-
-        if (bookIds.Count == 0)
-            return new Dictionary<int, Book>();
-
-        return await _db.Books
-            .AsNoTracking()
-            .Where(b => bookIds.Contains(b.Id))
-            .ToDictionaryAsync(b => b.Id, ct);
-    }
-
     private static CollaborationProjectListDto MapList(
         CollaborationProject x,
-        IReadOnlyDictionary<int, Book>? booksById = null)
+        IReadOnlyDictionary<int, Book>? books = null,
+        IReadOnlyDictionary<int, Product>? products = null)
     {
-        Book? book = null;
-        if (x.BookId.HasValue && booksById != null)
-            booksById.TryGetValue(x.BookId.Value, out book);
+        var content = CollaborationContentLookup.Resolve(x.ContentType, x.ContentId, books, products);
 
         return new()
         {
@@ -437,13 +458,13 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
             LongDescription = x.LongDescription,
             ProjectLink = x.ProjectLink,
             ProjectType = x.ProjectType,
-            BookId = x.BookId,
-            BookName = book is not null
-                ? (string.IsNullOrWhiteSpace(book.Name) ? $"Book #{book.Id}" : book.Name)
-                : (x.BookId.HasValue ? $"Book #{x.BookId.Value}" : null),
-            BookDialect = book?.Dialect,
-            BookImageUrl = book?.BookImageURL,
-            BookProjectUrl = book?.ProjectURL,
+            ContentType = x.ContentType,
+            ContentId = x.ContentId,
+            ContentTitle = content?.Title,
+            ContentGroup = content?.Group,
+            ContentSubtitle = content?.Subtitle,
+            ContentImageUrl = content?.ImageUrl,
+            ContentUrl = content?.Url,
             Year = x.Year,
             IsActive = x.IsActive,
             DisplayOrder = x.DisplayOrder,
@@ -456,28 +477,39 @@ public sealed class CollaborationProjectService : ICollaborationProjectService
         };
     }
 
-    private static CollaborationProjectDetailsDto MapDetails(CollaborationProject x) => new()
+    private static CollaborationProjectDetailsDto MapDetails(
+        CollaborationProject x,
+        IReadOnlyDictionary<int, Book>? books = null,
+        IReadOnlyDictionary<int, Product>? products = null)
     {
-        Id = x.Id,
-        PartnerContributorId = x.PartnerContributorId,
-        PartnerContributorName = x.PartnerContributor?.Name ?? string.Empty,
-        Title = x.Title,
-        LogoUrl = x.LogoUrl,
-        ShortDescription = x.ShortDescription,
-        LongDescription = x.LongDescription,
-        ProjectLink = x.ProjectLink,
-        ProjectType = x.ProjectType,
-        BookId = x.BookId,
-        Year = x.Year,
-        ContentPageId = x.ContentPageId,
-        IsActive = x.IsActive,
-        DisplayOrder = x.DisplayOrder,
-        CreatedAt = x.CreatedAt,
-        UpdatedAt = x.UpdatedAt,
-        Media = (x.Media ?? Enumerable.Empty<CollaborationMedia>())
-            .OrderBy(m => m.DisplayOrder)
-            .ThenBy(m => m.Id)
-            .Select(CollaborationMediaService.MapDto)
-            .ToList()
-    };
+        var content = CollaborationContentLookup.Resolve(x.ContentType, x.ContentId, books, products);
+
+        return new()
+        {
+            Id = x.Id,
+            PartnerContributorId = x.PartnerContributorId,
+            PartnerContributorName = x.PartnerContributor?.Name ?? string.Empty,
+            Title = x.Title,
+            LogoUrl = x.LogoUrl,
+            ShortDescription = x.ShortDescription,
+            LongDescription = x.LongDescription,
+            ProjectLink = x.ProjectLink,
+            ProjectType = x.ProjectType,
+            ContentType = x.ContentType,
+            ContentId = x.ContentId,
+            ContentTitle = content?.Title,
+            ContentGroup = content?.Group,
+            Year = x.Year,
+            ContentPageId = x.ContentPageId,
+            IsActive = x.IsActive,
+            DisplayOrder = x.DisplayOrder,
+            CreatedAt = x.CreatedAt,
+            UpdatedAt = x.UpdatedAt,
+            Media = (x.Media ?? Enumerable.Empty<CollaborationMedia>())
+                .OrderBy(m => m.DisplayOrder)
+                .ThenBy(m => m.Id)
+                .Select(CollaborationMediaService.MapDto)
+                .ToList()
+        };
+    }
 }

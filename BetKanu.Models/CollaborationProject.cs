@@ -1,5 +1,7 @@
 ﻿
 
+using BetKanu.Models.Common;
+
 namespace BetKanu.Models
 {
     public class CollaborationProject
@@ -21,7 +23,9 @@ namespace BetKanu.Models
 
         // Classification
         public string? ProjectType { get; set; }
-        public int? BookId { get; set; }
+        public CollaborationContentType? ContentType { get; set; }
+
+        public int? ContentId { get; set; }
         public int? Year { get; set; }
 
         // Page / Content Association

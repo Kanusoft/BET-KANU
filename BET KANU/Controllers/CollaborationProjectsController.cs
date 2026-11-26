@@ -34,7 +34,7 @@ public sealed class CollaborationProjectsController : Controller
         {
             PartnerContributorId = partner.Id,
             PartnerContributorName = partner.Name,
-            BookOptions = BuildBookOptions(null)
+            ContentOptions = BuildContentOptions()
         });
     }
 
@@ -42,10 +42,16 @@ public sealed class CollaborationProjectsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CollaborationProjectFormViewModel form, CancellationToken ct)
     {
-        form.BookOptions = BuildBookOptions(form.BookId);
+        form.ContentOptions = BuildContentOptions();
         ValidateForm(form);
         if (!ModelState.IsValid)
             return View("Edit", form);
+
+        if (!form.TryApplyContentSelection(out var contentType, out var contentId, out var contentError))
+        {
+            ModelState.AddModelError(nameof(form.ContentSelection), contentError ?? "The selected content is invalid.");
+            return View("Edit", form);
+        }
 
         var partner = await _partners.GetByIdAsync(form.PartnerContributorId, ct);
         if (partner is null)
@@ -55,7 +61,7 @@ public sealed class CollaborationProjectsController : Controller
         }
 
         form.PartnerContributorName = partner.Name;
-        var result = await _projects.CreateAsync(form.ToCreateDto(), ct);
+        var result = await _projects.CreateAsync(form.ToCreateDto(contentType, contentId), ct);
         if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
@@ -84,7 +90,7 @@ public sealed class CollaborationProjectsController : Controller
         var entity = await _projects.GetByIdAsync(id, ct);
         if (entity is null) return NotFound();
 
-        var model = CollaborationProjectFormViewModel.FromDetails(entity, BuildBookOptions(entity.BookId));
+        var model = CollaborationProjectFormViewModel.FromDetails(entity, BuildContentOptions());
         model.ActiveTab = tab?.Equals("media", StringComparison.OrdinalIgnoreCase) == true
             ? "media"
             : "information";
@@ -98,10 +104,17 @@ public sealed class CollaborationProjectsController : Controller
     {
         if (form.Id != id) return BadRequest();
 
-        form.BookOptions = BuildBookOptions(form.BookId);
+        form.ContentOptions = BuildContentOptions();
         ValidateForm(form);
         if (!ModelState.IsValid)
         {
+            await ReloadMediaAsync(form, ct);
+            return View(form);
+        }
+
+        if (!form.TryApplyContentSelection(out var contentType, out var contentId, out var contentError))
+        {
+            ModelState.AddModelError(nameof(form.ContentSelection), contentError ?? "The selected content is invalid.");
             await ReloadMediaAsync(form, ct);
             return View(form);
         }
@@ -114,7 +127,7 @@ public sealed class CollaborationProjectsController : Controller
             return View(form);
         }
 
-        var result = await _projects.UpdateAsync(id, form.ToUpdateDto(), ct);
+        var result = await _projects.UpdateAsync(id, form.ToUpdateDto(contentType, contentId), ct);
         if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
@@ -200,19 +213,38 @@ public sealed class CollaborationProjectsController : Controller
             ModelState.AddModelError(nameof(form.ContentPageId), "Content page ID must be a positive number when provided.");
     }
 
-    private IEnumerable<BookOptionItem> BuildBookOptions(int? selectedBookId)
+    private IEnumerable<CollaborationContentOptionItem> BuildContentOptions()
     {
-        var books = _unitOfWork.bKBundle.GetBooks()
-            .OrderBy(b => b.Name)
-            .Select(b => new BookOptionItem
+        var options = new List<CollaborationContentOptionItem>
+        {
+            new() { Value = "", Text = "(None)", Group = "" }
+        };
+
+        var books = (_unitOfWork.bKBundle.GetBooks() ?? Enumerable.Empty<BetKanu.Models.Book>())
+            .Select(b => new CollaborationContentOptionItem
             {
-                Value = b.Id.ToString(),
-                Text = string.IsNullOrWhiteSpace(b.Name) ? $"Book #{b.Id}" : b.Name!
+                Value = CollaborationContentSelection.Format(CollaborationContentType.ReaderBook, b.Id),
+                Text = string.IsNullOrWhiteSpace(b.Name) ? $"Book #{b.Id}" : b.Name!,
+                Group = CollaborationContentSelection.GroupLabel(CollaborationContentType.ReaderBook)
+            })
+            .OrderBy(x => x.Text, StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        options.AddRange(books);
+
+        var products = (_unitOfWork.product.GetAll() ?? Enumerable.Empty<BetKanu.Models.Product>())
+            .OrderBy(p => (int)p.Category)
+            .ThenBy(p => p.Title, StringComparer.OrdinalIgnoreCase)
+            .Select(p => new CollaborationContentOptionItem
+            {
+                Value = CollaborationContentSelection.Format(CollaborationContentType.Product, p.Id),
+                Text = string.IsNullOrWhiteSpace(p.Title) ? $"Product #{p.Id}" : p.Title!,
+                Group = CollaborationContentSelection.GroupLabel(CollaborationContentType.Product, p.Category)
             })
             .ToList();
 
-        books.Insert(0, new BookOptionItem { Value = "", Text = "(None)" });
-        return books;
+        options.AddRange(products);
+        return options;
     }
 
     private IActionResult LocalRedirectOrPartner(string? returnUrl, int projectId, CancellationToken ct)

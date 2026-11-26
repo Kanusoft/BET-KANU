@@ -218,10 +218,13 @@ namespace BetKanu.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BookId")
+                    b.Property<int?>("ContentId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ContentPageId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ContentType")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -268,9 +271,14 @@ namespace BetKanu.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ContentType", "ContentId");
+
                     b.HasIndex("PartnerContributorId", "DisplayOrder");
 
-                    b.ToTable("CollaborationProjects", (string)null);
+                    b.ToTable("CollaborationProjects", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_CollaborationProjects_ContentAssociation", "([ContentType] IS NULL AND [ContentId] IS NULL) OR ([ContentType] IS NOT NULL AND [ContentId] IS NOT NULL AND [ContentId] > 0 AND [ContentType] IN (1, 2))");
+                        });
                 });
 
             modelBuilder.Entity("BetKanu.Models.Magazine", b =>

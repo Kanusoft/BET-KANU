@@ -1,3 +1,4 @@
+using BetKanu.Models.Common;
 using System.ComponentModel.DataAnnotations;
 
 namespace BetKanu.Models.DTOs.Collaboration
@@ -21,7 +22,9 @@ namespace BetKanu.Models.DTOs.Collaboration
         [StringLength(150)]
         public string? ProjectType { get; set; }
 
-        public int? BookId { get; set; }
+        public CollaborationContentType? ContentType { get; set; }
+
+        public int? ContentId { get; set; }
 
         [Range(1900, 2100)]
         public int? Year { get; set; }
@@ -53,7 +56,9 @@ namespace BetKanu.Models.DTOs.Collaboration
         [StringLength(150)]
         public string? ProjectType { get; set; }
 
-        public int? BookId { get; set; }
+        public CollaborationContentType? ContentType { get; set; }
+
+        public int? ContentId { get; set; }
 
         [Range(1900, 2100)]
         public int? Year { get; set; }
@@ -73,6 +78,8 @@ namespace BetKanu.Models.DTOs.Collaboration
         public int? Year { get; set; }
         public string? ProjectType { get; set; }
         public bool? IsActive { get; set; }
+        public CollaborationContentType? ContentType { get; set; }
+        public int? ContentId { get; set; }
         public int Page { get; set; } = 1;
         public int PageSize { get; set; } = 20;
     }
@@ -88,11 +95,13 @@ namespace BetKanu.Models.DTOs.Collaboration
         public string? LongDescription { get; init; }
         public string? ProjectLink { get; init; }
         public string? ProjectType { get; init; }
-        public int? BookId { get; init; }
-        public string? BookName { get; init; }
-        public string? BookDialect { get; init; }
-        public string? BookImageUrl { get; init; }
-        public string? BookProjectUrl { get; init; }
+        public CollaborationContentType? ContentType { get; init; }
+        public int? ContentId { get; init; }
+        public string? ContentTitle { get; init; }
+        public string? ContentGroup { get; init; }
+        public string? ContentSubtitle { get; init; }
+        public string? ContentImageUrl { get; init; }
+        public string? ContentUrl { get; init; }
         public int? Year { get; init; }
         public bool IsActive { get; init; }
         public int DisplayOrder { get; init; }
@@ -112,7 +121,10 @@ namespace BetKanu.Models.DTOs.Collaboration
         public string? LongDescription { get; init; }
         public string? ProjectLink { get; init; }
         public string? ProjectType { get; init; }
-        public int? BookId { get; init; }
+        public CollaborationContentType? ContentType { get; init; }
+        public int? ContentId { get; init; }
+        public string? ContentTitle { get; init; }
+        public string? ContentGroup { get; init; }
         public int? Year { get; init; }
         public int? ContentPageId { get; init; }
         public bool IsActive { get; init; }
